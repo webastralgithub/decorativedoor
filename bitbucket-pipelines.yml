@@ -1,0 +1,18 @@
+image: php:7.4
+
+pipelines:
+ branches:
+   master:
+     - step:
+         name: Deploy to production
+         deployment: production
+         script:
+           - pipe: atlassian/rsync-deploy:0.5.0
+             variables:
+               USER: $RSYNC_USER
+               SERVER: $RSYNC_SERVER
+               SSH_PORT: $RSYNC_SSH_PORT
+               REMOTE_PATH: '/var/www/html/eagleff_crm'
+               LOCAL_PATH: './'
+               DEBUG: 'true'
+               DELETE_FLAG: 'false'
