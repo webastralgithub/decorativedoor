@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\ProductImage;
+use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -47,9 +49,42 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request): RedirectResponse
     {
-        Product::create($request->all());
+
+        $product = new Product();
+        $product->title = $request->title;
+        $product->sub_title = $request->sub_title;
+        $product->meta_title = $request->meta_title;
+        $product->meta_keywords = $request->meta_keywords;
+        $product->meta_description = $request->meta_description;
+        $product->slug = $request->slug;
+        $product->notes = $request->notes;
+        $product->code = $request->code;
+        $product->buying_price = $request->buying_price;
+        $product->selling_price = $request->selling_price;
+        $product->quantity_alert = $request->quantity_alert;
+        $product->tax = $request->tax;
+        $product->image = $request->image;
+        $product->quantity = $request->quantity;
+        $product->tax_type = $request->tax_type;
+
+        if ($request->product_images) {
+            foreach ($request->product_images as $key => $image) {
+                $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
+                $image->storeAs('products', $imgName);
+
+                // Store images in relational table
+                $product->images()->create([
+                    'product_id' => $product->id,
+                    'path' => $imgName,
+                ]);
+            }
+        }
+
+        $product->category_id = $request->category_id;
+        $product->save();
+
         return redirect()->route('products.index')
-            ->withSuccess('New product is added successfully.');
+            ->withSuccess('Product has been created successfully!');
     }
 
     /**

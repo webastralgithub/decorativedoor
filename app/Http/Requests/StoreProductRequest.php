@@ -22,8 +22,23 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:250',
-            'description' => 'required|string'
+            'title' => 'required',
+            'slug' => 'required',
+            'sub_title' => 'required',
+            'meta_title' => 'required',
+            'meta_keywords' => 'required',
+            'meta_description' => 'required',
+            'slug' => 'required|unique:products',
+            'code' => 'required|unique:products',
+            'notes' => 'required',
+            'buying_price' => 'required|numeric',
+            'selling_price' => 'numeric',
+            'quantity_alert' => 'required',
+            'tax' => 'required',
+            'quantity' => 'required|numeric',
+            'product_images' => 'required|mimes:jpeg,png',
+            'tax_type' => 'required',
+            'category_id' => 'required'
         ];
     }
 }
