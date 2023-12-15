@@ -56,6 +56,41 @@ body {
     background-color: #C2CACD;
 }
 
+.variant-btn {
+    display: flex;
+    justify-content: end;
+    margin: 0 !important;
+    margin-top: 20px !important;
+}
+
+.product-variants .tag-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-variants .tag {
+    margin: 5px;
+    padding: 0 5px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.product-variants .input-tags {
+    flex-wrap: wrap;
+    display: flex;
+    row-gap: 20px;
+}
+
+div#variant_addTag {
+    WIDTH: 100%;
+}
+
+.product-variants .tag span {
+    margin-right: 5px;
+}
 
 /*** Spinner ***/
 #spinner {

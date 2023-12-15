@@ -1,3 +1,116 @@
+jQuery(document).ready(function () {
+    // Add More Variant button click event
+    jQuery('.add-more-variant').on('click', function () {
+        // Clone the last row of fields
+        var clonedRow = jQuery('.row-cards:last').clone();
+
+        // Clear the input values in the cloned row
+        clonedRow.find('input').val('');
+        clonedRow.find('.tag-container').html('');
+        clonedRow.find('.tag-container').attr('data-count', parseInt(clonedRow.find('.tag-container').attr('data-count')) + 1)
+
+        // Append the cloned row to the form
+        jQuery('.variantForm').append(clonedRow);
+    });
+
+    // ADD TAGS 
+    jQuery('form').on('keydown', '.variant-tags', function (e) {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            addTags(jQuery(this));
+        }
+    });
+
+    function checkDuplicateTag(tagContainer) {
+        var tagTextArray = [];
+
+        tagContainer.find('.tag-text').each(function () {
+            tagTextArray.push(jQuery(this).text());
+        });
+        console.log("already created tags::", tagTextArray);
+        return tagTextArray;
+    }
+
+    function addTags(currentEle) {
+        var tagsInput = currentEle; //jQuery('#variant-tags');
+        var tagContainer = currentEle.parent().parent().find('.tag-container'); //jQuery('#tagContainer');
+        var existingTags = checkDuplicateTag(tagContainer);
+
+        var tags = tagsInput.val().split(',');
+        console.log("addTags  -> all tags::", tags, 'existingTags', existingTags);
+        tags.forEach(function (tag) {
+            tag = tag.trim();
+            if (tag !== "") { //&& !existingTags.includes(tag)
+                var tagElement = jQuery('<span class="tag"><span class="tag-text">' + tag + '</span><button type="button" class="close" aria-label="Close">×</button></span>');
+                tagContainer.append(tagElement);
+                // Clear the input field
+                tagsInput.val('');
+                // Create a new table row for the variant
+                jQuery('#variantsTable').css('display', 'block');
+                refreshVariantsData();
+            }
+        });
+    }
+
+    function refreshVariantsData() {
+        var tagsWithIndex = [];
+
+        jQuery('.variantForm .row-cards').each(function (index) {
+            var parentIndex = index + 1; // Adjust index to start from 1
+
+            var tagNames = [];
+            jQuery(this).find('.tag-text').each(function () {
+                var tagName = jQuery(this).text().trim();
+                tagNames.push(tagName);
+            });
+            tagsWithIndex.push({ index: parentIndex, tagNames: tagNames });
+        });
+        console.log("refreshVariantsData -> All variants::", tagsWithIndex);
+        addVariantTableRows(tagsWithIndex);
+    }
+
+    function addVariantTableRows(variantsArr = []) {
+        console.log("addVariantTableRows");
+
+        var variantsTableBody = jQuery('#variantsTable tbody');
+        var tableTR = '';
+
+        const result = [];
+        const dataLength = variantsArr.length;
+
+        for (let i = 0; i < variantsArr[0].tagNames.length; i++) {
+            const tag1 = variantsArr[0].tagNames[i];
+
+            for (let j = 0; j < variantsArr[1].tagNames.length; j++) {
+                const tag2 = variantsArr[1].tagNames[j];
+
+                for (let k = 0; k < variantsArr[2].tagNames.length; k++) {
+                    const tag3 = variantsArr[2].tagNames[k];
+                    const combination = [tag1, tag2, tag3];
+                    result.push(combination);
+                }
+            }
+        }
+        console.log("result::", result);
+        tableTR +=
+            `<tr>
+                <td><input type="text" name="variant_name[]" class="form-control" placeholder="Enter Name"></td>
+                <td><input type="text" name="variant_value[]" class="form-control" placeholder="Enter Value"></td>
+                <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code"></td>
+                <td><input type="text" name="variant_quantity[]" class="form-control" placeholder="Enter Quantity"></td>
+                <td><input type="text" name="variant_buying_price[]" class="form-control" placeholder="Enter Buying Price"></td>
+                <td><input type="text" name="variant_notes[]" class="form-control" placeholder="Enter Notes"></td>
+            </tr>`;
+        var newRow = jQuery(tableTR);
+        variantsTableBody.append(newRow);
+    }
+
+    // Remove tag on close button click
+    jQuery('form').on('click', '.close', '#tagContainer', function () {
+        jQuery(this).parent().remove();
+    });
+});
+
 // Get the modal
 var modal = document.getElementById("myModal");
 

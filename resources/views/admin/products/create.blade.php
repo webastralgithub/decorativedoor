@@ -26,7 +26,7 @@
                             <div class="small font-italic text-muted mb-2">
                                 JPG or PNG no larger than 2 MB
                             </div>
-                            <input type="file" accept="image/*" id="image" name="product_images[]" class="form-control @error('product_images') is-invalid @enderror" onchange="previewImage();" multiple>
+                            <input type="file" accept="image/*" id="image" name="product_images" class="form-control @error('product_images') is-invalid @enderror" onchange="previewImage();" multiple>
                             @error('product_images')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -66,7 +66,7 @@
                                         Product Code
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="product_code" id="name" class="form-control" placeholder="Product Code" value="{{ old('product_code') }}" />
+                                    <input name="code" id="name" class="form-control" placeholder="Product Code" value="{{ old('product_code') }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <label for="category_id" class="form-label">
@@ -181,8 +181,8 @@
                                             {{ __('Tax Type') }}
                                         </label>
                                         <select name="tax_type" id="tax_type" class="form-select @error('tax_type') is-invalid @enderror">
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
                                         </select>
                                         @error('tax_type')
                                         <div class="invalid-feedback">
@@ -209,16 +209,41 @@
                             </div>
                         </div>
 
-                        <div class="card-footer text-end">
-                            <div class="mb-3 row">
-                                <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="{{ __('Save') }}">
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
+
+            @include('admin.products.product-variant')
+
+            <div class="card-footer text-end">
+                <div class="mb-3 row">
+                    <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="{{ __('Save Product') }}">
+                </div>
+            </div>
         </form>
+
+        @if ($errors->any())
+        <div>
+            @foreach ($errors->all() as $error)
+            <li class="alert alert-danger">{{ $error }}</li>
+            @endforeach
+        </div>
+        @endif
+
+        @if(\Session::has('error'))
+        <div>
+            <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
+        </div>
+        @endif
+
+        @if(\Session::has('success'))
+        <div>
+            <li class="alert alert-success">{!! \Session::get('success') !!}</li>
+        </div>
+        @endif
     </div>
+
 </div>
 
 @endsection

@@ -63,11 +63,10 @@ class ProductController extends Controller
         $product->selling_price = $request->selling_price;
         $product->quantity_alert = $request->quantity_alert;
         $product->tax = $request->tax;
-        $product->image = $request->image;
         $product->quantity = $request->quantity;
         $product->tax_type = $request->tax_type;
 
-        if ($request->product_images) {
+        if (isset($request->product_images) && $request->product_images) {
             foreach ($request->product_images as $key => $image) {
                 $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
                 $image->storeAs('products', $imgName);
@@ -79,9 +78,9 @@ class ProductController extends Controller
                 ]);
             }
         }
-
-        $product->category_id = $request->category_id;
+        $category = Category::find($request->category_id);
         $product->save();
+        $product->categories()->attach($category);
 
         return redirect()->route('products.index')
             ->withSuccess('Product has been created successfully!');
