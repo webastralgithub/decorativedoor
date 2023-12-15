@@ -12,22 +12,22 @@
                             <i class="fa fa-bars"></i>
                             <span>All Categories</span>
                         </div>
-                       
+
                         <ul>
                             @foreach($allcategory as $category)
                                @php
                                if(empty($category->parent_id)):
                                @endphp
                                 <li><a href="{{route('product_category', $category->name)}}">{{$category->name}}</a></li>
-                                
+
                                 <ul class="under_ul">
                                     @foreach($category->children as $subcategory)
                                     <li><a href="{{route('product_category', $subcategory->name)}}">{{$subcategory->name}}</a></li>
                                     @endforeach
-                                </ul> 
+                                </ul>
                                 @php
                                 endif
-                                @endphp                           
+                                @endphp
                             @endforeach
                         </ul>
                     </div>
@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
@@ -136,6 +136,23 @@
                                     <a href="#"><i class="fa fa-pinterest"></i></a>
                                 </div>
                             </li>
+                            <h3>Variants</h3>
+                            @foreach($product->variants as $key =>$variant)
+                                <ul data-id="{{ $variant->id }}">
+                                    @php
+                                        if(session()->has('cart') &&
+                                            isset(session('cart')[$product->id]['variant_id']) &&
+                                            isset(session('cart')[$product->id]['variant_id'][$variant->id]['quantity'])) {
+                                            $quantity = session('cart')[$product->id]['variant_id'][$variant->id]['quantity'];
+                                        } else {
+                                            // Handle case where the keys or values are not set
+                                            $quantity = 0; // or any default value you prefer
+                                        }                                    @endphp
+                                    <li><b>Name</b> <span>{{$variant->name}}</span></li>
+                                    <li><b>Quantity</b><input type="number" value="{{$quantity??0}}" class="form-control quantity add-on"/>
+                                        </li>
+                                </ul>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
