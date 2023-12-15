@@ -34,10 +34,16 @@ Auth::routes(['register' => false]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
-Route::get('/product/{ProductName}', [App\Http\Controllers\ShopController::class, 'product_details'])->name('product');
+Route::get('/product/{ProductName}/{id}', [App\Http\Controllers\ShopController::class, 'product_details'])->name('product');
 Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
 Route::get('/category/{CategoryName}', [App\Http\Controllers\ShopController::class, 'product_details'])->name('product_category');
+Route::get('cart', [\App\Http\Controllers\ShopController::class, 'cart'])->name('cart');
 
+Route::get('add-to-cart/{id}', [\App\Http\Controllers\ShopController::class, 'addToCart'])->name('add.to.cart');
+
+Route::patch('update-cart', [\App\Http\Controllers\ShopController::class, 'update_cart'])->name('update.cart');
+Route::patch('add_on', [\App\Http\Controllers\ShopController::class, 'addOn'])->name('add_on.cart');
+Route::delete('remove-from-cart', [\App\Http\Controllers\ShopController::class, 'remove_cart'])->name('remove.from.cart');
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     //dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
