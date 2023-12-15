@@ -1,8 +1,6 @@
 @extends('frontend.layouts.app')
 
-
 @section('content')
-    
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
@@ -14,21 +12,20 @@
                             <span>All Categories</span>
                         </div>
                         <ul>
-                            @foreach($allcategory as $category)
-                               @php
-                               if(empty($category->parent_id)):
-                               @endphp
-                                <li><a href="{{route('category', $category->name)}}">{{$category->name}}</a></li>
-                                
-                                <ul class="under_ul">
-                                    @foreach($category->children as $subcategory)
-                                    <li><a href="{{route('category', $subcategory->name)}}">{{$subcategory->name}}</a></li>
-                                    @endforeach
-                                </ul> 
-                                @php
-                                endif
-                                @endphp                           
-                            @endforeach
+                            <li><a href="#">Interior Doors</a></li>
+                            <ul class="under_ul">
+                                <li><a href="#">COMMERCIAL DOORS</a></li>
+                                <li><a href="#">DUTCH DOORS</a></li>
+                                <li><a href="#">FIBERGLASS FRENCH DOORS</a></li>
+                                <li><a href="#">SOLID CORE UTILITY DOORS</a></li>
+                            </ul>
+                            <li><a href="#">Exterior Doors</a></li>
+                            <ul class="under_ul">
+                                <li><a href="#">COMMERCIAL DOORS</a></li>
+                                <li><a href="#">DUTCH DOORS</a></li>
+                                <li><a href="#">FIBERGLASS FRENCH DOORS</a></li>
+                                <li><a href="#">SOLID CORE UTILITY DOORS</a></li>
+                            </ul>
                         </ul>
                     </div>
                 </div>
@@ -61,14 +58,14 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="{{asset('frontend/img/breadcrumb.jpg')}}">
+    <section class="breadcrumb-section set-bg" data-setbg="{{asset('img/breadcrumb')}}.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Shop</h2>
+                        <h2>Interior Doors</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
+                            <a href="#">Home</a>
                             <span>Shop</span>
                         </div>
                     </div>
@@ -85,21 +82,13 @@
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
                         <div class="sidebar__item">
-                                @foreach($allcategory as $category)
-                                   @php
-                                   if(empty($category->parent_id)):
-                                   @endphp
-                                    <h4>{{$category->name}}</h4>
-                                    
-                                    <ul class="under_ul">
-                                        @foreach($category->children as $subcategory)
-                                        <li><a href="{{route('category', $subcategory->name)}}">{{$subcategory->name}}</a></li>
-                                        @endforeach
-                                    </ul> 
-                                    @php
-                                    endif
-                                    @endphp                           
-                                @endforeach
+                            <h4>Interior Doors</h4>
+                            <ul>
+                                <li><a href="#">COMMERCIAL DOORS</a></li>
+                                <li><a href="#">DUTCH DOORS</a></li>
+                                <li><a href="#">FIBERGLASS FRENCH DOORS</a></li>
+                                <li><a href="#">SOLID CORE UTILITY DOORS</a></li>
+                            </ul>
                         </div>
                         <div class="sidebar__item">
                             <h4>Price</h4>
@@ -189,27 +178,27 @@
                                 <h4>Latest Products</h4>
                                 <div class="latest-product__slider owl-carousel">
                                     <div class="latest-prdouct__slider__item">
-                                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                                        <a href="#" class="latest-product__item">
                                             <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-1.jpg" alt="">
+                                                <img src="{{asset('img/latest-product/lp-1.jpg')}}" alt="">
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>Heavy Double Door</h6>
                                                 <span>$76.000</span>
                                             </div>
                                         </a>
-                                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                                        <a href="#" class="latest-product__item">
                                             <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-2.jpg" alt="">
+                                                <img src="{{asset('img/latest-product/lp-2.jpg')}}" alt="">
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>Heavy Double Door</h6>
                                                 <span>$76.000</span>
                                             </div>
                                         </a>
-                                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                                        <a href="#" class="latest-product__item">
                                             <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-3.jpg" alt="">
+                                                <img src="{{asset('img/latest-product/lp-3.jpg')}}" alt="">
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>Heavy Double Door</h6>
@@ -218,27 +207,27 @@
                                         </a>
                                     </div>
                                     <div class="latest-prdouct__slider__item">
-                                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                                        <a href="#" class="latest-product__item">
                                             <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-1.jpg" alt="">
+                                                <img src="{{asset('img/latest-product/lp-1.jpg')}}" alt="">
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>Heavy Double Door</h6>
                                                 <span>$76.000</span>
                                             </div>
                                         </a>
-                                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                                        <a href="#" class="latest-product__item">
                                             <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-2.jpg" alt="">
+                                                <img src="{{asset('img/latest-product/lp-2.jpg')}}" alt="">
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>Heavy Double Door</h6>
                                                 <span>$76.000</span>
                                             </div>
                                         </a>
-                                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                                        <a href="#" class="latest-product__item">
                                             <div class="latest-product__item__pic">
-                                                <img src="img/latest-product/lp-3.jpg" alt="">
+                                                <img src="{{asset('img/latest-product/lp-3.jpg')}}" alt="">
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>Heavy Double Door</h6>
@@ -279,7 +268,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
+                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
                                     <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -287,14 +276,14 @@
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
+                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
                                     <h5>$76.000</h5>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
+                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
                                     <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -302,14 +291,14 @@
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
+                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
                                     <h5>$76.000</h5>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
+                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
                                     <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -317,14 +306,14 @@
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
+                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
                                     <h5>$76.000</h5>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
+                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
                                     <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -332,14 +321,14 @@
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
+                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
                                     <h5>$76.000</h5>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
+                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
                                     <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -347,14 +336,15 @@
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
+                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
                                     <h5>$76.000</h5>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
+                                @foreach($products as $product)
+                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
                                     <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -362,144 +352,10 @@
                                     </ul>
                                 </div>
                                 <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
+                                    <h6><a href="{{route('product',$product->slug)}}">{{$product->title}}</a></h6>
+                                    <h5>${{$product->buying_price}}</h5>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="{{route('product', 'heavy-double-door')}}">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -515,4 +371,3 @@
     </section>
     <!-- Product Section End -->
 @endsection
-

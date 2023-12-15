@@ -36,7 +36,7 @@ class StoreProductRequest extends FormRequest
             'quantity_alert' => 'required',
             'tax' => 'required',
             'quantity' => 'required|numeric',
-            'product_images' => 'required|mimes:jpeg,png',
+            // 'product_images' => 'required|mimes:jpeg,png',
             'tax_type' => 'required',
             'category_id' => 'required'
         ];

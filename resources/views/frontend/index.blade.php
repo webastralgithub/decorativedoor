@@ -5,30 +5,7 @@
     <section class="hero">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All Categories</span>
-                        </div>
-                        <ul>
-                            <li><a href="./shop-grid.html">Interior Doors</a></li>
-                            <ul class="under_ul">
-                                <li><a href="./shop-grid.html">COMMERCIAL DOORS</a></li>
-                                <li><a href="./shop-grid.html">DUTCH DOORS</a></li>
-                                <li><a href="./shop-grid.html">FIBERGLASS FRENCH DOORS</a></li>
-                                <li><a href="./shop-grid.html">SOLID CORE UTILITY DOORS</a></li>
-                            </ul>
-                            <li><a href="#">Exterior Doors</a></li>
-                            <ul class="under_ul">
-                                <li><a href="#">COMMERCIAL DOORS</a></li>
-                                <li><a href="#">DUTCH DOORS</a></li>
-                                <li><a href="#">FIBERGLASS FRENCH DOORS</a></li>
-                                <li><a href="#">SOLID CORE UTILITY DOORS</a></li>
-                            </ul>
-                        </ul>
-                    </div>
-                </div>
+            @include('frontend.layouts.include.sidebar')
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
@@ -47,7 +24,7 @@
                             </div>
                             <div class="hero__search__phone__text">
                                 <h5>+00 00.000.000</h5>
-                                <span>support 24/7 time</span>
+                                <!-- <span>support 24/7 time</span> -->
                             </div>
                         </div>
                     </div>
