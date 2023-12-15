@@ -24,7 +24,7 @@ use \App\Http\Controllers\admin\ErrorController;
 
 Route::get('/admin', function () {
     if (Auth::check()) {
-        return redirect()->route('dashboard');
+        return redirect()->route('home');
     } else {
         return view('auth.login');
     }
@@ -34,10 +34,11 @@ Auth::routes(['register' => false]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
-Route::get('/product/{ProductName}/{id}', [App\Http\Controllers\ShopController::class, 'product_details'])->name('product');
+Route::get('/product/{slug}', [App\Http\Controllers\ShopController::class, 'product_details'])->name('product');
 Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');
-Route::get('/category/{CategoryName}', [App\Http\Controllers\ShopController::class, 'product_details'])->name('product_category');
+// Route::get('/product-details/{CategoryName}', [App\Http\Controllers\ShopController::class, 'product_details'])->name('product_category');
 Route::get('cart', [\App\Http\Controllers\ShopController::class, 'cart'])->name('cart');
+Route::get('category/{slug}', [\App\Http\Controllers\ShopController::class, 'category'])->name('category');
 
 Route::get('add-to-cart/{id}', [\App\Http\Controllers\ShopController::class, 'addToCart'])->name('add.to.cart');
 
