@@ -52,6 +52,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         'roles' => \App\Http\Controllers\RoleController::class,
         'users' => \App\Http\Controllers\UserController::class,
         'products' => \App\Http\Controllers\ProductController::class,
+        'inventory' => \App\Http\Controllers\InventoryController::class,
         'category' =>  \App\Http\Controllers\CategoryController::class
     ]);
 });

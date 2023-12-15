@@ -7,10 +7,6 @@
          <div class="navbar-nav w-100">
              <a class="nav-item nav-link {{ request()->is('*/dashboard') ? 'active' : '' }}" href="{{route('dashboard')}}">
                  <img src="{{asset('img/side-icon1.svg')}}" class="img" /> Dashboard</a>
-             @canany(['create-role', 'edit-role', 'delete-role'])
-             <a class="nav-item nav-link {{ request()->is('*/roles') ? 'active' : '' }}" href="{{ route('roles.index') }}">
-                 <img src="{{asset('img/4634467_category_interface_link_categories_icon.svg')}}" class="img" /></i> Manage Roles</a>
-             @endcanany
 
              @canany(['create-category', 'edit-category', 'delete-category'])
              <a class="nav-item nav-link {{ request()->is('*/category') ? 'active' : '' }}" href="{{ route('category.index') }}">
@@ -25,6 +21,16 @@
              @canany(['create-product', 'edit-product', 'delete-product'])
              <a class="nav-item nav-link {{ request()->is('*/products') ? 'active' : '' }}" href="{{ route('products.index') }}">
                  <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Products</a>
+             @endcanany
+
+             @canany(['create-product', 'edit-product', 'delete-product'])
+             <a class="nav-item nav-link {{ request()->is('*/inventory') ? 'active' : '' }}" href="{{ route('inventory.index') }}">
+                 <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Inventory</a>
+             @endcanany
+
+             @canany(['create-role', 'edit-role', 'delete-role'])
+             <a class="nav-item nav-link {{ request()->is('*/roles') ? 'active' : '' }}" href="{{ route('roles.index') }}">
+                 <img src="{{asset('img/4634467_category_interface_link_categories_icon.svg')}}" class="img" /></i> Manage Roles</a>
              @endcanany
          </div>
      </nav>

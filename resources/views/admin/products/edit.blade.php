@@ -1,7 +1,6 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
 <div class="card mx-4">
     <div class="card-header">
         <div class="float-start">
@@ -12,9 +11,27 @@
         </div>
     </div>
     <div class="card-body">
+        @if ($errors->any())
+        <div>
+            @foreach ($errors->all() as $error)
+            <li class="alert alert-danger">{{ $error }}</li>
+            @endforeach
+        </div>
+        @endif
+
+        @if(\Session::has('error'))
+        <div>
+            <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
+        </div>
+        @endif
+
+        @if(\Session::has('success'))
+        <div>
+            <li class="alert alert-success">{!! \Session::get('success') !!}</li>
+        </div>
+        @endif
         <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
 
             <div class="row">
                 <div class="col-lg-4">
@@ -23,12 +40,16 @@
                             <h3 class="card-title">
                                 {{ __('Product Image') }}
                             </h3>
-                            <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" />
+                            <!-- <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" /> -->
+
+                            <div class="mt-1 text-center">
+                                <div class="images-preview-div"> </div>
+                            </div>
                             <div class="small font-italic text-muted mb-2">
                                 JPG or PNG no larger than 2 MB
                             </div>
-                            <input type="file" accept="image/*" id="image" name="product_image" class="form-control @error('product_image') is-invalid @enderror" onchange="previewImage();">
-                            @error('product_image')
+                            <input type="file" accept="image/*" id="image" name="product_images[]" class="form-control @error('product_images') is-invalid @enderror" onchange="previewImages(this, 'div.images-preview-div') /*previewImage(); */;" multiple>
+                            @error('product_images')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -42,7 +63,7 @@
                         <div class="card-header">
                             <div>
                                 <h3 class="card-title">
-                                    {{ __('Product Create') }}
+                                    {{ __('Product Update') }}
                                 </h3>
                             </div>
                         </div>
@@ -53,42 +74,42 @@
                                         Product Title
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="title" id="name" class="form-control" placeholder="Product name" value="{{ old('title') }}" />
+                                    <input name="title" id="name" class="form-control" placeholder="Product name" value="{{ $product->title }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <label for="category_id" class="form-label">
                                         Slug
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="slug" id="name" class="form-control" placeholder="Product Slug" value="{{ old('slug') }}" />
+                                    <input name="slug" id="name" class="form-control" placeholder="Product Slug" value="{{ $product->slug }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <label for="category_id" class="form-label">
                                         Product Code
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="product_code" id="name" class="form-control" placeholder="Product Code" value="{{ old('product_code') }}" />
+                                    <input name="code" id="name" class="form-control" placeholder="Product Code" value="{{ $product->product_code }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <label for="category_id" class="form-label">
                                         Sub Title
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="sub_title" id="name" class="form-control" placeholder="Sub Title" value="{{ old('sub_title') }}" />
+                                    <input name="sub_title" id="name" class="form-control" placeholder="Sub Title" value="{{ $product->sub_title }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <label for="category_id" class="form-label">
                                         Meta Title
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="meta_title" id="name" class="form-control" placeholder="Meta Title" value="{{ old('meta_title') }}" />
+                                    <input name="meta_title" id="name" class="form-control" placeholder="Meta Title" value="{{ $product->meta_title }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <label for="category_id" class="form-label">
-                                        Meta Tags
+                                        Meta Keywords
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="meta_tags" id="name" class="form-control" placeholder="Meta Tags" value="{{ old('meta_tags') }}" />
+                                    <input name="meta_keywords" id="name" class="form-control" placeholder="Meta Keywords" value="{{ $product->meta_keywords }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <label for="category_id" class="form-label">
@@ -106,25 +127,28 @@
                                         </label>
 
                                         @if ($categories->count() === 1)
-                                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" readonly>
-                                            @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" selected>
-                                                {{ $category->name }}
-                                            </option>
+                                        <select type="text" name="parent_id" class="form-control form-select @error('category_id') is-invalid @enderror" multiple>
+                                            <option value="">None</option>
+                                            @if($categories)
+                                            @foreach($categories as $category)
+                                            <?php $dash = ''; ?>
+                                            <option value="{{$category->id}}" {{ in_array($category->id, $selectedCategories) ? 'selected' : '' }}>{{$category->name}}</option>
+                                            @if(count($category->subcategory))
+                                            @include('admin.category.sub-category',['subcategories' => $category->subcategory])
+                                            @endif
                                             @endforeach
+                                            @endif
                                         </select>
                                         @else
-                                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror">
-                                            <option selected="" disabled="">
-                                                Select a category:
-                                            </option>
-
+                                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" multiple>
+                                            <option selected disabled>Select a category:</option>
                                             @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" @if(old('category_id')==$category->id) selected="selected" @endif>
+                                            <option value="{{ $category->id }}" {{ in_array($category->id, $selectedCategories) ? 'selected' : '' }}>
                                                 {{ $category->name }}
                                             </option>
                                             @endforeach
                                         </select>
+
                                         @endif
 
                                         @error('category_id')
@@ -139,41 +163,34 @@
                                     <label for="notes" class="form-label">
                                         {{ __('Buying Price') }}
                                     </label>
-                                    <input type="number" label="Buying Price" class="form-control" name="buying_price" id="buying_price" placeholder="0" value="{{ old('buying_price') }}" />
+                                    <input type="number" label="Buying Price" class="form-control" name="buying_price" id="buying_price" placeholder="0" value="{{ $product->buying_price }}" />
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="notes" class="form-label">
                                         {{ __('Selling Price') }}
                                     </label>
-                                    <input type="number" label="Selling Price" class="form-control" name="selling_price" id="buying_price" placeholder="0" value="{{ old('selling_price') }}" />
-                                </div>
-
-                                <div class="col-sm-6 col-md-6">
-                                    <label for="notes" class="form-label">
-                                        {{ __('Notes') }}
-                                    </label>
-                                    <input type="number" label="Selling Price" class="form-control" name="selling_price" id="selling_price" placeholder="0" value="{{ old('selling_price') }}" />
+                                    <input type="number" label="Selling Price" class="form-control" name="selling_price" id="buying_price" placeholder="0" value="{{ $product->selling_price }}" />
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
                                     <label for="notes" class="form-label">
                                         {{ __('Quantity') }}
                                     </label>
-                                    <input type="number" label="Quantity" class="form-control" name="quantity" id="quantity" placeholder="0" value="{{ old('quantity') }}" />
+                                    <input type="number" label="Quantity" class="form-control" name="quantity" id="quantity" placeholder="0" value="{{ $product->quantity }}" />
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
                                     <label for="notes" class="form-label">
                                         {{ __('Quantity Alert') }}
                                     </label>
-                                    <input type="number" label="Quantity Alert" class="form-control" name="quantity_alert" id="quantity_alert" placeholder="0" value="{{ old('quantity_alert') }}" />
+                                    <input type="number" label="Quantity Alert" class="form-control" name="quantity_alert" id="quantity_alert" placeholder="0" value="{{ $product->quantity_alert }}" />
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
                                     <label for="notes" class="form-label">
                                         {{ __('Tax') }}
                                     </label>
-                                    <input type="number" label="Tax" name="tax" class="form-control" id="tax" placeholder="0" value="{{ old('tax') }}" />
+                                    <input type="number" label="Tax" name="tax" class="form-control" id="tax" placeholder="0" value="{{ $product->tax }}" />
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
@@ -182,8 +199,8 @@
                                             {{ __('Tax Type') }}
                                         </label>
                                         <select name="tax_type" id="tax_type" class="form-select @error('tax_type') is-invalid @enderror">
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
                                         </select>
                                         @error('tax_type')
                                         <div class="invalid-feedback">
@@ -210,16 +227,21 @@
                             </div>
                         </div>
 
-                        <div class="card-footer text-end">
-                            <div class="mb-3 row">
-                                <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="{{ __('Save') }}">
-                            </div>
-                        </div>
+
                     </div>
+                </div>
+            </div>
+
+            @include('admin.products.product-variant')
+
+            <div class="card-footer text-end">
+                <div class="mb-3 row">
+                    <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="{{ __('Save Product') }}">
                 </div>
             </div>
         </form>
     </div>
+
 </div>
 
 @endsection

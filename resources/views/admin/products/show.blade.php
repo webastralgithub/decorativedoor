@@ -16,14 +16,32 @@
         <div class="row">
             <label for="name" class="col-md-4 col-form-label text-md-end text-start"><strong>Name:</strong></label>
             <div class="col-md-6" style="line-height: 35px;">
-                {{ $product->name }}
+                {{ $product->title }}
+            </div>
+        </div>
+        <div class="row">
+            <label for="name" class="col-md-4 col-form-label text-md-end text-start"><strong>Sub Title:</strong></label>
+            <div class="col-md-6" style="line-height: 35px;">
+                {{ $product->sub_title }}
+            </div>
+        </div>
+        <div class="row">
+            <label for="name" class="col-md-4 col-form-label text-md-end text-start"><strong>Buying Price:</strong></label>
+            <div class="col-md-6" style="line-height: 35px;">
+                {{ $product->buying_price }}
+            </div>
+        </div>
+        <div class="row">
+            <label for="name" class="col-md-4 col-form-label text-md-end text-start"><strong>Quantity:</strong></label>
+            <div class="col-md-6" style="line-height: 35px;">
+                {{ $product->quantity }}
             </div>
         </div>
 
         <div class="row">
             <label for="description" class="col-md-4 col-form-label text-md-end text-start"><strong>Description:</strong></label>
             <div class="col-md-6" style="line-height: 35px;">
-                {{ $product->description }}
+                {{ $product->notes }}
             </div>
         </div>
 

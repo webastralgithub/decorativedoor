@@ -12,6 +12,25 @@
         </div>
     </div>
     <div class="card-body">
+        @if ($errors->any())
+        <div>
+            @foreach ($errors->all() as $error)
+            <li class="alert alert-danger">{{ $error }}</li>
+            @endforeach
+        </div>
+        @endif
+
+        @if(\Session::has('error'))
+        <div>
+            <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
+        </div>
+        @endif
+
+        @if(\Session::has('success'))
+        <div>
+            <li class="alert alert-success">{!! \Session::get('success') !!}</li>
+        </div>
+        @endif
         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -22,11 +41,15 @@
                             <h3 class="card-title">
                                 {{ __('Product Image') }}
                             </h3>
-                            <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" />
+                            <!-- <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" /> -->
+
+                            <div class="mt-1 text-center">
+                                <div class="images-preview-div"> </div>
+                            </div>
                             <div class="small font-italic text-muted mb-2">
                                 JPG or PNG no larger than 2 MB
                             </div>
-                            <input type="file" accept="image/*" id="image" name="product_images" class="form-control @error('product_images') is-invalid @enderror" onchange="previewImage();" multiple>
+                            <input type="file" accept="image/*" id="image" name="product_images[]" class="form-control @error('product_images') is-invalid @enderror" onchange="previewImages(this, 'div.images-preview-div') /*previewImage(); */;" multiple>
                             @error('product_images')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -105,21 +128,26 @@
                                         </label>
 
                                         @if ($categories->count() === 1)
-                                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" readonly>
-                                            @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" selected>
-                                                {{ $category->name }}
-                                            </option>
+                                        <select type="text" name="category_id[]" class="form-control form-select @error('category_id') is-invalid @enderror" multiple>
+                                            <option value="">None</option>
+                                            @if($categories)
+                                            @foreach($categories as $category)
+                                            <?php $dash = ''; ?>
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                            @if(count($category->subcategory))
+                                            @include('admin.category.sub-category',['subcategories' => $category->subcategory])
+                                            @endif
                                             @endforeach
+                                            @endif
                                         </select>
                                         @else
-                                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror">
+                                        <select name="category_id[]" id="category_id" class="form-select @error('category_id') is-invalid @enderror" multiple>
                                             <option selected="" disabled="">
                                                 Select a category:
                                             </option>
 
                                             @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" @if(old('category_id')==$category->id) selected="selected" @endif>
+                                            <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected="selected" @endif>
                                                 {{ $category->name }}
                                             </option>
                                             @endforeach
@@ -145,13 +173,6 @@
                                         {{ __('Selling Price') }}
                                     </label>
                                     <input type="number" label="Selling Price" class="form-control" name="selling_price" id="buying_price" placeholder="0" value="{{ old('selling_price') }}" />
-                                </div>
-
-                                <div class="col-sm-6 col-md-6">
-                                    <label for="notes" class="form-label">
-                                        {{ __('Notes') }}
-                                    </label>
-                                    <input type="number" label="Selling Price" class="form-control" name="selling_price" id="selling_price" placeholder="0" value="{{ old('selling_price') }}" />
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
@@ -222,26 +243,6 @@
                 </div>
             </div>
         </form>
-
-        @if ($errors->any())
-        <div>
-            @foreach ($errors->all() as $error)
-            <li class="alert alert-danger">{{ $error }}</li>
-            @endforeach
-        </div>
-        @endif
-
-        @if(\Session::has('error'))
-        <div>
-            <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
-        </div>
-        @endif
-
-        @if(\Session::has('success'))
-        <div>
-            <li class="alert alert-success">{!! \Session::get('success') !!}</li>
-        </div>
-        @endif
     </div>
 
 </div>

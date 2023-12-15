@@ -92,6 +92,19 @@ div#variant_addTag {
     margin-right: 5px;
 }
 
+.images-preview-div {
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.images-preview-div img {
+    width: 45%;
+    object-fit: cover;
+    height: 90px;
+}
+
 /*** Spinner ***/
 #spinner {
     opacity: 0;

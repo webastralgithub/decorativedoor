@@ -71,38 +71,48 @@ jQuery(document).ready(function () {
 
     function addVariantTableRows(variantsArr = []) {
         console.log("addVariantTableRows");
-
         var variantsTableBody = jQuery('#variantsTable tbody');
-        var tableTR = '';
+        variantsTableBody.html('');
+        const combinations = [];
+        const numIndexes = variantsArr.length;
 
-        const result = [];
-        const dataLength = variantsArr.length;
+        const numTagNames = variantsArr.map(obj => obj.tagNames.length);
+        const indices = new Array(numIndexes).fill(0);
 
-        for (let i = 0; i < variantsArr[0].tagNames.length; i++) {
-            const tag1 = variantsArr[0].tagNames[i];
+        let done = false;
+        while (!done) {
+            const current = indices.map((index, i) => variantsArr[i].tagNames[index]);
+            combinations.push(current.slice());
 
-            for (let j = 0; j < variantsArr[1].tagNames.length; j++) {
-                const tag2 = variantsArr[1].tagNames[j];
-
-                for (let k = 0; k < variantsArr[2].tagNames.length; k++) {
-                    const tag3 = variantsArr[2].tagNames[k];
-                    const combination = [tag1, tag2, tag3];
-                    result.push(combination);
+            let i = numIndexes - 1;
+            for (; i >= 0; i--) {
+                indices[i]++;
+                if (indices[i] < numTagNames[i]) {
+                    break;
                 }
+                indices[i] = 0;
+            }
+            if (i < 0) {
+                done = true;
             }
         }
-        console.log("result::", result);
-        tableTR +=
-            `<tr>
-                <td><input type="text" name="variant_name[]" class="form-control" placeholder="Enter Name"></td>
-                <td><input type="text" name="variant_value[]" class="form-control" placeholder="Enter Value"></td>
-                <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code"></td>
+        combinations.length > 0 && combinations.map((ele, index) => {
+            let variantCode = '';
+            if (Array.isArray(ele))
+                variantCode = ele.join('/');
+            else
+                variantCode = ele;
+            let tableTR =
+                `<tr>
+                <td><input type="text" name="variant_name[]" class="form-control" placeholder="Enter Name" value="${variantCode}"></td>
+                <td><input type="text" name="variant_value[]" class="form-control" placeholder="Enter Value" ></td>
+                <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="${variantCode}-"></td>
                 <td><input type="text" name="variant_quantity[]" class="form-control" placeholder="Enter Quantity"></td>
                 <td><input type="text" name="variant_buying_price[]" class="form-control" placeholder="Enter Buying Price"></td>
                 <td><input type="text" name="variant_notes[]" class="form-control" placeholder="Enter Notes"></td>
             </tr>`;
-        var newRow = jQuery(tableTR);
-        variantsTableBody.append(newRow);
+            variantsTableBody.append(tableTR);
+        });
     }
 
     // Remove tag on close button click
@@ -110,6 +120,30 @@ jQuery(document).ready(function () {
         jQuery(this).parent().remove();
     });
 });
+
+
+// Multiple images preview with JavaScript
+var previewImages = function (input, imgPreviewPlaceholder) {
+
+    if (input.files) {
+        var filesAmount = input.files.length;
+
+        for (i = 0; i < filesAmount; i++) {
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                jQuery(jQuery.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+            }
+
+            reader.readAsDataURL(input.files[i]);
+        }
+    }
+
+};
+
+// jQuery('#images').on('change', function () {
+//     previewImages(this, 'images-preview-div');
+// });
 
 // Get the modal
 var modal = document.getElementById("myModal");
