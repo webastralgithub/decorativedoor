@@ -83,25 +83,26 @@
                         </li>
                         <h3>Variants</h3>
 
-                        @if(!empty($productCombinations))
+                        @if(!empty($product->variants))
                         @php
                         $variantSingle = $product->variants;
                         $variantSingle = $variantSingle->first();
                         $variantOptions = json_decode($variantSingle->option_type, true);
                         @endphp
+                        @if(!empty($variantOptions))
                         @foreach($variantOptions as $variantCombination)
                         <div class="row">
-                            <div class="col-sm-6"><label>{{$variantCombination->variantType}}</label></div>
+                            <div class="col-sm-6"><label>{{$variantCombination['variantType']}}</label></div>
                             <div class="col-sm-6">
                                 <select class="variants">
-                                    @foreach($variantCombination->tagNames as $tags)
+                                    @foreach($variantCombination['tagNames'] as $tags)
                                     <option>{{ucwords($tags)}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-
                         @endforeach
+                        @endif
                         @endif
 
                     </ul>
