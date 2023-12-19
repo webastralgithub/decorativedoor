@@ -1,6 +1,9 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+{{--    @php--}}
+{{--    print_r(session('cart'));die('herer');--}}
+{{--    @endphp--}}
 <table id="cart" class="table table-hover table-condensed cart-table">
 
     <thead>
@@ -13,7 +16,7 @@
 
         <th style="width:8%">Quantity</th>
 
-        <th style="width:22%" class="text-center">Subtotal</th>
+{{--        <th style="width:22%" class="text-center">Subtotal</th>--}}
 
         <th style="width:10%"></th>
 
@@ -25,7 +28,7 @@
 
     @php $total = 0;
     @endphp
-      
+
     @if(session('cart'))
 
         @foreach(session('cart') as $id => $details)
@@ -58,7 +61,7 @@
 
                 </td>
 
-                <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] + $details['variant_price'] }}</td>
+{{--                <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] + $details['variant_price'] }}</td>--}}
 
                 <td class="actions" data-th="">
 
@@ -66,13 +69,20 @@
 
                 </td>
             </tr>
+            @if(isset($details['variant_id']))
+{{--                @php--}}
+{{--                print_r($details['variant_id']);die('htete');--}}
+{{--                @endphp--}}
+            <td><h3>Variants</h3></td>
+            @foreach($details['variant_id'] as $variant)
+
 
             <tr class="cart-price-btm">
-                <td><h3>Variants</h3></td>
+
                 <td data-th="Price">
                     <ul data-id="">
                         <li>
-                            <b>Name:</b> <span></span>
+                            <b>Name:</b> <span>{{$variant['name']}} </span>
                         </li>
                     </ul>
                 </td>
@@ -80,28 +90,29 @@
                 <td data-th="Price">
                     <ul data-id="">
                         <li>
-                            <span></span>
+                            <span>{{$variant['price']}}</span>
                         </li>
                     </ul>
                 </td>
-             
+
 
                 <td data-th="Price">
                     <ul data-id="">
                         <li>
-                            <b>Quantity:</b>
+                            <b>Quantity: </b>
                         </li>
                     </ul>
                 </td>
                 <td data-th="Price">
                     <ul data-id="">
                         <li>
-                            <input type="number" value="" class="form-control quantity add-on" data-variant-id=""/>
+                            <input type="number" value="{{$variant['quantity']}}" class="form-control quantity add-on" data-variant-id=""/>
                         </li>
                     </ul>
                 </td>
             </tr>
-
+            @endforeach
+            @endif
 
 
                 <!-- <div class="product-variants">
@@ -120,6 +131,7 @@
                     </ul>
                 </div>
                 </div> -->
+
         @endforeach
 
     @endif
@@ -140,7 +152,7 @@
 
             <a href="{{ url('/') }}" class="btn btn-warning" style="background: #93681a; color: #fff; border-color: #93681a;"><i class="fa fa-angle-left"></i> Continue Shopping</a>
 
-            <button class="btn btn-success">Checkout</button>
+            <button class="btn btn-success" >Checkout</button>
 
         </td>
 

@@ -45,6 +45,8 @@ Route::get('add-to-cart/{id}', [\App\Http\Controllers\ShopController::class, 'ad
 Route::patch('update-cart', [\App\Http\Controllers\ShopController::class, 'update_cart'])->name('update.cart');
 Route::patch('add_on', [\App\Http\Controllers\ShopController::class, 'addOn'])->name('add_on.cart');
 Route::delete('remove-from-cart', [\App\Http\Controllers\ShopController::class, 'remove_cart'])->name('remove.from.cart');
+Route::post('checkout', [\App\Http\Controllers\ShopController::class, 'checkout'])->name('checkout');
+Route::get('get_price', [\App\Http\Controllers\ShopController::class, 'get_price'])->name('get.price');
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     //dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

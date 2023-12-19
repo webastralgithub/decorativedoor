@@ -187,7 +187,73 @@
         }
 
     });
+    $(".remove-from-cart").click(function (e) {
 
+        e.preventDefault();
+
+
+        var ele = $(this);
+
+
+        if (confirm("Are you sure want to remove?")) {
+
+            $.ajax({
+
+                url: '{{ route('remove.from.cart') }}',
+
+                method: "DELETE",
+
+                data: {
+
+                    _token: '{{ csrf_token() }}',
+
+                    id: ele.parents("tr").attr("data-id"),
+
+
+
+                },
+
+                success: function (response) {
+
+                    window.location.reload();
+
+                }
+
+            });
+
+        }
+
+    });
+
+    $(".variants").change(function () {
+        var arr = $('select').map(function(){
+            return this.value
+        }).get()
+        var str = arr.join("/");
+        $.ajax({
+
+            url: '{{ route('get.price') }}',
+
+            method: "GET",
+
+            data: {
+
+                _token: '{{ csrf_token() }}',
+
+                str: str,
+                pid:{{$product->id??0}}
+
+
+            },
+
+            success: function (response) {
+
+                // window.location.reload();
+
+            }
+
+        });
+    })
 
 </script>
 </body>

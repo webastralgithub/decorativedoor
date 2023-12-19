@@ -266,84 +266,11 @@
                         </div>
                     </div>
                     <div class="row">
+
+                        @foreach($products as $product)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
-                                    <ul class="featured__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="featured__item__text">
-                                    <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
-                                    <h5>$76.000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                @foreach($products as $product)
+
                                 <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
                                     <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
@@ -355,9 +282,10 @@
                                     <h6><a href="{{route('product',$product->slug)}}">{{$product->title}}</a></h6>
                                     <h5>${{$product->buying_price}}</h5>
                                 </div>
-                                @endforeach
+
                             </div>
                         </div>
+                        @endforeach
                     </div>
                     <div class="product__pagination">
                         <a href="#">1</a>

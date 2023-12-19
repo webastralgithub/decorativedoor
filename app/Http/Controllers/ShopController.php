@@ -108,4 +108,13 @@ class ShopController extends Controller
         $products = Product::all();
         return view('frontend.category',compact('category','products'));
     }
+
+    public function checkout(Request $request){
+
+    }
+
+    public function get_price(Request $request){
+        $price =DB::table('product_variants')->where(['product_id'=>$request->pid,'name'=>$request->str])->first();
+        return $price;
+    }
 }

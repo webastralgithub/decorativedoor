@@ -2,6 +2,10 @@
 
 
 @section('content')
+{{--@php--}}
+{{--    print_r($product);die('jhere');--}}
+{{--    @endphp--}}
+
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
@@ -115,7 +119,10 @@
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
-                                    <input type="text" value="1">
+                                    <tr data-id="{{$product->id}}">
+
+                                    </tr>
+                                    <input type="number" value="1" class="update-cart">
                                 </div>
                             </div>
                         </div>
@@ -124,6 +131,7 @@
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+
                             <li><b>Qunatity</b> <span>{{$product->quantity}}</span></li>
                             <li><b>Share on</b>
                                 <div class="share">
@@ -134,23 +142,27 @@
                                 </div>
                             </li>
                             <h3>Variants</h3>
-                            @foreach($product->variants as $key =>$variant)
-                                <ul data-id="{{ $variant->id }}">
+
+
                                     @php
-                                    
-                                        if(session()->has('cart') &&
-                                            isset(session('cart')[$product->id]['variant_id']) &&
-                                            isset(session('cart')[$product->id]['variant_id'][$variant->id]['quantity'])) {
-                                            $quantity = session('cart')[$product->id]['variant_id'][$variant->id]['quantity'];
-                                        } else {
-                                            // Handle case where the keys or values are not set
-                                            $quantity = 0; // or any default value you prefer
-                                        }                                    @endphp
-                                    <li><b>Name</b> <span>{{$variant->name}}</span></li>
-                                    <li><b>Quantity</b><input type="number" value="{{$quantity ?? 0}}" class="form-control quantity add-on"/>
-                                        </li>
-                                </ul>
-                            @endforeach
+                                  $decoded =  json_decode($product->variants->option_type);
+
+
+                                        @endphp
+                            @foreach($decoded as $de)
+                                   <div class="row">
+                                       <div class="col-sm-6"><label>{{$de->variantType}}</label></div>
+                                       <div class="col-sm-6">
+                                    <select class="variants">
+                                        @foreach($de->tagNames as $tags)
+                                        <option>{{$tags}}</option>
+                                        @endforeach
+                                    </select>
+                                       </div>
+                                   </div>
+
+                                @endforeach
+
                         </ul>
                     </div>
                 </div>
