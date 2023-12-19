@@ -91,25 +91,21 @@
                                     Total Product
                                 </td>
                                 <td class="text-center">
-                                    <!-- {{ Cart::count() }} -->
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="4" class="text-end">Subtotal</td>
                                 <td class="text-center">
-                                    <!-- {{ Cart::subtotal() }} -->
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="4" class="text-end">Tax</td>
                                 <td class="text-center">
-                                    <!-- {{ Cart::tax() }} -->
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="4" class="text-end">Tax</td>
                                 <td class="text-center">
-                                    <!-- {{ Cart::total() }} -->
                                 </td>
                             </tr>
                         </tbody>

@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Main heavy Door</h2>
+                    <h2>{{$product->title}}</h2>
                     <div class="breadcrumb__option">
                         <a href="./index.html">Home</a>
                         <span>Product-detail</span>
@@ -60,9 +60,8 @@
                         <div class="quantity">
                             <div class="pro-qty">
                                 <tr data-id="{{$product->id}}">
-
                                 </tr>
-                                <input type="number" value="1" class="update-cart">
+                                <input type="number" value="1" class="quantity update-cart">
                             </div>
                         </div>
                     </div>
@@ -108,8 +107,8 @@
                     </ul>
                 </div>
                 <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a>
-                <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
-                <ul>
+                <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
+                <!-- <ul>
                     <li><b>Availability</b> <span>In Stock</span></li>
                     <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
                     <li><b>Qunatity</b> <span>{{$product->quantity}}</span></li>
@@ -142,7 +141,9 @@
                     No data
                     @endforelse
                     @endif
-                </ul>
+                </ul> -->
+
+                @include('frontend.add-ons')
             </div>
             <div class="col-lg-12">
                 <div class="product__details__tab">

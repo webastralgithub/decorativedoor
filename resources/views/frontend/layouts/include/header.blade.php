@@ -176,7 +176,7 @@
                                 </ul>
                             </div>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div class="header__cart__price">item: <span>${{ $total }}</span></div>
                     </div>
                 </div>
             </div>

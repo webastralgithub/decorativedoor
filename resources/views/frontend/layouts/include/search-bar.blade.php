@@ -9,16 +9,16 @@
                     </div>
                     <ul>
                         @foreach($categories as $category)
+                        @if(empty($category->parent_id))
                         <li>
                             <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
-                            @if(count($category->children))
                             <ul class="under_ul sub">
                                 @foreach($category->children as $subcategory)
                                 <li><a class="sub-sub" href="{{route('category', $subcategory->slug )}}">{{ isset($subcategory->name) ? $subcategory->name : '' }}</a></li>
                                 @endforeach
                             </ul>
-                            @endif
                         </li>
+                        @endif
                         @endforeach
                     </ul>
                 </div>

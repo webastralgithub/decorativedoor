@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -40,23 +41,19 @@ class OrderController extends Controller
     {
         $order = Order::create($request->all());
 
-        // Create Order Details
-        // $contents = Cart::content();
-        // $oDetails = [];
+        $products = Product::findOrFail($request->id);
+        $oDetails = [];
 
-        // foreach ($contents as $content) {
-        //     $oDetails['order_id'] = $order['id'];
-        //     $oDetails['product_id'] = $content->id;
-        //     $oDetails['quantity'] = $content->qty;
-        //     $oDetails['unitcost'] = $content->price;
-        //     $oDetails['total'] = $content->subtotal;
-        //     $oDetails['created_at'] = Carbon::now();
+        foreach ($products as $content) {
+            $oDetails['order_id'] = $order['id'];
+            $oDetails['product_id'] = $content->product_id;
+            $oDetails['quantity'] = $content->quantity;
+            $oDetails['unitcost'] = $content->buying_price;
+            $oDetails['total'] = $content->buying_price;
+            $oDetails['created_at'] = Carbon::now();
 
-        //     OrderDetails::insert($oDetails);
-        // }
-
-        // // Delete Cart Sopping History
-        // Cart::destroy();
+            OrderDetails::insert($oDetails);
+        }
 
         return redirect()
             ->route('admin.orders.index')

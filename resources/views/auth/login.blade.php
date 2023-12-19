@@ -47,6 +47,7 @@
                     </button>
 
                 </form>
+                <p class="text-center mb-0">Create a Account <a href="{{route('register')}}">Sign Up</a></p>
             </div>
         </div>
     </div>
