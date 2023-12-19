@@ -155,12 +155,7 @@
                 </div>
             </div>
         </div>
-        <<<<<<< HEAD </div>
+    </div>
 </section>
 <!-- Product Section End -->
 @endsection
-=======
-</section>
-<!-- Product Section End -->
-@endsection
->>>>>>> 4eee6b6aa425c1c65dd1fc3fe30fdc3a1f0ecf6d
