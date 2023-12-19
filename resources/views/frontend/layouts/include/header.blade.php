@@ -186,17 +186,10 @@
         </div>
         <br />
         <div class="container">
-
             @if(session('success'))
-            <<<<<<< HEAD <div class="alert alert-success">
+            <div class="alert alert-success">
                 {{ session('success') }}
+            </div>
+            @endif
         </div>
-        @endif
     </header>
-    =======
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
-    </header>
-    >>>>>>> 4eee6b6aa425c1c65dd1fc3fe30fdc3a1f0ecf6d
