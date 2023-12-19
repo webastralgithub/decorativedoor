@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
 {
@@ -32,9 +32,9 @@ class ShopController extends Controller
 
     public function product_details($slug)
     {
-        $allcategory = Category::where('slug', $slug)->with(['children'])->get();
+        $allcategory = Category::with(['children'])->get();
         // $product =Product::with('variants')->find($slug);
-        $product = Product::with('variants')->where('slug', $slug)->first();
+        $product = Product::where('slug', $slug)->first();
         return view('frontend.product-details', compact('allcategory', 'product'));
     }
 
@@ -67,6 +67,7 @@ class ShopController extends Controller
             session()->flash('success', 'Cart updated successfully');
         }
     }
+
     public function addOn(Request $request)
     {
         $productPrice = DB::table('products')->where('id', $request->pid)->first();
@@ -112,12 +113,13 @@ class ShopController extends Controller
         return view('frontend.category', compact('category', 'products', 'allcategory'));
     }
 
-    public function checkout(Request $request){
-
+    public function checkout(Request $request)
+    {
     }
 
-    public function get_price(Request $request){
-        $price =DB::table('product_variants')->where(['product_id'=>$request->pid,'name'=>$request->str])->first();
+    public function get_price(Request $request)
+    {
+        $price = DB::table('product_variants')->where(['product_id' => $request->pid, 'name' => $request->str])->first();
         return $price;
     }
 }

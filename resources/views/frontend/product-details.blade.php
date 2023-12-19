@@ -83,23 +83,24 @@
                         </li>
                         <h3>Variants</h3>
 
-
+                        @if(!empty($productCombinations) && !empty($productCombinations[0]->option_type))
                         @php
-                        $decoded = json_decode($product->variants->option_type);
+                        $decodedVariants = json_decode($product->variants[0]->option_type);
                         @endphp
-                        @foreach($decoded as $de)
+                        @foreach($decodedVariants as $variantCombination)
                         <div class="row">
-                            <div class="col-sm-6"><label>{{$de->variantType}}</label></div>
+                            <div class="col-sm-6"><label>{{$variantCombination->variantType}}</label></div>
                             <div class="col-sm-6">
                                 <select class="variants">
-                                    @foreach($de->tagNames as $tags)
-                                    <option>{{$tags}}</option>
+                                    @foreach($variantCombination->tagNames as $tags)
+                                    <option>{{ucwords($tags)}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
                         @endforeach
+                        @endif
 
                     </ul>
                 </div>
@@ -118,10 +119,10 @@
                         </div>
                     </li>
                     <h3>Variants</h3>
-                    @foreach($product->variants as $key =>$variant)
+                    @if(!empty($product->variants))
+                    @forelse($product->variants as $key => $variant)
                     <ul data-id="{{ $variant->id }}">
                         @php
-
                         if(session()->has('cart') &&
                         isset(session('cart')[$product->id]['variant_id']) &&
                         isset(session('cart')[$product->id]['variant_id'][$variant->id]['quantity'])) {
@@ -134,7 +135,10 @@
                         <li><b>Quantity</b><input type="number" value="{{$quantity ?? 0}}" class="form-control quantity add-on" />
                         </li>
                     </ul>
-                    @endforeach
+                    @empty
+                    No data
+                    @endforelse
+                    @endif
                 </ul>
             </div>
             <div class="col-lg-12">

@@ -28,7 +28,7 @@
                     <td>{{$category->name}}</td>
                     <td>{{$category->slug}}</td>
                     <td>
-                        @if(isset($category->parent_id))
+                        @if(isset($category->parent_id) && !empty($category->subcategory->name))
                         {{$category->subcategory->name}}
                         @else
                         None
@@ -54,7 +54,6 @@
                 @if(count($category->subcategory))
                 @include('admin.category.sub-category-list',['subcategories' => $category->subcategory])
                 @endif
-
                 @endforeach
                 <?php unset($_SESSION['i']); ?>
                 @endif
