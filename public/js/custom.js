@@ -59,11 +59,16 @@ jQuery(document).ready(function () {
             var parentIndex = index + 1; // Adjust index to start from 1
 
             var tagNames = [];
+            var variantType = '';
             jQuery(this).find('.tag-text').each(function () {
                 var tagName = jQuery(this).text().trim();
                 tagNames.push(tagName);
             });
-            tagsWithIndex.push({ index: parentIndex, tagNames: tagNames });
+
+            jQuery(this).find('input[name="variant_option[]"]').each(function () {
+                variantType = jQuery(this).val();
+            });
+            tagsWithIndex.push({ index: parentIndex, tagNames: tagNames, variantType: variantType });
         });
         console.log("refreshVariantsData -> All variants::", tagsWithIndex);
         addVariantTableRows(tagsWithIndex);
@@ -72,7 +77,8 @@ jQuery(document).ready(function () {
     function addVariantTableRows(variantsArr = []) {
         console.log("addVariantTableRows");
         var variantsTableBody = jQuery('#variantsTable tbody');
-        variantsTableBody.html('');
+        // if (jQuery('.edit-variant-table').length <= 0)
+            variantsTableBody.html('');
         const combinations = [];
         const numIndexes = variantsArr.length;
 
@@ -104,6 +110,7 @@ jQuery(document).ready(function () {
                 variantCode = ele;
             let tableTR =
                 `<tr>
+                <input type="hidden" name="variant_option_type[]" class="form-control" value='${JSON.stringify(variantsArr, null, 2)}'>
                 <td><input type="text" name="variant_name[]" class="form-control" placeholder="Enter Name" value="${variantCode}"></td>
                 <td><input type="text" name="variant_value[]" class="form-control" placeholder="Enter Value" ></td>
                 <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="${variantCode}-"></td>
@@ -118,6 +125,7 @@ jQuery(document).ready(function () {
     // Remove tag on close button click
     jQuery('form').on('click', '.close', '#tagContainer', function () {
         jQuery(this).parent().remove();
+        refreshVariantsData();
     });
 });
 

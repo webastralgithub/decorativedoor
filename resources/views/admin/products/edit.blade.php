@@ -232,7 +232,7 @@
                 </div>
             </div>
 
-            @include('admin.products.product-variant')
+            @include('admin.products.edit-product-variant')
 
             <div class="card-footer text-end">
                 <div class="mb-3 row">

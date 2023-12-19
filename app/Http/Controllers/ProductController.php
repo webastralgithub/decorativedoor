@@ -11,7 +11,7 @@ use App\Models\ProductVariant;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Nette\Utils\Random;
+use Str;
 
 class ProductController extends Controller
 {
@@ -51,6 +51,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request): RedirectResponse
     {
+        // dd($request->all());
         $product = new Product();
         $product->title = $request->title;
         $product->sub_title = $request->sub_title;
@@ -86,7 +87,6 @@ class ProductController extends Controller
         $product->categories()->attach($categories);
         // Create Variants
         $this->createVariants($request, $product->id);
-
         return redirect()->route('products.index')
             ->withSuccess('Product has been created successfully!');
     }
@@ -94,7 +94,7 @@ class ProductController extends Controller
     public function createVariants($request, $productId)
     {
         $variantNames = $request->input('variant_name');
-        $variant_option = $request->input('variant_option');
+        $variant_option_type = $request->input('variant_option_type');
         $variant_value = $request->input('variant_value');
         $variant_code = $request->input('variant_code');
         $variant_quantity = $request->input('variant_quantity');
@@ -108,8 +108,9 @@ class ProductController extends Controller
             $product = new ProductVariant();
             $product->product_id = $productId;
             $product->name = !empty($variant) ? $variant : '';
+            $product->option_type = !empty($variant_option_type[$key]) ? $variant_option_type[$key] : '';
             $product->value = !empty($variantName[0]) ? $variantName[0] : '';
-            $product->code  = !empty($variant_code[$key]) ? $variant_code[$key] : Random::rand(10, 1200);
+            $product->code  = !empty($variant_code[$key]) ? $variant_code[$key] : Str::random(10, 1200);
             $product->quantity = !empty($variant_quantity[$key]) ? $variant_quantity[$key] : $key;
             $product->buying_price = !empty($variant_buying_price[$key]) ? $variant_buying_price[$key] : $key;
             $product->notes = !empty($variant_notes[$key]) ? $variant_notes[$key] : '';

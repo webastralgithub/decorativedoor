@@ -10,6 +10,7 @@ use \App\Http\Controllers\admin\ParamètreController;
 use \App\Http\Controllers\admin\StatistiquesController;
 use \App\Http\Controllers\admin\UtilisateursController;
 use \App\Http\Controllers\admin\ErrorController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,23 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         'users' => \App\Http\Controllers\UserController::class,
         'products' => \App\Http\Controllers\ProductController::class,
         'inventory' => \App\Http\Controllers\InventoryController::class,
-        'category' =>  \App\Http\Controllers\CategoryController::class
+        'category' =>  \App\Http\Controllers\CategoryController::class,
+        'permissions' =>  \App\Http\Controllers\PermissionController::class,
+        // 'orders' =>  \App\Http\Controllers\OrderController::class
     ]);
+
+    // Route Orders
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    // Route::get('/orders/pending', OrderPendingController::class)->name('orders.pending');
+    // Route::get('/orders/complete', OrderCompleteController::class)->name('orders.complete');
+
+    Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+    Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
+
+    // SHOW ORDER
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::put('/orders/update/{order}', [OrderController::class, 'update'])->name('orders.update');
+
+    // TODO: Remove from OrderController
+    Route::get('/orders/details/{order_id}/download', [OrderController::class, 'downloadInvoice'])->name('order.downloadInvoice');
 });

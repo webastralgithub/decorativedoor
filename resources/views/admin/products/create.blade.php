@@ -39,7 +39,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h3 class="card-title">
-                                {{ __('Product Image') }}
+                                {{ __('Product Images') }}
                             </h3>
                             <!-- <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" /> -->
 
