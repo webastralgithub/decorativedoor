@@ -83,11 +83,13 @@
                         </li>
                         <h3>Variants</h3>
 
-                        @if(!empty($productCombinations) && !empty($productCombinations[0]->option_type))
+                        @if(!empty($productCombinations))
                         @php
-                        $decodedVariants = json_decode($product->variants[0]->option_type);
+                        $variantSingle = $product->variants;
+                        $variantSingle = $variantSingle->first();
+                        $variantOptions = json_decode($variantSingle->option_type, true);
                         @endphp
-                        @foreach($decodedVariants as $variantCombination)
+                        @foreach($variantOptions as $variantCombination)
                         <div class="row">
                             <div class="col-sm-6"><label>{{$variantCombination->variantType}}</label></div>
                             <div class="col-sm-6">
