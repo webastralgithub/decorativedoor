@@ -137,7 +137,7 @@
                             <div class="dropdown">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a href="{{ route('cart') }}" role="button">
                                             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                                             <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                                         </a>
@@ -188,8 +188,15 @@
         <div class="container">
 
             @if(session('success'))
-            <div class="alert alert-success">
+            <<<<<<< HEAD <div class="alert alert-success">
                 {{ session('success') }}
-            </div>
-            @endif
+        </div>
+        @endif
     </header>
+    =======
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+    </header>
+    >>>>>>> 4eee6b6aa425c1c65dd1fc3fe30fdc3a1f0ecf6d

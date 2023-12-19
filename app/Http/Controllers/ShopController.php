@@ -111,4 +111,13 @@ class ShopController extends Controller
         $allcategory = Category::with(['children'])->get();
         return view('frontend.category', compact('category', 'products', 'allcategory'));
     }
+
+    public function checkout(Request $request){
+
+    }
+
+    public function get_price(Request $request){
+        $price =DB::table('product_variants')->where(['product_id'=>$request->pid,'name'=>$request->str])->first();
+        return $price;
+    }
 }

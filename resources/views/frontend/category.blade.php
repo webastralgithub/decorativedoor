@@ -31,26 +31,26 @@
             <div class="col-lg-9 col-md-7">
                 <div class="filter__item">
                     <div class="row">
-                        <div class="col-lg-4 col-md-5">
-                            <div class="filter__sort">
-                                <span>Sort By</span>
-                                <select>
-                                    <option value="0">Default</option>
-                                    <option value="0">Default</option>
-                                </select>
+
+                        @foreach($products as $product)
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+
+                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
+                                    <ul class="featured__item__pic__hover">
+                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="featured__item__text">
+                                    <h6><a href="{{route('product',$product->slug)}}">{{$product->title}}</a></h6>
+                                    <h5>${{$product->buying_price}}</h5>
+                                </div>
+
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="filter__found">
-                                <h6><span>16</span> Products found</h6>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-3">
-                            <div class="filter__option">
-                                <span class="icon_grid-2x2"></span>
-                                <span class="icon_ul"></span>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="row">
@@ -155,7 +155,12 @@
                 </div>
             </div>
         </div>
-    </div>
+        <<<<<<< HEAD </div>
 </section>
 <!-- Product Section End -->
 @endsection
+=======
+</section>
+<!-- Product Section End -->
+@endsection
+>>>>>>> 4eee6b6aa425c1c65dd1fc3fe30fdc3a1f0ecf6d
