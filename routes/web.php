@@ -51,6 +51,7 @@ Route::post('checkout', [\App\Http\Controllers\ShopController::class, 'checkout'
 Route::get('get_price', [\App\Http\Controllers\ShopController::class, 'get_price'])->name('get.price');
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     //dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resources([

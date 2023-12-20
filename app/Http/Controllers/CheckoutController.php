@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Models\OrderDetails;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,26 +18,31 @@ class CheckoutController extends Controller
     public function index()
     {
         // $cart = session()->get('cart');
-        // $productsArr = [];
         // if (!empty($cart)) {
-        //     foreach ($cart as $key => $product) {
-        //         $product =  Product::find($product->product_id);
-        //         $cartElement = [
-        //             'user_id' => isset(Auth::user()->id) ? Auth::user()->id : 1,
-        //             'order_date' => Carbon::now(),
-        //             'order_status' => OrderStatus::PENDING,
-        //             'total_products' => '',
-        //             'sub_total' => $product->buying_price,
-        //             'vat' => '',
-        //             'total' => $product->buying_price,
-        //             'invoice_no' => '',
-        //             'payment_type' => '',
-        //             'pay' => '',
-        //             'due' => '',
-        //         ];
-        //         array_merge($cartElement, $productsArr);
-        //     }
-        //     Order::createMany($productsArr);
+        //     $productsArr = [
+        //         'user_id' => isset(Auth::user()->id) ? Auth::user()->id : 1,
+        //         'order_date' => Carbon::now(),
+        //         'order_status' => OrderStatus::PENDING,
+        //         'total_products' => '',
+        //         'sub_total' => 0,
+        //         'vat' => '',
+        //         'total' => 0,
+        //         'invoice_no' => '',
+        //         'payment_type' => '',
+        //         'pay' => '',
+        //         'due' => '',
+        //     ];
+        //     $order = Order::create($productsArr);
+        //     if ($order)
+        //         foreach ($cart as $key => $product) {
+        //             $product =  Product::find($product->product_id);
+        //             OrderDetails::create([
+        //                 'order_id' => $order->id,
+        //                 'product_id' => $product->product_id,
+        //                 'quantity' => $product->quantity,
+        //                 'total' => $product->price,
+        //             ]);
+        //         }
         // }
 
         // session()->flash('success', 'Cart updated successfully');

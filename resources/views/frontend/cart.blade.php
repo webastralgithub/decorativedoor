@@ -1,6 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+@if(session()->has('cart') && !empty(session('cart')))
 <table id="cart" class="table table-hover table-condensed cart-table">
     <thead>
         <tr>
@@ -91,4 +92,16 @@
         </tr>
     </tfoot>
 </table>
+@else
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Cart is empty!</h2>
+                </div>
+            </div>
+        </div>
+</section>
+@endif
 @endsection
