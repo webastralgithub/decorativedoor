@@ -21,6 +21,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
+            $table->integer('variant_id')->default(0);
             $table->integer('quantity');
             $table->integer('unitcost');
             $table->integer('total');

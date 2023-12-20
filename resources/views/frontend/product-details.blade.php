@@ -25,6 +25,13 @@
 <!-- Breadcrumb Section End -->
 
 <!-- Product Details Section Begin -->
+@if(!empty($product->variants))
+@php
+$variantSingle = $product->variants;
+$variantSingle = $variantSingle->first();
+$variantOptions = json_decode($variantSingle->option_type, true);
+@endphp
+@endif
 <section class="product-details spad">
     <div class="container">
         <div class="row">
@@ -65,8 +72,15 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a>
-                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                    <form method="POST" action="{{ route('add.to.cart') }}">
+                        @csrf
+                        @method('POST')
+                        <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
+                        <input type="hidden" name="product_id" value="{{$product->id}}" />
+                        <button type="submit" class="primary-btn add-to-cart">ADD TO CART</button>
+                    </form>
+                    <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
+                    <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
                     <ul>
                         <li><b>Availability</b> <span>In Stock</span></li>
                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
@@ -83,18 +97,13 @@
                         <h3>Variants</h3>
 
                         @if(!empty($product->variants))
-                        @php
-                        $variantSingle = $product->variants;
-                        $variantSingle = $variantSingle->first();
-                        $variantOptions = json_decode($variantSingle->option_type, true);
-                        @endphp
                         @if(!empty($variantOptions))
                         @foreach($variantOptions as $variantCombination)
                         <div class="row">
-                            <div class="col-sm-6"><label>{{$variantCombination['variantType']}}</label></div>
+                            <div class="col-sm-6"><label>{{ucwords($variantCombination['variantType'])}}</label></div>
                             <div class="col-sm-6">
                                 <select class="variants">
-                                    <option>Select {{$variantCombination['variantType']}}</option>
+                                    <option>Select {{ucwords($variantCombination['variantType'])}}</option>
                                     @foreach($variantCombination['tagNames'] as $tags)
                                     <option>{{ucwords($tags)}}</option>
                                     @endforeach
@@ -107,7 +116,11 @@
 
                     </ul>
                 </div>
-                <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a>
+                <form method="POST" action="{{ route('add.to.cart') }}">
+                    <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
+                    <input type="hidden" name="product_id" value="{{$product->id}}" />
+                    <button type="submit" class="primary-btn add-to-cart">ADD TO CART</button>
+                </form>
                 <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
                 <!-- <ul>
                     <li><b>Availability</b> <span>In Stock</span></li>

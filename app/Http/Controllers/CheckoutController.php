@@ -6,6 +6,8 @@ use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
+use App\Models\ProductVariant;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,35 +19,48 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        // $cart = session()->get('cart');
-        // if (!empty($cart)) {
-        //     $productsArr = [
-        //         'user_id' => isset(Auth::user()->id) ? Auth::user()->id : 1,
-        //         'order_date' => Carbon::now(),
-        //         'order_status' => OrderStatus::PENDING,
-        //         'total_products' => '',
-        //         'sub_total' => 0,
-        //         'vat' => '',
-        //         'total' => 0,
-        //         'invoice_no' => '',
-        //         'payment_type' => '',
-        //         'pay' => '',
-        //         'due' => '',
-        //     ];
-        //     $order = Order::create($productsArr);
-        //     if ($order)
-        //         foreach ($cart as $key => $product) {
-        //             $product =  Product::find($product->product_id);
-        //             OrderDetails::create([
-        //                 'order_id' => $order->id,
-        //                 'product_id' => $product->product_id,
-        //                 'quantity' => $product->quantity,
-        //                 'total' => $product->price,
-        //             ]);
-        //         }
-        // }
+        $cart = session()->get('cart');
+        // dd($cart);
+        if (!empty($cart)) {
+            $totalProducts = 0;
+            $totalPrice = 0;
+            foreach (session('cart') as $id => $details) {
+                $totalProducts += (int)$details['quantity'];
+                $totalPrice += $details['variant_price'];
+            }
+            $productsArr = [
+                'user_id' => (Auth::check()) ? Auth::user()->id : 3,
+                'order_date' => Carbon::now(),
+                'order_status' => 1,
+                'total_products' => $totalProducts,
+                'sub_total' => $totalPrice,
+                'vat' => 0,
+                'total' => $totalPrice,
+                'invoice_no' => '',
+                'payment_type' => 'demo',
+                'pay' => 1,
+                'due' => 0,
+            ];
+            $order = Order::create($productsArr);
+            if ($order)
+                foreach ($cart as $key => $product) {
+                    $selectedVariant = null;
+                    if (!empty($product['variant'])) {
+                        $selectedVariant = json_decode($product['variant'], true);
+                    }
+                    $product =  ProductVariant::find($product['product_id']);
 
-        // session()->flash('success', 'Cart updated successfully');
+                    OrderDetails::create([
+                        'order_id' => $order->id,
+                        'product_id' => $product['product_id'],
+                        'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
+                        'quantity' => $product->quantity,
+                        'total' => (!empty($selectedVariant)) ? $selectedVariant['buying_price'] : 0,
+                        'unitcost' => 0
+                    ]);
+                }
+            session()->forget('cart');
+        }
         return view('frontend.thank-you');
     }
 

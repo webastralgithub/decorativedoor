@@ -157,7 +157,7 @@
 
                                                 @php $total = 0 @endphp
                                                 @foreach((array) session('cart') as $id => $details)
-                                                @php $total += $details['price'] * $details['quantity'] + $details['variant_price'] @endphp
+                                                @php $total += $details['variant_price'] * $details['quantity'] @endphp
                                                 @endforeach
                                                 <div class="col-lg-12 col-sm-12 col-12 total-section text-center">
                                                     <p>Total: <span class="text-info">$ {{ $total }}</span></p>

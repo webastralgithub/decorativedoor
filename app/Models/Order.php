@@ -32,7 +32,6 @@ class Order extends Model
         'order_date'    => 'date',
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
-        'order_status'  => OrderStatus::class
     ];
 
     public function customer()

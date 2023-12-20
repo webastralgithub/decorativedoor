@@ -42,7 +42,7 @@ Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])-
 Route::get('cart', [\App\Http\Controllers\ShopController::class, 'cart'])->name('cart');
 Route::get('category/{slug}', [\App\Http\Controllers\ShopController::class, 'category'])->name('category');
 
-Route::get('add-to-cart/{id}', [\App\Http\Controllers\ShopController::class, 'addToCart'])->name('add.to.cart');
+Route::post('add-to-cart', [\App\Http\Controllers\ShopController::class, 'addToCart'])->name('add.to.cart');
 
 Route::patch('update-cart', [\App\Http\Controllers\ShopController::class, 'update_cart'])->name('update.cart');
 Route::patch('add_on', [\App\Http\Controllers\ShopController::class, 'addOn'])->name('add_on.cart');

@@ -79,6 +79,7 @@
 <script src="{{asset('frontend/js/mixitup.min.js')}}"></script>
 <script src="{{asset('frontend/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('frontend/js/main.js')}}"></script>
+
 <script type="text/javascript">
     $(".update-cart").change(function(e) {
         e.preventDefault();
@@ -96,23 +97,6 @@
             }
         });
     });
-    function addOn () {
-        e.preventDefault();
-        $.ajax({
-            url: "{{ route('add_on.cart') }}",
-            method: "patch",
-            data: {
-                _token: '{{ csrf_token() }}',
-                id: ele.parents("ul").attr("data-id"),
-                quantity: ele.parents("li").find(".quantity").val(),
-                pid: "{{$product->id ?? 0}}"
-            },
-
-            success: function(response) {
-                window.location.reload();
-            }
-        });
-    };
     $(".remove-from-cart").click(function(e) {
         e.preventDefault();
         var ele = $(this);
@@ -131,13 +115,30 @@
         }
     });
 
+    function addOn() {
+        e.preventDefault();
+        $.ajax({
+            url: "{{ route('add_on.cart') }}",
+            method: "patch",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: ele.parents("ul").attr("data-id"),
+                quantity: ele.parents("li").find(".quantity").val(),
+                pid: "{{$product->id ?? 0}}"
+            },
+
+            success: function(response) {
+                window.location.reload();
+            }
+        });
+    };
+
     $(".variants").change(function() {
         var arr = $('select').map(function() {
             return this.value
         }).get()
         var str = arr.join("/");
         $.ajax({
-
             url: "{{ route('get.price') }}",
             method: "GET",
             data: {
@@ -146,15 +147,14 @@
                 pid: "{{$product->id ?? 0 }}"
             },
             success: function(response) {
-                let price =0;
-                if(response.buying_price){
-                    price= {{$product->buying_price}}+response.buying_price
+                let price = 0;
+                if (response.buying_price) {
+                    price = response.buying_price
+                } else {
+                    price = 0;
                 }
-                else {
-                    price={{$product->buying_price}};
-                }
-
-                $('.product__details__price').text('$'+price)
+                $('.product-variant-data').val(JSON.stringify(response))
+                $('.product__details__price').text('$' + price)
 
             }
         });
