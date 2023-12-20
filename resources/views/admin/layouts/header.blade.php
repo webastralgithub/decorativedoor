@@ -38,12 +38,12 @@
                     <span class="d-none d-lg-inline-flex">{{ Auth::user()->name }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                    <a href="#" class="dropdown-item">Mon Profil</a>
-                    <a href="#" class="dropdown-item">Paramètres</a>
+                    <!-- <a href="#" class="dropdown-item">Mon Profil</a>
+                    <a href="#" class="dropdown-item">Paramètres</a> -->
                     <a href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                   document.getElementById('logout-form').submit();"
-                        class="dropdown-item">Me déconnecter</a>
+                        class="dropdown-item">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>

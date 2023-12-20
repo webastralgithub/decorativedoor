@@ -467,6 +467,10 @@ ol {
 	color: #93681a;
 }
 
+.mobile-menu ul li.active a {
+	color: #93681a;
+}
+
 .header__menu ul li:hover .header__menu__dropdown {
 	top: 30px;
 	opacity: 1;
@@ -501,21 +505,21 @@ ol {
 	padding: 24px 0;
 }
 
-.dropdown-menu.dropdown-menu-right{
-    padding: 10px;
+.dropdown-menu.dropdown-menu-right {
+	padding: 10px;
 }
 
-.dropdown-menu.dropdown-menu-right .checkout{
-    padding: 0;
-    box-sizing: border-box;
+.dropdown-menu.dropdown-menu-right .checkout {
+	padding: 0;
+	box-sizing: border-box;
 }
 
-.dropdown-menu.dropdown-menu-right .checkout a.btn{
-    box-sizing: border-box;
-    width: 78%;
-    padding: 2px 8px;
-    background: #93681a;
-    border: none;
+.dropdown-menu.dropdown-menu-right .checkout a.btn {
+	box-sizing: border-box;
+	width: 78%;
+	padding: 2px 8px;
+	background: #93681a;
+	border: none;
 	margin: 0 auto;
 }
 
@@ -559,51 +563,49 @@ ol {
 	right: -19px;
 }
 
-.total-section p{
-    color: #000;
+.total-section p {
+	color: #000;
 	margin-bottom: 0;
 }
 
-.total-section p .text-info{
-    color: #93681a !important;
-    font-weight: 700;
-    font-size: 17px;
-}
-
-.cart-detail{
-    width: 90%;
-    margin: 10px auto 10px;
-    border: 1px solid #dad2d2;
-    border-left: none;
-    border-right: none;
-    padding: 7px 0;
-}
-
-.cart-detail .price.text-info{
+.total-section p .text-info {
 	color: #93681a !important;
-    font-weight: 700;
+	font-weight: 700;
+	font-size: 17px;
 }
 
-.cart-detail .cart-detail-img{
+.cart-detail {
+	width: 90%;
+	margin: 10px auto 10px;
+	border: 1px solid #dad2d2;
+	border-left: none;
+	border-right: none;
+	padding: 7px 0;
+}
+
+.cart-detail .price.text-info {
+	color: #93681a !important;
+	font-weight: 700;
+}
+
+.cart-detail .cart-detail-img {
 	padding: 0 !important;
 	border-right: 1px solid #c1c1c1;
 }
 
-.cart-detail .cart-detail-img img{
+.cart-detail .cart-detail-img img {}
 
+.cart-price-btm ul li {
+	list-style: none;
 }
 
-.cart-price-btm ul li{
-    list-style: none;
-}
 
 
-
-.dropdown-menu.dropdown-menu-right{
+.dropdown-menu.dropdown-menu-right {
 	padding: 10px;
 }
 
-.dropdown-toggle::after{
+.dropdown-toggle::after {
 	display: none;
 }
 
@@ -796,6 +798,7 @@ ul.under_ul li a {
 
 .hero__search__phone__text {
 	overflow: hidden;
+	margin-top: 15px;
 }
 
 .hero__search__phone__text h5 {
@@ -3675,6 +3678,6 @@ ul.under_ul li a {
 
 
 .cart-table {
-    max-width: 1200px;
-    margin: 0 auto;
+	max-width: 1200px;
+	margin: 0 auto;
 }

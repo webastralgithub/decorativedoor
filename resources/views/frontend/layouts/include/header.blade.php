@@ -59,9 +59,9 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="{{route('home')}}">Home</a></li>
-                <li><a href="{{route('shop')}}">Shop</a></li>
-                <li><a href="{{route('contact')}}">Contact</a></li>
+                <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
+                <li class="{{ request()->is('*shop') ? 'active' : '' }}"><a href="{{route('shop')}}">Shop</a></li>
+                <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -93,12 +93,12 @@
                     <div class="col-lg-6">
                         <div class="header__top__right">
                             <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <!-- <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                                <a href="#"><i class="fa fa-pinterest-p"></i></a> -->
                             </div>
-                            <div class="header__top__right__language">
+                            <!-- <div class="header__top__right__language">
                                 <img src="img/language.png" alt="">
                                 <div>English</div>
                                 <span class="arrow_carrot-down"></span>
@@ -106,9 +106,19 @@
                                     <li><a href="#">Spanis</a></li>
                                     <li><a href="#">English</a></li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <div class="header__top__right__auth">
-                                <a href="{{route('login')}}"><i class="fa fa-user"></i> Login</a>
+                                @if(auth()->check())
+                                {{-- User is logged in --}}
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button type="submit">Logout</button>
+                                </form>
+                                @else
+                                {{-- User is not logged in --}}
+                                <a href="{{ route('login') }}">Login</a>
+                                @endif
+                                <!-- <a href="{{route('login')}}"><i class="fa fa-user"></i> Login</a> -->
                             </div>
                         </div>
                     </div>
@@ -125,9 +135,10 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="{{route('home')}}">Home</a></li>
-                            <li><a href="{{route('shop')}}">Shop</a></li>
-                            <li><a href="{{route('contact')}}">Contact</a></li>
+                            
+                            <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
+                            <li class="{{ request()->is('*shop') ? 'active' : '' }}"><a href="{{route('shop')}}">Shop</a></li>
+                            <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -176,7 +187,7 @@
                                 </ul>
                             </div>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div class="header__cart__price">item: <span>${{ $total }}</span></div>
                     </div>
                 </div>
             </div>

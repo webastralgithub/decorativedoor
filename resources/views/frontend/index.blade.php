@@ -11,27 +11,27 @@
         <div class="row">
             <div class="categories__slider owl-carousel">
                 <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-1.jpg')}}">
                         <h5><a href="#">Decorative Door</a></h5>
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-2.jpg">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-2.jpg')}}">
                         <h5><a href="#">Decorative Door</a></h5>
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-3.jpg">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-3.jpg')}}">
                         <h5><a href="#">Decorative Door</a></h5>
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-4.jpg">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-4.jpg')}}">
                         <h5><a href="#">Decorative Door</a></h5>
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="img/categories/cat-5.jpg">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-5.jpg')}}">
                         <h5><a href="#">Decorative Door</a></h5>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
         <div class="row featured__filter">
             <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
+                    <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
                         <ul class="featured__item__pic__hover">
                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -76,7 +76,7 @@
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-2.jpg">
+                    <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-2.jpg')}}">
                         <ul class="featured__item__pic__hover">
                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -91,7 +91,7 @@
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-3.jpg">
+                    <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-3.jpg')}}">
                         <ul class="featured__item__pic__hover">
                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -115,12 +115,12 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="banner__pic">
-                    <img src="img/banner/banner-1.jpg" alt="">
+                    <img src="{{asset('frontend/img/banner/banner-1.jpg')}}" alt="">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="banner__pic">
-                    <img src="img/banner/banner-2.jpg" alt="">
+                    <img src="{{asset('frontend/img/banner/banner-2.jpg')}}" alt="">
                 </div>
             </div>
         </div>

@@ -26,16 +26,20 @@ class ShopController extends Controller
      */
     public function index()
     {
+        $products = Product::all();
         $allcategory = Category::with(['children'])->get();
-        return view('frontend.shop', compact('allcategory'));
+        return view('frontend.shop', compact('allcategory', 'products'));
     }
 
     public function product_details($slug)
     {
         $allcategory = Category::with(['children'])->get();
-        // $product =Product::with('variants')->find($slug);
         $product = Product::where('slug', $slug)->first();
-        return view('frontend.product-details', compact('allcategory', 'product'));
+        $addOnProducts = Product::where('id', '!=', $product->id)->get();
+        if (empty($product)) {
+            return abort(404);
+        }
+        return view('frontend.product-details', compact('addOnProducts', 'allcategory', 'product'));
     }
 
     public function addToCart($id)
@@ -46,7 +50,8 @@ class ShopController extends Controller
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
-                "name" => $product->name,
+                "name" => $product->title,
+                "product_id" => $product->id,
                 "quantity" => 1,
                 "price" => $product->buying_price,
                 "image" => $product->image,
@@ -88,6 +93,7 @@ class ShopController extends Controller
             session()->flash('success', 'Cart updated successfully');
         }
     }
+
     public function remove_cart(Request $request)
     {
         if ($request->id) {
@@ -110,6 +116,9 @@ class ShopController extends Controller
         $category =  Category::where('slug', $slug)->first();
         $products = Product::all();
         $allcategory = Category::with(['children'])->get();
+        if (empty($category)) {
+            return abort(404);
+        }
         return view('frontend.category', compact('category', 'products', 'allcategory'));
     }
 

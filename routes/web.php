@@ -10,6 +10,7 @@ use \App\Http\Controllers\admin\ParamètreController;
 use \App\Http\Controllers\admin\StatistiquesController;
 use \App\Http\Controllers\admin\UtilisateursController;
 use \App\Http\Controllers\admin\ErrorController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 
 /*
@@ -31,7 +32,7 @@ Route::get('/admin', function () {
     }
 });
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
@@ -50,6 +51,7 @@ Route::post('checkout', [\App\Http\Controllers\ShopController::class, 'checkout'
 Route::get('get_price', [\App\Http\Controllers\ShopController::class, 'get_price'])->name('get.price');
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     //dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resources([
@@ -77,3 +79,4 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     // TODO: Remove from OrderController
     Route::get('/orders/details/{order_id}/download', [OrderController::class, 'downloadInvoice'])->name('order.downloadInvoice');
 });
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.order');

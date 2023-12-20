@@ -104,27 +104,27 @@
                 <h4>Latest Products</h4>
                 <div class="latest-product__slider owl-carousel">
                     <div class="latest-prdouct__slider__item">
-                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
-                                <img src="img/latest-product/lp-1.jpg" alt="">
+                                <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
                             <div class="latest-product__item__text">
                                 <h6>Heavy Double Door</h6>
                                 <span>$76.000</span>
                             </div>
                         </a>
-                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
-                                <img src="img/latest-product/lp-2.jpg" alt="">
+                                <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
                             <div class="latest-product__item__text">
                                 <h6>Heavy Double Door</h6>
                                 <span>$76.000</span>
                             </div>
                         </a>
-                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
-                                <img src="img/latest-product/lp-3.jpg" alt="">
+                                <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
                             <div class="latest-product__item__text">
                                 <h6>Heavy Double Door</h6>
@@ -133,27 +133,27 @@
                         </a>
                     </div>
                     <div class="latest-prdouct__slider__item">
-                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
-                                <img src="img/latest-product/lp-1.jpg" alt="">
+                                <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
                             <div class="latest-product__item__text">
                                 <h6>Heavy Double Door</h6>
                                 <span>$76.000</span>
                             </div>
                         </a>
-                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
-                                <img src="img/latest-product/lp-2.jpg" alt="">
+                                <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
                             <div class="latest-product__item__text">
                                 <h6>Heavy Double Door</h6>
                                 <span>$76.000</span>
                             </div>
                         </a>
-                        <a href="{{route('product', 'heavy-double-door')}}" class="latest-product__item">
+                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
-                                <img src="img/latest-product/lp-3.jpg" alt="">
+                                <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
                             <div class="latest-product__item__text">
                                 <h6>Heavy Double Door</h6>
