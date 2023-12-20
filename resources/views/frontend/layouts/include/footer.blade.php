@@ -96,9 +96,8 @@
             }
         });
     });
-    $(".add-on").change(function(e) {
+    function addOn () {
         e.preventDefault();
-        var ele = $(this);
         $.ajax({
             url: "{{ route('add_on.cart') }}",
             method: "patch",
@@ -113,7 +112,7 @@
                 window.location.reload();
             }
         });
-    });
+    };
     $(".remove-from-cart").click(function(e) {
         e.preventDefault();
         var ele = $(this);
@@ -147,7 +146,16 @@
                 pid: "{{$product->id ?? 0 }}"
             },
             success: function(response) {
-                // window.location.reload();
+                let price =0;
+                if(response.buying_price){
+                    price= {{$product->buying_price}}+response.buying_price
+                }
+                else {
+                    price={{$product->buying_price}};
+                }
+
+                $('.product__details__price').text('$'+price)
+
             }
         });
     })

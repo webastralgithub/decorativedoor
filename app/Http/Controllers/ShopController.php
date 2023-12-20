@@ -120,6 +120,6 @@ class ShopController extends Controller
     public function get_price(Request $request)
     {
         $price = DB::table('product_variants')->where(['product_id' => $request->pid, 'name' => $request->str])->first();
-        return $price;
+        return $price?? 0;
     }
 }

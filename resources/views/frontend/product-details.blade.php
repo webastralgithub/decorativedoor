@@ -95,6 +95,7 @@
                             <div class="col-sm-6"><label>{{$variantCombination['variantType']}}</label></div>
                             <div class="col-sm-6">
                                 <select class="variants">
+                                    <option>Select {{$variantCombination['variantType']}}</option>
                                     @foreach($variantCombination['tagNames'] as $tags)
                                     <option>{{ucwords($tags)}}</option>
                                     @endforeach
@@ -121,27 +122,6 @@
                             <a href="#"><i class="fa fa-pinterest"></i></a>
                         </div>
                     </li>
-                    <h3>Variants</h3>
-                    @if(!empty($product->variants))
-                    @forelse($product->variants as $key => $variant)
-                    <ul data-id="{{ $variant->id }}">
-                        @php
-                        if(session()->has('cart') &&
-                        isset(session('cart')[$product->id]['variant_id']) &&
-                        isset(session('cart')[$product->id]['variant_id'][$variant->id]['quantity'])) {
-                        $quantity = session('cart')[$product->id]['variant_id'][$variant->id]['quantity'];
-                        } else {
-                        // Handle case where the keys or values are not set
-                        $quantity = 0; // or any default value you prefer
-                        } @endphp
-                        <li><b>Name</b> <span>{{$variant->name}}</span></li>
-                        <li><b>Quantity</b><input type="number" value="{{$quantity ?? 0}}" class="form-control quantity add-on" />
-                        </li>
-                    </ul>
-                    @empty
-                    No data
-                    @endforelse
-                    @endif
                 </ul>
             </div>
             <div class="col-lg-12">
