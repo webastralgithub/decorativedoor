@@ -32,12 +32,14 @@
             <div class="mb-3 row">
                 <label class="col-md-4 col-form-label text-md-end text-start">Select parent category*</label>
                 <div class="col-md-6">
-                    <select type="text" name="parent_id" class="form-control">
+                    <select type="text" name="parent_id" class="form-control select-category form-control">
                         <option value="">None</option>
                         @if($categories)
                         @foreach($categories as $category)
+                        @if(!isset($category->parent_id))
                         <?php $dash = ''; ?>
                         <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endif
                         @if(count($category->subcategory))
                         @include('admin.category.sub-category',['subcategories' => $category->subcategory])
                         @endif

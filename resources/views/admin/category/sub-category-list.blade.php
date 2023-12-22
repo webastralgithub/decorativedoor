@@ -11,7 +11,7 @@
             @csrf
             @method('DELETE')
 
-            <a href="{{ route('category.show', $subcategory->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
+            <!-- <a href="{{ route('category.show', $subcategory->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a> -->
             @can('edit-role')
             <a href="{{ route('category.edit', $subcategory->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
             @endcan
@@ -23,7 +23,7 @@
         </form>
     </td>
 </tr>
-@if(count($subcategory->subcategory))
+@if(count($subcategory->subcategory) > 1)
 @include('admin.category.sub-category-list',['subcategories' => $subcategory->subcategory])
 @endif
 @endforeach

@@ -16,9 +16,37 @@
         @endphp
         @if(session('cart'))
         @foreach(session('cart') as $id => $details)
-        @php $total += $details['variant_price'] * $details['quantity'] @endphp
+        @if(isset($details['variant_price']))
+        <!-- if product with multiple variants -->
+        @if(isset($details['variant_data']))
+        @foreach($details['variant_data'] as $variantId => $subVariant)
+        @php $total += $subVariant['price'] * $subVariant['quantity'] @endphp
+        <tr data-id="{{ $id }}" data-variant="{{$variantId}}">
+            <td data-th="Product">
+                <div class="row">
+                    <div class="col-sm-3 hidden-xs"><img src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" width="100" height="100" class="img-responsive" /></div>
+                    <div class="col-sm-9">
+                        <h4 class="nomargin">{{ $details['name'] }}</h4>
+                        <span class="cart-price-btm">
+                            <b>Type:</b> <span>{{($subVariant['name'] != '') ? $subVariant['name'] : ''}} </span>
+                        </span>
+                    </div>
+                </div>
+            </td>
+            <td data-th="Price">${{ $subVariant['price'] }}</td>
+            <td data-th="Quantity">
+                <input type="number" value="{{ $subVariant['quantity'] }}" class="form-control quantity update-cart" />
+            </td>
 
-        <tr data-id="{{ $id }}">
+            <td class="actions" data-th="">
+                <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
+            </td>
+        </tr>
+        @endforeach
+
+        @else
+        @php $total += (isset($details['variant_price']) ? $details['variant_price'] : $details['price']) * $details['quantity'] @endphp
+        <tr data-id="{{ $id }}" data-variant="">
             <td data-th="Product">
                 <div class="row">
                     <div class="col-sm-3 hidden-xs"><img src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" width="100" height="100" class="img-responsive" /></div>
@@ -27,10 +55,8 @@
                         @if(isset($details['variant_data']))
                         @foreach($details['variant_data'] as $variant)
                         <span class="cart-price-btm">
-
-                            <b>Type:</b> <span>{{$variant['name']}} </span>
+                            <b>Type:</b> <span>{{($variant['name'] != '') ? $variant['name'] : ''}} </span>
                             <!-- <b>Quantity:{{$variant['quantity']}} </b> -->
-
                         </span>
                         @endforeach
                         @endif
@@ -46,7 +72,8 @@
                 <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
             </td>
         </tr>
-
+        @endif
+        @endif
         @endforeach
         @endif
     </tbody>

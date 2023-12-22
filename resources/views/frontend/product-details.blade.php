@@ -25,11 +25,11 @@
 <!-- Breadcrumb Section End -->
 
 <!-- Product Details Section Begin -->
-@if(!empty($product->variants))
+@if(!empty($product->variants) && isset($product->variants))
 @php
 $variantSingle = $product->variants;
 $variantSingle = $variantSingle->first();
-$variantOptions = json_decode($variantSingle->option_type, true);
+$variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->option_type)) ? json_decode($variantSingle->option_type, true) : null;
 @endphp
 @endif
 <section class="product-details spad">
@@ -61,66 +61,73 @@ $variantOptions = json_decode($variantSingle->option_type, true);
                         <i class="fa fa-star-half-o"></i>
                         <span>(18 reviews)</span>
                     </div>
-                    <div class="product__details__price">${{$product->buying_price}}</div>
-                    <p>{{$product->meta_description}}</p>
-                    <div class="product__details__quantity">
-                        <div class="quantity">
-                            <div class="pro-qty">
-                                <tr data-id="{{$product->id}}">
-                                </tr>
-                                <input type="number" value="1" class="quantity update-cart">
+                    <div class="product__details__price">
+                        ${{$product->buying_price}}
+                    </div>
+                    <p>{{$product->notes}}</p>
+
+                    @if(!empty($product->variants) && !empty($variantOptions))
+                    <div class="varients-cart">
+                        <h3>Variants</h3>
+                        <div class="varients-block-flex">
+                            @foreach($variantOptions as $variantCombination)
+                            <div class="row varient-block-cn">
+                                <div class="col-sm-6"><label>{{ucwords($variantCombination['variantType'])}}</label></div>
+                                <div class="col-sm-6">
+                                    <select class="variants">
+                                        <option disabled selected value="0">Select {{ucwords($variantCombination['variantType'])}}</option>
+                                        @foreach($variantCombination['tagNames'] as $key => $tags)
+                                        <option value="{{$tags}}">{{ucwords($tags)}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
+                            @endforeach
+
                         </div>
                     </div>
-                    <form method="POST" action="{{ route('add.to.cart') }}">
+                    @endif
+                    <form method="POST" action="{{ route('add.to.cart') }}" class="form-cart-btn">
                         @csrf
                         @method('POST')
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <tr data-id="{{$product->id}}">
+                                    </tr>
+                                    <input type="number" min="0" value="1" class="quantity " name="quantity">
+                                </div>
+                            </div>
+                        </div>
+
                         <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
-                        <button type="submit" class="primary-btn add-to-cart">ADD TO CART</button>
+                        <button type="submit" class="primary-btn add-to-cart" onclick="return addToCart()">ADD TO CART</button>
                     </form>
                     <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
                     <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
                     <ul>
-                        <li><b>Availability</b> <span>In Stock</span></li>
+                        <li><b>Availability</b> <span>{{($product->quantity > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
 
                         <li><b>Qunatity</b> <span>{{$product->quantity}}</span></li>
-                        <li><b>Share on</b>
+                        <!-- <li><b>Description</b> <span>{{$product->notes}}</span></li> -->
+                        <!-- <li><b>Share on</b>
                             <div class="share">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-instagram"></i></a>
                                 <a href="#"><i class="fa fa-pinterest"></i></a>
                             </div>
-                        </li>
-                        <h3>Variants</h3>
-
-                        @if(!empty($product->variants))
-                        @if(!empty($variantOptions))
-                        @foreach($variantOptions as $variantCombination)
-                        <div class="row">
-                            <div class="col-sm-6"><label>{{ucwords($variantCombination['variantType'])}}</label></div>
-                            <div class="col-sm-6">
-                                <select class="variants">
-                                    <option>Select {{ucwords($variantCombination['variantType'])}}</option>
-                                    @foreach($variantCombination['tagNames'] as $tags)
-                                    <option>{{ucwords($tags)}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        @endforeach
-                        @endif
-                        @endif
+                        </li> -->
 
                     </ul>
                 </div>
-                <form method="POST" action="{{ route('add.to.cart') }}">
+                <!-- <form method="POST" action="{{ route('add.to.cart') }}" class="form-cart-btn">
                     <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
                     <input type="hidden" name="product_id" value="{{$product->id}}" />
                     <button type="submit" class="primary-btn add-to-cart">ADD TO CART</button>
-                </form>
+                </form> -->
                 <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
                 <!-- <ul>
                     <li><b>Availability</b> <span>In Stock</span></li>
@@ -156,8 +163,9 @@ $variantOptions = json_decode($variantSingle->option_type, true);
                     @endforelse
                     @endif
                 </ul> -->
-
-                @include('frontend.add-ons')
+                <div class="col-lg-12">
+                    @include('frontend.add-ons')
+                </div>
             </div>
             <div class="col-lg-12">
                 <div class="product__details__tab">
@@ -245,7 +253,7 @@ $variantOptions = json_decode($variantSingle->option_type, true);
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product','test-loom')}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -260,7 +268,7 @@ $variantOptions = json_decode($variantSingle->option_type, true);
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product','test-loom')}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -275,7 +283,7 @@ $variantOptions = json_decode($variantSingle->option_type, true);
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product','test-loom')}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -290,7 +298,7 @@ $variantOptions = json_decode($variantSingle->option_type, true);
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product','test-loom')}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -299,4 +307,30 @@ $variantOptions = json_decode($variantSingle->option_type, true);
     </div>
 </section>
 <!-- Related Product Section End -->
+@endsection
+
+@section('scripts')
+<script>
+    function addToCart() {
+        var allVariants = document.querySelectorAll('.variants');
+        var selectedVariants = [];
+
+        // Iterate through all variant dropdowns
+        allVariants.forEach(function(variant) {
+            var selectedValue = variant.value;
+            console.log("selectedValue", selectedValue);
+            // Check if the variant is selected
+            if (selectedValue && selectedValue != '0') {
+                selectedVariants.push(selectedValue);
+            }
+        });
+        // Check if all variants are selected
+        if (selectedVariants.length === (allVariants.length / 2)) {
+            document.getElementById('addToCartForm').submit();
+        } else {
+            alert('Please select all variants before adding to the cart.');
+        }
+        return false;
+    }
+</script>
 @endsection

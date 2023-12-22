@@ -78,7 +78,7 @@ jQuery(document).ready(function () {
         console.log("addVariantTableRows");
         var variantsTableBody = jQuery('#variantsTable tbody');
         // if (jQuery('.edit-variant-table').length <= 0)
-            variantsTableBody.html('');
+        variantsTableBody.html('');
         const combinations = [];
         const numIndexes = variantsArr.length;
 
@@ -126,6 +126,12 @@ jQuery(document).ready(function () {
     jQuery('form').on('click', '.close', '#tagContainer', function () {
         jQuery(this).parent().remove();
         refreshVariantsData();
+    });
+
+    jQuery('.select-category').select2({
+        theme: "classic",
+        placeholder: "Select a Category",
+        allowClear: true
     });
 });
 

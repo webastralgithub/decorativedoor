@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\OrderStatus;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +28,7 @@ class OrderStoreRequest extends FormRequest
     {
         $this->merge([
             'order_date' => Carbon::now()->format('Y-m-d'),
-            'order_status' => OrderStatus::PENDING->value,
+            'order_status' => 0,
             // 'total_products' => Cart::count(),
             // 'sub_total' => Cart::subtotal(),
             // 'vat' => Cart::tax(),

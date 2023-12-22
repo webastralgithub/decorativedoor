@@ -38,7 +38,7 @@
                             @csrf
                             @method('DELETE')
 
-                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
+                            <!-- <a href="{{ route('users.show', $user->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a> -->
 
                             @if (in_array('Super Admin', $user->getRoleNames()->toArray() ?? []) )
                             @if (Auth::user()->hasRole('Super Admin'))

@@ -12,30 +12,29 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <th>{{__('ID')}}</th>
-                <th>{{__('Invoice No.')}}</th>
                 <th>{{__('Customer')}}</th>
                 <th>{{__('Date')}}</th>
                 <th>{{__('Payment')}}</th>
                 <th>{{__('Total')}}</th>
+                <th>{{__('Status')}}</th>
                 <th>{{__('Action')}}</th>
             </thead>
             <tbody>
                 @foreach ($orders as $order)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $order->invoice_no }}</td>
-                    <td>{{ $order->customer->name }}</td>
+                    <td>{{ $order->user->name }}</td>
                     <td>{{ $order->order_date->format('d-m-Y') }}</td>
                     <td>{{ $order->payment_type }}</td>
-                    <td>{{ Number::currency($order->total, 'EUR') }}</td>
+                    <td>{{ number_format($order->total) }}</td>
                     <td>
-                        <a class="{{ $order->order_status === 'complete' ? 'bg-green' : 'bg-orange' }}">
-                            {{ $order->order_status }}
+                        <a class="{{ $order->order_status === 1 ? 'text-success' : 'text-info' }}">
+                            {{ ($order->order_status == 1) ? 'Completed' : 'Pending' }}
                             <a>
                     </td>
                     <td>
-                        <a class="btn-icon" href="{{ route('orders.show', $order) }}"> Show</a>
-                        <a class="btn-icon" href="{{ route('order.downloadInvoice', $order) }}">Print</a>
+                        <a class="btn btn-warning btn-sm" href="{{ route('orders.show', $order) }}"> Show</a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('order.downloadInvoice', $order) }}">Print</a>
                     </td>
                 </tr>
                 @endforeach

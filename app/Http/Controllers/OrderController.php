@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\OrderStatus;
 use App\Http\Requests\OrderStoreRequest;
 use App\Models\Order;
 use App\Models\OrderDetails;
@@ -17,7 +16,6 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::latest()->get();
-
         return view('admin.orders.index', [
             'orders' => $orders
         ]);
@@ -59,11 +57,17 @@ class OrderController extends Controller
             ->route('admin.orders.index')
             ->with('success', 'Order has been created!');
     }
+    public function updateStatus(Request $request)
+    {
+        $orderId = $request->order_id;
+        $orders = Order::findOrFail($orderId)->update(['order_status' => $request->new_status]);
+        return response()->json(['success' => 'Order status has been updated!']);
+    }
 
     public function show(Order $order)
     {
         $order->loadMissing(['user', 'details'])->get();
-
+        // dd($order);
         return view('admin.orders.show', [
             'order' => $order
         ]);
@@ -83,11 +87,11 @@ class OrderController extends Controller
         }
 
         $order->update([
-            'order_status' => OrderStatus::COMPLETE
+            'order_status' => 1
         ]);
 
         return redirect()
-            ->route('admin.orders.complete')
+            ->route('orders.complete')
             ->with('success', 'Order has been completed!');
     }
 

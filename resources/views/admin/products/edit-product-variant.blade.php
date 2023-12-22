@@ -11,7 +11,7 @@
             @php
             $variantSingle = $product->variants;
             $variantSingle = $variantSingle->first();
-            $variantOptions = json_decode($variantSingle->option_type, true);
+            $variantOptions = !empty($variantSingle->option_type) ? json_decode($variantSingle->option_type, true) : null;
             @endphp
             @if (!empty($variantOptions))
             {{-- Access the decoded JSON data --}}

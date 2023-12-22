@@ -26,7 +26,8 @@ class CategoryController extends Controller
     }
     public function index(): View
     {
-        $categories = Category::where('parent_id', null)->orderby('name', 'asc')->get();
+        $categories = Category::with('children')->whereNull('parent_id')->get();
+        // $categories = Category::where('parent_id', null)->orderby('name', 'asc')->get();
         // $categories = Category::where('parent_id', null)->orderby('name', 'asc')->paginate(5);
         return view('admin.category.index', compact('categories'));
     }

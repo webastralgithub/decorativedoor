@@ -15,10 +15,13 @@
                         <ul class="product__item__pic__hover">
                             <!-- <li><a href="#"><i class="fa fa-heart"></i></a></li>
                             <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
-                            <form method="POST" action="{{ route('add.to.cart') }}">
+
+                            <form method="POST" action="{{ route('add.to.cart') }}" class="form-cart-btn">
+                                @csrf
+                                @method('POST')
                                 <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
                                 <input type="hidden" name="product_id" value="{{$product->id}}" />
-                                <!-- <button type="submit" class=" add-to-cart"><i class="fa fa-shopping-cart"></i></button> -->
+                                <input type="hidden" name="quantity" value="1" />
                                 <li><button type="submit" class=" add-to-cart"><i class="fa fa-shopping-cart"></i></button></li>
                             </form>
 

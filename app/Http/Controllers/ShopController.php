@@ -34,44 +34,43 @@ class ShopController extends Controller
 
     public function product_details($slug)
     {
-        $allcategory = Category::with(['children'])->get();
         $product = Product::where('slug', $slug)->first();
-        $addOnProducts = Product::where('id', '!=', $product->id)->get();
         if (empty($product)) {
             return abort(404);
         }
+        $allcategory = Category::with(['children'])->get();
+        $addOnProducts = Product::where('id', '!=', $product->id)->get();
         return view('frontend.product-details', compact('addOnProducts', 'allcategory', 'product'));
     }
 
     public function addToCart(Request $request)
     {
-        /*
-          [
-            "_token" => "aR28sRJE3Zd4zIfZn75QcnC2ZdadoAQqBI4PkCVp"
-            "_method" => "POST"
-            "variant" => "{"id":1,"product_id":1,"option_type":"[\n  {\n    \"index\": 1,\n    \"tagNames\": [\n      \"red\"\n    ],\n    \"variantType\": \"color\"\n  },\n  {\n    \"index\": 2,\n    \"tagNames\": [\n      \"s\",\n      \"m\"\n    ],\n    \"variantType\": \"size\"\n  }\n]","name":"red\/S","value":"Red","code":"Red12","quantity":11,"buying_price":20,"notes":"Testtt","created_at":"2023-12-15T12:02:31.000000Z","updated_at":"2023-12-15T12:02:31.000000Z"} ◀"
-            "product_id" => "1"
-            ]
-         */
+        $cart = (!session()->has('cart')) ? session()->get('cart', []) : session()->get('cart');
+        // dd($cart);
         $productId = @$request->product_id;
-
         $product = Product::findOrFail($productId);
         if (!empty($product->variants) && !empty($request->variant)) {
             $selectedVariant = json_decode($request->variant, true);
+            if (isset($cart[$productId]) && isset($cart[$productId]['variant_data'][$selectedVariant['id']])) {
+                $cart[$productId]['quantity']++;
+                $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"]++;
+            } else {
+                if (!isset($cart[$productId]))
+                    $cart[$productId] = [
+                        "name" => $product->title,
+                        "product_id" => $product->id,
+                        "quantity" => !empty($request->quantity) ? $request->quantity : 1,
+                        "price" => $product->buying_price,
+                        "image" => $product->image,
+                        // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
+                        // "variant_price" => 0
 
-            $cart[$productId] = [
-                "name" => $product->title,
-                "product_id" => $product->id,
-                "quantity" => !empty($request->quantity) ? $request->quantity : 1,
-                "price" => $product->buying_price,
-                "image" => $product->image,
-                // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
-                // "variant_price" => 0
-
-            ];
-            $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] = !empty($request->quantity) ? $request->quantity : 1;
+                    ];
+                $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] = !empty($request->quantity) ? $request->quantity : 1;
+            }
+            $cart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
             $cart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
-            $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = (!empty($request->quantity) ? $request->quantity : 1) * $selectedVariant['buying_price'];
+            $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['buying_price'];
             $pricevariant = array_values($cart[$productId]['variant_data']);
             $variant_prices = [];
             foreach ($pricevariant as $price) {
@@ -87,30 +86,14 @@ class ShopController extends Controller
                     "name" => $product->title,
                     "product_id" => $product->id,
                     "quantity" => !empty($request->quantity) ? $request->quantity : 1,
-                    "price" => (!empty($request->quantity) ? $request->quantity : 1) * $product->buying_price,
+                    "price" => $product->buying_price,
                     "image" => $product->image,
-                    "variant_id" => 0,
-                    "variant_price" => (!empty($request->quantity) ? $request->quantity : 1) * $product->buying_price
+                    "variant_data" => [],
+                    // "variant_price" => $product->buying_price
                 ];
             }
         }
         session()->put('cart', $cart);
-
-        // $cart = session()->get('cart', []);
-        // if (isset($cart[$id])) {
-        //     $cart[$id]['quantity']++;
-        // } else {
-        //     $cart[$id] = [
-        //         "name" => $product->title,
-        //         "product_id" => $product->id,
-        //         "quantity" => 1,
-        //         "price" => $product->buying_price,
-        //         "image" => $product->image,
-        //         "variant_price" => 0
-
-        //     ];
-        // }
-
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
@@ -118,7 +101,12 @@ class ShopController extends Controller
     {
         if ($request->id && $request->quantity) {
             $cart = session()->get('cart');
-            $cart[$request->id]["quantity"] = $request->quantity;
+            if (isset($request->variant) && !empty($request->variant)) {
+                $variantId = $request->variant;
+                $cart[$request->id]['variant_data'][$variantId]["quantity"] = $request->quantity;
+            } else {
+                $cart[$request->id]["quantity"] = $request->quantity;
+            }
             session()->put('cart', $cart);
             session()->flash('success', 'Cart updated successfully');
         }
@@ -149,16 +137,32 @@ class ShopController extends Controller
     {
         if ($request->id) {
             $cart = session()->get('cart');
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
+            // dd($cart[$request->id]);
+            if (isset($request->variant) && !empty($request->variant)) {
+                $variantId = $request->variant;
+                if (isset($cart[$request->id]['variant_data'][$variantId])) {
+                    $quantity = $cart[$request->id]['variant_data'][$variantId]['quantity'];
+                    $price = $cart[$request->id]['variant_data'][$variantId]['price'];
+                    // update the price before remove variant with all quantity
+                    $cart[$request->id]['variant_price'] = $cart[$request->id]['variant_price'] - ($price * $quantity);
+                    unset($cart[$request->id]['variant_data'][$variantId]);
+                }
+            } else {
+                if (isset($cart[$request->id])) {
+                    unset($cart[$request->id]);
+                }
             }
+            session()->put('cart', $cart);
             session()->flash('success', 'Product removed successfully');
         }
     }
 
     public function cart()
     {
+        // $cart = session()->get('cart');
+        // unset($cart[30]);
+        // session()->put('cart', $cart);
+        // dd(session()->get('cart'));
         return view('frontend.cart');
     }
 

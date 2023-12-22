@@ -47,7 +47,6 @@
                     <thead class="thead-light">
                     <tr>
                         <th scope="col" class="text-center">{{ __('No.') }}</th>
-                        <th scope="col" class="text-center">{{ __('Invoice No.') }}</th>
                         <th scope="col" class="text-center">{{ __('Customer') }}</th>
                         <th scope="col" class="text-center">{{ __('Date') }}</th>
                         <th scope="col" class="text-center">{{ __('Payment') }}</th>
@@ -62,7 +61,6 @@
                             <td class="text-center">
                                 {{ $loop->iteration }}
                             </td>
-                            <td class="text-center">{{ $order->invoice_no }}</td>
                             <td class="text-center">{{ $order->customer->name }}</td>
                             <td class="text-center">{{ $order->order_date->format('d-m-Y') }}</td>
                             <td class="text-center">{{ $order->payment_type }}</td>

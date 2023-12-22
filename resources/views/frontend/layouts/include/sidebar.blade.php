@@ -9,7 +9,7 @@
 
             <ul class="under_ul">
                 @foreach($category->children as $subcategory)
-                <li><a href="{{route('category', $subcategory->name)}}">{{$subcategory->name}}</a></li>
+                <li><a href="{{route('category', $subcategory->slug)}}">{{$subcategory->name}}</a></li>
                 @endforeach
             </ul>
             @php

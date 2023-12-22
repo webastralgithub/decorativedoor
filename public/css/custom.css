@@ -8,6 +8,10 @@
     display: flex;
 }
 
+.row.row-cards {
+	row-gap: 17px !important;
+}
+
 @media (max-width: 991px) {
     .div-2 {
         flex-direction:

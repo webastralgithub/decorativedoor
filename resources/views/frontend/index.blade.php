@@ -4,35 +4,93 @@
 @section('content')
 @include('frontend.layouts.include.search-bar')
 <!-- Hero Section End -->
+<style>
+    .slider {
+        position: relative;
+        width: 98%;
+        margin: auto;
+        overflow: hidden;
+        height: 350px;
+    }
 
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top center;
+        /* Adjust as needed: cover, contain, fill, etc. */
+    }
+
+    .prev-btn {
+        left: 10px;
+    }
+
+    .next-btn {
+        right: 10px;
+    }
+</style>
 <!-- Categories Section Begin -->
-<section class="categories">
+<!-- <section class="categories">
     <div class="container">
         <div class="row">
             <div class="categories__slider owl-carousel">
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-1.jpg')}}">
-                        <h5><a href="#">Decorative Door</a></h5>
+                <div class="col-lg-12">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/banner/banner1.jpg')}}">
+
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-2.jpg')}}">
-                        <h5><a href="#">Decorative Door</a></h5>
+                <div class="col-lg-12">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/banner/banner2.jpg')}}">
+
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-3.jpg')}}">
-                        <h5><a href="#">Decorative Door</a></h5>
+                <div class="col-lg-12">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/banner/banner3.jpg')}}">
+
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-4.jpg')}}">
-                        <h5><a href="#">Decorative Door</a></h5>
+                <div class="col-lg-12">
+                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/banner/banner4.jpg')}}">
+
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="categories__item set-bg" data-setbg="{{asset('frontend/img/categories/cat-5.jpg')}}">
-                        <h5><a href="#">Decorative Door</a></h5>
+
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hero__item set-bg" data-setbg="{{asset('frontend/img/banner/banner.jpg')}}">
+                    <div class="hero__text">
+                        <span>Latest Designs</span>
+                        <h2>Creative &<br /> Decorative Doors</h2>
+                        <p>Secure you home with modern design doors.</p>
+                        <a href="{{ route('shop')}}" class="primary-btn">SHOP NOW</a>
                     </div>
                 </div>
             </div>
@@ -69,7 +127,7 @@
                         </ul>
                     </div>
                     <div class="featured__item__text">
-                        <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -84,7 +142,7 @@
                         </ul>
                     </div>
                     <div class="featured__item__text">
-                        <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -99,7 +157,7 @@
                         </ul>
                     </div>
                     <div class="featured__item__text">
-                        <h6><a href="./shop-details.html">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -126,4 +184,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+
 @endsection

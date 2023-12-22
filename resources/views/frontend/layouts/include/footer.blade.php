@@ -8,7 +8,7 @@
                     </div>
                     <ul>
                         <li>Address: 00-00 Road 00000 Dummy Address</li>
-                        <li>Phone: +00 00.000.000</li>
+                        <li>Phone: +1(604) 446-5841</li>
                         <li>Email: hello@dummy.com</li>
                     </ul>
                 </div>
@@ -28,7 +28,7 @@
                         <li><a href="#">Who We Are</a></li>
                         <li><a href="#">Our Services</a></li>
                         <li><a href="#">Projects</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="{{ route('contact') }}">Contact</a></li>
                         <li><a href="#">Innovation</a></li>
                         <li><a href="#">Testimonials</a></li>
                     </ul>
@@ -90,6 +90,7 @@
             data: {
                 _token: '{{ csrf_token() }}',
                 id: ele.parents("tr").attr("data-id"),
+                variant: ele.parents("tr").attr("data-variant"),
                 quantity: ele.parents("tr").find(".quantity").val()
             },
             success: function(response) {
@@ -107,6 +108,7 @@
                 data: {
                     _token: '{{ csrf_token() }}',
                     id: ele.parents("tr").attr("data-id"),
+                    variant: ele.parents("tr").attr("data-variant"),
                 },
                 success: function(response) {
                     window.location.reload();

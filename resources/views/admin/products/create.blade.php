@@ -35,31 +35,7 @@
             @csrf
 
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">
-                                {{ __('Product Images') }}
-                            </h3>
-                            <!-- <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" /> -->
-
-                            <div class="mt-1 text-center">
-                                <div class="images-preview-div"> </div>
-                            </div>
-                            <div class="small font-italic text-muted mb-2">
-                                JPG or PNG no larger than 2 MB
-                            </div>
-                            <input type="file" accept="image/*" id="image" name="product_images[]" class="form-control @error('product_images') is-invalid @enderror" onchange="previewImages(this, 'div.images-preview-div') /*previewImage(); */;" multiple>
-                            @error('product_images')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
                             <div>
@@ -70,42 +46,42 @@
                         </div>
                         <div class="card-body">
                             <div class="row row-cards">
-                                <div class="col-md-12">
+                                <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Product Title
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input name="title" id="name" class="form-control" placeholder="Product name" value="{{ old('title') }}" />
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Slug
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input name="slug" id="name" class="form-control" placeholder="Product Slug" value="{{ old('slug') }}" />
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Product Code
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input name="code" id="name" class="form-control" placeholder="Product Code" value="{{ old('product_code') }}" />
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Sub Title
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input name="sub_title" id="name" class="form-control" placeholder="Sub Title" value="{{ old('sub_title') }}" />
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Meta Title
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input name="meta_title" id="name" class="form-control" placeholder="Meta Title" value="{{ old('meta_title') }}" />
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Meta Keywords
                                         <span class="text-danger">*</span>
@@ -128,7 +104,7 @@
                                         </label>
 
                                         @if ($categories->count() === 1)
-                                        <select type="text" name="category_id[]" class="form-control form-select @error('category_id') is-invalid @enderror" multiple>
+                                        <select type="text" name="category_id[]" class="select-category form-control form-select @error('category_id') is-invalid @enderror" multiple>
                                             <option value="">None</option>
                                             @if($categories)
                                             @foreach($categories as $category)
@@ -141,13 +117,9 @@
                                             @endif
                                         </select>
                                         @else
-                                        <select name="category_id[]" id="category_id" class="form-select @error('category_id') is-invalid @enderror" multiple>
-                                            <option selected="" disabled="">
-                                                Select a category:
-                                            </option>
-
+                                        <select name="category_id[]" id="category_id" class="select-category form-select @error('category_id') is-invalid @enderror" multiple>
                                             @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected="selected" @endif>
+                                            <option value="{{ $category->id }}" @if(old('category_id')==$category->id) selected="selected" @endif>
                                                 {{ $category->name }}
                                             </option>
                                             @endforeach
@@ -168,25 +140,12 @@
                                     </label>
                                     <input type="number" label="Buying Price" class="form-control" name="buying_price" id="buying_price" placeholder="0" value="{{ old('buying_price') }}" />
                                 </div>
-                                <div class="col-sm-6 col-md-6">
-                                    <label for="notes" class="form-label">
-                                        {{ __('Selling Price') }}
-                                    </label>
-                                    <input type="number" label="Selling Price" class="form-control" name="selling_price" id="buying_price" placeholder="0" value="{{ old('selling_price') }}" />
-                                </div>
 
                                 <div class="col-sm-6 col-md-6">
                                     <label for="notes" class="form-label">
                                         {{ __('Quantity') }}
                                     </label>
                                     <input type="number" label="Quantity" class="form-control" name="quantity" id="quantity" placeholder="0" value="{{ old('quantity') }}" />
-                                </div>
-
-                                <div class="col-sm-6 col-md-6">
-                                    <label for="notes" class="form-label">
-                                        {{ __('Quantity Alert') }}
-                                    </label>
-                                    <input type="number" label="Quantity Alert" class="form-control" name="quantity_alert" id="quantity_alert" placeholder="0" value="{{ old('quantity_alert') }}" />
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
@@ -229,8 +188,32 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                {{ __('Product Images') }}
+                            </h3>
+                            <!-- <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" /> -->
 
+                            <div class="mt-1 text-center">
+                                <div class="images-preview-div"> </div>
+                            </div>
+                            <div class="small font-italic text-muted mb-2">
+                                JPG or PNG no larger than 2 MB
+                            </div>
+                            <input type="file" accept="image/*" id="image" name="product_images[]" class="form-control @error('product_images') is-invalid @enderror" onchange="previewImages(this, 'div.images-preview-div') /*previewImage(); */;" multiple>
+                            @error('product_images')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
             </div>
@@ -247,4 +230,11 @@
 
 </div>
 
+@endsection
+@section('scripts')
+<script>
+    jQuery('.select-category').select2({
+        theme: "classic"
+    });
+</script>
 @endsection

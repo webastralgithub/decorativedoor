@@ -43,7 +43,8 @@ class ProductController extends Controller
     public function create(): View
     {
         $categories = Category::all(['id', 'name']);
-        return view('admin.products.create', compact('categories'));
+        $selectedCategories = 0;
+        return view('admin.products.create', compact('categories', 'selectedCategories'));
     }
 
     /**
@@ -62,8 +63,6 @@ class ProductController extends Controller
         $product->notes = $request->notes;
         $product->code = $request->code;
         $product->buying_price = $request->buying_price;
-        $product->selling_price = $request->selling_price;
-        $product->quantity_alert = $request->quantity_alert;
         $product->tax = $request->tax;
         $product->quantity = $request->quantity;
         $product->tax_type = $request->tax_type;
@@ -86,7 +85,8 @@ class ProductController extends Controller
 
         $product->categories()->attach($categories);
         // Create Variants
-        $this->createVariants($request, $product->id);
+        if (!empty($request->variant_option) && !empty($request->variant_name))
+            $this->createVariants($request, $product->id);
         return redirect()->route('products.index')
             ->withSuccess('Product has been created successfully!');
     }
@@ -147,8 +147,7 @@ class ProductController extends Controller
 
         $product->update($request->only([
             'title', 'sub_title', 'meta_title', 'meta_keywords', 'meta_description',
-            'notes', 'buying_price', 'selling_price',
-            'quantity_alert', 'tax', 'quantity', 'tax_type'
+            'notes', 'buying_price','tax', 'quantity', 'tax_type'
         ]));
 
         // Update category

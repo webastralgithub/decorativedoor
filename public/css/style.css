@@ -100,11 +100,13 @@ div#variant_addTag {
 }
 
 .images-preview-div img {
-    width: 45%;
+    width: 24%;
     object-fit: cover;
-    height: 90px;
+    height: 200px;
 }
-
+.row-cards {
+	row-gap: 17px !important;
+}
 /*** Spinner ***/
 #spinner {
     opacity: 0;
@@ -1887,6 +1889,7 @@ body {
     }
 
 }
+
 .cart-table {
     max-width: 1200px !important;
     margin: 0 auto;

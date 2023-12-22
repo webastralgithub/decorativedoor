@@ -21,6 +21,8 @@
                 @if(isset($categories))
                 <?php $_SESSION['i'] = 0; ?>
                 @foreach($categories as $category)
+
+                @if(!isset($category->parent_id))
                 <?php $_SESSION['i'] = $_SESSION['i'] + 1; ?>
                 <tr>
                     <?php $dash = ''; ?>
@@ -29,7 +31,7 @@
                     <td>{{$category->slug}}</td>
                     <td>
                         @if(isset($category->parent_id) && !empty($category->subcategory->name))
-                        {{$category->subcategory->name}}
+                        {{ $category->subcategory->name ?? 'None' }}
                         @else
                         None
                         @endif
@@ -39,7 +41,7 @@
                             @csrf
                             @method('DELETE')
 
-                            <a href="{{ route('category.show', $category->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
+                            <!-- <a href="{{ route('category.show', $category->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a> -->
                             @can('edit-role')
                             <a href="{{ route('category.edit', $category->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
                             @endcan
@@ -51,6 +53,7 @@
                         </form>
                     </td>
                 </tr>
+                @endif
                 @if(count($category->subcategory))
                 @include('admin.category.sub-category-list',['subcategories' => $category->subcategory])
                 @endif

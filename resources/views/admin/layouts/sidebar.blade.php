@@ -24,8 +24,8 @@
              @endcanany
 
              @canany(['create-product', 'edit-product', 'delete-product'])
-             <a class="nav-item nav-link {{ request()->is('*/inventory') ? 'active' : '' }}" href="{{ route('inventory.index') }}">
-                 <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Inventory</a>
+             <!-- <a class="nav-item nav-link {{ request()->is('*/inventory') ? 'active' : '' }}" href="{{ route('inventory.index') }}">
+                 <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Inventory</a> -->
              @endcanany
 
              @canany(['create-product', 'edit-product', 'delete-product'])

@@ -43,7 +43,7 @@
             </ul>
             <div class="header__cart__price">item: <span>$150.00</span></div>
         </div>
-        <div class="humberger__menu__widget">
+        <!-- <div class="humberger__menu__widget">
             <div class="header__top__right__language">
                 <img src="img/language.png" alt="">
                 <div>English</div>
@@ -56,7 +56,7 @@
             <div class="header__top__right__auth">
                 <a href="{{route('login')}}"><i class="fa fa-user"></i> Login</a>
             </div>
-        </div>
+        </div> -->
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
@@ -112,7 +112,11 @@
                                 {{-- User is logged in --}}
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf
-                                    <button type="submit">Logout</button>
+                                    <!-- <input type="submit" value="Logout"> -->
+                                    <label for="submitButton" style="cursor: pointer;">
+                                        <input type="submit" id="submitButton" style="display: none;">
+                                        Logout
+                                    </label>
                                 </form>
                                 @else
                                 {{-- User is not logged in --}}
@@ -135,7 +139,7 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            
+
                             <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
                             <li class="{{ request()->is('*shop') ? 'active' : '' }}"><a href="{{route('shop')}}">Shop</a></li>
                             <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li>
@@ -157,26 +161,22 @@
 
                                                 @php $total = 0 @endphp
                                                 @foreach((array) session('cart') as $id => $details)
+                                                @if(isset($details['variant_price']))
+                                                <!-- if product with multiple variants -->
+                                                @if(isset($details['variant_data']))
+                                                @foreach($details['variant_data'] as $variantId => $subVariant)
+                                                @php $total += $subVariant['price'] * $subVariant['quantity'] @endphp
+                                                @endforeach
+                                                @else
+                                                
                                                 @php $total += $details['variant_price'] * $details['quantity'] @endphp
+                                                @endif
+                                                @endif
                                                 @endforeach
                                                 <div class="col-lg-12 col-sm-12 col-12 total-section text-center">
                                                     <p>Total: <span class="text-info">$ {{ $total }}</span></p>
                                                 </div>
                                             </div>
-                                            @if(session('cart'))
-                                            @foreach(session('cart') as $id => $details)
-                                            <div class="row cart-detail">
-                                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                                    <img src="{{ $details['image'] }}" />
-                                                </div>
-                                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                                    <!-- <p>{{ $details['name'] }}</p> -->
-                                                    <span class="price text-info"> ${{ $details['price'] }}</span>
-                                                    <span class="count"> Quantity:{{ $details['quantity'] }}</span>
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                            @endif
                                             <div class="row">
                                                 <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
                                                     <a href="{{ route('cart') }}" class="btn btn-primary btn-block">View all</a>
