@@ -149,7 +149,7 @@
             title: "Assign User",
             input: "select",
             inputOptions:inputOptions,
-            inputPlaceholder: "Select Assembler",
+            inputPlaceholder: "Select User",
             showCancelButton: true,
             inputValidator: (value) => {
                 return new Promise((resolve) => {
