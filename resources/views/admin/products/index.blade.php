@@ -5,14 +5,15 @@
     <div class="card-header">Product List</div>
     <div class="card-body">
         @can('create-product')
-        <a href="{{ route('products.create') }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Product</a>
+        <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Product</a>
         @endcan
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th scope="col">S#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Description</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Price</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -23,7 +24,8 @@
                     <td>{{ $product->title }}
                         <note>{{ $product->sub_title }}</note>
                     </td>
-                    <td>{{ $product->notes }}</td>
+                    <td>{{ $product->code }}</td>
+                    <td>{{ $product->buying_price }}</td>
                     <td>
                         <form action="{{ route('products.destroy', $product->id) }}" method="post">
                             @csrf

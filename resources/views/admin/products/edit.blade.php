@@ -50,14 +50,14 @@
                                         Product Title
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="title" id="name" class="form-control" placeholder="Product name" value="{{ $product->title }}" />
+                                    <input name="title" id="name" class="form-control product-title" placeholder="Product name" value="{{ $product->title }}" />
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Slug
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="slug" id="name" class="form-control" placeholder="Product Slug" value="{{ $product->slug }}" />
+                                    <input name="slug" id="name" class="form-control product-slug" placeholder="Product Slug" value="{{ $product->slug }}" />
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">

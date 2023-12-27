@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,7 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.index');
+        return view('frontend.index', [
+            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 10))
+        ]);
     }
 
     public function contact()

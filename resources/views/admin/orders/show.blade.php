@@ -10,17 +10,20 @@
                     {{ __('Order Details') }}
                 </h3>
             </div>
+            @can('change-order-status')
             <div class="col-md-6">
                 <label class="small mb-1" for="order_status">
                     Order Status
                     <span class="text-danger">*</span>
                 </label>
                 <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="updateOrderStatus()">
-                    <option value="0" @selected($order->order_status == 0)>Pending</option>
-                    <option value="1" @selected($order->order_status == 1)>Completed</option>
+                    @foreach($order_statuses as $status)
+                    <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
                     <!-- Add other status options as needed -->
+                    @endforeach
                 </select>
             </div>
+            @endcan
         </div>
     </div>
 
@@ -130,13 +133,24 @@
             },
             success: function(response) {
                 // Handle success, if needed
-                if (response.success)
-                    //Order status updated successfully
+                if (response.success) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Order Status Updated',
                         text: response.success
                     });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Order Status Error',
+                        text: response.error
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                }
             },
             error: function(error) {
                 // Handle error, if needed

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Str;
 
@@ -39,6 +40,20 @@ if (!function_exists('generateProductSlug')) {
         function getRandomProductSlug()
         {
             return Product::inRandomOrder()->first()->slug;
+        }
+    }
+
+    if (!function_exists('productsTotal')) {
+        function productsTotal()
+        {
+            return Product::count();
+        }
+    }
+
+    if (!function_exists('ordersTotal')) {
+        function ordersTotal()
+        {
+            return Order::count();
         }
     }
 }

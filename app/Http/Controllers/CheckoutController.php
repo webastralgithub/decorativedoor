@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderDetails;
+use App\Models\OrderStatus;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
@@ -31,7 +32,7 @@ class CheckoutController extends Controller
             $productsArr = [
                 'user_id' => (Auth::check()) ? Auth::user()->id : 3,
                 'order_date' => Carbon::now(),
-                'order_status' => 1,
+                'order_status' => OrderStatus::IN_PROGRESS,
                 'total_products' => $totalProducts,
                 'sub_total' => $totalPrice,
                 'vat' => 0,

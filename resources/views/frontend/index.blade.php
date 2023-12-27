@@ -117,51 +117,23 @@
             </div>
         </div>
         <div class="row featured__filter">
+            @foreach($products as $product)
             <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                 <div class="featured__item">
                     <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                        <ul class="featured__item__pic__hover">
+                        <!-- <ul class="featured__item__pic__hover">
                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
+                        </ul> -->
                     </div>
                     <div class="featured__item__text">
-                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
-                        <h5>$76.000</h5>
+                        <h6><a href="{{route('product',$product->slug)}}">{{$product->title}}</a></h6>
+                        <h5>${{$product->buying_price}}</h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-2.jpg')}}">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
-                        <h5>$76.000</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
-                <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-3.jpg')}}">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
-                        <h5>$76.000</h5>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>

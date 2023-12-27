@@ -15,6 +15,7 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+        'order_id',
         'order_date',
         'order_status',
         'total_products',
@@ -23,6 +24,7 @@ class Order extends Model
         'total',
         'invoice_no',
         'payment_type',
+        'payment_status',
         'pay',
         'due',
     ];
@@ -32,6 +34,15 @@ class Order extends Model
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($order) {
+            $order->order_id = str_pad(static::max('id') + 1, 5, '0', STR_PAD_LEFT);
+        });
+    }
 
     public function customer()
     {

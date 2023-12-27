@@ -41,6 +41,6 @@
         <i class="checkmark">✓</i>
     </div>
     <h1>Success</h1>
-    <p>We received your purchase request;<br /> we'll be in touch shortly!</p>
+    <p>Thank you for processing the order.<br />We will be in touch with you shortly!</p>
 </div>
 @endsection

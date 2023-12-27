@@ -33,7 +33,7 @@ class ProductController extends Controller
     public function index(): View
     {
         return view('admin.products.index', [
-            'products' => Product::latest()->paginate(3)
+            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 10))
         ]);
     }
 
@@ -147,7 +147,7 @@ class ProductController extends Controller
 
         $product->update($request->only([
             'title', 'sub_title', 'meta_title', 'meta_keywords', 'meta_description',
-            'notes', 'buying_price','tax', 'quantity', 'tax_type'
+            'notes', 'buying_price', 'tax', 'quantity', 'tax_type'
         ]));
 
         // Update category

@@ -51,7 +51,7 @@
             <div class="mb-3 row">
                 <label for="permissions" class="col-md-4 col-form-label text-md-end text-start">Permissions</label>
                 <div class="col-md-6">
-                    <!-- <select class="form-select @error('permissions') is-invalid @enderror" multiple aria-label="Permissions" id="permissions" name="permissions[]" style="height: 210px;">
+                    <select class="select-permissions form-select @error('permissions') is-invalid @enderror" multiple aria-label="Permissions" id="permissions" name="permissions[]" style="height: 210px;">
                         @forelse ($permissions as $permission)
                         <option value="{{ $permission->id }}" {{ in_array($permission->id, $rolePermissions ?? []) ? 'selected' : '' }}>
                             {{ $permission->name }}
@@ -59,8 +59,8 @@
                         @empty
 
                         @endforelse
-                    </select> -->
-                    <div id="myDropdownSelect" class="form-select dropdown @error('permissions') is-invalid @enderror">
+                    </select>
+                    <!-- <div id="myDropdownSelect" class="form-select dropdown @error('permissions') is-invalid @enderror">
                         <div onclick="toggleDropdown()">Select Permissions</div>
                         <div id="myDropdown" class="dropdown-content">
                             @forelse ($permissions as $permission)
@@ -69,9 +69,8 @@
                                 <label for="option1">{{ $permission->name }}</label>
                             </div>
                             @endforeach
-                            <!-- Add more checkboxes as needed -->
                         </div>
-                    </div>
+                    </div> -->
                     @if ($errors->has('permissions'))
                     <span class="text-danger">{{ $errors->first('permissions') }}</span>
                     @endif

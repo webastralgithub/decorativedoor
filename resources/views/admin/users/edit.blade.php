@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <div class="mb-3 row">
+            <!-- <div class="mb-3 row">
                 <label for="password" class="col-md-4 col-form-label text-md-end text-start">Password</label>
                 <div class="col-md-6">
                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                 </div>
-            </div>
+            </div> -->
 
             <div class="mb-3 row">
                 <label for="roles" class="col-md-4 col-form-label text-md-end text-start">Roles</label>

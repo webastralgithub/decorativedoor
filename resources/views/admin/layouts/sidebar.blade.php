@@ -28,7 +28,7 @@
                  <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Inventory</a> -->
              @endcanany
 
-             @canany(['create-product', 'edit-product', 'delete-product'])
+             @canany(['create-order', 'edit-order', 'delete-order','change-order-status'])
              <a class="nav-item nav-link {{ request()->is('*/orders') ? 'active' : '' }}" href="{{ route('orders.index') }}">
                  <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Orders</a>
              @endcanany

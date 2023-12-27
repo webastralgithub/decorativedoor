@@ -233,7 +233,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
 <!-- Product Details Section End -->
 
 <!-- Related Product Section Begin -->
-<section class="related-product">
+<!-- <section class="related-product">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -253,7 +253,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="{{route('product','test-loom')}}">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -268,7 +268,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="{{route('product','test-loom')}}">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -283,7 +283,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="{{route('product','test-loom')}}">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
@@ -298,14 +298,14 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="{{route('product','test-loom')}}">Heavy Double Door</a></h6>
+                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
                         <h5>$76.000</h5>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- Related Product Section End -->
 @endsection
 

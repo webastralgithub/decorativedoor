@@ -14,7 +14,8 @@ jQuery(document).ready(function () {
     });
 
     // ADD TAGS 
-    jQuery('form').on('keydown', '.variant-tags', function (e) {
+    jQuery('form').on('keydown', '#variant-tags', function (e) {
+        console.log('hererr');
         if (e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
             addTags(jQuery(this));
@@ -70,12 +71,11 @@ jQuery(document).ready(function () {
             });
             tagsWithIndex.push({ index: parentIndex, tagNames: tagNames, variantType: variantType });
         });
-        console.log("refreshVariantsData -> All variants::", tagsWithIndex);
         addVariantTableRows(tagsWithIndex);
     }
 
+
     function addVariantTableRows(variantsArr = []) {
-        console.log("addVariantTableRows");
         var variantsTableBody = jQuery('#variantsTable tbody');
         // if (jQuery('.edit-variant-table').length <= 0)
         variantsTableBody.html('');
@@ -133,6 +133,23 @@ jQuery(document).ready(function () {
         placeholder: "Select a Category",
         allowClear: true
     });
+
+    jQuery('.select-permissions').select2({
+        theme: "classic",
+        placeholder: "Select a Permission",
+        allowClear: true
+    });
+    jQuery('.select-sales_users').select2({
+        theme: "classic",
+        placeholder: "Select a User",
+        allowClear: true
+    });
+
+    jQuery('.product-title').on('input', function () {
+        var name = jQuery(this).val();
+        var slug = jQuery.trim(name).replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+        jQuery('.product-slug').val(slug);
+    });
 });
 
 
@@ -160,113 +177,113 @@ var previewImages = function (input, imgPreviewPlaceholder) {
 // });
 
 // Get the modal
-var modal = document.getElementById("myModal");
+// var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+// // Get the button that opens the modal
+// var btn = document.getElementById("myBtn");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close-modal")[0];
+// // Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close-modal")[0];
 
-// When the user clicks the button, open the modal 
-btn.onclick = function () {
-    modal.style.display = "flex";
-}
+// // When the user clicks the button, open the modal 
+// btn.onclick = function () {
+//     modal.style.display = "flex";
+// }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function () {
+//     modal.style.display = "none";
+// }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-var memes = [
-    'Dude, you smashed my turtle saying "I\'M MARIO BROS!"',
-    'Dude, you grabed seven oranges and yelled "I GOT THE DRAGON BALLS!"',
-    'Dude, you threw my hamster across the room and said "PIKACHU I CHOOSE YOU!"',
-    'Dude, you congratulated a potato for getting a part in Toy Story',
-    'Dude, you were hugging an old man with a beard screaming "DUMBLEDORE YOU\'RE ALIVE!"',
-    'Dude, you were cutting all my pinapples yelling "SPONGEBOB! I KNOW YOU\'RE THERE!"',
-];
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function (event) {
+//     if (event.target == modal) {
+//         modal.style.display = "none";
+//     }
+// }
+// var memes = [
+//     'Dude, you smashed my turtle saying "I\'M MARIO BROS!"',
+//     'Dude, you grabed seven oranges and yelled "I GOT THE DRAGON BALLS!"',
+//     'Dude, you threw my hamster across the room and said "PIKACHU I CHOOSE YOU!"',
+//     'Dude, you congratulated a potato for getting a part in Toy Story',
+//     'Dude, you were hugging an old man with a beard screaming "DUMBLEDORE YOU\'RE ALIVE!"',
+//     'Dude, you were cutting all my pinapples yelling "SPONGEBOB! I KNOW YOU\'RE THERE!"',
+// ];
 
-var random = document.querySelector('#random');
+// var random = document.querySelector('#random');
 
-random.innerHTML = memes[Math.floor(Math.random() * memes.length)];
+// random.innerHTML = memes[Math.floor(Math.random() * memes.length)];
 
-/* Time */
+// /* Time */
 
-var deviceTime = document.querySelector('.status-bar .time');
-var messageTime = document.querySelectorAll('.message .time');
+// var deviceTime = document.querySelector('.status-bar .time');
+// var messageTime = document.querySelectorAll('.message .time');
 
-deviceTime.innerHTML = moment().format('h:mm');
+// deviceTime.innerHTML = moment().format('h:mm');
 
-setInterval(function () {
-    deviceTime.innerHTML = moment().format('h:mm');
-}, 1000);
+// setInterval(function () {
+//     deviceTime.innerHTML = moment().format('h:mm');
+// }, 1000);
 
-for (var i = 0; i < messageTime.length; i++) {
-    messageTime[i].innerHTML = moment().format('h:mm A');
-}
+// for (var i = 0; i < messageTime.length; i++) {
+//     messageTime[i].innerHTML = moment().format('h:mm A');
+// }
 
-/* Message */
+// /* Message */
 
-var form = document.querySelector('.conversation-compose');
-var conversation = document.querySelector('.conversation-container');
+// var form = document.querySelector('.conversation-compose');
+// var conversation = document.querySelector('.conversation-container');
 
-form.addEventListener('submit', newMessage);
+// form.addEventListener('submit', newMessage);
 
-function newMessage(e) {
-    var input = e.target.input;
+// function newMessage(e) {
+//     var input = e.target.input;
 
-    if (input.value) {
-        var message = buildMessage(input.value);
-        conversation.appendChild(message);
-        animateMessage(message);
-    }
+//     if (input.value) {
+//         var message = buildMessage(input.value);
+//         conversation.appendChild(message);
+//         animateMessage(message);
+//     }
 
-    input.value = '';
-    conversation.scrollTop = conversation.scrollHeight;
+//     input.value = '';
+//     conversation.scrollTop = conversation.scrollHeight;
 
-    e.preventDefault();
-}
+//     e.preventDefault();
+// }
 
-function buildMessage(text) {
-    var element = document.createElement('div');
+// function buildMessage(text) {
+//     var element = document.createElement('div');
 
-    element.classList.add('message', 'sent');
+//     element.classList.add('message', 'sent');
 
-    element.innerHTML = text +
-        '<span class="metadata">' +
-        '<span class="time">' + moment().format('h:mm A') + '</span>' +
-        '<span class="tick tick-animation">' +
-        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck" x="2047" y="2061"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#92a58c"/></svg>' +
-        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg>' +
-        '</span>' +
-        '</span>';
+//     element.innerHTML = text +
+//         '<span class="metadata">' +
+//         '<span class="time">' + moment().format('h:mm A') + '</span>' +
+//         '<span class="tick tick-animation">' +
+//         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck" x="2047" y="2061"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#92a58c"/></svg>' +
+//         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg>' +
+//         '</span>' +
+//         '</span>';
 
-    return element;
-}
+//     return element;
+// }
 
-function animateMessage(message) {
-    setTimeout(function () {
-        var tick = message.querySelector('.tick');
-        tick.classList.remove('tick-animation');
-    }, 500);
-}
+// function animateMessage(message) {
+//     setTimeout(function () {
+//         var tick = message.querySelector('.tick');
+//         tick.classList.remove('tick-animation');
+//     }, 500);
+// }
 
 
-function previewImage() {
-    const image = document.querySelector("#image");
-    const imagePreview = document.querySelector("#image-preview");
+// function previewImage() {
+//     const image = document.querySelector("#image");
+//     const imagePreview = document.querySelector("#image-preview");
 
-    const oFReader = new FileReader();
-    oFReader.readAsDataURL(image.files[0]);
+//     const oFReader = new FileReader();
+//     oFReader.readAsDataURL(image.files[0]);
 
-    oFReader.onload = function (oFREvent) {
-        imagePreview.src = oFREvent.target.result;
-    };
-}
+//     oFReader.onload = function (oFREvent) {
+//         imagePreview.src = oFREvent.target.result;
+//     };
+// }

@@ -18,10 +18,10 @@ class InventoryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:create-product|edit-product|delete-product', ['only' => ['index', 'show']]);
-        $this->middleware('permission:create-product', ['only' => ['create', 'store']]);
-        $this->middleware('permission:edit-product', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete-product', ['only' => ['destroy']]);
+        $this->middleware('permission:create-inventory|edit-inventory|delete-inventory', ['only' => ['index', 'show']]);
+        $this->middleware('permission:create-inventory', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-inventory', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-inventory', ['only' => ['destroy']]);
     }
 
     /**

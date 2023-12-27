@@ -17,14 +17,14 @@ return new class extends Migration
             $table->foreignIdFor(User::class)
                 ->constrained();
             $table->string('order_date');
-            $table->tinyInteger('order_status')
-                ->comment('0 - Pending / 1 - Complete');
+            $table->tinyInteger('order_status')->default('1');
             $table->integer('total_products');
             $table->integer('sub_total');
             $table->integer('vat');
             $table->integer('total');
             $table->string('invoice_no');
-            $table->string('payment_type');
+            $table->string('payment_type')->nullable();
+            $table->tinyInteger('payment_status')->deafult('1');
             $table->integer('pay');
             $table->integer('due');
             $table->timestamps();

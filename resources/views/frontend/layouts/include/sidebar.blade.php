@@ -99,12 +99,12 @@
                 </label>
             </div>
         </div>
-        <div class="sidebar__item">
+        <!-- <div class="sidebar__item">
             <div class="latest-product__text">
                 <h4>Latest Products</h4>
                 <div class="latest-product__slider owl-carousel">
                     <div class="latest-prdouct__slider__item">
-                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
+                        <a href="{{route('product',getRandomProductSlug())}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
                                 <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
@@ -113,7 +113,7 @@
                                 <span>$76.000</span>
                             </div>
                         </a>
-                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
+                        <a href="{{route('product',getRandomProductSlug())}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
                                 <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
@@ -122,7 +122,7 @@
                                 <span>$76.000</span>
                             </div>
                         </a>
-                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
+                        <a href="{{route('product',getRandomProductSlug())}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
                                 <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
@@ -133,7 +133,7 @@
                         </a>
                     </div>
                     <div class="latest-prdouct__slider__item">
-                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
+                        <a href="{{route('product',getRandomProductSlug())}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
                                 <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
@@ -142,7 +142,7 @@
                                 <span>$76.000</span>
                             </div>
                         </a>
-                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
+                        <a href="{{route('product',getRandomProductSlug())}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
                                 <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
@@ -151,7 +151,7 @@
                                 <span>$76.000</span>
                             </div>
                         </a>
-                        <a href="{{route('product', 'arden-gonzales')}}" class="latest-product__item">
+                        <a href="{{route('product',getRandomProductSlug())}}" class="latest-product__item">
                             <div class="latest-product__item__pic">
                                 <img src="{{asset('img/featured/feature-1.jpg')}}" alt="">
                             </div>
@@ -163,6 +163,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

@@ -11,6 +11,10 @@ class PermissionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:create-permission|edit-permission|delete-permission', ['only' => ['index', 'show']]);
+        $this->middleware('permission:create-permission', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-permission', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-permission', ['only' => ['destroy']]);
     }
 
     /**
@@ -19,7 +23,7 @@ class PermissionController extends Controller
     public function index()
     {
         return view('admin.permissions.index', [
-            'permissions' => Permission::latest('id')->paginate(10)
+            'permissions' => Permission::latest('id')->paginate(env('RECORD_PER_PAGE', 10))
         ]);
     }
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderStoreRequest;
 use App\Models\Order;
 use App\Models\OrderDetails;
+use App\Models\OrderStatus;
+use App\Models\PaymentStatus;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -13,12 +15,27 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:create-order|edit-order|delete-order', ['only' => ['index', 'show']]);
+        $this->middleware('permission:create-order', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-order', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete-order', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $orders = Order::latest()->get();
+       
         return view('admin.orders.index', [
-            'orders' => $orders
+            'orders' => $orders,
+            'sales_users' => User::role('Sales Person')->get(),
+            'delivery_users' => User::role('Delivery User')->get(),
+            'assembler_users' => User::role('Product Assembler')->get(),
         ]);
+        
     }
 
     public function create()
@@ -60,8 +77,19 @@ class OrderController extends Controller
     public function updateStatus(Request $request)
     {
         $orderId = $request->order_id;
-        $orders = Order::findOrFail($orderId)->update(['order_status' => $request->new_status]);
+        $order = Order::findOrFail($orderId)->where('payment_status', PaymentStatus::PAID)->first();
+        if (!isset($order) && empty($order)) {
+            return response()->json(['error' => 'Order Payment is not done yet!']);
+        }
+        Order::findOrFail($orderId)->update(['order_status' => $request->new_status]);
         return response()->json(['success' => 'Order status has been updated!']);
+    }
+
+    public function updatePaymentMethod(Request $request)
+    {
+        $orderId = $request->order_id;
+        Order::findOrFail($orderId)->update(['order_status' => OrderStatus::READY_TO_ASSEMBLE, 'payment_status' => PaymentStatus::PAID, 'payment_type' => $request->method]);
+        return response()->json(['success' => 'Payment method has been updated!']);
     }
 
     public function show(Order $order)
@@ -69,7 +97,8 @@ class OrderController extends Controller
         $order->loadMissing(['user', 'details'])->get();
         // dd($order);
         return view('admin.orders.show', [
-            'order' => $order
+            'order' => $order,
+            'order_statuses' => OrderStatus::all()
         ]);
     }
 
@@ -87,7 +116,7 @@ class OrderController extends Controller
         }
 
         $order->update([
-            'order_status' => 1
+            'order_status' => OrderStatus::COMPLETE
         ]);
 
         return redirect()

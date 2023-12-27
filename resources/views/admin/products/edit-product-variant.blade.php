@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="card-body product-variants">
-        <div class="variantForm">
+        <div class="variantForm edit">
             @php
             $variantSingle = $product->variants;
             $variantSingle = $variantSingle->first();
@@ -50,6 +50,32 @@
                 </div>
             </div>
             @endforeach
+            @else
+            <div class="row row-cards">
+                <div class="col-sm-4 col-md-4">
+                    <label for="category_id" class="form-label">
+                        Option
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input name="variant_option[]" id="option" class="form-control" placeholder="Like Size, Color..." value="" />
+                </div>
+
+                <div class="col-sm-8 col-md-8">
+                    <label for="category_id" class="form-label">
+                        Value
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input name="variant_option_value[]" id="variant-value" class="form-control" style="display: none;" value="" />
+                    <span class="input-tags">
+                        <span class="tag-container" id="tagContainer">
+                        </span>
+                        <div id="variant_addTag">
+                            <input id="variant-tags" class="edit-variant-tags form-control tag-input error" value="" placeholder="Enter variant value seperated by comma" />
+                        </div>
+
+                    </span>
+                </div>
+            </div>
             @endif
         </div>
 
