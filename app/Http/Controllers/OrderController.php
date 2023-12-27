@@ -19,7 +19,7 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:create-order|edit-order|delete-order', ['only' => ['index', 'show']]);
+        $this->middleware('permission:create-order|edit-order|delete-order|view-order', ['only' => ['index', 'show']]);
         $this->middleware('permission:create-order', ['only' => ['create', 'store']]);
         $this->middleware('permission:edit-order', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete-order', ['only' => ['destroy']]);
@@ -28,14 +28,14 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::latest()->get();
-       
+
         return view('admin.orders.index', [
             'orders' => $orders,
             'sales_users' => User::role('Sales Person')->get(),
             'delivery_users' => User::role('Delivery User')->get(),
             'assembler_users' => User::role('Product Assembler')->get(),
         ]);
-        
+
     }
 
     public function create()
@@ -142,5 +142,28 @@ class OrderController extends Controller
         return view('admin.orders.print-invoice', [
             'order' => $order,
         ]);
+    }
+
+    public function assign_user(Request $request){
+
+        switch ($request->type){
+            case "sales":
+            $key="sales_user_id";
+                $value=$request->userid;
+            break;
+            case "assembler":
+            $key="assembler_user_id";
+                $value=$request->userid;
+            break;
+            case "delivery":
+            $key="delivery_user_id";
+                $value=$request->userid;
+            break;
+        }
+
+        $order =Order::whereId($request->orderid)->update([$key=>$value]);
+        if($order){
+          return response()->json(['success' => 'Assigned successfully']);
+        }
     }
 }

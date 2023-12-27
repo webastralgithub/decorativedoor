@@ -17,9 +17,28 @@
                     <span class="text-danger">*</span>
                 </label>
                 <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="updateOrderStatus()">
+
                     @foreach($order_statuses as $status)
-                    <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
-                    <!-- Add other status options as needed -->
+
+                        @if (\App\Models\OrderStatus::COMPLETE == $status->id && auth()->user()->can('order-status-complete'))
+                           <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                        @endif
+                            @if (\App\Models\OrderStatus::IN_PROGRESS == $status->id && auth()->user()->can('order-status-progress'))
+                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                            @endif
+                            @if (\App\Models\OrderStatus::FAILED == $status->id && auth()->user()->can('order-status-failed'))
+                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                            @endif
+                            @if (\App\Models\OrderStatus::READY_TO_ASSEMBLE == $status->id && auth()->user()->can('order-status-ready-to-assemble'))
+                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                            @endif
+                            @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id && auth()->user()->can('order-status-deliver'))
+                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                            @endif
+                            @if (\App\Models\OrderStatus::DISPATCHED == $status->id && auth()->user()->can('order-status-dispatch'))
+                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                            @endif
+
                     @endforeach
                 </select>
             </div>

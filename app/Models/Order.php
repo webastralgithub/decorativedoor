@@ -65,4 +65,9 @@ class Order extends Model
             ->orWhere('order_status', 'like', "%{$value}%")
             ->orWhere('payment_type', 'like', "%{$value}%");
     }
+
+    public function assemble()
+    {
+        return $this->belongsTo(User::class,'assembler_user_id');
+    }
 }

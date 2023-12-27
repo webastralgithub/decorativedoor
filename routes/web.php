@@ -69,8 +69,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         // 'orders' =>  \App\Http\Controllers\OrderController::class
     ]);
 
+
+
     // Route Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('/assign_user', [OrderController::class, 'assign_user'])->name('assign_user');
     Route::get('/orders/pending', OrderPendingController::class)->name('orders.pending');
     Route::get('/orders/complete', OrderCompleteController::class)->name('orders.complete');
 
