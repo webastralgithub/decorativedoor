@@ -26,8 +26,8 @@
                     <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Quantity')}}</th>
                     <th>{{__('Sales Person')}}</th>
-                    <th>{{__('Assembler')}}</th>
                     <th>{{__('Delivery By')}}</th>
+                    <th>{{__('Assembler')}}</th>
                     <th>{{__('Total')}}</th>
                     <th>{{__('Status')}}</th>
                     <th>{{__('Action')}}</th>
@@ -44,7 +44,7 @@
                         <td>{{ $order->user->name }}</td>
                         <td>
 
-                                <span  onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','assembler');">{{$order->assemble->name??"..."}}</span>
+                                <span  onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','delivery');">{{$order->delivery->name??"..."}}</span>
 
 
                         </td>

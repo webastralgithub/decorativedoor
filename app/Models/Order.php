@@ -70,4 +70,8 @@ class Order extends Model
     {
         return $this->belongsTo(User::class,'assembler_user_id');
     }
+    public function delivery()
+    {
+        return $this->belongsTo(User::class,'delivery_user_id');
+    }
 }
