@@ -6,7 +6,6 @@
         display: block;
         overflow-x: auto;
         white-space: nowrap;
-        /* Add scrollbar if the table content overflows */
     }
 </style>
 <div class="card mx-4">
@@ -17,7 +16,7 @@
         <a href="{{ route('orders.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Order</a>
         @endcan
         <div class="table-order">
-            <table class="table table-striped table-bordered" id="order" >
+            <table class="table table-striped table-bordered" id="order">
                 <thead>
                     <th>{{__('ID')}}</th>
                     <th>{{__('Order ID')}}</th>
@@ -43,16 +42,10 @@
                         <td>{{ number_format($order->total_products) }}</td>
                         <td>{{ $order->user->name }}</td>
                         <td>
-
-                                <span  onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','assembler');">{{$order->assemble->name??"..."}}</span>
-
-
+                            <span class="dots-assigned" onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','assembler');">{{$order->assemble->name ?? "..."}}</span>
                         </td>
                         <td>
-
-                                <span  onclick="return assignUser('{{$order->id}}','{{$assembler_users}}','assembler');">{{$order->assemble->name??"..."}}</span>
-
-                            </select>
+                            <span class="dots-assigned" onclick="return assignUser('{{$order->id}}','{{$assembler_users}}','assembler');">{{$order->assemble->name ?? "..."}}</span>
                         </td>
                         <td>{{ number_format($order->total) }}</td>
                         <td>
@@ -139,8 +132,8 @@
 
     }
 
-    async function assignUser(orderId,assign_users,type) {
-        var users =JSON.parse(assign_users)
+    async function assignUser(orderId, assign_users, type) {
+        var users = JSON.parse(assign_users)
         const inputOptions = {};
         users.forEach(user => {
             inputOptions[user.id] = user.name;
@@ -148,7 +141,7 @@
         await Swal.fire({
             title: "Assign User",
             input: "select",
-            inputOptions:inputOptions,
+            inputOptions: inputOptions,
             inputPlaceholder: "Select Assembler",
             showCancelButton: true,
             inputValidator: (value) => {
@@ -197,10 +190,10 @@
     $(".select-sales_users").change(function() {
 
         $.ajax({
-           url: "{{ route('assign_user') }}",
+            url: "{{ route('assign_user') }}",
             method: "post",
             data: {
-               _token: '{{ csrf_token() }}',
+                _token: '{{ csrf_token() }}',
                 orderid: $(this).attr("data-id"),
                 type: $(this).attr("data-type"),
                 userid: $(this).val()
@@ -218,7 +211,7 @@
                     }
                 });
             }
-         });
+        });
     })
     new DataTable('#order');
 </script>

@@ -104,9 +104,11 @@ div#variant_addTag {
     object-fit: cover;
     height: 200px;
 }
+
 .row-cards {
-	row-gap: 17px !important;
+    row-gap: 17px !important;
 }
+
 /*** Spinner ***/
 #spinner {
     opacity: 0;
@@ -126,6 +128,14 @@ div#variant_addTag {
     filter: invert(38%) sepia(13%) saturate(694%) hue-rotate(155deg) brightness(96%) contrast(82%);
 }
 
+span.dots-assigned {
+    cursor: pointer;
+    font-weight: 900;
+}
+
+table td {
+    text-align: center;
+}
 
 /*** Button ***/
 .btn {

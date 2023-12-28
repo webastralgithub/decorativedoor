@@ -35,7 +35,6 @@ class OrderController extends Controller
             'delivery_users' => User::role('Delivery User')->get(),
             'assembler_users' => User::role('Product Assembler')->get(),
         ]);
-
     }
 
     public function create()
@@ -144,26 +143,23 @@ class OrderController extends Controller
         ]);
     }
 
-    public function assign_user(Request $request){
+    public function assign_user(Request $request)
+    {
 
-        switch ($request->type){
-            case "sales":
-            $key="sales_user_id";
-                $value=$request->userid;
-            break;
+        switch ($request->type) {
             case "assembler":
-            $key="assembler_user_id";
-                $value=$request->userid;
-            break;
+                $key = "assembler_user_id";
+                $value = $request->userid;
+                break;
             case "delivery":
-            $key="delivery_user_id";
-                $value=$request->userid;
-            break;
+                $key = "delivery_user_id";
+                $value = $request->userid;
+                break;
         }
 
-        $order =Order::whereId($request->orderid)->update([$key=>$value]);
-        if($order){
-          return response()->json(['success' => 'Assigned successfully']);
+        $order = Order::whereId($request->orderid)->update([$key => $value]);
+        if ($order) {
+            return response()->json(['success' => 'Assigned successfully']);
         }
     }
 }

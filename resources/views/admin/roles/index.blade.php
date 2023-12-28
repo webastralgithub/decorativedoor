@@ -12,6 +12,7 @@
                 <tr>
                     <th scope="col">S#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Permissions</th>
                     <th scope="col" style="width: 250px;">Action</th>
                 </tr>
             </thead>
@@ -21,11 +22,27 @@
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $role->name }}</td>
                     <td>
+                        @if ($role->name=='Super Admin')
+                        <span class="badge bg-primary">All</span>
+                        @else
+                        @php
+                        $rolePermissions = \App\Models\Permission::join("role_has_permissions", "permission_id", "=", "id")
+                        ->where("role_id", $role->id)
+                        ->select('name')
+                        ->get();
+                        @endphp
+                        @forelse ($rolePermissions as $permission)
+                        <span class="badge bg-primary">{{ $permission->name }}</span>
+                        @empty
+                        @endforelse
+                        @endif
+                    </td>
+                    <td>
                         <form action="{{ route('roles.destroy', $role->id) }}" method="post">
                             @csrf
                             @method('DELETE')
 
-                            <a href="{{ route('roles.show', $role->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
+                            <!-- <a href="{{ route('roles.show', $role->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a> -->
 
                             @if ($role->name != 'Super Admin')
                             @can('edit-role')
@@ -51,7 +68,6 @@
                 @endforelse
             </tbody>
         </table>
-
         {{ $roles->links() }}
 
     </div>

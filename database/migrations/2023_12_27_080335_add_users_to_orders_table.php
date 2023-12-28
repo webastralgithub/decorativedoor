@@ -12,11 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedBigInteger('sales_user_id');
-            $table->unsignedBigInteger('coordinator_user_id');
-            $table->unsignedBigInteger('assembler_user_id');
-            $table->unsignedBigInteger('delivery_user_id');
-            $table->unsignedBigInteger('accounted_user_id');
+            $table->unsignedBigInteger('coordinator_user_id')->default(0);
+            $table->unsignedBigInteger('assembler_user_id')->default(0);
+            $table->unsignedBigInteger('delivery_user_id')->default(0);
+            $table->unsignedBigInteger('accounted_user_id')->default(0);
         });
     }
 
