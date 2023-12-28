@@ -25,8 +25,8 @@
                     <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Quantity')}}</th>
                     <th>{{__('Sales Person')}}</th>
-                    <th>{{__('Assembler')}}</th>
                     <th>{{__('Delivery By')}}</th>
+                    <th>{{__('Assembler')}}</th>
                     <th>{{__('Total')}}</th>
                     <th>{{__('Status')}}</th>
                     <th>{{__('Action')}}</th>
@@ -42,7 +42,7 @@
                         <td>{{ number_format($order->total_products) }}</td>
                         <td>{{ $order->user->name }}</td>
                         <td>
-                            <span class="dots-assigned" onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','assembler');">{{$order->assemble->name ?? "..."}}</span>
+                            <span class="dots-assigned" onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','delivery');">{{$order->delivery->name ?? "..."}}</span>
                         </td>
                         <td>
                             <span class="dots-assigned" onclick="return assignUser('{{$order->id}}','{{$assembler_users}}','assembler');">{{$order->assemble->name ?? "..."}}</span>
