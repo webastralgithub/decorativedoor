@@ -80,4 +80,12 @@ if (!function_exists('generateProductSlug')) {
             return null;
         }
     }
+
+    if (!function_exists('convertToReadableStatus')) {
+        function convertToReadableStatus($status)
+        {
+            $formattedStatus = ucwords(strtolower(str_replace('_', ' ', $status)));
+            return $formattedStatus;
+        }
+    }
 }

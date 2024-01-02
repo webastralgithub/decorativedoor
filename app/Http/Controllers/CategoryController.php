@@ -24,7 +24,7 @@ class CategoryController extends Controller
         $this->middleware('permission:edit-category', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete-category', ['only' => ['destroy']]);
     }
-    
+
     public function index(): View
     {
         $categories = Category::with('children')->whereNull('parent_id')->get();
@@ -52,7 +52,7 @@ class CategoryController extends Controller
             'parent_id' => $request->parent_id
         ]);
 
-        return redirect()->back()->withSuccess('success', 'Category has been created successfully.');
+        return redirect()->route('category.index')->with('success',  'Category has been created successfully.');
     }
 
     /**
@@ -91,12 +91,12 @@ class CategoryController extends Controller
             if (isset($request->parent_id)) {
                 $checkDuplicate = Category::where('name', $request->name)->where('parent_id', $request->parent_id)->first();
                 if ($checkDuplicate) {
-                    return redirect()->back()->withErrors('error', 'Category already exist in this parent.');
+                    return redirect()->route('category.index')->with('error', 'Category already exist in this parent.');
                 }
             } else {
                 $checkDuplicate = Category::where('name', $request->name)->where('parent_id', null)->first();
                 if ($checkDuplicate) {
-                    return redirect()->back()->withErrors('error', 'Category already exist with this name.');
+                    return redirect()->route('category.index')->with('error', 'Category already exist with this name.');
                 }
             }
         }
@@ -105,7 +105,7 @@ class CategoryController extends Controller
         $category->parent_id = $request->parent_id;
         $category->slug = $request->slug;
         $category->save();
-        return redirect()->back()->withSuccess('success', 'Category has been updated successfully.');
+        return redirect()->route('category.index')->with('success',  'Category has been updated successfully.');
     }
 
     /**
@@ -122,6 +122,6 @@ class CategoryController extends Controller
             }
         }
         $category->delete();
-        return redirect()->back()->withSuccess('delete', 'Category has been deleted successfully.');
+        return redirect()->route('category.index')->with('success', 'Category has been deleted successfully.');
     }
 }

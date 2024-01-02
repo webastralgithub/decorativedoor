@@ -23,9 +23,9 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-md-4 col-form-label text-md-end text-start">Category Slug*</label>
+                <label class="col-md-4 col-form-label text-md-end text-start">Category Url*</label>
                 <div class="col-md-6">
-                    <input type="text" name="slug" class="form-control" placeholder="Category Slug" value="{{old('slug')}}" required />
+                    <input type="text" name="slug" class="form-control" placeholder="Category Url" value="{{old('slug')}}" required />
                 </div>
             </div>
 
@@ -51,27 +51,7 @@
             <div class="mb-3 row">
                 <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Category">
             </div>
-        </form>
-
-        @if ($errors->any())
-        <div>
-            @foreach ($errors->all() as $error)
-            <li class="alert alert-danger">{{ $error }}</li>
-            @endforeach
-        </div>
-        @endif
-
-        @if(\Session::has('error'))
-        <div>
-            <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
-        </div>
-        @endif
-
-        @if(\Session::has('success'))
-        <div>
-            <li class="alert alert-success">{!! \Session::get('success') !!}</li>
-        </div>
-        @endif
+        </form>        
     </div>
 </div>
 @endsection

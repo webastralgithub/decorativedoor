@@ -71,8 +71,8 @@
                                 <th scope="row">1</th>
                                 <td>{{ $item->product->title }}</td>
                                 <td>{{ $item->quantity }}</td>
-                                <td>${{ number_format($item->unitcost) }}</td>
-                                <td>$ {{ number_format($item->total) }}</td>
+                                <td>${{ number_format($item->unitcost, 2, '.', ',') }}</td>
+                                <td>$ {{ number_format($item->total, 2, '.', ',') }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -86,10 +86,10 @@
                     </div>
                     <div class="col-xl-3">
                         <ul class="list-unstyled">
-                            <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>${{ number_format($order->sub_total) }}</li>
-                            <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax </span>${{ number_format($order->vat) }}</li>
+                            <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>${{ number_format($order->sub_total, 2, '.', ',') }}</li>
+                            <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax </span>${{ number_format($order->vat, 2, '.', ',') }}</li>
                         </ul>
-                        <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span style="font-size: 25px;">${{ (number_format($order->total) -number_format($order->vat)) }}</span></p>
+                        <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span style="font-size: 25px;">${{ (number_format($order->total - $order->vat, 2, '.', ',')) }}</span></p>
                     </div>
                 </div>
                 <hr>

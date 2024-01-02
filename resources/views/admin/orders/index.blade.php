@@ -25,9 +25,12 @@
                     <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Quantity')}}</th>
                     <th>{{__('Sales Person')}}</th>
-                    <th>{{__('Delivery By')}}</th>
+                    <th>{{__('Accountant')}}</th>
                     <th>{{__('Assembler')}}</th>
+                    <th>{{__('Delivery By')}}</th>
+                    @can('order_price')
                     <th>{{__('Total')}}</th>
+                    @endcan
                     @can('change-order-status')
                     <th>{{__('Status')}}</th>
                     @endcan
@@ -42,27 +45,38 @@
                         <td>-</td>
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
                         <td>-</td>
-                        <td>{{ number_format($order->total_products) }}</td>
+                        <td>{{ number_format($order->total_products, 2, '.', ',') }}</td>
                         <td class="center">
                             <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_sales_person') onclick="return assignUser('{{$order->id}}','{{$sales_users}}','sales person','{{$order->user_id}}');" @endcan>{{$order->user->name ?? "..."}}</span>
                         </td>
                         <td class="center">
-                            <span class="@if(!$order->delivery) dots-assigned @endif cursor-pointer" @can('change_delivery_user') onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','delivery','{{$order->delivery_user_id}}');" @endcan>{{$order->delivery->name ?? "..."}}</span>
+                            <span class="@if(!$order->accountant) dots-assigned @endif cursor-pointer" @can('change_accountant_user') onclick="return assignUser('{{$order->id}}','{{$accountant_users}}','accountant','{{$order->accountant_user_id}}');" @endcan>{{$order->accountant->name ?? "..."}}</span>
                         </td>
                         <td class="center">
                             <span class="@if(!$order->assemble) dots-assigned @endif cursor-pointer" @can('change_assembler_user') onclick="return assignUser('{{$order->id}}','{{$assembler_users}}','assembler','{{$order->assembler_user_id}}');" @endcan>{{$order->assemble->name ?? "..."}}</span>
                         </td>
-                        <td>{{ number_format($order->total) }}</td>
+                        <td class="center">
+                            <span class="@if(!$order->delivery) dots-assigned @endif cursor-pointer" @can('change_delivery_user') onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','delivery','{{$order->delivery_user_id}}');" @endcan>{{$order->delivery->name ?? "..."}}</span>
+                        </td>
+                        @can('order_price')
+                        <td>${{ number_format($order->total, 2, '.', ',') }}</td>
+                        @endcan
                         @can('change-order-status')
                         <td class="center">
                             <a class="text-info" onclick="return changeOrderStatus('{{$order->id}}','{{$order_statuses}}','{{$order->order_status}}');">
                                 {{ \App\Models\OrderStatus::getStatusNameById($order->order_status)}}
-                                <a>
+                            </a>
+                            @foreach ($order->details as $item)
+                            </br>
+                            <a class="text-info-product " href="{{ route('orders.show', $order->order_id) }}">
+                                (#{{$item->id}}) {{ \App\Models\OrderStatus::getStatusNameById($item->order_status)}}
+                            </a>
+                            @endforeach
                         </td>
-                        <td class="center">
-                            @php
-                            $address = getUserAddress($order->user_id);
-                            @endphp
+                        @php
+                        $address = getUserAddress($order->user_id);
+                        @endphp
+                        <td class="@if($address == '') center @endif">
                             @if($address != '')
                             <span class="">{{$address}}</span>
                             @else

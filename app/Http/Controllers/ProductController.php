@@ -73,7 +73,7 @@ class ProductController extends Controller
         if (isset($request->product_images) && $request->product_images) {
             foreach ($request->product_images as $key => $image) {
                 $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
-                $image->storeAs('products', $imgName);
+                $image->storeAs('public/products', $imgName);
 
                 // Store images in relational table
                 ProductImage::create([
@@ -158,7 +158,7 @@ class ProductController extends Controller
         if (isset($request->product_images) && $request->product_images) {
             foreach ($request->product_images as $key => $image) {
                 $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
-                $image->storeAs('products', $imgName);
+                $image->storeAs('public/products', $imgName);
 
                 // Store images in relational table
                 ProductImage::updateOrCreate(

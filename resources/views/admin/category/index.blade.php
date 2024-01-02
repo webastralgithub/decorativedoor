@@ -7,12 +7,31 @@
         @can('create-category')
         <a href="{{ route('category.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Category</a>
         @endcan
+        @if ($errors->any())
+        <div>
+            @foreach ($errors->all() as $error)
+            <li class="alert alert-danger">{{ $error }}</li>
+            @endforeach
+        </div>
+        @endif
+
+        @if(\Session::has('error'))
+        <div>
+            <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
+        </div>
+        @endif
+
+        @if(\Session::has('success'))
+        <div>
+            <li class="alert alert-success">{!! \Session::get('success') !!}</li>
+        </div>
+        @endif
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>S.No.</th>
                     <th>Category Name</th>
-                    <th>Category Slug</th>
+                    <th>Category Url</th>
                     <th>Parent Category</th>
                     <th scope="col" style="width: 250px;">Action</th>
                 </tr>

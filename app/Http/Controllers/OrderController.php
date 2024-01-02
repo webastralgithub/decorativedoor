@@ -47,7 +47,7 @@ class OrderController extends Controller
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
-        } else if (auth()->user()->hasRole('Accounted')) {
+        } else if (auth()->user()->hasRole('Accountant')) {
             $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::FAILED, OrderStatus::IN_PROGRESS])->latest()->get();
             $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
         } else {
@@ -58,6 +58,7 @@ class OrderController extends Controller
         return view('admin.orders.index', [
             'orders' => $orders,
             'sales_users' => User::role('Sales Person')->get(),
+            'accountant_users' => User::role('Accountant')->get(),
             'delivery_users' => User::role('Delivery User')->get(),
             'assembler_users' => User::role('Product Assembler')->get(),
             'order_statuses' => $order_statuses,
@@ -144,10 +145,20 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $order->loadMissing(['user', 'details'])->get();
-        // dd($order);
+        if (auth()->user()->hasRole('Product Assembler')) {
+            $access_status = [4, 5];
+        } else if (auth()->user()->hasRole('Delivery User')) {
+            $access_status = [5, 6];
+        } else if (auth()->user()->hasRole('Accountant')) {
+            $access_status = [1, 3, 4];
+        } else {
+            $access_status = [1, 2, 3, 4, 5, 6];
+        }
+        $order_statuses = OrderStatus::all();
         return view('admin.orders.show', [
             'order' => $order,
-            'order_statuses' => OrderStatus::all()
+            'order_statuses' => $order_statuses,
+            'access_status' => $access_status
         ]);
     }
 
@@ -199,6 +210,10 @@ class OrderController extends Controller
         switch ($request->type) {
             case "sales person":
                 $key = "user_id";
+                $value = $request->userid;
+                break;
+            case "accountant":
+                $key = "accountant_user_id";
                 $value = $request->userid;
                 break;
             case "assembler":

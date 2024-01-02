@@ -23,9 +23,9 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-md-4 col-form-label text-md-end text-start">Category slug*</label>
+                <label class="col-md-4 col-form-label text-md-end text-start">Category Url*</label>
                 <div class="col-md-6">
-                    <input type="text" name="slug" class="form-control" placeholder="Category slug" value="{{$category->slug}}" required />
+                    <input type="text" name="slug" class="form-control" placeholder="Category Url" value="{{$category->slug}}" required />
                 </div>
             </div>
 

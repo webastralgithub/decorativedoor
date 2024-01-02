@@ -21,6 +21,6 @@ class OrderStatus extends Model
     static function getStatusNameById($statusId = 1)
     {
         $statusId = ($statusId == 0) ? 1 : $statusId;
-        return OrderStatus::find($statusId)->name;
+        return convertToReadableStatus(OrderStatus::find($statusId)->name);
     }
 }

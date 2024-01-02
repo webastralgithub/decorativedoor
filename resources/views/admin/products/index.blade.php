@@ -22,10 +22,9 @@
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $product->title }}
-                        <note>{{ $product->sub_title }}</note>
                     </td>
                     <td>{{ $product->code }}</td>
-                    <td>{{ $product->buying_price }}</td>
+                    <td>${{ number_format($product->buying_price, 2, '.', ',') }}</td>
                     <td>
                         <form action="{{ route('products.destroy', $product->id) }}" method="post">
                             @csrf

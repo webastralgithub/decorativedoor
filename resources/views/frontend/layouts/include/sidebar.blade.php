@@ -3,7 +3,7 @@
         <div class="sidebar__item">
             @foreach($allcategory as $category)
             @php
-            if(empty($category->parent_id)):
+            if(empty($category->parent_id) && $category->name != 'Add On'):
             @endphp
             <h4>{{$category->name}}</h4>
 

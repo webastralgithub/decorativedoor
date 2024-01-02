@@ -60,7 +60,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
                             <a href="{{route('product',$product->slug)}}">
-                                <div class="featured__item__pic set-bg" data-setbg="{{asset('img/featured/feature-1.jpg')}}">
+                                <div class="featured__item__pic set-bg" data-setbg="{{asset((!empty($product->image) ? Storage::url('products/'.$product->image->path) : 'img/featured/feature-1.jpg'))}}">
                                     <!-- <ul class="featured__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                         <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="featured__item__text">
                                     <h6>{{$product->title}}</h6>
-                                    <h5>${{$product->buying_price}}</h5>
+                                    <h5>${{number_format($product->buying_price, 2, '.', ',')}}</h5>
                                 </div>
                             </a>
                         </div>

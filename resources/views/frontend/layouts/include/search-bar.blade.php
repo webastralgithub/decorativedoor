@@ -9,7 +9,7 @@
                     </div>
                     <ul>
                         @foreach($categories as $category)
-                        @if(empty($category->parent_id))
+                        @if(empty($category->parent_id) && $category->name != 'Add On')
                         <li>
                             <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
                             <ul class="under_ul sub">
