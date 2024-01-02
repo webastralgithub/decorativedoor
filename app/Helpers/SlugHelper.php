@@ -2,6 +2,7 @@
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 if (!function_exists('generateProductSlug')) {
@@ -54,6 +55,29 @@ if (!function_exists('generateProductSlug')) {
         function ordersTotal()
         {
             return Order::count();
+        }
+    }
+    if (!function_exists('getUserAddress')) {
+        function getUserAddress($userID = null)
+        {
+            if (!$userID)
+                return null;
+            $user = User::with('address')->findOrFail($userID);
+            return getFullAddress($user->address);
+        }
+    }
+
+    if (!function_exists('getFullAddress')) {
+        function getFullAddress($jsonAddress)
+        {
+            $address = json_decode($jsonAddress, true);
+
+            if ($address) {
+                $fullAddress = $address['street'] . ', ' . $address['city'] . ', ' . $address['state'] . ' ' . $address['zip_code'];
+                return $fullAddress;
+            }
+
+            return null;
         }
     }
 }

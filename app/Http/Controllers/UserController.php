@@ -9,6 +9,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -123,5 +124,24 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')
             ->withSuccess('User is deleted successfully.');
+    }
+
+    public function createAddress(Request $request)
+    {
+        $userId = $request->userId;
+
+        $user = User::find($userId);
+        $user->address()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'street' => $request->street,
+                'city' => $request->city,
+                'state' => $request->state,
+                'country' => $request->country,
+                'zip_code' => $request->zipCode,
+            ]
+        );
+
+        return response()->json(['success' => 'User address has been updated!']);
     }
 }

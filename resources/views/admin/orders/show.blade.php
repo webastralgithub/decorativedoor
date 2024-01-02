@@ -4,14 +4,14 @@
 
 <div class="card  mx-4">
     <div class="card-header">
-        <div class="row gx-3 mb-3">
-            <div class="col-md-6">
-                <h3 class="card-title">
-                    {{ __('Order Details') }}
-                </h3>
-            </div>
-            @can('change-order-status')
-            <div class="col-md-6">
+        <div class="float-start">
+            <h3>{{ __('Order') }} #{{ $order->order_id}}</h3>
+        </div>
+        <div class="float-end">
+            <a href="{{ route('orders.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
+        </div>
+        @can('change-order-status')
+        <!-- <div class="col-md-6">
                 <label class="small mb-1" for="order_status">
                     Order Status
                     <span class="text-danger">*</span>
@@ -20,53 +20,49 @@
 
                     @foreach($order_statuses as $status)
 
-                        @if (\App\Models\OrderStatus::COMPLETE == $status->id && auth()->user()->can('order-status-complete'))
-                           <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
-                        @endif
-                            @if (\App\Models\OrderStatus::IN_PROGRESS == $status->id && auth()->user()->can('order-status-progress'))
-                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
-                            @endif
-                            @if (\App\Models\OrderStatus::FAILED == $status->id && auth()->user()->can('order-status-failed'))
-                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
-                            @endif
-                            @if (\App\Models\OrderStatus::READY_TO_ASSEMBLE == $status->id && auth()->user()->can('order-status-ready-to-assemble'))
-                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
-                            @endif
-                            @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id && auth()->user()->can('order-status-deliver'))
-                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
-                            @endif
-                            @if (\App\Models\OrderStatus::DISPATCHED == $status->id && auth()->user()->can('order-status-dispatch'))
-                                <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
-                            @endif
+                    @if (\App\Models\OrderStatus::COMPLETE == $status->id && auth()->user()->can('order-status-complete'))
+                    <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                    @endif
+                    @if (\App\Models\OrderStatus::IN_PROGRESS == $status->id && auth()->user()->can('order-status-progress'))
+                    <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                    @endif
+                    @if (\App\Models\OrderStatus::FAILED == $status->id && auth()->user()->can('order-status-failed'))
+                    <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                    @endif
+                    @if (\App\Models\OrderStatus::READY_TO_ASSEMBLE == $status->id && auth()->user()->can('order-status-ready-to-assemble'))
+                    <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                    @endif
+                    @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id && auth()->user()->can('order-status-deliver'))
+                    <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                    @endif
+                    @if (\App\Models\OrderStatus::DISPATCHED == $status->id && auth()->user()->can('order-status-dispatch'))
+                    <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
+                    @endif
 
                     @endforeach
                 </select>
-            </div>
-            @endcan
-        </div>
+            </div> -->
+        @endcan
     </div>
 
     <div class="card-body">
         <div class="row row-cards mb-3">
             <div class="col">
                 <label for="order_date" class="form-label required">
-                    {{ __('Order Date') }}
+                    <strong>{{ __('Order Date') }}:</strong> {{ $order->order_date->format('d-m-Y') }}
                 </label>
-                <input type="text" id="order_date" class="form-control" value="{{ $order->order_date->format('d-m-Y') }}" disabled>
+
             </div>
             <div class="col">
                 <label for="customer" class="form-label required">
-                    {{ __('Customer') }}
+                    <strong>{{ __('Customer') }}:</strong> {{ @$order->user->name }}
                 </label>
-                <input type="text" id="customer" class="form-control" value="{{ $order->user->name }}" disabled>
             </div>
 
             <div class="col">
                 <label for="payment_type" class="form-label required">
-                    {{ __('Payment Type') }}
+                    <strong>{{ __('Payment Via') }}:</strong> {{ @$order->payment_type }}
                 </label>
-
-                <input type="text" id="payment_type" class="form-control" value="{{ $order->payment_type }}" disabled>
             </div>
         </div>
 
@@ -77,8 +73,10 @@
                         <th scope="col" class="align-middle text-center">No.</th>
                         <th scope="col" class="align-middle text-center">Photo</th>
                         <th scope="col" class="align-middle text-center">Product Name</th>
-                        <th scope="col" class="align-middle text-center">Product Code</th>
                         <th scope="col" class="align-middle text-center">Quantity</th>
+                        @can('change-order-status')
+                        <th scope="col" class="align-middle text-center">Order Status</th>
+                        @endcan
                         <th scope="col" class="align-middle text-center">Price</th>
                         <th scope="col" class="align-middle text-center">Total</th>
                     </tr>
@@ -96,13 +94,41 @@
                         </td>
                         <td class="align-middle text-center">
                             {{ $item->product->title }}
-                        </td>
-                        <td class="align-middle text-center">
-                            {{ $item->product->code }}
+                            <div>CODE:<note>{{ $item->product->code }}</note>
+                            </div>
                         </td>
                         <td class="align-middle text-center">
                             {{ $item->quantity }}
                         </td>
+                        @can('change-order-status')
+                        <td class="align-middle text-center">
+                            <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="return updateSpecificProductrStatus('{{ $item->id }}',this)" @disabled((auth()->user()->hasRole('Product Assembler') && !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-dispatch']) && in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::DISPATCHED]))
+                                ||(auth()->user()->hasRole('Delivery User') && !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-ready-to-assemble']) && in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::READY_TO_ASSEMBLE]))
+                                ||(auth()->user()->hasRole('Accounted') && !auth()->user()->can(['order-status-complete','order-status-dispatch']))&& in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::READY_TO_DELIVER,\App\Models\OrderStatus::DISPATCHED]))>
+                                @foreach($order_statuses as $status)
+                                @if (\App\Models\OrderStatus::COMPLETE == $status->id)
+                                <option value="{{$status->id}}" @selected($item->order_status == $status->id)>{{$status->name}}</option>
+                                @endif
+                                @if (\App\Models\OrderStatus::IN_PROGRESS == $status->id)
+                                <option value="{{$status->id}}" @selected($item->order_status == $status->id)>{{$status->name}}</option>
+                                @endif
+                                @if (\App\Models\OrderStatus::FAILED == $status->id)
+                                <option value="{{$status->id}}" @selected($item->order_status == $status->id)>{{$status->name}}</option>
+                                @endif
+                                @if (\App\Models\OrderStatus::READY_TO_ASSEMBLE == $status->id)
+                                <option value="{{$status->id}}" @selected($item->order_status == $status->id)>{{$status->name}}</option>
+                                @endif
+                                @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id)
+                                <option value="{{$status->id}}" @selected($item->order_status == $status->id)>{{$status->name}}</option>
+                                @endif
+                                @if (\App\Models\OrderStatus::DISPATCHED == $status->id)
+                                <option value="{{$status->id}}" @selected($item->order_status == $status->id)>{{$status->name}}</option>
+                                @endif
+
+                                @endforeach
+                            </select>
+                        </td>
+                        @endcan
                         <td class="align-middle text-center">
                             {{ number_format($item->unitcost, 2) }}
                         </td>
@@ -112,13 +138,7 @@
                     </tr>
                     @endforeach
                     <tr>
-                        <td colspan="6" class="text-end">
-                            Payed amount
-                        </td>
-                        <td class="text-center">{{ number_format($order->pay, 2) }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" class="text-end">Due</td>
+                        <td colspan="6" class="text-end">Shipping Charges</td>
                         <td class="text-center">{{ number_format($order->due, 2) }}</td>
                     </tr>
                     <tr>
@@ -127,7 +147,7 @@
                     </tr>
                     <tr>
                         <td colspan="6" class="text-end">Total</td>
-                        <td class="text-center">{{ number_format($order->total, 2) }}</td>
+                        <td class="text-center">{{ number_format(($order->total - $order->vat) -$order->due, 2) }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -137,16 +157,14 @@
 @endsection
 @section('scripts')
 <script>
-    function updateOrderStatus() {
-        var orderId = "{{ $order->id }}";
-        var newStatus = document.getElementById('order_status').value;
-
+    function updateSpecificProductrStatus(itemId, selectElement) {
+        var newStatus = selectElement.value;
         // Send AJAX request to update order status
         jQuery.ajax({
-            url: '/admin/update-order-status', // Replace with your actual route
+            url: '/admin/update-product-status', // Replace with your actual route
             type: 'POST',
             data: {
-                order_id: orderId,
+                item_id: itemId,
                 new_status: newStatus,
                 _token: '{{ csrf_token() }}' // Add CSRF token if needed
             },

@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Nette\Utils\Random;
 
 class CheckoutController extends Controller
 {
@@ -27,17 +28,17 @@ class CheckoutController extends Controller
             $totalPrice = 0;
             foreach (session('cart') as $id => $details) {
                 $totalProducts += (int)$details['quantity'];
-                $totalPrice += number_format($details['quantity'] * $details['variant_price']);
+                $totalPrice += number_format($details['quantity'] * (!empty($details['variant_price']) ? $details['variant_price'] : $details['price']));
             }
             $productsArr = [
-                'user_id' => (Auth::check()) ? Auth::user()->id : 3,
+                'user_id' => (Auth::check()) ? Auth::user()->id : 0,
                 'order_date' => Carbon::now(),
                 'order_status' => OrderStatus::IN_PROGRESS,
                 'total_products' => $totalProducts,
                 'sub_total' => $totalPrice,
                 'vat' => 0,
                 'total' => $totalPrice,
-                'invoice_no' => '',
+                'invoice_no' => Random::generate(10),
                 'payment_type' => 'demo',
                 'pay' => 0,
                 'due' => 0,
@@ -47,7 +48,7 @@ class CheckoutController extends Controller
                 foreach ($cart as $key => $product) {
                     $selectedVariant = null;
                     $productData = null;
-                    if (!empty($product['variant_data'])) {
+                    if (!empty($product['variant_data']) && count($product['variant_data']) > 0) {
                         $firstKey = array_key_first($product['variant_data']);
                         $selectedVariant = $product['variant_data'][$firstKey];
                         $productData =  ProductVariant::find($product['product_id']);

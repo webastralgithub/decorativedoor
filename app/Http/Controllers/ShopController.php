@@ -49,7 +49,8 @@ class ShopController extends Controller
         // dd($cart);
         $productId = @$request->product_id;
         $product = Product::findOrFail($productId);
-        if (!empty($product->variants) && !empty($request->variant)) {
+        // dd(count($product->variants));
+        if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
             $selectedVariant = json_decode($request->variant, true);
             if (isset($cart[$productId]) && isset($cart[$productId]['variant_data'][$selectedVariant['id']])) {
                 $cart[$productId]['quantity']++;
@@ -66,18 +67,21 @@ class ShopController extends Controller
                         // "variant_price" => 0
 
                     ];
-                $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] = !empty($request->quantity) ? $request->quantity : 1;
+                if (!empty($selectedVariant))
+                    $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] = !empty($request->quantity) ? $request->quantity : 1;
             }
-            $cart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
-            $cart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
-            $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['buying_price'];
-            $pricevariant = array_values($cart[$productId]['variant_data']);
-            $variant_prices = [];
-            foreach ($pricevariant as $price) {
-                $variant_prices[] = $price['price'];
+            if (!empty($selectedVariant)) {
+                $cart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
+                $cart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
+                $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['buying_price'];
+                $pricevariant = array_values($cart[$productId]['variant_data']);
+                $variant_prices = [];
+                foreach ($pricevariant as $price) {
+                    $variant_prices[] = $price['price'];
+                }
+                $price = array_sum($variant_prices);
             }
-            $price = array_sum($variant_prices);
-            $cart[$productId]['variant_price'] = $price;
+            $cart[$productId]['variant_price'] = $price || $product->buying_price;
         } else {
             if (isset($cart[$productId])) {
                 $cart[$productId]['quantity']++;

@@ -22,6 +22,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->integer('variant_id')->default(0);
+            $table->tinyInteger('order_status')->default('1');
             $table->integer('quantity');
             $table->integer('unitcost');
             $table->integer('total');

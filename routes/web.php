@@ -53,7 +53,7 @@ Route::patch('add_on', [ShopController::class, 'addOn'])->name('add_on.cart');
 Route::delete('remove-from-cart', [ShopController::class, 'remove_cart'])->name('remove.from.cart');
 Route::post('checkout', [ShopController::class, 'checkout'])->name('checkout');
 Route::get('get_price', [ShopController::class, 'get_price'])->name('get.price');
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function () {
     //dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -68,43 +68,23 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         'deliveries' =>  DeliveriesController::class,
         // 'orders' =>  \App\Http\Controllers\OrderController::class
     ]);
-
-
-
     // Route Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::post('/assign_user', [OrderController::class, 'assign_user'])->name('assign_user');
     Route::get('/orders/pending', OrderPendingController::class)->name('orders.pending');
     Route::get('/orders/complete', OrderCompleteController::class)->name('orders.complete');
-
     Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
     Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
     Route::post('/update-payment-method', [OrderController::class, 'updatePaymentMethod'])->name('orders.pay');
-
-    // SHOW ORDER
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::put('/orders/update/{order}', [OrderController::class, 'update'])->name('orders.update');
-
-    // TODO: Remove from OrderController
     Route::get('/orders/details/{order_id}/download', [OrderController::class, 'downloadInvoice'])->name('order.downloadInvoice');
     Route::post('/update-order-status', [OrderController::class, 'updateStatus']);
-
+    Route::post('/update-product-status', [OrderController::class, 'updateProductStatus']);
+    Route::post('/update-user-address', [UserController::class, 'createAddress']);
 
     Route::get('/deliverie', [DeliveriesController::class, 'index'])->name('deliveries');
     Route::get('/deliveries/track', [DeliveriesController::class, 'orderTrack'])->name('order.track');
     Route::post('deliveries/track/order', [DeliveriesController::class, 'deliveryTrackOrder'])->name('delivery.track.order');
-
-    // Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
-    // Route::get('/purchases/create', [PurchaseController::class, 'create'])->name('purchases.create');
-    // Route::post('/purchases', [PurchaseController::class, 'store'])->name('purchases.store');
-
-    // //Route::get('/purchases/show/{purchase}', [PurchaseController::class, 'show'])->name('purchases.show');
-    // Route::get('/purchases/{purchase}', [PurchaseController::class, 'show'])->name('purchases.show');
-
-    // //Route::get('/purchases/edit/{purchase}', [PurchaseController::class, 'edit'])->name('purchases.edit');
-    // Route::get('/purchases/{purchase}/edit', [PurchaseController::class, 'edit'])->name('purchases.edit');
-
-    // Route::put('/purchases/update/{purchase}', [PurchaseController::class, 'update'])->name('purchases.update');
-    // Route::delete('/purchases/delete/{purchase}', [PurchaseController::class, 'destroy'])->name('purchases.delete');
 });
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.order');

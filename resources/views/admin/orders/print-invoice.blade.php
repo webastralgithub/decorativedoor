@@ -1,167 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.layouts.app')
 
-<head>
-    <title>
-        {{ config('app.name') }}
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <!-- External CSS libraries -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('assets/invoice/css/bootstrap.min.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ asset('assets/invoice/fonts/font-awesome/css/font-awesome.min.css') }}">
-    <!-- Google fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Custom Stylesheet -->
-    <link type="text/css" rel="stylesheet" href="{{ asset('assets/invoice/css/style.css') }}">
-</head>
+@section('content')
 
-<body>
-    <div class="invoice-16 invoice-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="invoice-inner-9" id="invoice_wrapper">
-                        <div class="invoice-top">
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="logo">
-                                        <h1>Name Store</h1>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <div class="invoice">
-                                        <h1>
-                                            Invoice # <span>{{ $order->invoice_no }}</span>
-                                        </h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="invoice-info">
-                            <div class="row">
-                                <div class="col-sm-6 mb-50">
-                                    <div class="invoice-number">
-                                        <h4 class="inv-title-1">
-                                            Invoice date:
-                                        </h4>
-                                        <p class="invo-addr-1">
-                                            {{ $order->order_date }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 mb-50">
-                                    <h4 class="inv-title-1">Customer</h4>
-                                    <p class="inv-from-1">{{ $order->user->name }}</p>
-                                    <p class="inv-from-1">{{ $order->user->phone }}</p>
-                                    <p class="inv-from-1">{{ $order->user->email }}</p>
-                                    <p class="inv-from-2">{{ $order->user->address }}</p>
-                                </div>
-                                <div class="col-sm-6 text-end mb-50">
-                                    <h4 class="inv-title-1">Store</h4>
-                                    <p class="inv-from-1">Name Store</p>
-                                    <p class="inv-from-1">(+62) 123 123 123</p>
-                                    <p class="inv-from-1">email@example.com</p>
-                                    <p class="inv-from-2">Cirebon, Jawa Barat, Indonesia</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order-summary">
-                            <div class="table-outer">
-                                <table class="default-table invoice-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="align-middle">Item</th>
-                                            <th class="align-middle text-center">Price</th>
-                                            <th class="align-middle text-center">Quantity</th>
-                                            <th class="align-middle text-center">Subtotal</th>
-                                        </tr>
-                                    </thead>
+<div class="card mx-4">
+    <div class="card-body">
+        <div class="container mb-5 mt-3">
+            <div class="row d-flex align-items-baseline">
+                <div class="col-xl-9">
+                    <p style="color: #7e8d9f;font-size: 20px;">Invoice >> <strong>ID: #{{ $order->invoice_no }}</strong></p>
+                </div>
+                <div class="col-xl-3 float-end">
+                    <a href="javascript:window.print()" class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i class="fas fa-print text-primary"></i> Print</a>
+                </div>
+                <hr>
+            </div>
 
-                                    <tbody>
-                                        {{-- @foreach ($orderDetails as $item)--}}
-                                        @foreach ($order->details as $item)
-                                        <tr>
-                                            <td class="align-middle">
-                                                {{ $item->product->name }}
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                {{ number_format($item->unitcost) }}
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                {{ $item->quantity }}
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                {{ number_format($item->total) }}
-                                            </td>
-                                        </tr>
-                                        @endforeach
-
-                                        <tr>
-                                            <td colspan="3" class="text-end">
-                                                <strong>
-                                                    Subtotal
-                                                </strong>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <strong>
-                                                    {{ number_format($order->sub_total) }}
-                                                </strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="text-end">
-                                                <strong>Tax</strong>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <strong>
-                                                    {{ number_format($order->vat) }}
-                                                </strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="text-end">
-                                                <strong>Total</strong>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <strong>
-                                                    {{ number_format($order->total) }}
-                                                </strong>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        {{-- <div class="invoice-informeshon-footer">
-                                <ul>
-                                    <li><a href="#">www.website.com</a></li>
-                                    <li><a href="mailto:sales@hotelempire.com">info@example.com</a></li>
-                                    <li><a href="tel:+088-01737-133959">+62 123 123 123</a></li>
-                                </ul>
-                            </div> --}}
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
+                        <p class="pt-0">Home Decor</p>
                     </div>
-                    <div class="invoice-btn-section clearfix d-print-none">
-                        <a href="javascript:window.print()" class="btn btn-lg btn-print">
-                            <i class="fa fa-print"></i>
-                            Print Invoice
-                        </a>
-                        <a id="invoice_download_btn" class="btn btn-lg btn-download">
-                            <i class="fa fa-download"></i>
-                            Download Invoice
-                        </a>
+
+                </div>
+
+
+                <div class="row">
+                    @if($order->user)
+                    <div class="col-xl-8">
+                        <ul class="list-unstyled">
+                            <li class="text-muted">To: <span style="color:#5d9fc5 ;">{{ @$order->user->name }}</span></li>
+                            <li class="text-muted">{{ @$order->user->address->street .' '. @$order->user->address->city }}</li>
+                            <li class="text-muted">{{@$order->user->address->state}}, {{@$order->user->address->country}}</li>
+                            <li class="text-muted"><i class="fas fa-phone"></i> {{ @$order->user->phone }}</li>
+                        </ul>
+                    </div>
+                    @endif
+                    <div class="col-xl-4">
+                        <p class="text-muted">Invoice</p>
+                        <ul class="list-unstyled">
+                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i>
+                                <span class="fw-bold">ID:</span>#{{$order->order_id}}
+                            </li>
+                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i>
+                                <span class="fw-bold">Creation Date: </span>{{ $order->order_date->format('M d, Y') }}
+                            </li>
+                            <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i>
+                                <span class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
+                                    {{ \App\Models\OrderStatus::getStatusNameById($order->order_status)}}
+                                </span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+
+                <div class="row my-2 mx-1 justify-content-center">
+                    <table class="table table-striped table-borderless">
+                        <thead style="background-color:#84B0CA ;" class="text-white">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($order->details as $item)
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>{{ $item->product->title }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>${{ number_format($item->unitcost) }}</td>
+                                <td>$ {{ number_format($item->total) }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-xl-8">
+                        <p class="ms-3">Add additional notes and payment information</p>
+
+                    </div>
+                    <div class="col-xl-3">
+                        <ul class="list-unstyled">
+                            <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>${{ number_format($order->sub_total) }}</li>
+                            <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax </span>${{ number_format($order->vat) }}</li>
+                        </ul>
+                        <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span style="font-size: 25px;">${{ (number_format($order->total) -number_format($order->vat)) }}</span></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xl-10">
+                        <p>Thank you for your purchase</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-    <script src="{{ asset('assets/invoice/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/invoice/js/jspdf.min.js') }}"></script>
-    <script src="{{ asset('assets/invoice/js/html2canvas.js') }}"></script>
-    <script src="{{ asset('assets/invoice/js/app.js') }}"></script>
-</body>
-
-</html>
+</div>
+@endsection

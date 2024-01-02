@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -27,13 +28,39 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::latest()->get();
+        if (auth()->user()->hasRole('Product Assembler')) {
+            // $orders = Order::where('assembler_user_id', Auth::user()->id)->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])->latest()->get();
+            $orders = Order::whereHas('details', function ($query) {
+                $query->orWhereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER]);
+            })
+                ->where('assembler_user_id', Auth::user()->id)
+                ->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])
+                ->latest()
+                ->get();
+            $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
+        } else if (auth()->user()->hasRole('Delivery User')) {
+            $orders = Order::whereHas('details', function ($query) {
+                $query->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED]);
+            })
+                ->where('delivery_user_id', Auth::user()->id)
+                ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED])
+                ->latest()
+                ->get();
+            $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
+        } else if (auth()->user()->hasRole('Accounted')) {
+            $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::FAILED, OrderStatus::IN_PROGRESS])->latest()->get();
+            $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
+        } else {
+            $orders = Order::latest()->get();
+            $order_statuses = OrderStatus::all();
+        }
 
         return view('admin.orders.index', [
             'orders' => $orders,
             'sales_users' => User::role('Sales Person')->get(),
             'delivery_users' => User::role('Delivery User')->get(),
             'assembler_users' => User::role('Product Assembler')->get(),
+            'order_statuses' => $order_statuses,
         ]);
     }
 
@@ -81,6 +108,29 @@ class OrderController extends Controller
             return response()->json(['error' => 'Order Payment is not done yet!']);
         }
         Order::findOrFail($orderId)->update(['order_status' => $request->new_status]);
+        return response()->json(['success' => 'Order status has been updated!']);
+    }
+
+    public function updateProductStatus(Request $request)
+    {
+        $itemId = $request->item_id;
+        $orderDetails = OrderDetails::findOrFail($itemId);
+        if (!isset($orderDetails) && empty($orderDetails)) {
+            return response()->json(['error' => 'Order is not valid!']);
+        }
+        // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);
+
+        if ($orderDetails->order->details->count() == 1) {
+            $orderDetails->order->update(['order_status' => $request->new_status]);
+            $orderDetails->update(['order_status' => $request->new_status]);
+
+            return response()->json(['success' => 'Order status updated successfully']);
+        } else {
+            $orderDetails->update(['order_status' => $request->new_status]);
+            return response()->json(['success' => 'Order status updated successfully']);
+        }
+
+
         return response()->json(['success' => 'Order status has been updated!']);
     }
 
@@ -147,6 +197,10 @@ class OrderController extends Controller
     {
 
         switch ($request->type) {
+            case "sales person":
+                $key = "user_id";
+                $value = $request->userid;
+                break;
             case "assembler":
                 $key = "assembler_user_id";
                 $value = $request->userid;

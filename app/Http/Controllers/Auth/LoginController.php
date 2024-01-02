@@ -45,6 +45,12 @@ class LoginController extends Controller
         $user = User::find(Auth::user()->id);
         if ($user->hasRole('Super Admin')) {
             return '/admin/dashboard';
+        } else if ($user->hasRole('Delivery User')) {
+            return '/admin/dashboard';
+        } else if ($user->hasRole('Product Assembler')) {
+            return '/admin/dashboard';
+        } else if ($user->hasRole('Accounted')) {
+            return '/admin/dashboard';
         } else {
             return '/';
         }

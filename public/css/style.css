@@ -133,8 +133,29 @@ span.dots-assigned {
     font-weight: 900;
 }
 
+span.cursor-pointer {
+    cursor: pointer;
+}
+
+h2#swal2-title {
+    font-size: 20px !important;
+}
+
+select#swal2-select {
+    border: 1px solid;
+    font-size: 15px;
+}
+
+a.text-info {
+    cursor: pointer;
+}
+
 table td {
     text-align: center;
+}
+
+.swal2-html-container .flex {
+    display: flex;
 }
 
 /*** Button ***/
