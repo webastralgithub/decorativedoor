@@ -120,17 +120,19 @@
             @foreach($products as $product)
             <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                        <!-- <ul class="featured__item__pic__hover">
+                    <a href="{{route('product',$product->slug)}}">
+                        <div class="featured__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
+                            <!-- <ul class="featured__item__pic__hover">
                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                         </ul> -->
-                    </div>
-                    <div class="featured__item__text">
-                        <h6><a href="{{route('product',$product->slug)}}">{{$product->title}}</a></h6>
-                        <h5>${{$product->buying_price}}</h5>
-                    </div>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6>{{$product->title}}</h6>
+                            <h5>${{$product->buying_price}}</h5>
+                        </div>
+                    </a>
                 </div>
             </div>
             @endforeach

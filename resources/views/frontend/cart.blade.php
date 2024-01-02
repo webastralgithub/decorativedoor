@@ -8,6 +8,7 @@
             <th style="width:50%">Product</th>
             <th style="width:10%">Price</th>
             <th style="width:8%">Quantity</th>
+            <th style="width:10%">SubTotal</th>
             <th style="width:10%"></th>
         </tr>
     </thead>
@@ -37,7 +38,9 @@
             <td data-th="Quantity">
                 <input type="number" value="{{ $subVariant['quantity'] }}" class="form-control quantity update-cart" />
             </td>
-
+            <td data-th="SubTotal">
+                ${{ ($subVariant['price'] * $subVariant['quantity']) }}
+            </td>
             <td class="actions" data-th="">
                 <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
             </td>
@@ -66,6 +69,9 @@
             <td data-th="Price">${{ $details['variant_price'] }}</td>
             <td data-th="Quantity">
                 <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
+            </td>
+            <td data-th="SubTotal">
+                ${{ ($details['variant_price'] * $details['quantity']) }}
             </td>
 
             <td class="actions" data-th="">

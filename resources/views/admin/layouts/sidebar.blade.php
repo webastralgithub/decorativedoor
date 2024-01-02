@@ -2,7 +2,7 @@
  <div class="sidebar pe-4 pb-3">
      <nav class="navbar bg-light navbar-light">
          <a href="{{route('dashboard')}}" class="navbar-brand mx-4 mt-3">
-             <h3>Home Docer</h3>
+             <h3>Door Admin</h3>
          </a>
          <div class="navbar-nav w-100">
              <a class="nav-item nav-link {{ request()->is('*/dashboard') ? 'active' : '' }}" href="{{route('dashboard')}}">

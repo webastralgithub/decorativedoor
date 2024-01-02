@@ -8,7 +8,7 @@
                     </div>
                     <ul>
                         <li>Address: 00-00 Road 00000 Dummy Address</li>
-                        <li>Phone: +1(604) 446-5841</li>
+                        <li>Phone: +1 (604) 446-5841</li>
                         <li>Email: hello@dummy.com</li>
                     </ul>
                 </div>

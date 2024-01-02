@@ -43,23 +43,23 @@
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
                         <td>-</td>
                         <td>{{ number_format($order->total_products) }}</td>
-                        <td>
+                        <td class="center">
                             <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_sales_person') onclick="return assignUser('{{$order->id}}','{{$sales_users}}','sales person','{{$order->user_id}}');" @endcan>{{$order->user->name ?? "..."}}</span>
                         </td>
-                        <td>
+                        <td class="center">
                             <span class="@if(!$order->delivery) dots-assigned @endif cursor-pointer" @can('change_delivery_user') onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','delivery','{{$order->delivery_user_id}}');" @endcan>{{$order->delivery->name ?? "..."}}</span>
                         </td>
-                        <td>
+                        <td class="center">
                             <span class="@if(!$order->assemble) dots-assigned @endif cursor-pointer" @can('change_assembler_user') onclick="return assignUser('{{$order->id}}','{{$assembler_users}}','assembler','{{$order->assembler_user_id}}');" @endcan>{{$order->assemble->name ?? "..."}}</span>
                         </td>
                         <td>{{ number_format($order->total) }}</td>
                         @can('change-order-status')
-                        <td>
+                        <td class="center">
                             <a class="text-info" onclick="return changeOrderStatus('{{$order->id}}','{{$order_statuses}}','{{$order->order_status}}');">
                                 {{ \App\Models\OrderStatus::getStatusNameById($order->order_status)}}
                                 <a>
                         </td>
-                        <td>
+                        <td class="center">
                             @php
                             $address = getUserAddress($order->user_id);
                             @endphp

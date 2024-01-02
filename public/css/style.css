@@ -150,7 +150,7 @@ a.text-info {
     cursor: pointer;
 }
 
-table td {
+table td.center {
     text-align: center;
 }
 

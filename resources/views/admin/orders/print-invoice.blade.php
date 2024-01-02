@@ -19,7 +19,7 @@
                 <div class="col-md-12">
                     <div class="text-center">
                         <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
-                        <p class="pt-0">Home Decor</p>
+                        <p class="pt-0">Door Admin</p>
                     </div>
 
                 </div>

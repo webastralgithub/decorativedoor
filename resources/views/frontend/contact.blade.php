@@ -204,7 +204,7 @@
                     how we can help you?</li>
                 <span class="hightlight-contact-info">
                     <li class="email-info"><i class="fa fa-envelope" aria-hidden="true"></i> info@demo.com</li>
-                    <li><i class="fa fa-phone" aria-hidden="true"></i> <span class="highlight-text">+1(604) 446-5841</span></li>
+                    <li><i class="fa fa-phone" aria-hidden="true"></i> <span class="highlight-text">+1 (604) 446-5841</span></li>
                 </span>
             </ul>
         </div>

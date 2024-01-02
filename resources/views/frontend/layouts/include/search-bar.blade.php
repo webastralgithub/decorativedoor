@@ -41,7 +41,7 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="hero__search__phone__text">
-                            <h5>+1(604) 446-5841</h5>
+                            <h5>+1 (604) 446-5841</h5>
                         </div>
                     </div>
                 </div>
