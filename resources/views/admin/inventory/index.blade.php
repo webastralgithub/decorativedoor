@@ -1,19 +1,17 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="card mx-4">
-    <div class="card-header">
-        <div class="float-start">
-            Inventory Information
-        </div>
-        <div class="float-end">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>Inventory Information</h3>
+        <div class="top-bntspg-hdr">
             <a href="{{ route('category.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
         </div>
     </div>
-    <div class="card-body">
+    <div class="content-body">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header">
                         <h4 class="card-title">{{__('Statistics_by_Quantity_(TOP 15)')}}</h4>
                     </div>

@@ -8,13 +8,19 @@
         white-space: nowrap;
     }
 </style>
-<div class="card mx-4">
-    <div class="card-header">Manage Orders</div>
-    <div class="card-body">
 
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>Manage Orders</h3>
+
+        <div class="top-bntspg-hdr">
         @can('create-order')
         <a href="{{ route('orders.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Order</a>
         @endcan
+        </div>
+    </div>
+
+    <div class="content-body">
         <div class="table-order">
             <table class="table table-striped table-bordered" id="order">
                 <thead>
@@ -62,7 +68,7 @@
                         <td>${{ number_format($order->total, 2, '.', ',') }}</td>
                         @endcan
                         @can('change-order-status')
-                        <td class="center">
+                        <td class="center status-links">
                             <a class="text-info" onclick="return changeOrderStatus('{{$order->id}}','{{$order_statuses}}','{{$order->order_status}}');">
                                 {{ \App\Models\OrderStatus::getStatusNameById($order->order_status)}}
                             </a>

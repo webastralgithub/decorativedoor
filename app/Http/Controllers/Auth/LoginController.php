@@ -43,6 +43,7 @@ class LoginController extends Controller
     public function redirectTo()
     {
         $user = User::find(Auth::user()->id);
+        // dd($user->hasRole('Accountant'));
         if ($user->hasRole('Super Admin')) {
             return '/admin/dashboard';
         } else if ($user->hasRole('Delivery User')) {
