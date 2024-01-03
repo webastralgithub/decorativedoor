@@ -43,7 +43,7 @@
                             @endif
                         </span>
                         <div id="variant_addTag">
-                            <input id="variant-tags" class="edit-variant-tags form-control tag-input error" value="" placeholder="Enter variant value seperated by comma" />
+                            <input data-check="existing" id="variant-tags" class="edit-variant-tags form-control tag-input error" value="" placeholder="Enter variant value seperated by comma" />
                         </div>
 
                     </span>
@@ -70,7 +70,7 @@
                         <span class="tag-container" id="tagContainer">
                         </span>
                         <div id="variant_addTag">
-                            <input id="variant-tags" class="edit-variant-tags form-control tag-input error" value="" placeholder="Enter variant value seperated by comma" />
+                            <input data-check="new" id="variant-tags" class="edit-variant-tags form-control tag-input error" value="" placeholder="Enter variant value seperated by comma" />
                         </div>
 
                     </span>
@@ -98,6 +98,7 @@
                 <tbody>
                     @foreach($product->variants->all() as $variant)
                     <tr>
+                        <input type="hidden" name="variant_option_type[]" class="form-control" value='{{$variant->option_type}}'>
                         <td><input type="text" name="variant_name[]" class="form-control" placeholder="Enter Name" value="{{$variant->name}}"></td>
                         <td><input type="text" name="variant_value[]" class="form-control" placeholder="Enter Value" value="{{$variant->value}}"></td>
                         <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="{{$variant->code}}"></td>

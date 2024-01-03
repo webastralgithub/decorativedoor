@@ -7,7 +7,8 @@ jQuery(document).ready(function () {
         // Clear the input values in the cloned row
         clonedRow.find('input').val('');
         clonedRow.find('.tag-container').html('');
-        clonedRow.find('.tag-container').attr('data-count', parseInt(clonedRow.find('.tag-container').attr('data-count')) + 1)
+        clonedRow.find('.tag-container').attr('data-count', parseInt(clonedRow.find('.tag-container').attr('data-count')) + 1);
+        clonedRow.find('.edit-variant-tags').attr('data-check', 'new');
 
         // Append the cloned row to the form
         jQuery('.variantForm').append(clonedRow);
@@ -34,6 +35,7 @@ jQuery(document).ready(function () {
 
     function addTags(currentEle) {
         var tagsInput = currentEle; //jQuery('#variant-tags');
+        var optionCheck = currentEle.attr('data-check'); //jQuery('#variant-tags');
         var tagContainer = currentEle.parent().parent().find('.tag-container'); //jQuery('#tagContainer');
         var existingTags = checkDuplicateTag(tagContainer);
 
@@ -48,12 +50,12 @@ jQuery(document).ready(function () {
                 tagsInput.val('');
                 // Create a new table row for the variant
                 jQuery('#variantsTable').css('display', 'block');
-                refreshVariantsData();
+                refreshVariantsData(optionCheck);
             }
         });
     }
 
-    function refreshVariantsData() {
+    function refreshVariantsData(optionCheck = 'new') {
         var tagsWithIndex = [];
 
         jQuery('.variantForm .row-cards').each(function (index) {
@@ -71,14 +73,13 @@ jQuery(document).ready(function () {
             });
             tagsWithIndex.push({ index: parentIndex, tagNames: tagNames, variantType: variantType });
         });
-        addVariantTableRows(tagsWithIndex);
+        addVariantTableRows(tagsWithIndex, optionCheck);
     }
 
 
-    function addVariantTableRows(variantsArr = []) {
+    function addVariantTableRows(variantsArr = [], optionCheck = 'new') {
         var variantsTableBody = jQuery('#variantsTable tbody');
-        // if (jQuery('.edit-variant-table').length <= 0)
-        variantsTableBody.html('');
+
         const combinations = [];
         const numIndexes = variantsArr.length;
 
@@ -102,14 +103,35 @@ jQuery(document).ready(function () {
                 done = true;
             }
         }
-        combinations.length > 0 && combinations.map((ele, index) => {
-            let variantCode = '';
-            if (Array.isArray(ele))
-                variantCode = ele.join('/');
-            else
-                variantCode = ele;
+
+        if (optionCheck == 'existing') {
+
+            const lastTag = variantsArr[0].tagNames[variantsArr[0].tagNames.length - 1];
+
             let tableTR =
                 `<tr>
+                <input type="hidden" name="variant_option_type[]" class="form-control" value='${JSON.stringify(variantsArr, null, 2)}'>
+                <td><input type="text" name="variant_name[]" class="form-control" placeholder="Enter Name" value="${lastTag}"></td>
+                <td><input type="text" name="variant_value[]" class="form-control" placeholder="Enter Value" ></td>
+                <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="${lastTag}-"></td>
+                <td><input type="text" name="variant_quantity[]" class="form-control" placeholder="Enter Quantity"></td>
+                <td><input type="text" name="variant_buying_price[]" class="form-control" placeholder="Enter Buying Price"></td>
+                <td><input type="text" name="variant_notes[]" class="form-control" placeholder="Enter Notes"></td>
+            </tr>`;
+            variantsTableBody.append(tableTR);
+
+        } else {
+            //if (jQuery('.edit-variant-table').length <= 0)
+            variantsTableBody.html('');
+
+            combinations.length > 0 && combinations.map((ele, index) => {
+                let variantCode = '';
+                if (Array.isArray(ele))
+                    variantCode = ele.join('/');
+                else
+                    variantCode = ele;
+                let tableTR =
+                    `<tr>
                 <input type="hidden" name="variant_option_type[]" class="form-control" value='${JSON.stringify(variantsArr, null, 2)}'>
                 <td><input type="text" name="variant_name[]" class="form-control" placeholder="Enter Name" value="${variantCode}"></td>
                 <td><input type="text" name="variant_value[]" class="form-control" placeholder="Enter Value" ></td>
@@ -118,8 +140,9 @@ jQuery(document).ready(function () {
                 <td><input type="text" name="variant_buying_price[]" class="form-control" placeholder="Enter Buying Price"></td>
                 <td><input type="text" name="variant_notes[]" class="form-control" placeholder="Enter Notes"></td>
             </tr>`;
-            variantsTableBody.append(tableTR);
-        });
+                variantsTableBody.append(tableTR);
+            });
+        }
     }
 
     // Remove tag on close button click
