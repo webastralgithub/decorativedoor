@@ -28,7 +28,7 @@ class CheckoutController extends Controller
             $totalPrice = 0;
             foreach (session('cart') as $id => $details) {
                 $totalProducts += (int)$details['quantity'];
-                $totalPrice += number_format($details['quantity'] * (!empty($details['variant_price']) ? $details['variant_price'] : $details['price']), 2, ',', '.');
+                $totalPrice += $details['quantity'] * (!empty($details['variant_price']) ? $details['variant_price'] : $details['price']);
             }
             $productsArr = [
                 'user_id' => (Auth::check()) ? Auth::user()->id : 0,

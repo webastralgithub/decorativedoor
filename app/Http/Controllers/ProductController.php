@@ -144,7 +144,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-
+        // echo print_r($request->all(), true);die();    
         $product->update($request->only([
             'title', 'sub_title', 'meta_title', 'meta_keywords', 'meta_description',
             'notes', 'buying_price', 'tax', 'quantity', 'tax_type'

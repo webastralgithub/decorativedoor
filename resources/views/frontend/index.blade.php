@@ -130,7 +130,7 @@
                         </div>
                         <div class="featured__item__text">
                             <h6>{{$product->title}}</h6>
-                            <h5>${{$product->buying_price}}</h5>
+                            <h5>${{number_format($product->buying_price, 2, '.', ',')}}</h5>
                         </div>
                     </a>
                 </div>

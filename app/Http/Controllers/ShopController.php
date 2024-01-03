@@ -67,10 +67,10 @@ class ShopController extends Controller
                         // "variant_price" => 0
 
                     ];
-                if (!empty($selectedVariant))
+                // if (!empty($selectedVariant))
                     $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] = !empty($request->quantity) ? $request->quantity : 1;
             }
-            if (!empty($selectedVariant)) {
+            // if (!empty($selectedVariant)) {
                 $cart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
                 $cart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
                 $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['buying_price'];
@@ -80,7 +80,7 @@ class ShopController extends Controller
                     $variant_prices[] = $price['price'];
                 }
                 $price = array_sum($variant_prices);
-            }
+            // }
             $cart[$productId]['variant_price'] = $price || $product->buying_price;
         } else {
             if (isset($cart[$productId])) {
@@ -163,7 +163,8 @@ class ShopController extends Controller
 
     public function cart()
     {
-        // $cart = session()->get('cart');
+
+        // $cart = session()->remove('cart');
         // unset($cart[30]);
         // session()->put('cart', $cart);
         // dd(session()->get('cart'));

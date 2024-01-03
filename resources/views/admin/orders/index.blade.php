@@ -66,10 +66,10 @@
                             <a class="text-info" onclick="return changeOrderStatus('{{$order->id}}','{{$order_statuses}}','{{$order->order_status}}');">
                                 {{ \App\Models\OrderStatus::getStatusNameById($order->order_status)}}
                             </a>
-                            @foreach ($order->details as $item)
+                            @foreach ($order->details->unique('order_status') as $item)
                             </br>
                             <a class="text-info-product " href="{{ route('orders.show', $order->order_id) }}">
-                                (#{{$item->id}}) {{ \App\Models\OrderStatus::getStatusNameById($item->order_status)}}
+                                {{ \App\Models\OrderStatus::getStatusNameById($item->order_status)}}
                             </a>
                             @endforeach
                         </td>

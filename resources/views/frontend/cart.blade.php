@@ -79,6 +79,30 @@
             </td>
         </tr>
         @endif
+        @else
+        @php $total += $details['price'] * $details['quantity'] @endphp
+        <tr data-id="{{ $id }}" data-variant="">
+            <td data-th="Product">
+                <div class="row">
+                    <div class="col-sm-3 hidden-xs">
+                        <img src="{{ asset('frontend/img/product/details/product-details-1.jpg') }}" width="100" height="100" class="img-responsive" />
+                    </div>
+                    <div class="col-sm-9">
+                        <h4 class="nomargin">{{ $details['name'] }}</h4>
+                    </div>
+                </div>
+            </td>
+            <td data-th="Price">${{ number_format($details['price'], 2, '.', ',') }}</td>
+            <td data-th="Quantity">
+                <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
+            </td>
+            <td data-th="SubTotal">
+                ${{ number_format($details['price'] * $details['quantity'], 2, '.', ',') }}
+            </td>
+            <td class="actions" data-th="">
+                <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
+            </td>
+        </tr>
         @endif
         @endforeach
         @endif

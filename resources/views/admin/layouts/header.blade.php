@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand navbar-light sticky-top px-4 py-0 top-bar-nav">
     <div class="navbar top-bar-nav-wrp bg-light ">
         <a href="{{ route('dashboard') }}" class="navbar-brand d-flex d-lg-none me-4">
-            <img src="{{ asset('img/favicon.png') }}" />
+            <h3>Door Admin</h3>
         </a>
         <a href="#" class="sidebar-toggler flex-shrink-0">
             <img src="{{ asset('img/toggle.svg') }}" />
