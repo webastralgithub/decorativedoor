@@ -91,7 +91,7 @@
                         </td>
                         <td class="align-middle text-center">
                             <div style="max-height: 80px; max-width: 80px;">
-                                <img class="img-fluid" src="{{ $item->product->product_image ? asset('img/product/'.$item->product->product_image) : asset('img/product/default.webp') }}">
+                                <img class="img-fluid" src="{{asset((!empty($item->product->product_image) ? Storage::url('products/'.$item->product->product_image) : 'img/featured/feature-1.jpg'))}}">
                             </div>
                         </td>
                         <td class="align-middle text-center">
