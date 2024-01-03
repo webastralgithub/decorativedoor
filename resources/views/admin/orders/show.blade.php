@@ -2,14 +2,13 @@
 
 @section('content')
 
-<div class="card  mx-4">
-    <div class="card-header">
-        <div class="float-start">
-            <h3>{{ __('Order') }} #{{ $order->order_id}}</h3>
-        </div>
-        <div class="float-end">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>{{ __('Order') }} #{{ $order->order_id}}</h3>
+
+         <div class="top-bntspg-hdr">
             <a href="{{ route('orders.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
-        </div>
+      
         @can('change-order-status')
         <!-- <div class="col-md-6">
                 <label class="small mb-1" for="order_status">
@@ -43,10 +42,12 @@
                 </select>
             </div> -->
         @endcan
+
+        </div>
     </div>
 
-    <div class="card-body">
-        <div class="row row-cards mb-3">
+    <div class="card-body ">
+        <div class="row row-cards mb-3 order-table-topb">
             <div class="col">
                 <label for="order_date" class="form-label required">
                     <strong>{{ __('Order Date') }}:</strong> {{ $order->order_date->format('d-m-Y') }}
@@ -66,6 +67,7 @@
             </div>
         </div>
 
+        <div class="content-body">
         <div class="table-responsive">
             <table class="table table-striped table-bordered align-middle">
                 <thead class="thead-light">
@@ -160,6 +162,8 @@
                     @endcan
                 </tbody>
             </table>
+        </div>
+
         </div>
     </div>
 </div>
