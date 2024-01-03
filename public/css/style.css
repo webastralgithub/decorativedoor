@@ -602,7 +602,21 @@ option:disabled {
 
 
 .status-links .text-info-product {
+    color: #052b4e !important;  
+    
+}
+
+.status-links .text-info{
     color: #115ca1 !important;
+}
+
+.swal2-title{
+    font-size: 25px !important;
+    margin-bottom: 20px;
+    color: #ffffff !important;
+    border-bottom: 1px solid #0000004a;
+    padding-bottom: 11px;
+    background: #004787;
 }
 
 .table-striped>tbody>tr:nth-of-type(odd){
@@ -2072,6 +2086,97 @@ body {
 .cart-table {
     max-width: 1200px !important;
     margin: 0 auto;
+}
+
+.print-pg-top-bar{
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.print-pg-top-bar p{
+    width: auto !important;
+    padding: 0;
+}
+
+.text-to-print{
+    font-size: 20px;
+    color: #000 !important;
+    font-weight: 600;
+}
+
+.text-to-print span{
+    color: #004382 !important;
+}
+
+.print-pg-top-bar a{
+    width: max-content;
+    background: #004382;
+    color: #fff !important;
+    padding: 8px 38px;
+}
+
+.print-pg-top-bar a:hover{
+    background: #012444;
+}
+
+.print-admin-mn{
+    background: #012444;
+    margin-top: 20px;
+    color: #fff;
+    padding: 8px;
+    margin-bottom: 21px;
+}
+
+.print-admin-mn p{
+    color: #fff;
+    margin-bottom: 0;
+}
+
+.thankyou-print p{
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.additinal-notes-print-tottle{
+    margin-top: 20px;
+}
+
+.total-price-print{
+    font-weight: 700;
+    width: 100%;
+    border-top: 1px solid #000;
+    padding-top: 10px;
+    margin-top: 16px;
+}
+
+.list-totle-sub-totle-print{
+    margin-bottom: 0;
+    background: #efefef;
+    padding: 20px 0;
+}
+
+.list-totle-sub-totle-print li{
+    font-weight: 700;
+}
+
+.table-borderless-print{
+    box-shadow: 0 3px 16px #00000012;
+}
+
+.order-table-topb .form-label{
+    background: #02315c;
+    color: #fff;
+    padding: 6px 20px;
+    border-radius: 4px;
+}
+
+.order-table-topb .form-label strong{
+    color: #fff !important;
+}
+
+.swal2-confirm{
+    background: #004787 !important;
 }
 
 @media (max-width:600px) {
