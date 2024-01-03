@@ -1,5 +1,5 @@
 <!-- Navbar Start -->
-<nav class="navbar navbar-expand navbar-light sticky-top px-4 py-0 top-bar-nav">
+<nav class="navbar navbar-expand navbar-light sticky-top px-4 py-0 top-bar-nav mb-4">
     <div class="navbar top-bar-nav-wrp bg-light ">
         <a href="{{ route('dashboard') }}" class="navbar-brand d-flex d-lg-none me-4">
             <img src="{{ asset('img/favicon.png') }}" />

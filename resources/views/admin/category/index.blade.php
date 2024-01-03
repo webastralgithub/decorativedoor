@@ -1,9 +1,10 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="card mx-4">
-    <div class="card-header">Manage Categories</div>
-    <div class="card-body">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+      <h3>Manage Categories</h3> 
+      <div class="top-bntspg-hdr">
         @can('create-category')
         <a href="{{ route('category.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Category</a>
         @endcan
@@ -26,6 +27,11 @@
             <li class="alert alert-success">{!! \Session::get('success') !!}</li>
         </div>
         @endif
+      </div>
+    </div>
+
+    <div class="content-body">
+
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>

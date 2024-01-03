@@ -1,12 +1,20 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="card mx-4">
-    <div class="card-header">Product List</div>
-    <div class="card-body">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+    <h3>Product List</h3>
+    
+    <div class="top-bntspg-hdr">
         @can('create-product')
         <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Product</a>
         @endcan
+    </div>
+</div>
+
+
+    <div class="content-body">
+
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
