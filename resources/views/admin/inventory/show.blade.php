@@ -153,7 +153,7 @@
 
         var recived = document.getElementById('recived');
        var recivedqun = parseFloat(recived.innerHTML) || 0;
-        total.innerHTML = inputValue + maintotal;;
+        total.innerHTML = inputValue + maintotal;
         var finaltotal = inputValue + maintotal - recivedqun;
         var currenttotalElement = document.getElementById('current_total');
         currenttotalElement.textContent = finaltotal.toFixed(2);

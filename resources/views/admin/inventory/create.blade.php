@@ -197,9 +197,10 @@
 
         var recived = document.getElementById('recived');
        var recivedqun = parseFloat(recived.innerHTML) || 0;
+        total.innerHTML = inputValue + maintotal;
         var finaltotal = inputValue + maintotal - recivedqun;
-        console.log('Input Value on blur:', finaltotal);
-        total.innerHTML = finaltotal;
+        var currenttotalElement = document.getElementById('current_total');
+        currenttotalElement.textContent = finaltotal.toFixed(2);
     });
 </script>
 @endsection

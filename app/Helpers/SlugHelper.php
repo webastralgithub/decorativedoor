@@ -92,7 +92,7 @@ if (!function_exists('generateProductSlug')) {
     if (!function_exists('getProductAvailabityStock')) {
         function getProductAvailabityStock($productId = null)
         {
-            $products = product::with(['inventories', 'orderdetails'])->where('id', $productId)->first();
+            $products = Product::with(['inventories', 'orderdetails'])->where('id', $productId)->first();
             $totalrecived = 0;
             $total = 0;
             foreach ($products->orderdetails as $order) {
