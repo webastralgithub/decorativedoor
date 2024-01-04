@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('sub_title');
-            $table->string('meta_title');
-            $table->string('meta_keywords');
-            $table->text('meta_description');
+            $table->string('meta_title')->nullable();
+            $table->string('meta_keywords')->nullable();
+            $table->text('meta_description')->nullable();
             $table->string('slug');
             $table->string('code')->unique()->nullable();
             $table->integer('quantity');

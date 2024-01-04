@@ -18,14 +18,14 @@
             <div class="mb-3 row">
                 <label class="col-md-4 col-form-label text-md-end text-start">Category name*</label>
                 <div class="col-md-6">
-                    <input type="text" name="name" class="form-control" placeholder="Category name" value="{{old('name')}}" required />
+                    <input type="text" name="name" class="form-control category-name" placeholder="Category name" value="{{old('name')}}" required />
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-md-4 col-form-label text-md-end text-start">Category Url*</label>
                 <div class="col-md-6">
-                    <input type="text" name="slug" class="form-control" placeholder="Category Url" value="{{old('slug')}}" required />
+                    <input type="text" name="slug" class="form-control category-slug" placeholder="Category Url" value="{{old('slug')}}" required />
                 </div>
             </div>
 

@@ -16,7 +16,6 @@ jQuery(document).ready(function () {
 
     // ADD TAGS 
     jQuery('form').on('keydown', '#variant-tags', function (e) {
-        console.log('hererr');
         if (e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
             addTags(jQuery(this));
@@ -130,12 +129,13 @@ jQuery(document).ready(function () {
                     variantCode = ele.join('/');
                 else
                     variantCode = ele;
+                    let productCode = jQuery('#productcode').val()
                 let tableTR =
                     `<tr>
                 <input type="hidden" name="variant_option_type[]" class="form-control" value='${JSON.stringify(variantsArr, null, 2)}'>
                 <td><input type="text" name="variant_name[]" class="form-control" placeholder="Enter Name" value="${variantCode}"></td>
                 <td><input type="text" name="variant_value[]" class="form-control" placeholder="Enter Value" ></td>
-                <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="${variantCode}-"></td>
+                <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="${variantCode}-${productCode}"></td>
                 <td><input type="text" name="variant_quantity[]" class="form-control" placeholder="Enter Quantity"></td>
                 <td><input type="text" name="variant_buying_price[]" class="form-control" placeholder="Enter Buying Price"></td>
                 <td><input type="text" name="variant_notes[]" class="form-control" placeholder="Enter Notes"></td>
@@ -174,8 +174,21 @@ jQuery(document).ready(function () {
         jQuery('.product-slug').val(slug);
     });
 });
+    ClassicEditor
+    .create(document.querySelector('#editor'))
+    .then(editor => { console.log(editor); })
+    .catch(error => { console.error(error); });
 
+    ClassicEditor
+    .create(document.querySelector('#notes'))
+    .then(editor => { console.log(editor); })
+    .catch(error => { console.error(error); });
 
+    jQuery('.category-name').on('input', function () {
+        var name = jQuery(this).val();
+        var slug = jQuery.trim(name).replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+        jQuery('.category-slug').val(slug);
+    });
 // Multiple images preview with JavaScript
 var previewImages = function (input, imgPreviewPlaceholder) {
 

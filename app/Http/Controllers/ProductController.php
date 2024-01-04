@@ -65,7 +65,6 @@ class ProductController extends Controller
         $product->buying_price = $request->buying_price;
         $product->tax = $request->tax;
         $product->quantity = $request->quantity;
-        $product->tax_type = $request->tax_type;
 
         $categories = Category::whereIn('id', $request->category_id)->get();
         $product->save();
@@ -147,7 +146,7 @@ class ProductController extends Controller
         // echo print_r($request->all(), true);die();    
         $product->update($request->only([
             'title', 'sub_title', 'meta_title', 'meta_keywords', 'meta_description',
-            'notes', 'buying_price', 'tax', 'quantity', 'tax_type'
+            'notes', 'buying_price', 'tax', 'quantity', 
         ]));
 
         // Update category

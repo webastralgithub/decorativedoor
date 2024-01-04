@@ -3,9 +3,9 @@
 <?php $_SESSION['i'] = $_SESSION['i'] + 1; ?>
 <tr>
     <td>{{$_SESSION['i']}}</td>
-    <td>{{$dash}}{{$subcategory->name}}</td>
+    <td><a href="{{ route('category.edit', $subcategory->id) }}">{{$subcategory->parent->name}}</a></td>
+    <td> <a href="{{ route('category.edit', $subcategory->id) }}">{{$dash}}{{$subcategory->name}}</a></td>
     <td>{{$subcategory->slug}}</td>
-    <td>{{$subcategory->parent->name}}</td>
     <td>
         <form action="{{ route('category.destroy', $subcategory->id) }}" method="post">
             @csrf

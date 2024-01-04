@@ -27,7 +27,7 @@
                 @forelse ($roles as $role)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $role->name }}</td>
+                    <td><a href="{{ route('roles.edit', $role->id) }}">{{ $role->name }}</a></td>
                     <td>
                         @if ($role->name=='Super Admin')
                         <span class="badge bg-primary">All</span>
