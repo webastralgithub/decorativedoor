@@ -1,17 +1,14 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
-<div class="card mx-4">
-    <div class="card-header">
-        <div class="float-start">
-            Add New Product
-        </div>
-        <div class="float-end">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>Add New Product</h3> 
+        <div class="top-bntspg-hdr">
             <a href="{{ route('products.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
         </div>
     </div>
-    <div class="card-body">
+    <div class="body-content-new">
         @if ($errors->any())
         <div>
             @foreach ($errors->all() as $error)
@@ -194,8 +191,8 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="card mt-4">
+                        <div class="card-body product-imguploads">
                             <h3 class="card-title">
                                 {{ __('Product Images') }}
                             </h3>
@@ -220,8 +217,8 @@
 
             @include('admin.products.product-variant')
 
-            <div class="card-footer text-end">
-                <div class="mb-3 row">
+            <div class="card-ftr text-end">
+                <div class="mb-3 row mt-4">
                     <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="{{ __('Save Product') }}">
                 </div>
             </div>

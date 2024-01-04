@@ -544,7 +544,7 @@ option:disabled {
     border: none;
 }
 
-.card .card-header h4{
+.card .card-header .card-title{
     font-size: 18px;
     margin-bottom: 0;
 }
@@ -704,12 +704,6 @@ option:disabled {
 .active-notification h6:before {
     background-color: #004787;
 }
-
-.btn-primary{
-
-}
-
-
 
 
 /***======================= clients ========================***/
@@ -987,6 +981,89 @@ select {
 
 .table-top-bar-project form {
     width: 60%;
+}
+
+.body-content-new{
+    background: #fff;
+    margin-top: 20px;
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: 0 2px 9px #00000005;
+}
+
+.body-content-new .card .card-header{
+    background: #004787;
+}
+
+.body-content-new .card .card-header .card-title{
+    color: #fff !important;
+}
+
+.body-content-new .card label.form-label{
+    font-size: 14px;
+}
+
+.body-content-new .card input.form-control,
+.body-content-new .card textarea.form-control,
+.body-content-new .card select.form-select  {
+    color: #000;
+    font-size: 14px;
+    padding: 10px 10px;
+}
+
+.body-content-new .card li.select2-selection__choice{
+    font-size: 12px;
+}
+
+.body-content-new form label{
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+}
+
+.body-content-new form input{
+    color: #000;
+    font-size: 15px;
+    padding: 10px 13px;
+}
+
+.body-content-new form li.select2-selection__choice{
+    background-color: #004787 !important;
+    border-color: #013d70 !important;
+    color: #fff !important;
+}
+
+.body-content-new form li.select2-selection__choice span{
+    color: #fff !important;
+}
+
+.body-content-new .content-body{
+    box-shadow: 0 4px 6px #00000014;
+    border-radius: 10px;
+}
+
+.body-content-new .card-ftr button{
+    background-color: #004787;
+    border-color: #064b88;
+}  
+
+.product-imguploads .images-preview-div{
+    justify-content: flex-start;
+}
+
+.product-imguploads .images-preview-div img{
+    width: 14%;
+    object-fit: cover;
+    height: 113px;
+    border: 1px solid #e1e1e1;
+    border-radius: 7px;
+}
+
+input:focus,
+select:focus{
+    color: #000 !important;
+    box-shadow: unset !important;
+    border-color: #000000 !important;
 }
 
 /***======================= projects ========================***/
@@ -2099,13 +2176,17 @@ body {
 }
 
 .text-to-print{
-    font-size: 20px;
+    font-size: 17px;
     color: #000 !important;
     font-weight: 600;
 }
 
 .text-to-print span{
-    color: #004382 !important;
+    color: #000 !important;
+}
+
+.text-sn-addrs{
+    font-size: 14px;
 }
 
 .print-pg-top-bar a{
@@ -2121,10 +2202,11 @@ body {
 
 .print-admin-mn{
     background: #012444;
-    margin-top: 20px;
+    margin-top: 12px;
     color: #fff;
     padding: 8px;
     margin-bottom: 21px;
+    border-radius: 6px 6px 0 0;
 }
 
 .print-admin-mn p{
@@ -2134,12 +2216,19 @@ body {
 
 .thankyou-print p{
     text-align: center;
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 600;
+    color: #222;
+    margin-bottom: 25px;
 }
 
 .additinal-notes-print-tottle{
     margin-top: 20px;
+}
+
+.additinal-notes-print-tottle .col-xl-9 p{
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .total-price-print{
@@ -2160,8 +2249,23 @@ body {
     font-weight: 700;
 }
 
+.list-totle-sub-totle-print li span{
+    width: 40%;
+    display: inline-block;
+}
+
 .table-borderless-print{
     box-shadow: 0 3px 16px #00000012;
+    margin-top: 20px;
+}
+
+.table-borderless-print thead th{
+    color: #fff !important;
+}
+
+.table-borderless-print th,
+.table-borderless-print td{
+    font-size: 14px;
 }
 
 .order-table-topb .form-label{
@@ -2177,6 +2281,12 @@ body {
 
 .swal2-confirm{
     background: #004787 !important;
+}
+
+.invoice-card{
+    box-shadow: 0 0 6px #00000024;
+    border-radius: 10px;
+    margin: 40px 0 0;
 }
 
 @media (max-width:600px) {
