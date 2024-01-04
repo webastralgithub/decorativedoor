@@ -16,7 +16,9 @@
         </div>
         @endif
 
-        @if(\Session::has('error'))
+      </div>
+    </div>
+    @if(\Session::has('error'))
         <div>
             <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
         </div>
@@ -27,9 +29,6 @@
             <li class="alert alert-success">{!! \Session::get('success') !!}</li>
         </div>
         @endif
-      </div>
-    </div>
-
     <div class="content-body">
 
         <table class="table table-bordered table-striped">

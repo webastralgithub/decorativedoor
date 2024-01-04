@@ -9,6 +9,17 @@
             <a href="{{ route('inventory.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
         </div> 
     </div>
+    @if(\Session::has('error'))
+    <div>
+        <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
+    </div>
+    @endif
+    
+    @if(\Session::has('success'))
+    <div>
+        <li class="alert alert-success">{!! \Session::get('success') !!}</li>
+    </div>
+    @endif
     <div class="content-body">
         <div class="row">
             <div class="col-md-12">
