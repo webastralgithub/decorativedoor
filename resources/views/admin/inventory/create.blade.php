@@ -47,6 +47,7 @@
 
                 <div class="content-body">
                     <div class="table-responsive">
+                        
                         <table class="table table-striped table-bordered align-middle">
                             <thead class="thead-light">
                                 <tr>
@@ -61,22 +62,28 @@
                             <tbody>
 
                                 
-                                <tr>
+                                <tr id="form_row">
                                     <th scope="col">
                                         {{ __('Product') }}
                                     </th>
-                                    <th scope="col" class="text-center"><input type="text" class="form-control" value="<?php echo date('Y-m-d');?>"></th>
+                                    <th scope="col" class="text-center"><input type="date" class="form-control" value="<?php echo date('Y-m-d');?>"></th>
                                     <th scope="col" class="text-center"><input type="text" class="form-control" name="waybill" value=""></th>
                                     <th scope="col" class="text-center"><input type="number" class="form-control" name="quantity"  id="enter_quantity" value=""></th>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" class="text-end">Recived</td>
-                                    <td class="text-center recived" id="recived">
+                                    <td colspan="3" class="text-end">Total Inventory</td>
+                                    <td class="text-center total" id="total">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" class="text-end">Total Quantity</td>
-                                    <td class="text-center total" id="total">
+                                    <td colspan="3" class="text-end">Order Recived</td>
+                                    <td class="text-center recived" id="recived">
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td colspan="3" class="text-end">Current Inventory</td>
+                                    <td class="text-center total" id="current_total">
                                     </td>
                                 </tr>
                             </tbody>
@@ -113,16 +120,30 @@
         var productData = selectedProductOption.getAttribute('data-product') || '';
         productData = JSON.parse(productData)
         var tbody = document.querySelector('.table tbody');
+        
         $.each(productData.inventories, function(index, element) {
         var newRow = document.createElement('tr');
         newRow.setAttribute("class", "totals");
+
+        var dateObject = new Date(element.created_at);
+
+        // Format the date to a more readable format
+        var formattedDate = dateObject.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        });
+
         newRow.innerHTML = `
             <td>${selectedProductOption.text}</td>
-            <td class="text-center">${element.created_at}</td>
+            <td class="text-center">${formattedDate}</td>
             <td class="text-center">${element.waybill}</td>
             <td class="text-center ">${element.quantity}</td>
         `;
-        tbody.insertBefore(newRow, tbody.firstChild);
+        tbody.insertBefore(newRow, tbody.childNodes[2]);
         });
         // Update corresponding fields based on the selected product
         // document.getElementById('tax').innerHTML = productData.tax;
@@ -150,7 +171,10 @@
         });
          var final = total - recived;
         // Update the total price in the designated element
-        totalElement.textContent = final.toFixed(2); // Adjust as needed
+        totalElement.textContent = total.toFixed(2); // Adjust as needed
+
+        var currenttotalElement = document.getElementById('current_total');
+        currenttotalElement.textContent = final.toFixed(2);
     }
 
     var inputElement = document.getElementById('enter_quantity');

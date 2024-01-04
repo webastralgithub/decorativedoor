@@ -70,7 +70,16 @@ class InventoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = product::with(['inventories', 'orderdetails'])->where('id', $id)->first();
+        $customers = User::all(['id', 'name']);
+
+        // $carts = Cart::content();
+
+        return view('admin.inventory.show', [
+            'products' => $product,
+            'customers' => $customers,
+            // 'carts' => $carts,
+        ]);
     }
 
     /**
