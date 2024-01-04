@@ -28,4 +28,13 @@ class Product extends Model
     {
         return $this->hasOne(ProductImage::class);
     }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
+    public function orderdetails(){
+        return $this->hasMany(OrderDetails::class);
+    }
 }
