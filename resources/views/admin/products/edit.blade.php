@@ -64,7 +64,7 @@
                                         Product Code
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="code" id="name" class="form-control" placeholder="Product Code" value="{{ $product->code }}" />
+                                    <input name="code" id="productcode" class="form-control product-code" placeholder="Product Code" value="{{ $product->code }}" />
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
@@ -76,21 +76,18 @@
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Meta Title
-                                        <span class="text-danger">*</span>
                                     </label>
                                     <input name="meta_title" id="name" class="form-control" placeholder="Meta Title" value="{{ $product->meta_title }}" />
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
                                         Meta Keywords
-                                        <span class="text-danger">*</span>
                                     </label>
                                     <input name="meta_keywords" id="name" class="form-control" placeholder="Meta Keywords" value="{{ $product->meta_keywords }}" />
                                 </div>
                                 <div class="col-md-12">
                                     <label for="category_id" class="form-label">
                                         Meta Description
-                                        <span class="text-danger">*</span>
                                     </label>
                                     <textarea name="meta_description" id="notes" rows="5" class="form-control @error('meta_description') is-invalid @enderror" placeholder="Meta Description">{{ $product->meta_description }}</textarea>
                                 </div>
@@ -152,23 +149,6 @@
                                         {{ __('Tax') }}
                                     </label>
                                     <input type="number" label="Tax" name="tax" class="form-control" id="tax" placeholder="0" value="{{ $product->tax }}" />
-                                </div>
-
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="tax_type">
-                                            {{ __('Tax Type') }}
-                                        </label>
-                                        <select name="tax_type" id="tax_type" class="form-select @error('tax_type') is-invalid @enderror">
-                                            <option value="1">Yes</option>
-                                            <option value="0">No</option>
-                                        </select>
-                                        @error('tax_type')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
                                 </div>
 
                                 <div class="col-md-12">

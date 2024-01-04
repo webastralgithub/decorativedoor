@@ -25,9 +25,9 @@ class UpdateProductRequest extends FormRequest
             'title' => 'required',
             'slug' => 'required',
             'sub_title' => 'required',
-            'meta_title' => 'required',
-            'meta_keywords' => 'required',
-            'meta_description' => 'required',
+            // 'meta_title' => 'required',
+            // 'meta_keywords' => 'required',
+            // 'meta_description' => 'required',
             'slug' => 'required',
             'code' => 'required',
             'notes' => 'required',
@@ -35,7 +35,7 @@ class UpdateProductRequest extends FormRequest
             'tax' => 'required',
             'quantity' => 'required|numeric',
             // 'product_images' => 'required|mimes:jpeg,png,jpg',
-            'tax_type' => 'required',
+            // 'tax_type' => 'required',
             'category_id' => 'required'
         ];
     }

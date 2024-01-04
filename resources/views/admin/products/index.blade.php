@@ -29,7 +29,7 @@
                 @forelse ($products as $product)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $product->title }}
+                    <td><a href="{{ route('products.edit', $product->id) }}">{{ $product->title }}</a>
                     </td>
                     <td>{{ $product->code }}</td>
                     <td>${{ number_format($product->buying_price, 2, '.', ',') }}</td>
