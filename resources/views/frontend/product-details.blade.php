@@ -162,9 +162,10 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     @endforelse
                     @endif
                 </ul> -->
-                <div class="col-lg-12">
-                    @include('frontend.add-ons')
-                </div>
+               
+            </div>
+            <div class="col-lg-12">
+                @include('frontend.add-ons')
             </div>
             <div class="col-lg-12">
                 <div class="product__details__tab">
