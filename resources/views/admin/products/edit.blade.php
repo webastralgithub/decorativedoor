@@ -1,16 +1,14 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="card mx-4">
-    <div class="card-header">
-        <div class="float-start">
-            Update Product
-        </div>
-        <div class="float-end">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>Update Product</h3>   
+        <div class="top-bntspg-hdr">
             <a href="{{ route('products.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
         </div>
     </div>
-    <div class="card-body">
+    <div class="body-content-new">
         @if ($errors->any())
         <div>
             @foreach ($errors->all() as $error)
@@ -89,7 +87,7 @@
                                     <label for="category_id" class="form-label">
                                         Meta Description
                                     </label>
-                                    <textarea name="meta_description" id="notes" rows="5" class="form-control @error('meta_description') is-invalid @enderror" placeholder="Meta Description">{{ $product->meta_description }}</textarea>
+                                    <textarea name="meta_description" id="editor" rows="5" class="form-control @error('meta_description') is-invalid @enderror" placeholder="Meta Description">{{ $product->meta_description }}</textarea>
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
@@ -173,7 +171,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body product-imguploads">
                             <h3 class="card-title">
                                 {{ __('Product Image') }}
                             </h3>
@@ -198,8 +196,8 @@
 
             @include('admin.products.edit-product-variant')
 
-            <div class="card-footer text-end">
-                <div class="mb-3 row">
+            <div class="card-ftr text-end">
+                <div class="mb-3 row mt-4">
                     <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="{{ __('Save Product') }}">
                 </div>
             </div>

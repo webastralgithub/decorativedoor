@@ -2,36 +2,35 @@
 
 @section('content')
 
-<div class="card mx-4">
-    <div class="card-header">
-        <div class="float-start">
-            Edit Category
-        </div>
-        <div class="float-end">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>Edit Category</h3>
+            
+        <div class="top-bntspg-hdr">
             <a href="{{ route('category.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
         </div>
     </div>
-    <div class="card-body">
+    <div class="body-content-new">
         <form action="{{ route('category.update', $category->id) }}" method="post">
             @csrf
             @method("PUT")
             <div class="mb-3 row">
                 <label class="col-md-4 col-form-label text-md-end text-start">Category name*</label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input type="text" name="name" class="form-control category-name" placeholder="Category name" value="{{$category->name}}" required />
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-md-4 col-form-label text-md-end text-start">Category Url*</label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input type="text" name="slug" class="form-control category-slug" placeholder="Category Url" value="{{$category->slug}}" required />
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-md-4 col-form-label text-md-end text-start">Select parent category*</label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <select type="text" name="parent_id" class="select-category form-control">
                         <option value="">None</option>
                         @if($categories)
@@ -50,7 +49,7 @@
             </div>
 
             <div class="mb-3 row">
-                <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Update Category">
+                <input type="submit" class="col-md-4 offset-md-6 btn btn-primary" value="Update Category">
             </div>
 
         </form>

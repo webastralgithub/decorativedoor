@@ -1,26 +1,25 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="card mx-4">
-    <div class="card-header">
-        <div class="float-start">
-            Add New Inventory
-        </div>
-        <div class="float-end">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>Add New Inventory</h3>
+            
+        <div class="top-bntspg-hdr">
             <a href="{{ route('inventory.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
         </div>
     </div>
-    <div class="card-body">
+    <div class="body-content-new">
         <form action="{{ route('inventory.store') }}" method="POST">
             @csrf
-            <div class="card-body">
+           
                 <div class="row gx-3 mb-3">
                     <?php 
                         // echo "<pre>";
                         //     print_r($products);
                         //     echo "</pre>";
                         ?>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="small mb-1" for="customer_id">
                             {{ __('Product') }}
                             <span class="text-danger">*</span>
@@ -46,45 +45,47 @@
                     </div>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered align-middle">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">
-                                    {{ __('Product') }}
-                                </th>
-                                <th scope="col" class="text-center">{{ __('Date') }}</th>
-                                <th scope="col" class="text-center">{{ __('WayBill') }}</th>
-                                <th scope="col" class="text-center">{{ __('Quantity') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <div class="content-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered align-middle">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">
+                                        {{ __('Product') }}
+                                    </th>
+                                    <th scope="col" class="text-center">{{ __('Date') }}</th>
+                                    <th scope="col" class="text-center">{{ __('WayBill') }}</th>
+                                    <th scope="col" class="text-center">{{ __('Quantity') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                            
-                            <tr>
-                                <th scope="col">
-                                    {{ __('Product') }}
-                                </th>
-                                <th scope="col" class="text-center"><input type="text" class="form-control" value="<?php echo date('Y-m-d');?>"></th>
-                                <th scope="col" class="text-center"><input type="text" class="form-control" name="waybill" value=""></th>
-                                <th scope="col" class="text-center"><input type="number" class="form-control" name="quantity"  id="enter_quantity" value=""></th>
-                            </tr>
-                            <tr>
-                                <td colspan="3" class="text-end">Recived</td>
-                                <td class="text-center recived" id="recived">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" class="text-end">Total Quantity</td>
-                                <td class="text-center total" id="total">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                
+                                <tr>
+                                    <th scope="col">
+                                        {{ __('Product') }}
+                                    </th>
+                                    <th scope="col" class="text-center"><input type="text" class="form-control" value="<?php echo date('Y-m-d');?>"></th>
+                                    <th scope="col" class="text-center"><input type="text" class="form-control" name="waybill" value=""></th>
+                                    <th scope="col" class="text-center"><input type="number" class="form-control" name="quantity"  id="enter_quantity" value=""></th>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end">Recived</td>
+                                    <td class="text-center recived" id="recived">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-end">Total Quantity</td>
+                                    <td class="text-center total" id="total">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-            </div>
-            <div class="card-footer text-end">
+            
+            <div class="card-ftr text-center mt-4">
                 <button type="submit" class="btn btn-success add-list mx-1">
                     {{ __('Create Inventory') }}
                 </button>

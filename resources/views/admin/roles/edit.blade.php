@@ -24,23 +24,22 @@
         margin-bottom: 8px;
     }
 </style>
-<div class="card mx-4">
-    <div class="card-header">
-        <div class="float-start">
-            Edit Role
-        </div>
-        <div class="float-end">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>Edit Role</h3>
+            
+        <div class="top-bntspg-hdr">
             <a href="{{ route('roles.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
         </div>
     </div>
-    <div class="card-body">
+    <div class="body-content-new">
         <form action="{{ route('roles.update', $role->id) }}" method="post">
             @csrf
             @method("PUT")
 
             <div class="mb-3 row">
                 <label for="name" class="col-md-4 col-form-label text-md-end text-start">Name</label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $role->name }}">
                     @if ($errors->has('name'))
                     <span class="text-danger">{{ $errors->first('name') }}</span>
@@ -50,7 +49,7 @@
 
             <div class="mb-3 row">
                 <label for="permissions" class="col-md-4 col-form-label text-md-end text-start">Permissions</label>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <select class="select-permissions form-select @error('permissions') is-invalid @enderror" multiple aria-label="Permissions" id="permissions" name="permissions[]" style="height: 210px;">
                         @forelse ($permissions as $permission)
                         <option value="{{ $permission->id }}" {{ in_array($permission->id, $rolePermissions ?? []) ? 'selected' : '' }}>
@@ -78,7 +77,7 @@
             </div>
 
             <div class="mb-3 row">
-                <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Update Role">
+                <input type="submit" class="col-md-4 offset-md-6 btn btn-primary" value="Update Role">
             </div>
 
         </form>

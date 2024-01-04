@@ -1,16 +1,15 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="card mx-4">
-    <div class="card-header">
-        <div class="float-start">
-            Add New Order
-        </div>
-        <div class="float-end">
+<div class="mx-4 content-p-mobile">
+    <div class="page-header-tp">
+        <h3>Add New Order</h3>
+            
+        <div class="top-bntspg-hdr">
             <a href="{{ route('orders.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
         </div>
     </div>
-    <div class="card-body">
+    <div class="body-content-new">
         <form action="{{ route('orders.create') }}" method="POST">
             @csrf
             <div class="card-body">
@@ -96,7 +95,8 @@
                         @enderror
                     </div>
                 </div>
-
+  
+                <div class="content-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered align-middle">
                         <thead class="thead-light">
@@ -127,9 +127,10 @@
                         </tbody>
                     </table>
                 </div>
+                </div>
 
             </div>
-            <div class="card-footer text-end">
+            <div class="card-ftr text-center">
                 <button type="submit" class="btn btn-success add-list mx-1">
                     {{ __('Create Order') }}
                 </button>
