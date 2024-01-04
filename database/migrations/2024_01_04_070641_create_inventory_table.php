@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('inventory', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id')->nullable();
-            $table->integer('quantity');
+            $table->string('quantity');
             $table->integer('waybill');
             $table->timestamps();
         });

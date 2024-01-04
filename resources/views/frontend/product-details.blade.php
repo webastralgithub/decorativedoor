@@ -106,11 +106,10 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     </form>
                     <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
                     <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
-                    <ul>
-                        <li><b>Availability</b> <span>{{($product->quantity > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
+                        <li><b>Availability</b> <span>{{( getProductAvailabityStock($product->id) > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
 
-                        <li><b>Qunatity</b> <span>{{$product->quantity}}</span></li>
+                        <li><b>Qunatity</b> <span>{{ getProductAvailabityStock($product->id) }}</span></li>
                         <!-- <li><b>Description</b> <span>{{$product->notes}}</span></li> -->
                         <!-- <li><b>Share on</b>
                             <div class="share">
@@ -324,12 +323,17 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                 selectedVariants.push(selectedValue);
             }
         });
+        let checkStockAvailability = "{{ getProductAvailabityStock($product->id) }}";
+        console.log("checkStockAvailability::",checkStockAvailability);
+        if(checkStockAvailability != 0){
         // Check if all variants are selected
         if (selectedVariants.length === (allVariants.length / 2)) {
             document.getElementById('addToCartForm').submit();
         } else {
             alert('Please select all variants before adding to the cart.');
         }
+        }
+        
         return false;
     }
 </script>
