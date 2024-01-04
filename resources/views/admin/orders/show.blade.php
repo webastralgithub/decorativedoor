@@ -157,7 +157,7 @@
                     </tr>
                     <tr>
                         <td colspan="6" class="text-end">Total</td>
-                        <td class="text-center">${{ number_format(($order->total - $order->vat) -$order->due, 2, '.', ',') }}</td>
+                        <td class="text-center">${{ number_format(($order->total + $order->vat) -$order->due, 2, '.', ',') }}</td>
                     </tr>
                     @endcan
                 </tbody>

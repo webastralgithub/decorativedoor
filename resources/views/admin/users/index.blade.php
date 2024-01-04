@@ -31,7 +31,7 @@
                 @forelse ($users as $user)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $user->name }}</td>
+                    <td> <a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a></td>
                     <td>{{ $user->email }}</td>
                     <td>
                         @forelse ($user->getRoleNames() as $role)

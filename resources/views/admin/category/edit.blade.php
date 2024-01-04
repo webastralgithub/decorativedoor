@@ -17,14 +17,14 @@
             <div class="mb-3 row">
                 <label class="col-md-4 col-form-label text-md-end text-start">Category name*</label>
                 <div class="col-md-8">
-                    <input type="text" name="name" class="form-control" placeholder="Category name" value="{{$category->name}}" required />
+                    <input type="text" name="name" class="form-control category-name" placeholder="Category name" value="{{$category->name}}" required />
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-md-4 col-form-label text-md-end text-start">Category Url*</label>
                 <div class="col-md-8">
-                    <input type="text" name="slug" class="form-control" placeholder="Category Url" value="{{$category->slug}}" required />
+                    <input type="text" name="slug" class="form-control category-slug" placeholder="Category Url" value="{{$category->slug}}" required />
                 </div>
             </div>
 

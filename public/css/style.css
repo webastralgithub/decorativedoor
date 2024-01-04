@@ -2254,6 +2254,12 @@ body {
     display: inline-block;
 }
 
+.body-content-new .content-body table tr td.recived,
+.body-content-new .content-body table tr td.total{
+    font-size: 14px;
+    font-weight: 600;  
+}
+
 .table-borderless-print{
     box-shadow: 0 3px 16px #00000012;
     margin-top: 20px;

@@ -94,6 +94,12 @@
                             <p class="text-black float-start total-price-print"><span class="text-black me-3"> Total Amount</span><span style="font-size: 25px;">${{ (number_format($order->total - $order->vat, 2, '.', ',')) }}</span></p>
                         </div>
                     </div>
+                    <div class="col-xl-3">
+                        <ul class="list-unstyled list-totle-sub-totle-print">
+                            <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>${{ number_format($order->sub_total, 2, '.', ',') }}</li>
+                            <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax </span>${{ number_format($order->vat, 2, '.', ',') }}</li>
+                        </ul>
+                        <p class="text-black float-start total-price-print"><span class="text-black me-3"> Total Amount</span><span style="font-size: 25px;">${{ (number_format($order->total + $order->vat, 2, '.', ',')) }}</span></p>
                     </div>
                     <hr>
 

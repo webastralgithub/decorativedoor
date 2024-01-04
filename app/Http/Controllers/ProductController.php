@@ -65,7 +65,6 @@ class ProductController extends Controller
         $product->buying_price = $request->buying_price;
         $product->tax = $request->tax;
         $product->quantity = $request->quantity;
-        $product->tax_type = $request->tax_type;
 
         $categories = Category::whereIn('id', $request->category_id)->get();
         $product->save();
@@ -147,7 +146,7 @@ class ProductController extends Controller
         // echo print_r($request->all(), true);die();    
         $product->update($request->only([
             'title', 'sub_title', 'meta_title', 'meta_keywords', 'meta_description',
-            'notes', 'buying_price', 'tax', 'quantity', 'tax_type'
+            'notes', 'buying_price', 'tax', 'quantity', 
         ]));
 
         // Update category
@@ -189,22 +188,24 @@ class ProductController extends Controller
         $variant_quantity = $request->input('variant_quantity');
         $variant_buying_price = $request->input('variant_buying_price');
         $variant_notes = $request->input('variant_notes');
+        if(!empty($variantNames)){
+            foreach ($variantNames as $key => $variant) {
 
-        foreach ($variantNames as $key => $variant) {
-
-            $variantName = explode('/', $variant);
-
-            $product = new ProductVariant();
-            $product->product_id = $productId;
-            $product->name = !empty($variant) ? $variant : '';
-            $product->option_type = !empty($variant_option_type[$key]) ? $variant_option_type[$key] : '';
-            $product->value = !empty($variantName[0]) ? $variantName[0] : '';
-            $product->code  = !empty($variant_code[$key]) ? $variant_code[$key] : Str::random(10, 1200);
-            $product->quantity = !empty($variant_quantity[$key]) ? $variant_quantity[$key] : $key;
-            $product->buying_price = !empty($variant_buying_price[$key]) ? $variant_buying_price[$key] : $key;
-            $product->notes = !empty($variant_notes[$key]) ? $variant_notes[$key] : '';
-            $product->save();
+                $variantName = explode('/', $variant);
+    
+                $product = new ProductVariant();
+                $product->product_id = $productId;
+                $product->name = !empty($variant) ? $variant : '';
+                $product->option_type = !empty($variant_option_type[$key]) ? $variant_option_type[$key] : '';
+                $product->value = !empty($variantName[0]) ? $variantName[0] : '';
+                $product->code  = !empty($variant_code[$key]) ? $variant_code[$key] : Str::random(10, 1200);
+                $product->quantity = !empty($variant_quantity[$key]) ? $variant_quantity[$key] : $key;
+                $product->buying_price = !empty($variant_buying_price[$key]) ? $variant_buying_price[$key] : $key;
+                $product->notes = !empty($variant_notes[$key]) ? $variant_notes[$key] : '';
+                $product->save();
+            }
         }
+        
     }
 
     /**

@@ -36,9 +36,9 @@
             <thead>
                 <tr>
                     <th>S.No.</th>
+                    <th>Parent Category</th>
                     <th>Category Name</th>
                     <th>Category Url</th>
-                    <th>Parent Category</th>
                     <th scope="col" style="width: 250px;">Action</th>
                 </tr>
             </thead>
@@ -52,15 +52,15 @@
                 <tr>
                     <?php $dash = ''; ?>
                     <td>{{$_SESSION['i']}}</td>
-                    <td>{{$category->name}}</td>
-                    <td>{{$category->slug}}</td>
                     <td>
                         @if(isset($category->parent_id) && !empty($category->subcategory->name))
-                        {{ $category->subcategory->name ?? 'None' }}
+                        <a href="{{ route('category.edit', $category->id) }}">{{ $category->subcategory->name ?? 'None' }}</a>
                         @else
                         None
                         @endif
                     </td>
+                    <td> <a href="{{ route('category.edit', $category->id) }}">{{$category->name}}</a></td>
+                    <td>{{$category->slug}}</td>
                     <td>
                         <form action="{{ route('category.destroy', $category->id) }}" method="post">
                             @csrf

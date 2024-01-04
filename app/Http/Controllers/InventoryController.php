@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\SoldProduct;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
@@ -30,11 +32,7 @@ class InventoryController extends Controller
     public function index()
     {
         return view('admin.inventory.index', [
-            'categories' => Category::all(),
-            'products' => Product::all(),
-            'soldproductsbystock' => SoldProduct::selectRaw('product_id, max(created_at), sum(quantity) as total_qty, sum(total_amount) as incomes, avg(price) as avg_price')->whereYear('created_at', Carbon::now()->year)->groupBy('product_id')->orderBy('total_qty', 'desc')->limit(15)->get(),
-            'soldproductsbyincomes' => SoldProduct::selectRaw('product_id, max(created_at), sum(quantity) as total_qty, sum(total_amount) as incomes, avg(price) as avg_price')->whereYear('created_at', Carbon::now()->year)->groupBy('product_id')->orderBy('incomes', 'desc')->limit(15)->get(),
-            'soldproductsbyavgprice' => SoldProduct::selectRaw('product_id, max(created_at), sum(quantity) as total_qty, sum(total_amount) as incomes, avg(price) as avg_price')->whereYear('created_at', Carbon::now()->year)->groupBy('product_id')->orderBy('avg_price', 'desc')->limit(15)->get()
+            'products' => product::with(['inventories', 'orderdetails'])->get()
         ]);
     }
 
@@ -43,7 +41,17 @@ class InventoryController extends Controller
      */
     public function create()
     {
-        //
+        $product = product::with(['inventories', 'orderdetails'])->get();
+
+        $customers = User::all(['id', 'name']);
+
+        // $carts = Cart::content();
+
+        return view('admin.inventory.create', [
+            'products' => $product,
+            'customers' => $customers,
+            // 'carts' => $carts,
+        ]);
     }
 
     /**
@@ -51,7 +59,10 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $inventory = Inventory::create($request->all());
+         return redirect()
+         ->route('inventory.index')
+         ->with('success', 'Inventory has been created!');
     }
 
     /**
