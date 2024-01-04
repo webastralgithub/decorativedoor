@@ -38,4 +38,10 @@ class StoreProductRequest extends FormRequest
             'category_id' => 'required'
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'category_id.required' => 'The category field is required',
+        ];
+    }
 }

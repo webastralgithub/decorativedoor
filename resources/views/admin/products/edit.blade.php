@@ -87,7 +87,7 @@
                                     <label for="category_id" class="form-label">
                                         Meta Description
                                     </label>
-                                    <textarea name="meta_description" id="notes" rows="5" class="form-control @error('meta_description') is-invalid @enderror" placeholder="Meta Description">{{ $product->meta_description }}</textarea>
+                                    <textarea name="meta_description" id="editor" rows="5" class="form-control @error('meta_description') is-invalid @enderror" placeholder="Meta Description">{{ $product->meta_description }}</textarea>
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
