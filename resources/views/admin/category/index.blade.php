@@ -34,7 +34,6 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>S.No.</th>
                     <th>Parent Category</th>
                     <th>Category Name</th>
                     <th>Category Url</th>
@@ -50,16 +49,6 @@
                 <?php $_SESSION['i'] = $_SESSION['i'] + 1; ?>
                 <tr>
                     <?php $dash = ''; ?>
-                    <td>{{$_SESSION['i']}}</td>
-                    <td>
-                        @if(isset($category->parent_id) && !empty($category->subcategory->name))
-                        <a href="{{ route('category.edit', $category->id) }}">{{ $category->subcategory->name ?? 'None' }}</a>
-                        @else
-                        None
-                        @endif
-                    </td>
-                    <td> <a href="{{ route('category.edit', $category->id) }}">{{$category->name}}</a></td>
-                    <td>{{$category->slug}}</td>
                     <td>
                         <form action="{{ route('category.destroy', $category->id) }}" method="post">
                             @csrf
@@ -76,6 +65,15 @@
 
                         </form>
                     </td>
+                    <td>
+                        @if(isset($category->parent_id) && !empty($category->subcategory->name))
+                        <a href="{{ route('category.edit', $category->id) }}">{{ $category->subcategory->name ?? 'None' }}</a>
+                        @else
+                        None
+                        @endif
+                    </td>
+                    <td> <a href="{{ route('category.edit', $category->id) }}">{{$category->name}}</a></td>
+                    <td>{{$category->slug}}</td>
                 </tr>
                 @endif
                 @if(count($category->subcategory))

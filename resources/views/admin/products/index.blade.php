@@ -28,21 +28,15 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">S#</th>
+                    <th scope="col">Action</th>
                     <th scope="col">Name</th>
                     <th scope="col">Code</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($products as $product)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
-                    <td><a href="{{ route('products.edit', $product->id) }}">{{ $product->title }}</a>
-                    </td>
-                    <td>{{ $product->code }}</td>
-                    <td>${{ number_format($product->buying_price, 2, '.', ',') }}</td>
                     <td>
                         <form action="{{ route('products.destroy', $product->id) }}" method="post">
                             @csrf
@@ -59,6 +53,10 @@
                             @endcan
                         </form>
                     </td>
+                    <td><a href="{{ route('products.edit', $product->id) }}">{{ $product->title }}</a>
+                    </td>
+                    <td>{{ $product->code }}</td>
+                    <td>${{ number_format($product->buying_price, 2, '.', ',') }}</td>
                 </tr>
                 @empty
                 <td colspan="4">

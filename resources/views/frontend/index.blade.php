@@ -82,19 +82,21 @@
 </section> -->
 
 <section class="hero">
+    <div class="hero__item set-bg" data-setbg="{{asset('frontend/img/banner/banner.jpg')}}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="hero__item set-bg" data-setbg="{{asset('frontend/img/banner/banner.jpg')}}">
+                
                     <div class="hero__text">
                         <span>Latest Designs</span>
                         <h2>Creative &<br /> Decorative Doors</h2>
                         <p>Secure you home with modern design doors.</p>
                         <a href="{{ route('shop')}}" class="primary-btn">SHOP NOW</a>
                     </div>
-                </div>
+                
             </div>
         </div>
+    </div>
     </div>
 </section>
 <!-- Categories Section End -->

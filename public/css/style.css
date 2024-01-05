@@ -301,7 +301,7 @@ option:disabled {
 
 .top-bar-nav-wrp h5 {
     color: #2b4551;
-    font-size: 28px;
+    font-size: 22px;
     margin-bottom: 0;
     display: flex;
     align-items: center;
@@ -327,6 +327,7 @@ option:disabled {
     font-weight: 500;
     border-radius: 0 30px 30px 0;
     outline: none;
+    font-size: 14px;
 }
 
 .img-account-profile {
@@ -360,7 +361,7 @@ option:disabled {
 
 .sidebar .navbar .dropdown-toggle::after {
     position: absolute;
-    top: 15px;
+    top: 8px;
     right: 15px;
     border: none;
     content: "\f107";
@@ -616,7 +617,7 @@ option:disabled {
     color: #ffffff !important;
     border-bottom: 1px solid #0000004a;
     padding-bottom: 11px;
-    background: #004787;
+    /* background: #004787; */
 }
 
 .table-striped>tbody>tr:nth-of-type(odd){
@@ -630,11 +631,12 @@ option:disabled {
 
 .page-header-tp h3{
     color: #292929 !important;
+    font-size: 22px;
 }
 
 .box-stats h6 {
-    margin-bottom: 40px !important;
-    font-size: 38px;
+    margin-bottom: 20px !important;
+    font-size: 30px;
     font-weight: 600;
 }
 
@@ -643,7 +645,7 @@ option:disabled {
 }
 
 .box-stats p {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     margin-bottom: 0;
 }
@@ -2295,6 +2297,20 @@ body {
     margin: 40px 0 0;
 }
 
+.product-variants .input-tags .tag-container .tag{
+    background-color: #004787;
+}
+
+.product-variants .input-tags .tag-container .tag .tag-text{
+    color: #fff;
+}
+
+.product-variants .input-tags .tag-container .tag button.close{
+    border: none;
+    background: no-repeat;
+    color: #fff;
+}
+
 @media (max-width:600px) {
     .content-p-mobile{
         margin: 0 5px !important;
@@ -2308,3 +2324,23 @@ body {
 button#remove-input-variant {
     margin-top: 30px;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888888ab; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #888888ab; 
+  }
