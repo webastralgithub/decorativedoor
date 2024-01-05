@@ -223,7 +223,7 @@
             </div>
         </form>
     </div>
-    <form id="addressForm" style="display: none;">
+    <form id="addressForm" class="edit-inventory-popup" style="display: none;">
             <div class="inventory_info">
                 <p><strong>On Hold Quantity :</strong> {{ getProductOnhandAvailabityStock($product->id) }}</p>
                 <p><strong>On Order Quantity :</strong> {{ getProductOnorderAvailabityStock($product->id) }}</p>
@@ -255,6 +255,7 @@
                 </div>
             </div>
         </div>
+        <div class="manage-inventory-pop-up-table content-body">
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -273,6 +274,7 @@
                 @endforeach
             </tbody>
         </table>
+      </div>
         <!-- <button type="button" onclick="submitAddressForm()">Submit</button> -->
     </form>
 </div>

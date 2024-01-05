@@ -54,7 +54,7 @@
                                         <th scope="col" class="text-center"><input type="text" class="form-control" name="waybill" value=""></th>
                                         <th scope="col" class="text-center"><input type="number" class="form-control" name="quantity"  id="enter_quantity" value=""></th>
                                         <th>
-                                            <div class="card-ftr text-center mt-4">
+                                            <div class="card-ftr text-center create-inv-ind-btn">
                                                 <button type="submit" class="btn btn-success add-list mx-1">
                                                     {{ __('Create Inventory') }}
                                                 </button>
@@ -65,12 +65,12 @@
                               @foreach($products->inventories as $inventory)
                                 <tr class="totals">
                                     <td>
-                                        <form action="{{ route('inventory.destroy', $inventory->id) }}" method="post">
+                                        <form class="buttons-add-edit" action="{{ route('inventory.destroy', $inventory->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                 
                                             @can('edit-inventory')
-                                            <span class="dots-assigned cursor-pointer"  onclick="return EditInventory('{{$inventory->id}}');">{{"Edit"}}</span>
+                                            <a class="dots-assigned cursor-pointer btn btn-primary btn-sm"  onclick="return EditInventory('{{$inventory->id}}');">{{"Edit"}}</a>
                                             @endcan
                 
                                             @can('delete-inventory')
@@ -120,7 +120,7 @@
                         </table>
                     </div>
                 </div>
-                <form id="addressForm" style="display: none;">
+                <form id="addressForm" class="edit-inventory-popup" style="display: none;">
                     <div class="mb-3 row">
                         <div class="col-md-12 flex">
                             <label for="waybill" class="col-md-3 col-form-label text-md-end text-start">

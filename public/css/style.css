@@ -426,6 +426,53 @@ option:disabled {
     transform: rotate(-180deg);
 }
 
+.buttons-add-edit{
+    display: flex;
+    gap: 5px;
+}
+
+.create-inv-ind-btn{
+    margin-top: 0;
+}
+
+.create-inv-ind-btn button{
+    width: max-content;
+}
+
+.swal2-html-container#swal2-html-container{
+   overflow: hidden;
+}
+
+.inventory_info{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 23px;
+    background: #004787 ;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    padding: 15px;
+    row-gap: 8px;
+}
+
+.inventory_info p   {
+    margin-bottom: 0;
+    font-size: 16px;
+    color: #fff;
+}
+
+.inventory_info p strong{
+    color: #fff;
+}
+
+.manage-inventory-pop-up-table.content-body{
+    border: 1px solid #e1e1e1;
+    border-radius: 11px;
+}
+
+.manage-inventory-pop-up-table table td{
+    text-align: left;
+}
+
 @media (max-width: 575.98px) {
     .content .navbar .navbar-nav .nav-link {
         margin-left: 15px;

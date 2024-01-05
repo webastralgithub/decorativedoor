@@ -716,9 +716,18 @@ ul.under_ul li a {
 
 .hero__categories ul {
 	border: 1px solid #ebebeb;
-	padding-left: 40px;
-	padding-top: 10px;
-	padding-bottom: 12px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 12px;
+    padding-right: 10px;
+}
+
+.contact-page-front{
+	margin-top: 40px;
+}
+
+.contact-page-front{
+	max-width: 80% !important;
 }
 
 .hero__categories ul li {

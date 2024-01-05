@@ -394,8 +394,8 @@
     async function addUserAddress(userId, responseType) {
         if (userId <= 0) {
             Swal.fire({
-                icon: 'warning',
-                title: 'User not valid!',
+               // icon: 'warning',
+                //title: 'User not valid!',
                 text: "Please select Sales Person"
             });
             return false;
