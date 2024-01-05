@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
-                                        Slug
+                                    Url
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input name="slug" id="name" class="form-control product-slug" placeholder="Product Slug" value="{{ $product->slug }}" />
@@ -163,6 +163,20 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="notes" class="form-label">
+                                            {{ __('Short Description') }}
+                                        </label>
+
+                                        <textarea name="short_description" id="short_description" rows="5" class="form-control @error('short_description') is-invalid @enderror" placeholder="Product Short Description">{{ $product->short_description }}</textarea>
+                                        @error('short_description')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,7 +190,7 @@
                                 {{ __('Product Image') }}
                             </h3>
                             <!-- <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" /> -->
-
+                           
                             <div class="mt-1 text-center">
                                 <div class="images-preview-div"> </div>
                             </div>

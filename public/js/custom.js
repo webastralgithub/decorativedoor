@@ -10,8 +10,45 @@ jQuery(document).ready(function () {
         clonedRow.find('.tag-container').attr('data-count', parseInt(clonedRow.find('.tag-container').attr('data-count')) + 1);
         clonedRow.find('.edit-variant-tags').attr('data-check', 'new');
 
+
+        var cloanhtml = `<div class="row row-cards">
+        <div class="col-sm-3 col-md-3">
+            <label for="category_id" class="form-label">
+                Option
+                <span class="text-danger">*</span>
+            </label>
+            <input name="variant_option[]" id="option" class="form-control" placeholder="Like Size, Color..." value="">
+        </div>
+
+        <div class="col-sm-8 col-md-8">
+            <label for="category_id" class="form-label">
+                Value
+                <span class="text-danger">*</span>
+            </label>
+            <input name="variant_option_value[]" id="variant-value" class="form-control" style="display: none;" value="">
+            <span class="input-tags">
+                <span class="tag-container" id="tagContainer" data-count="1">
+                </span>
+                <div id="variant_addTag">
+                    <input id="variant-tags" class="variant-tags form-control tag-input error" value="" placeholder="Enter variant value seperated by comma">
+                </div>
+
+            </span>
+        </div>
+        <div class="col-sm-1 col-md-1">                   
+            <span class="remove-input-tags">
+                <button type="button" id="remove-input-variant" class="close-row  btn btn-primary" aria-label="Close">×</button>
+            </span>
+        </div>
+    </div>`;
+
         // Append the cloned row to the form
-        jQuery('.variantForm').append(clonedRow);
+        jQuery('.variantForm').append(cloanhtml);
+
+        jQuery('button.close-row.btn.btn-primary').on('click', function(){
+            var parentclass = jQuery(this).parent().parent().parent().remove();
+            console.log(parentclass);
+       });
     });
 
     // ADD TAGS 
@@ -184,6 +221,11 @@ jQuery(document).ready(function () {
     .then(editor => { console.log(editor); })
     .catch(error => { console.error(error); });
 
+    ClassicEditor
+    .create(document.querySelector('#short_description'))
+    .then(editor => { console.log(editor); })
+    .catch(error => { console.error(error); });
+
     jQuery('.category-name').on('input', function () {
         var name = jQuery(this).val();
         var slug = jQuery.trim(name).replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
@@ -207,6 +249,11 @@ var previewImages = function (input, imgPreviewPlaceholder) {
     }
 
 };
+
+jQuery('button.close-row.btn.btn-primary').on('click', function(){
+     var parentclass = jQuery(this).parent().parent().parent().remove();
+     console.log(parentclass);
+});
 
 // jQuery('#images').on('change', function () {
 //     previewImages(this, 'images-preview-div');

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('tax')->nullable();
             $table->tinyInteger('tax_type')->nullable();
             $table->text('notes')->nullable();
+            $table->text('short_description')->nullable();
             $table->timestamps();
         });
     }

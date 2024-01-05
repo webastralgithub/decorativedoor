@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
-                                        Slug
+                                        Url
                                         <span class="text-danger">*</span>
                                     </label>
                                     <input name="slug" id="name" class="form-control product-slug" placeholder="Product Slug" value="{{ old('slug') }}" />
@@ -157,6 +157,21 @@
 
                                         <textarea name="notes" id="notes" rows="5" class="form-control @error('notes') is-invalid @enderror" placeholder="Product notes"></textarea>
                                         @error('notes')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="notes" class="form-label">
+                                            {{ __('Short Description') }}
+                                        </label>
+
+                                        <textarea name="short_description" id="short_description" rows="5" class="form-control @error('short_description') is-invalid @enderror" placeholder="Product Short Description"></textarea>
+                                        @error('short_description')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

@@ -32,7 +32,7 @@ class InventoryController extends Controller
     public function index()
     {
         return view('admin.inventory.index', [
-            'products' => product::with(['inventories', 'orderdetails'])->get()
+            'products' => Product::with(['inventories', 'orderdetails'])->latest()->paginate(10)
         ]);
     }
 
@@ -59,6 +59,15 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = $request->validate([
+            'product_id'     => 'required',
+            'quantity'     => 'required',
+            'waybill' => 'required',
+        ],[
+            'product_id.required'=> 'Please select a Product First.',
+            'quantity.required'=> 'The quantity field is required.',
+            'waybill.required'=> 'The waybill field is required.',
+        ]);
          $inventory = Inventory::create($request->all());
          return redirect()
          ->route('inventory.index')

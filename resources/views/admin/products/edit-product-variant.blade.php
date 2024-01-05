@@ -17,7 +17,7 @@
             {{-- Access the decoded JSON data --}}
             @foreach ($variantOptions as $key => $variant)
             <div class="row row-cards">
-                <div class="col-sm-4 col-md-4">
+                <div class="col-sm-3 col-md-3">
                     <label for="category_id" class="form-label">
                         Option
                         <span class="text-danger">*</span>
@@ -48,11 +48,16 @@
 
                     </span>
                 </div>
+                {{-- <div class="col-sm-1 col-md-1">                   
+                    <span class="remove-input-tags">
+                        <button type="button" id="remove-input-variant" class="close-row btn btn-primary" aria-label="Close">×</button>
+                    </span>
+                </div> --}}
             </div>
             @endforeach
             @else
             <div class="row row-cards">
-                <div class="col-sm-4 col-md-4">
+                <div class="col-sm-3 col-md-3">
                     <label for="category_id" class="form-label">
                         Option
                         <span class="text-danger">*</span>
@@ -75,6 +80,11 @@
 
                     </span>
                 </div>
+                {{-- <div class="col-sm-1 col-md-1">                   
+                    <span class="remove-input-tags">
+                        <button type="button" id="remove-input-variant" class="close-row  btn btn-primary" aria-label="Close">×</button>
+                    </span>
+                </div> --}}
             </div>
             @endif
         </div>
