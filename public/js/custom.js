@@ -221,6 +221,11 @@ jQuery(document).ready(function () {
     .then(editor => { console.log(editor); })
     .catch(error => { console.error(error); });
 
+    ClassicEditor
+    .create(document.querySelector('#short_description'))
+    .then(editor => { console.log(editor); })
+    .catch(error => { console.error(error); });
+
     jQuery('.category-name').on('input', function () {
         var name = jQuery(this).val();
         var slug = jQuery.trim(name).replace(/[^a-z0-9-]+/gi, '-').toLowerCase();

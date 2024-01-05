@@ -163,6 +163,21 @@
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="notes" class="form-label">
+                                            {{ __('Short Description') }}
+                                        </label>
+
+                                        <textarea name="short_description" id="short_description" rows="5" class="form-control @error('short_description') is-invalid @enderror" placeholder="Product Short Description"></textarea>
+                                        @error('short_description')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
