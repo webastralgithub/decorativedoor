@@ -30,6 +30,9 @@
                 <tr>
                     <th scope="col">Action</th>
                     <th scope="col">Name</th>
+                    <th scope="col">On Hand Quantity</th>
+                    <th scope="col">On Order Quantity</th>
+                    <th scope="col">Available Quantity</th>
                     <th scope="col">Code</th>
                     <th scope="col">Price</th>
                 </tr>
@@ -55,6 +58,9 @@
                     </td>
                     <td><a href="{{ route('products.edit', $product->id) }}">{{ $product->title }}</a>
                     </td>
+                    <th>{{ getProductOnhandAvailabityStock($product->id) }}</th>
+                    <th>{{ getProductOnorderAvailabityStock($product->id) }}</th>
+                    <th>{{ getProductAvailabityStock($product->id) }}</th>
                     <td>{{ $product->code }}</td>
                     <td>${{ number_format($product->buying_price, 2, '.', ',') }}</td>
                 </tr>

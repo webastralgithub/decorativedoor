@@ -104,7 +104,13 @@ class InventoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Inventory::where('id', $request->inventoryid)
+        ->update([
+            'product_id' => $request->product_id,
+            'waybill' => $request->waybill,
+            'quantity' => $request->quantity
+        ]);
+
     }
 
     /**
@@ -112,6 +118,10 @@ class InventoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+        $inventory =  Inventory::where('id', $id)->first('product_id');
+        Inventory::where('id', $id)->delete();
+        return redirect()->route('inventory.show', $inventory->product_id)
+        ->withSuccess('Inventory is deleted successfully.');
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\ProductImage;
 use App\Models\ProductVariant;
+use App\Models\Inventory;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -136,7 +137,10 @@ class ProductController extends Controller
         $categories = Category::all(['id', 'name']);
         $selectedCategories = $product->categories->pluck('id')->toArray();
         $productImages = ProductImage::where('product_id',$product->id)->get();
-        return view('admin.products.edit', compact('product', 'productImages','categories', 'selectedCategories'));
+
+        $inventory = Inventory::where('product_id',$product->id)->get();
+
+        return view('admin.products.edit', compact('product', 'inventory', 'productImages','categories', 'selectedCategories'));
     }
 
     /**
