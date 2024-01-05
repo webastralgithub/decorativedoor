@@ -10,22 +10,22 @@
 
             @canany(['create-order', 'edit-order', 'delete-order','change-order-status'])
              <a class="nav-item nav-link {{ request()->is('*/orders') ? 'active' : '' }}" href="{{ route('orders.index') }}">
-                 <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Orders</a>
+                 <img src="{{asset('img/order-icon.svg')}}" class="img" /> Manage Orders</a>
              @endcanany
 
              @canany(['create-product', 'edit-product', 'delete-product'])
              <a class="nav-item nav-link {{ request()->is('*/inventory') ? 'active' : '' }}" href="{{ route('inventory.index') }}">
-                 <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Inventory</a>
+                 <img src="{{asset('img/inventory.svg')}}" class="img" /> Manage Inventory</a>
              @endcanany
 
              @canany(['create-product', 'edit-product', 'delete-product'])
              <a class="nav-item nav-link {{ request()->is('*/products') ? 'active' : '' }}" href="{{ route('products.index') }}">
-                 <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Products</a>
+                 <img src="{{asset('img/products-icon.svg')}}" class="img" /> Manage Products</a>
              @endcanany
 
              <div class="nav-item dropdown">
                 <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img src="{{asset('img/4634467_category_interface_link_categories_icon.svg')}}" class="img" /></i>Administration</a>
+                    <img src="{{asset('img/administration.svg')}}" class="img" /></i>Administration</a>
                 <div class="dropdown-menu bg-transparent border-0">
                     
                 @canany(['create-user', 'edit-user', 'delete-user'])
