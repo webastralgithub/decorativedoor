@@ -2304,3 +2304,7 @@ body {
         flex-direction: column;
     }
 }
+
+button#remove-input-variant {
+    margin-top: 30px;
+}
