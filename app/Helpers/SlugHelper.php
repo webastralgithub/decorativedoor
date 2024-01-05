@@ -105,4 +105,32 @@ if (!function_exists('generateProductSlug')) {
             return $FinalQuantity;
         }
     }
+
+    if (!function_exists('getProductOnhandAvailabityStock')) {
+        function getProductOnhandAvailabityStock($productId = null)
+        {
+            $products = Product::with(['inventories', 'orderdetails'])->where('id', $productId)->first();
+            $total = 0;           
+            foreach ($products->inventories as $product) {
+                $total += $product->quantity;
+            }
+            $FinalQuantity = $total;
+            return $FinalQuantity;
+        }
+    }
+
+
+
+    if (!function_exists('getProductOnorderAvailabityStock')) {
+        function getProductOnorderAvailabityStock($productId = null)
+        {
+            $products = Product::with(['inventories', 'orderdetails'])->where('id', $productId)->first();
+            $totalrecived = 0;
+            foreach ($products->orderdetails as $order) {
+                $totalrecived += $order->quantity;
+            }
+            $FinalQuantity = $totalrecived;
+            return $FinalQuantity;
+        }
+    }
 }

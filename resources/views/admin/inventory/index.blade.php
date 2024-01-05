@@ -52,6 +52,7 @@
                     <td>{{ $inventoryquantity }}</td>
                     <td>{{ $orderdetails }}</td>
                     <td>{{ $inventoryquantity - $orderdetails }}</td>
+                   
                 </tr>
                 @endforeach
             </tbody>
