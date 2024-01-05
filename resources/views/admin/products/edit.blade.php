@@ -192,7 +192,12 @@
                             <!-- <img class="img-account-profile mb-2" src="{{ asset('img/product/default.webp') }}" alt="" id="image-preview" /> -->
                            
                             <div class="mt-1 text-center">
-                                <div class="images-preview-div"> </div>
+                            <div class="images-preview-div">
+                            @foreach($productImages AS $image)
+                            
+                             <img src="{{ asset('storage/products/' . $image->path)}}">
+                            @endforeach
+                            </div> 
                             </div>
                             <div class="small font-italic text-muted mb-2">
                                 JPG or PNG no larger than 2 MB

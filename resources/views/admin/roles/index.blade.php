@@ -27,33 +27,14 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">S#</th>
+                    <th scope="col" style="width: 250px;">Action</th>
                     <th scope="col">Name</th>
                     <th scope="col">Permissions</th>
-                    <th scope="col" style="width: 250px;">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($roles as $role)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
-                    <td><a href="{{ route('roles.edit', $role->id) }}">{{ $role->name }}</a></td>
-                    <td>
-                        @if ($role->name=='Super Admin')
-                        <span class="badge bg-primary">All</span>
-                        @else
-                        @php
-                        $rolePermissions = \App\Models\Permission::join("role_has_permissions", "permission_id", "=", "id")
-                        ->where("role_id", $role->id)
-                        ->select('name')
-                        ->get();
-                        @endphp
-                        @forelse ($rolePermissions as $permission)
-                        <span class="badge bg-primary">{{ $permission->name }}</span>
-                        @empty
-                        @endforelse
-                        @endif
-                    </td>
                     <td>
                         <form action="{{ route('roles.destroy', $role->id) }}" method="post">
                             @csrf
@@ -74,6 +55,23 @@
                             @endif
 
                         </form>
+                    </td>
+                    <td><a href="{{ route('roles.edit', $role->id) }}">{{ $role->name }}</a></td>
+                    <td>
+                        @if ($role->name=='Super Admin')
+                        <span class="badge bg-primary">All</span>
+                        @else
+                        @php
+                        $rolePermissions = \App\Models\Permission::join("role_has_permissions", "permission_id", "=", "id")
+                        ->where("role_id", $role->id)
+                        ->select('name')
+                        ->get();
+                        @endphp
+                        @forelse ($rolePermissions as $permission)
+                        <span class="badge bg-primary">{{ $permission->name }}</span>
+                        @empty
+                        @endforelse
+                        @endif
                     </td>
                 </tr>
                 @empty

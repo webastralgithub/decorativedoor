@@ -34,34 +34,52 @@
         <div class="table-order">
             <table class="table table-striped table-bordered" id="order">
                 <thead>
-                    <th>{{__('ID')}}</th>
+                    <th>{{__('Action')}}</th>
                     <th>{{__('Order ID')}}</th>
+                    <th>{{__('Status')}}</th>
                     <th>{{__('Order Coordinator')}}</th>
-                    <th>{{__('Ready Date')}}</th>
-                    <th>{{__('Delivery Date')}}</th>
-                    <th>{{__('Quantity')}}</th>
                     <th>{{__('Sales Person')}}</th>
                     <th>{{__('Accountant')}}</th>
                     <th>{{__('Assembler')}}</th>
                     <th>{{__('Delivery By')}}</th>
+                    <th>{{__('Ready Date')}}</th>
+                    <th>{{__('Delivery Date')}}</th>
+                    <th>{{__('Address')}}</th>
+                    <th>{{__('Quantity')}}</th>
                     @can('order_price')
                     <th>{{__('Total')}}</th>
                     @endcan
                     @can('change-order-status')
-                    <th>{{__('Status')}}</th>
                     @endcan
-                    <th>{{__('Address')}}</th>
-                    <th>{{__('Action')}}</th>
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>
+                            @can('make-payment')
+                            @if($order->order_status == \App\Models\OrderStatus::IN_PROGRESS)
+                            <a class="btn btn-success btn-sm" onclick="return makePayment('{{$order->id}}');"> Make Payment</a>
+                            @endif
+                            @endcan
+                            <!-- @can('download-invoice')
+                            <a class="btn btn-primary btn-sm" href="{{ route('order.downloadInvoice', $order) }}">Print</a>
+                            @endcan -->
+                        </td>
                         <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{ $order->order_id }}</a></td>
+                        @can('change-order-status')
+                        <td class="center status-links">
+                            <!-- <a class="text-info" onclick="return changeOrderStatus('{{$order->id}}','{{$order_statuses}}','{{$order->order_status}}');">
+                                {{ \App\Models\OrderStatus::getStatusNameById($order->order_status)}}
+                            </a> -->
+                            @foreach ($order->details->unique('order_status') as $item)
+                            </br>
+                            <a class="text-info-product " href="{{ route('orders.show', $order->order_id) }}">
+                                {{ \App\Models\OrderStatus::getStatusNameById($item->order_status)}}
+                            </a>
+                            @endforeach
+                        </td>
+                        @endcan
                         <td>-</td>
-                        <td>{{ $order->order_date->format('d-m-Y') }}</td>
-                        <td>-</td>
-                        <td>{{ number_format($order->total_products, 2, '.', ',') }}</td>
                         <td class="center">
                             <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_sales_person') onclick="return assignUser('{{$order->id}}','{{$sales_users}}','sales person','{{$order->user_id}}');" @endcan>{{$order->user->name ?? "..."}}</span>
                         </td>
@@ -74,21 +92,7 @@
                         <td class="center">
                             <span class="@if(!$order->delivery) dots-assigned @endif cursor-pointer" @can('change_delivery_user') onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','delivery','{{$order->delivery_user_id}}');" @endcan>{{$order->delivery->name ?? "..."}}</span>
                         </td>
-                        @can('order_price')
-                        <td>${{ number_format($order->total, 2, '.', ',') }}</td>
-                        @endcan
                         @can('change-order-status')
-                        <td class="center status-links">
-                            <a class="text-info" onclick="return changeOrderStatus('{{$order->id}}','{{$order_statuses}}','{{$order->order_status}}');">
-                                {{ \App\Models\OrderStatus::getStatusNameById($order->order_status)}}
-                            </a>
-                            @foreach ($order->details->unique('order_status') as $item)
-                            </br>
-                            <a class="text-info-product " href="{{ route('orders.show', $order->order_id) }}">
-                                {{ \App\Models\OrderStatus::getStatusNameById($item->order_status)}}
-                            </a>
-                            @endforeach
-                        </td>
                         @php
                         $address = getUserAddress($order->user_id);
                         @endphp
@@ -100,16 +104,12 @@
                             @endif
                         </td>
                         @endcan
-                        <td>
-                            @can('make-payment')
-                            @if($order->order_status == \App\Models\OrderStatus::IN_PROGRESS)
-                            <a class="btn btn-success btn-sm" onclick="return makePayment('{{$order->id}}');"> Make Payment</a>
-                            @endif
-                            @endcan
-                            @can('download-invoice')
-                            <a class="btn btn-primary btn-sm" href="{{ route('order.downloadInvoice', $order) }}">Print</a>
-                            @endcan
-                        </td>
+                        <td>{{ $order->order_date->format('d-m-Y') }}</td>
+                        <td>-</td>
+                        <td>{{ number_format($order->total_products, 2, '.', ',') }}</td>
+                        @can('order_price')
+                        <td>${{ number_format($order->total, 2, '.', ',') }}</td>
+                        @endcan
                     </tr>
                     @endforeach
                 </tbody>
@@ -225,7 +225,7 @@
                         });
 
                     } else {
-                        resolve("Please select Payment Method)");
+                        resolve("Please select Payment Method");
                     }
                 });
             }
@@ -240,10 +240,10 @@
             inputOptions[user.id] = user.name;
         });
         await Swal.fire({
-            title: "Assigne the " + type,
+            // title: "Assigne the " + type,
             input: "select",
             inputOptions: inputOptions,
-            inputPlaceholder: "Select " + type,
+            inputPlaceholder: "Select " +type.charAt(0).toUpperCase() + type.slice(1).toLowerCase(),
             inputValue: selectedUser,
             showCancelButton: true,
             inputValidator: (value) => {
@@ -282,7 +282,7 @@
                         });
 
                     } else {
-                        resolve("Please select Payment Method)");
+                        resolve("Please Select " + type.charAt(0).toUpperCase() + type.slice(1).toLowerCase());
                     }
                 });
             }

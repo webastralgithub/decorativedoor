@@ -140,9 +140,9 @@
                     <nav class="header__menu">
                         <ul>
 
-                            <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
-                            <li class="{{ request()->is('*shop') ? 'active' : '' }}"><a href="{{route('shop')}}">Shop</a></li>
-                            <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li>
+                            <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+                            <li class="{{ request()->is('*shop') ? 'active' : '' }}"><a href="{{route('shop')}}"><i class="fa fa-shopping-bag" aria-hidden="true"></i>Shop</a></li>
+                            <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}"><i class="fa fa-phone-square" aria-hidden="true"></i></i>Contact</a></li>
                         </ul>
                     </nav>
                 </div>

@@ -31,25 +31,15 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">S#</th>
+                    <th scope="col">Action</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Roles</th>
-                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($users as $user)
                 <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
-                    <td> <a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a></td>
-                    <td>{{ $user->email }}</td>
-                    <td>
-                        @forelse ($user->getRoleNames() as $role)
-                        <span class="badge bg-primary">{{ $role }}</span>
-                        @empty
-                        @endforelse
-                    </td>
                     <td>
                         <form action="{{ route('users.destroy', $user->id) }}" method="post">
                             @csrf
@@ -74,6 +64,14 @@
                             @endif
 
                         </form>
+                    </td>
+                    <td> <a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a></td>
+                    <td>{{ $user->email }}</td>
+                    <td>
+                        @forelse ($user->getRoleNames() as $role)
+                        {{ $role }}
+                        @empty
+                        @endforelse
                     </td>
                 </tr>
                 @empty
