@@ -1,7 +1,7 @@
 <section class="hero hero-normal">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <!-- <div class="col-lg-3">
                 <div class="hero__categories">
                     <div class="hero__categories__all">
                         <i class="fa fa-bars"></i>
@@ -22,7 +22,7 @@
                         @endforeach
                     </ul>
                 </div>
-            </div>
+            </div> -->
             <!-- Sidebar End -->
             <div class="col-lg-9">
                 <div class="hero__search">
@@ -36,14 +36,14 @@
                             <button type="submit" class="site-btn">SEARCH</button>
                         </form> 
                     </div> -->
-                    <div class="hero__search__phone">
+                    <!-- <div class="hero__search__phone">
                         <div class="hero__search__phone__icon">
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="hero__search__phone__text">
                             <h5>+1 (604) 446-5841</h5>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

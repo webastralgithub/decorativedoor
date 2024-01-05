@@ -74,6 +74,7 @@
         <div class="humberger__menu__contact">
             <ul>
                 <li><i class="fa fa-envelope"></i> hello@dummy.com</li>
+                <li><i class="fa fa-phone"></i> +1 (604) 446-5841</li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
@@ -86,6 +87,7 @@
                         <div class="header__top__left">
                             <ul>
                                 <li><i class="fa fa-envelope"></i> hello@dummy.com</li>
+                                <li><i class="fa fa-phone"></i> +1 (604) 446-5841</li>
                                 <li>Free Shipping for all Order of $99</li>
                             </ul>
                         </div>
@@ -131,12 +133,34 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
+
+                <div class="col-lg-5 hero hero-normal">
+                <div class="header__logo">
                         <a href="{{route('home')}}"><img src="{{asset('frontend/img/logo.png')}}" alt=""></a>
-                    </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>All Categories</span>
+                    </div>
+                    <ul>
+                        @foreach($categories as $category)
+                        @if(empty($category->parent_id) && $category->name != 'Add On')
+                        <li>
+                            <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
+                            <ul class="under_ul sub">
+                                @foreach($category->children as $subcategory)
+                                <li><a class="sub-sub" href="{{route('category', $subcategory->slug )}}">{{ isset($subcategory->name) ? $subcategory->name : '' }}</a></li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        @endif
+                        @endforeach
+                    </ul>
+                </div>
+                </div>
+
+                <div class="col-lg-4">
                     <nav class="header__menu">
                         <ul>
 
@@ -146,6 +170,9 @@
                         </ul>
                     </nav>
                 </div>
+
+
+
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
@@ -195,7 +222,6 @@
                 <i class="fa fa-bars"></i>
             </div>
         </div>
-        <br />
         <div class="container">
             @if(session('success'))
             <div class="alert alert-success">
