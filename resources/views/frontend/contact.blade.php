@@ -164,9 +164,9 @@
         color: #ec1c24;
     }
 </style>
-<div class="contain">
+<div class="contain contact-page-front">
     <div class="wrapper">
-        <div class="form">
+        <div class="form ">
             <h4>GET IN TOUCH</h4>
             <h2 class="form-headline">Send us a message</h2>
             <form id="submit-form" action="">
