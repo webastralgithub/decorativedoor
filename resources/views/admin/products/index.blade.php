@@ -35,7 +35,7 @@
                     <th scope="col">On Hand Quantity</th>
                     <th scope="col">On Order Quantity</th>
                     <th scope="col">Available Quantity</th>
-                    <th scope="col">Code</th>
+                    <th scope="col">SKU</th>
                     <th scope="col">Price</th>
                 </tr>
             </thead>
