@@ -58,7 +58,15 @@
                         <td>
                             @can('make-payment')
                             @if($order->order_status == \App\Models\OrderStatus::IN_PROGRESS)
-                            <a class="btn btn-success btn-sm" onclick="return makePayment('{{$order->id}}');"> Make Payment</a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Make Payment</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make Payment</a></li>
+                                </ul>
+                            </div>
                             @endif
                             @endcan
                             <!-- @can('download-invoice')
@@ -282,7 +290,7 @@
                         });
 
                     } else {
-                        resolve("Please Select " + type.charAt(0).toUpperCase() + type.slice(1).toLowerCase());
+                        resolve();
                     }
                 });
             }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\View\View;
@@ -23,11 +24,15 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('admin.roles.index', [
-            'roles' => Role::orderBy('id', 'DESC')->paginate(env('RECORD_PER_PAGE', 10))
-        ]);
+
+        $roles = Role::when(isset($request->q), function ($query) use ($request) {
+
+            $query->whereRaw("(name LIKE '%" . $request->q . "%')");
+        })->orderBy('id', 'DESC')->paginate(env('RECORD_PER_PAGE', 10));
+        
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**

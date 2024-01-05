@@ -59,10 +59,10 @@
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
-                                        Product Code
+                                        SKU
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <input name="code" id="productcode" class="form-control product-code" placeholder="Product Code" value="{{ $product->code }}" />
+                                    <input name="code" id="productcode" class="form-control product-code" placeholder="SKU" value="{{ $product->code }}" />
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="category_id" class="form-label">
@@ -133,7 +133,7 @@
                                     <label for="notes" class="form-label">
                                         {{ __('Buying Price') }}
                                     </label>
-                                    <input type="number" label="Buying Price" class="form-control" name="buying_price" id="buying_price" placeholder="0" value="{{ $product->buying_price }}" />
+                                    <input type="number" label="Buying Price" class="form-control" name="buying_price" id="buying_price" placeholder="0" value="{{ $product->buying_price }}" min="0" />
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
@@ -146,7 +146,7 @@
                                     <label for="notes" class="form-label">
                                         {{ __('Tax') }}
                                     </label>
-                                    <input type="number" label="Tax" name="tax" class="form-control" id="tax" placeholder="0" value="{{ $product->tax }}" />
+                                    <input type="number" label="Tax" name="tax" class="form-control" id="tax" placeholder="0" value="{{ $product->tax }}" min="0" />
                                 </div>
 
                                 <div class="col-md-12">

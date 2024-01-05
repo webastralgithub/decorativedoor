@@ -28,11 +28,14 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('admin.users.index', [
-            'users' => User::latest('id')->paginate(env('RECORD_PER_PAGE', 10))
-        ]);
+        $users = User::when(isset($request->q), function ($query) use ($request) {
+
+            $query->whereRaw("(name LIKE '%" . $request->q . "%' or email LIKE '%" . $request->q . "%')");
+        })->latest('id')->paginate(env('RECORD_PER_PAGE', 10));
+        
+        return view('admin.users.index', compact('users'));
     }
 
     /**

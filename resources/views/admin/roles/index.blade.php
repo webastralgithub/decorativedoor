@@ -4,7 +4,9 @@
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
         <h3>Manage Roles</h3>
-
+        <form >
+            <input type="search" class="form-control" placeholder="Find Role" name="q" value="{{ request('q') }}">
+        </form>
         <div class="top-bntspg-hdr">
         @can('create-role')
         <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Role</a>
@@ -36,25 +38,32 @@
                 @forelse ($roles as $role)
                 <tr>
                     <td>
-                        <form action="{{ route('roles.destroy', $role->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-
-                            <!-- <a href="{{ route('roles.show', $role->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a> -->
-
-                            @if ($role->name != 'Super Admin')
-                            @can('edit-role')
-                            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
-                            @endcan
-
-                            @can('delete-role')
-                            @if ($role->name!=Auth::user()->hasRole($role->name))
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this role?');"><i class="bi bi-trash"></i> Delete</button>
-                            @endif
-                            @endcan
-                            @endif
-
-                        </form>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden"><i class="fa fa-home"></i></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <form action="{{ route('roles.destroy', $role->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                    
+                                    @if ($role->name != 'Super Admin')
+                                    @can('edit-role')
+                                    <li><a href="{{ route('roles.edit', $role->id) }}">Edit</a></li>
+                                    @endcan
+                    
+                                    @can('delete-role')
+                                    @if ($role->name != Auth::user()->hasRole($role->name))
+                                    <li><button type="submit" class="dropdown-item"
+                                            onclick="return confirm('Do you want to delete this role?');">Delete</button></li>
+                                    @endif
+                                    @endcan
+                                    @endif
+                    
+                                </form>
+                            </ul>
+                        </div>
                     </td>
                     <td><a href="{{ route('roles.edit', $role->id) }}">{{ $role->name }}</a></td>
                     <td>
