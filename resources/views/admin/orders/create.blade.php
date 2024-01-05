@@ -105,7 +105,7 @@
                                     {{ __('Product') }}
                                 </th>
                                 <th scope="col" class="text-center">{{ __('Quantity') }}</th>
-                                <th scope="col" class="text-center">{{ __('Product Code') }}</th>
+                                <th scope="col" class="text-center">{{ __('SKU') }}</th>
                                 <th scope="col" class="text-center">{{ __('Price') }}</th>
                                 <th scope="col" class="text-center">
                                     {{ __('Total') }}

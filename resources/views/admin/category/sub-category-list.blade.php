@@ -3,23 +3,29 @@
 <?php $_SESSION['i'] = $_SESSION['i'] + 1; ?>
 <tr>
     <td>
-        <form action="{{ route('category.destroy', $subcategory->id) }}" method="post">
-            @csrf
-            @method('DELETE')
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="visually-hidden"><i class="bi bi-pencil-square"></i></span>
+            </button>
+            <ul class="dropdown-menu">
+                <form action="{{ route('category.destroy', $subcategory->id) }}" method="post">
+                    @csrf
+                    @method('DELETE')
 
-            <!-- <a href="{{ route('category.show', $subcategory->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a> -->
-            @can('edit-role')
-            <a href="{{ route('category.edit', $subcategory->id) }}" class="btn btn-primary btn-sm"><i
-                    class="bi bi-pencil-square"></i> Edit</a>
-            @endcan
+                    @can('edit-subcategory')
+                    <li><a href="{{ route('category.edit', $subcategory->id) }}" class="dropdown-item"><i
+                                class="bi bi-pencil-square"></i> Edit</a></li>
+                    @endcan
 
-            @can('delete-role')
-            <button type="submit" class="btn btn-danger btn-sm"
-                onclick="return confirm('Do you want to delete this Category?');"><i class="bi bi-trash"></i>
-                Delete</button>
-            @endcan
-
-        </form>
+                    @can('delete-subcategory')
+                    <li><button type="submit" class="dropdown-item btn-danger"
+                            onclick="return confirm('Do you want to delete this Subcategory?');"><i class="bi bi-trash"></i>
+                            Delete</button></li>
+                    @endcan
+                </form>
+            </ul>
+        </div>
     </td>
     <td><a href="{{ route('category.edit', $subcategory->id) }}">{{$subcategory->parent->name}}</a></td>
     <td> <a href="{{ route('category.edit', $subcategory->id) }}">{{$dash}}{{$subcategory->name}}</a></td>

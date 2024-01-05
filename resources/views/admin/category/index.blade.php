@@ -4,6 +4,9 @@
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
       <h3>Manage Categories</h3> 
+         <form >
+            <input type="search" class="form-control" placeholder="Find Category" name="q" value="{{ request('q') }}">
+        </form>
       <div class="top-bntspg-hdr">
         @can('create-category')
         <a href="{{ route('category.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Category</a>
@@ -50,20 +53,29 @@
                 <tr>
                     <?php $dash = ''; ?>
                     <td>
-                        <form action="{{ route('category.destroy', $category->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-
-                            <!-- <a href="{{ route('category.show', $category->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a> -->
-                            @can('edit-role')
-                            <a href="{{ route('category.edit', $category->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
-                            @endcan
-
-                            @can('delete-role')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this Category?');"><i class="bi bi-trash"></i> Delete</button>
-                            @endcan
-
-                        </form>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <span class="visually-hidden"><i class="bi bi-pencil-square"></i></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <form action="{{ route('category.destroy', $category->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                        
+                                    @can('edit-category')
+                                    <li><a href="{{ route('category.edit', $category->id) }}" class="dropdown-item"><i
+                                                class="bi bi-pencil-square"></i> Edit</a></li>
+                                    @endcan
+                        
+                                    @can('delete-category')
+                                    <li><button type="submit" class="dropdown-item btn-danger"
+                                            onclick="return confirm('Do you want to delete this Category?');"><i class="bi bi-trash"></i>
+                                            Delete</button></li>
+                                    @endcan
+                                </form>
+                            </ul>
+                        </div>
                     </td>
                     <td>
                         @if(isset($category->parent_id) && !empty($category->subcategory->name))

@@ -33,11 +33,6 @@
                     <img src="{{asset('img/8666755_users_group_icon.svg')}}" class="img" /></i> Manage Users</a>
                 @endcanany
 
-                @canany(['create-inventory', 'edit-inventory', 'delete-inventory'])
-                <a class="nav-item nav-link {{ request()->is('*/inventory') ? 'active' : '' }}" href="{{ route('inventory.index') }}">
-                    <img src="{{asset('img/4544841_box_business_comerce_delivery_shop_icon.svg')}}" class="img" /> Manage Inventory</a>
-                @endcanany
-
                 @canany(['create-role', 'edit-role', 'delete-role'])
                 <a class="nav-item nav-link {{ request()->is('*/roles') ? 'active' : '' }}" href="{{ route('roles.index') }}">
                     <img src="{{asset('img/4634467_category_interface_link_categories_icon.svg')}}" class="img" /></i> Manage Roles</a>
