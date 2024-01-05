@@ -3082,7 +3082,8 @@ fieldset:disabled .btn {
 .btn-primary {
   color: #000;
   background-color: #004787;
-  border-color: #004787
+  border-color: #004787;
+  font-size: 13px !important;
 }
 
 .btn-primary:hover {
@@ -3307,7 +3308,8 @@ fieldset:disabled .btn {
 .btn-danger {
   color: #fff;
   background-color: #dc3545;
-  border-color: #dc3545
+  border-color: #dc3545;
+  font-size: 13px !important;
 }
 
 .btn-danger:hover {
@@ -4460,7 +4462,7 @@ fieldset:disabled .btn {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
-  gap: 25px;
+  gap: 8px;
 }
 
 .navbar-nav .nav-link {
