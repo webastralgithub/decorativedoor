@@ -25,9 +25,12 @@ class CategoryController extends Controller
         $this->middleware('permission:delete-category', ['only' => ['destroy']]);
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $categories = Category::with('children')->whereNull('parent_id')->get();
+        $categories = Category::when(isset($request->q), function ($query) use ($request) {
+
+            $query->whereRaw("(name LIKE '%" . $request->q . "%')");
+        })->with('children')->whereNull('parent_id')->orderBy('id', 'DESC')->paginate(env('RECORD_PER_PAGE', 10));
         return view('admin.category.index', compact('categories'));
     }
 
