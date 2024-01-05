@@ -61,6 +61,7 @@ class ProductController extends Controller
         $product->meta_description = $request->meta_description;
         $product->slug = $request->slug;
         $product->notes = $request->notes;
+        $product->short_description = $request->short_description;
         $product->code = $request->code;
         $product->buying_price = $request->buying_price;
         $product->tax = $request->tax;
@@ -134,8 +135,8 @@ class ProductController extends Controller
     {
         $categories = Category::all(['id', 'name']);
         $selectedCategories = $product->categories->pluck('id')->toArray();
-
-        return view('admin.products.edit', compact('product', 'categories', 'selectedCategories'));
+        $productImages = ProductImage::where('product_id',$product->id)->get();
+        return view('admin.products.edit', compact('product', 'productImages','categories', 'selectedCategories'));
     }
 
     /**
@@ -146,7 +147,7 @@ class ProductController extends Controller
         // echo print_r($request->all(), true);die();    
         $product->update($request->only([
             'title', 'sub_title', 'meta_title', 'meta_keywords', 'meta_description',
-            'notes', 'buying_price', 'tax', 'quantity', 
+            'notes', 'buying_price', 'tax', 'quantity', 'short_description',
         ]));
 
         // Update category

@@ -64,7 +64,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     <div class="product__details__price">
                         ${{$product->buying_price}}
                     </div>
-                    <p>{{$product->notes}}</p>
+                    <p>{!!$product->short_description!!}</p>
 
                     @if(!empty($product->variants) && !empty($variantOptions))
                     <div class="varients-cart">
@@ -102,14 +102,14 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
 
                         <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
-                        <button type="submit" class="primary-btn add-to-cart" onclick="return addToCart()">ADD TO CART</button>
+                        <button type="submit" class="primary-btn add-to-cart" onclick="return addToCart()" <?php if(getProductAvailabityStock($product->id) <= 0){ echo "disabled"; }?>>ADD TO CART</button>
                     </form>
                     <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
                     <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
                         <li><b>Availability</b> <span>{{( getProductAvailabityStock($product->id) > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
 
-                        <li><b>Qunatity</b> <span>{{ getProductAvailabityStock($product->id) }}</span></li>
+                        <!-- <li><b>Qunatity</b> <span>{{ getProductAvailabityStock($product->id) }}</span></li> -->
                         <!-- <li><b>Description</b> <span>{{$product->notes}}</span></li> -->
                         <!-- <li><b>Share on</b>
                             <div class="share">
@@ -140,7 +140,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                             <a href="#"><i class="fa fa-pinterest"></i></a>
                         </div>
                     </li>
-                    <h3>Variants</h3>
+                    <h3>Variants</h3> 
                     @if(!empty($product->variants))
                     @forelse($product->variants as $key => $variant)
                     <ul data-id="{{ $variant->id }}">
@@ -184,7 +184,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 <h6>Products Infomation</h6>
-                                <p>{{$product->notes}}</p>
+                                <p>{!!$product->notes!!}</p>
                             </div>
                         </div>
                         <div class="tab-pane" id="tabs-2" role="tabpanel">

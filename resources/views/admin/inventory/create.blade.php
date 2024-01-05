@@ -10,6 +10,25 @@
         </div>
     </div>
     <div class="body-content-new">
+        @if ($errors->any())
+        <div>
+            @foreach ($errors->all() as $error)
+            <li class="alert alert-danger">{{ $error }}</li>
+            @endforeach
+        </div>
+        @endif
+        
+        @if(\Session::has('error'))
+        <div>
+            <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
+        </div>
+        @endif
+        
+        @if(\Session::has('success'))
+        <div>
+            <li class="alert alert-success">{!! \Session::get('success') !!}</li>
+        </div>
+        @endif
         <form action="{{ route('inventory.store') }}" method="POST">
             @csrf
            
@@ -66,7 +85,7 @@
                                     <th scope="col">
                                         {{ __('Product') }}
                                     </th>
-                                    <th scope="col" class="text-center"><input type="date" class="form-control" value="<?php echo date('Y-m-d');?>"></th>
+                                    <th scope="col" class="text-center"><input type="datetime-local" class="form-control" value="<?php echo date('Y-m-d');?>"></th>
                                     <th scope="col" class="text-center"><input type="text" class="form-control" name="waybill" value=""></th>
                                     <th scope="col" class="text-center"><input type="number" class="form-control" name="quantity"  id="enter_quantity" value=""></th>
                                 </tr>
