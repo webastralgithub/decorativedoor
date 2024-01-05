@@ -64,7 +64,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     <div class="product__details__price">
                         ${{$product->buying_price}}
                     </div>
-                    <p>{{$product->notes}}</p>
+                    <p>{!$product->notes!}</p>
 
                     @if(!empty($product->variants) && !empty($variantOptions))
                     <div class="varients-cart">
@@ -184,7 +184,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <div class="tab-pane active" id="tabs-1" role="tabpanel">
                             <div class="product__details__tab__desc">
                                 <h6>Products Infomation</h6>
-                                <p>{{$product->notes}}</p>
+                                <p>{!$product->notes!}</p>
                             </div>
                         </div>
                         <div class="tab-pane" id="tabs-2" role="tabpanel">
