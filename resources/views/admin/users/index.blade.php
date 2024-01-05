@@ -46,7 +46,7 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="visually-hidden"><i class="fa fa-home"></i></span>
+                                <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <form action="{{ route('users.destroy', $user->id) }}" method="post">

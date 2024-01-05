@@ -10,6 +10,7 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Models\Inventory;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Str;
@@ -31,11 +32,14 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('admin.products.index', [
-            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 10))
-        ]);
+        $products = Product::when(isset($request->q), function ($query) use ($request) {
+
+            $query->whereRaw("(title LIKE '%" . $request->q . "%')");
+        })->latest()->paginate(env('RECORD_PER_PAGE', 10));
+        return view('admin.products.index', compact('products'));
+
     }
 
     /**
@@ -66,7 +70,7 @@ class ProductController extends Controller
         $product->code = $request->code;
         $product->buying_price = $request->buying_price;
         $product->tax = $request->tax;
-        $product->quantity = $request->quantity;
+        // $product->quantity = $request->quantity;
 
         $categories = Category::whereIn('id', $request->category_id)->get();
         $product->save();

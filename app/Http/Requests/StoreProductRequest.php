@@ -33,7 +33,7 @@ class StoreProductRequest extends FormRequest
             'notes' => 'required',
             'buying_price' => 'required|numeric',
             'tax' => 'required',
-            'quantity' => 'required|numeric',
+            // 'quantity' => 'required|numeric',
             // 'product_images' => 'required|mimes:jpeg,png,jpg',
             'category_id' => 'required'
         ];

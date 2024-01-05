@@ -29,7 +29,7 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th scope="col" style="width: 250px;">Action</th>
+                    <th scope="col" >Action</th>
                     <th scope="col">Name</th>
                     <th scope="col">Permissions</th>
                 </tr>
@@ -41,7 +41,7 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="visually-hidden"><i class="fa fa-home"></i></span>
+                                <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <form action="{{ route('roles.destroy', $role->id) }}" method="post">

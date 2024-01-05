@@ -4,7 +4,9 @@
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
     <h3>Product List</h3>
-    
+        <form >
+            <input type="search" class="form-control" placeholder="Find Products" name="q" value="{{ request('q') }}">
+        </form>
     <div class="top-bntspg-hdr">
         @can('create-product')
         <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Product</a>
@@ -41,20 +43,29 @@
                 @forelse ($products as $product)
                 <tr>
                     <td>
-                        <form action="{{ route('products.destroy', $product->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-
-                            <!-- <a href="{{ route('products.show', $product->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a> -->
-
-                            @can('edit-product')
-                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
-                            @endcan
-
-                            @can('delete-product')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this product?');"><i class="bi bi-trash"></i> Delete</button>
-                            @endcan
-                        </form>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <form action="{{ route('products.destroy', $product->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                    
+                                    @can('edit-product')
+                                    <li><a href="{{ route('products.edit', $product->id) }}" class="dropdown-item"><i
+                                                class="bi bi-pencil-square"></i> Edit</a></li>
+                                    @endcan
+                    
+                                    @can('delete-product')
+                                    <li><button type="submit" class="dropdown-item btn-danger"
+                                            onclick="return confirm('Do you want to delete this product?');"><i class="bi bi-trash"></i>
+                                            Delete</button></li>
+                                    @endcan
+                                </form>
+                            </ul>
+                        </div>
                     </td>
                     <td><a href="{{ route('products.edit', $product->id) }}">{{ $product->title }}</a>
                     </td>

@@ -29,11 +29,14 @@ class InventoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.inventory.index', [
-            'products' => Product::with(['inventories', 'orderdetails'])->latest()->paginate(10)
-        ]);
+
+        $products = Product::when(isset($request->q), function ($query) use ($request) {
+
+            $query->whereRaw("(title LIKE '%" . $request->q . "%')");
+        })->with(['inventories', 'orderdetails'])->latest()->paginate(10);
+        return view('admin.inventory.index', compact('products'));
     }
 
     /**
