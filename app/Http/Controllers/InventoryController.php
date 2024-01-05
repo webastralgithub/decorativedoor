@@ -32,7 +32,7 @@ class InventoryController extends Controller
     public function index()
     {
         return view('admin.inventory.index', [
-            'products' => product::with(['inventories', 'orderdetails'])->get()
+            'products' => Product::with(['inventories', 'orderdetails'])->latest()->paginate(10)
         ]);
     }
 
