@@ -137,10 +137,11 @@
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
-                                    <label for="notes" class="form-label">
-                                        {{ __('Quantity') }}
-                                    </label>
-                                    <input type="number" label="Quantity" class="form-control" name="quantity" id="quantity" placeholder="0" value="{{ $product->quantity }}" />
+                                    <span class="dots-assigned cursor-pointer btn btn-primary"  onclick="return ManageInventory('{{$product->id}}');">Manage Inventory</span>
+                                    {{-- <label for="notes" class="form-label">
+                                        {{ __('Quantity') }} 
+                                    </label> --}}
+                                    <input type="hidden" label="Quantity" class="form-control" name="quantity" id="quantity" placeholder="0" value="{{ $product->quantity }}" />
                                 </div>
                                 <div class="col-sm-6 col-md-6">
                                     <label for="notes" class="form-label">
@@ -222,7 +223,104 @@
             </div>
         </form>
     </div>
+    <form id="addressForm" style="display: none;">
+            <div class="inventory_info">
+                <p><strong>On Hold Quantity :</strong> {{ getProductOnhandAvailabityStock($product->id) }}</p>
+                <p><strong>On Order Quantity :</strong> {{ getProductOnorderAvailabityStock($product->id) }}</p>
+                <p><strong>Available Quantity :</strong> {{ getProductAvailabityStock($product->id) }}</p>
+            </div>
 
+            
+        <div class="mb-3 row">
+            <div class="col-md-12 flex">
+                <label for="waybill" class="col-md-3 col-form-label text-md-end text-start">
+                    {{ __('Waybill') }}
+                    <span class="text-danger">*</span>
+                </label>
+                <input type="hidden" id="product_id" name="product_id" value=" {{ $product->id }}">
+                <div class="col-md-9" style="line-height: 35px;">
+                    <input name="waybill" id="waybill" type="text" class="form-control example-date-input @error('waybill') is-invalid @enderror" value="{{ old('waybill') }}" required>
+                </div>
+            </div>
+        </div>
+       
+        <div class="mb-3 row">
+            <div class="col-md-12 flex">
+                <label for="quantity" class="col-md-3 col-form-label text-md-end text-start">
+                    {{ __('Quantity') }}
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-md-9" style="line-height: 35px;">
+                    <input name="quantity" id="quantity" type="number" class="form-control example-date-input @error('quantity') is-invalid @enderror" value="{{ old('Quantity') }}" required>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Waybill</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($inventory as $invent)
+                <tr>
+                    <td>{{$product->title}}</td>
+                    <td>{{ $invent->waybill }}</td>
+                    <td>{{ $invent->quantity }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <!-- <button type="button" onclick="submitAddressForm()">Submit</button> -->
+    </form>
 </div>
+<script>
+     async function ManageInventory(InventoryId, responseType) {
+      
+      if (InventoryId <= 0) {
+          Swal.fire({
+              icon: 'warning',
+              title: 'User not valid!',
+              text: "Please select Sales Person"
+          });
+          return false;
+      }
+      await Swal.fire({
+         // title: "Add User Address",
+          html: document.getElementById('addressForm').innerHTML,
+          showCancelButton: true,
+          preConfirm: () => {
+              const product_id = Swal.getPopup().querySelector('#product_id').value;
+              const waybill = Swal.getPopup().querySelector('#waybill').value;
+              const quantity = Swal.getPopup().querySelector('#quantity').value;
 
+              if (product_id.trim() === '' || waybill.trim() === '' || quantity.trim() === '') {
+                  Swal.showValidationMessage('All fields are required');
+              } else {
+                  jQuery.ajax({
+                      url: "{{route('inventory.store')}}", // Replace with your actual route
+                      type: 'post',
+                      data: {
+                          product_id: product_id,
+                          waybill: waybill,
+                          quantity: quantity,
+                          _token: '{{ csrf_token() }}' // Add CSRF token if needed
+                      },
+                      success: function(response) {
+                          // Handle success, if needed
+                          location.reload();
+                      },
+                      error: function(error) {
+                          // Handle error, if needed
+                          console.error('Error updating order status', error);
+                      }
+                  });
+                  Swal.close(); // Close the Swal.fire modal
+              }
+          }
+      });
+  }
+    </script>
 @endsection
