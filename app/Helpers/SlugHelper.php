@@ -63,7 +63,7 @@ if (!function_exists('generateProductSlug')) {
             if (!$userID)
                 return null;
             $user = User::with('address')->findOrFail($userID);
-            return getFullAddress($user->address);
+            return !empty($user->address) ? getFullAddress($user->address) : '';
         }
     }
 
@@ -95,12 +95,14 @@ if (!function_exists('generateProductSlug')) {
             $products = Product::with(['inventories', 'orderdetails'])->where('id', $productId)->first();
             $totalrecived = 0;
             $total = 0;
-            foreach ($products->orderdetails as $order) {
-                $totalrecived += $order->quantity;
-            }
-            foreach ($products->inventories as $product) {
-                $total += $product->quantity;
-            }
+            if (!empty($products->orderdetails))
+                foreach ($products->orderdetails as $order) {
+                    $totalrecived += $order->quantity;
+                }
+            if (!empty($products->inventories))
+                foreach ($products->inventories as $product) {
+                    $total += $product->quantity;
+                }
             $FinalQuantity = $total - $totalrecived;
             return $FinalQuantity;
         }
@@ -110,10 +112,11 @@ if (!function_exists('generateProductSlug')) {
         function getProductOnhandAvailabityStock($productId = null)
         {
             $products = Product::with(['inventories', 'orderdetails'])->where('id', $productId)->first();
-            $total = 0;           
-            foreach ($products->inventories as $product) {
-                $total += $product->quantity;
-            }
+            $total = 0;
+            if (!empty($products->inventories))
+                foreach ($products->inventories as $product) {
+                    $total += $product->quantity;
+                }
             $FinalQuantity = $total;
             return $FinalQuantity;
         }
@@ -126,9 +129,10 @@ if (!function_exists('generateProductSlug')) {
         {
             $products = Product::with(['inventories', 'orderdetails'])->where('id', $productId)->first();
             $totalrecived = 0;
-            foreach ($products->orderdetails as $order) {
-                $totalrecived += $order->quantity;
-            }
+            if (!empty($products->orderdetails))
+                foreach ($products->orderdetails as $order) {
+                    $totalrecived += $order->quantity;
+                }
             $FinalQuantity = $totalrecived;
             return $FinalQuantity;
         }

@@ -62,7 +62,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <span>(18 reviews)</span>
                     </div>
                     <div class="product__details__price">
-                        ${{$product->buying_price}}
+                        ${{number_format($product->buying_price, 2, '.', ',')}}
                     </div>
                     <p>{!!$product->short_description!!}</p>
 
@@ -87,9 +87,9 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         </div>
                     </div>
                     @endif
-                    <form method="POST" action="{{ route('add.to.cart') }}" class="form-cart-btn">
+                    <form method="POST" action="{{ route('add.to.cart') }}" id="addToCartForm" class="form-cart-btn">
                         @csrf
-                        @method('POST')
+                        <!-- @method('POST') -->
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
@@ -102,16 +102,16 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
 
                         <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
-                        <button type="submit" class="primary-btn add-to-cart" onclick="return addToCart()" <?php if(getProductAvailabityStock($product->id) <= 0){ echo "disabled"; }?>>ADD TO CART</button>
+                        <button type="submit" class="primary-btn add-to-cart" onclick="return addToCart(event)" @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
                     </form>
                     <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
                     <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
-                        <li><b>Availability</b> <span>{{( getProductAvailabityStock($product->id) > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
-                        <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                    <li><b>Availability</b> <span id="availability">{{( getProductAvailabityStock($product->id) > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
+                    <!-- <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li> -->
 
-                        <!-- <li><b>Qunatity</b> <span>{{ getProductAvailabityStock($product->id) }}</span></li> -->
-                        <!-- <li><b>Description</b> <span>{{$product->notes}}</span></li> -->
-                        <!-- <li><b>Share on</b>
+                    <!-- <li><b>Qunatity</b> <span>{{ getProductAvailabityStock($product->id) }}</span></li> -->
+                    <!-- <li><b>Description</b> <span>{{$product->notes}}</span></li> -->
+                    <!-- <li><b>Share on</b>
                             <div class="share">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -162,7 +162,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     @endforelse
                     @endif
                 </ul> -->
-               
+
             </div>
             <div class="col-lg-12">
                 @include('frontend.add-ons')
@@ -311,10 +311,9 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
 
 @section('scripts')
 <script>
-    function addToCart() {
+    function addToCart(event) {
         var allVariants = document.querySelectorAll('.variants');
         var selectedVariants = [];
-
         // Iterate through all variant dropdowns
         allVariants.forEach(function(variant) {
             var selectedValue = variant.value;
@@ -325,16 +324,23 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
             }
         });
         let checkStockAvailability = "{{ getProductAvailabityStock($product->id) }}";
-        console.log("checkStockAvailability::",checkStockAvailability);
-        if(checkStockAvailability != 0){
-        // Check if all variants are selected
-        if (selectedVariants.length === (allVariants.length / 2)) {
-            document.getElementById('addToCartForm').submit();
-        } else {
-            alert('Please select all variants before adding to the cart.');
+        console.log("checkStockAvailability::", checkStockAvailability, "selectedVariants", selectedVariants.length);
+        if (checkStockAvailability != 0) {
+            // Check if all variants are selected
+            if (selectedVariants.length > 0 && selectedVariants.length === (allVariants.length / 2)) {
+                document.getElementById('addToCartForm').submit();
+            } else {
+                event.preventDefault(event);
+                document.getElementById('addToCartForm').disabled = true;
+
+                allVariants.forEach(function(variant) {
+                    variant.style.border = '2px solid red';
+                });
+                // alert('Please select all variants before adding to the cart.');
+                return false;
+            }
         }
-        }
-        
+
         return false;
     }
 </script>

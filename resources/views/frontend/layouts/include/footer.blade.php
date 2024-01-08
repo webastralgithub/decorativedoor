@@ -139,6 +139,10 @@
         var arr = $('select').map(function() {
             return this.value
         }).get()
+        var allVariants = document.querySelectorAll('.variants');
+        allVariants.forEach(function(variant) {
+            variant.style.border = '';
+        });
         var str = arr.join("/");
         $.ajax({
             url: "{{ route('get.price') }}",
@@ -149,6 +153,7 @@
                 pid: "{{$product->id ?? 0 }}"
             },
             success: function(response) {
+                console.log("productAvailabityStock:", response.productAvailabityStock);
                 let price = 0;
                 if (response.buying_price) {
                     price = response.buying_price
@@ -156,12 +161,14 @@
                     price = 0;
                 }
                 $('.product-variant-data').val(JSON.stringify(response))
-                $('.product__details__price').text('$' + price)
+                $('.product__details__price').text('$' + price);
+                // if (response.productAvailabityStock <= 0)
+                //     $('#availability').text('Out of Stock');
+                // $('.add-to-cart').attr('disabled', (response.productAvailabityStock > 0) ? false : true);
 
             }
         });
     })
-
 </script>
 </body>
 

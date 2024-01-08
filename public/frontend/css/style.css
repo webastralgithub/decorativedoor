@@ -722,6 +722,12 @@ ul.under_ul li a {
     padding-right: 10px;
 }
 
+button:disabled {
+    background-color: #bdc3c7;
+    color: #7f8c8d;
+    cursor: not-allowed;
+}
+
 .contact-page-front{
 	margin-top: 40px;
 }

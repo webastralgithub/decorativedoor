@@ -23,6 +23,7 @@ class CheckoutController extends Controller
         $cart = session()->get('cart');
         // dd($cart);
         // print_r($cart);
+        $orderId = '';
         if (!empty($cart)) {
             $totalProducts = 0;
             $totalPrice = 0;
@@ -66,9 +67,10 @@ class CheckoutController extends Controller
                     ]);
                 }
             session()->forget('cart');
+            $orderId = '#' . $order->order_id;
         }
         // dd($order);
-        return view('frontend.thank-you');
+        return view('frontend.thank-you', compact('orderId'));
     }
 
     /**

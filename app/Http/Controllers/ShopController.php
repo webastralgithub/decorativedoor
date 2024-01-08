@@ -68,18 +68,18 @@ class ShopController extends Controller
 
                     ];
                 // if (!empty($selectedVariant))
-                    $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] = !empty($request->quantity) ? $request->quantity : 1;
+                $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] = !empty($request->quantity) ? $request->quantity : 1;
             }
             // if (!empty($selectedVariant)) {
-                $cart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
-                $cart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
-                $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['buying_price'];
-                $pricevariant = array_values($cart[$productId]['variant_data']);
-                $variant_prices = [];
-                foreach ($pricevariant as $price) {
-                    $variant_prices[] = $price['price'];
-                }
-                $price = array_sum($variant_prices);
+            $cart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
+            $cart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
+            $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['buying_price'];
+            $pricevariant = array_values($cart[$productId]['variant_data']);
+            $variant_prices = [];
+            foreach ($pricevariant as $price) {
+                $variant_prices[] = $price['price'];
+            }
+            $price = array_sum($variant_prices);
             // }
             $cart[$productId]['variant_price'] = $price || $product->buying_price;
         } else {
@@ -191,6 +191,8 @@ class ShopController extends Controller
         $product = DB::table('product_variants')->where(['product_id' => $request->pid])->whereRaw('LOWER(name) COLLATE utf8mb4_general_ci = ?', [strtolower($request->str)])->first();
         if (!$product)
             $product = DB::table('product_variants')->where(['product_id' => $request->pid])->first();
+        $productAvailabityStock =  getProductAvailabityStock($request->pid);
+        $product->productAvailabityStock =  $productAvailabityStock;
         return $product;
     }
 }

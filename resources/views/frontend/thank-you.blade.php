@@ -41,6 +41,7 @@
         <i class="checkmark">✓</i>
     </div>
     <h1>Success</h1>
+    <h2><strong>{{$orderId}}</strong></h2>
     <p>Thank you for processing the order.<br />We will be in touch with you shortly!</p>
 </div>
 @endsection

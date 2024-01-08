@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id')->nullable();
             $table->string('quantity');
-            $table->integer('waybill');
+            $table->string('waybill');
             $table->timestamps();
         });
     }
