@@ -221,4 +221,46 @@
         $button.parent().find('input').val(newVal);
     });
 
+
+
+    /*----------------------
+      email check ajax
+    ----------------------*/
+    var customeremail = $('#customer-email');
+    customeremail.keyup(function(){
+        $('#user-alreday-exist').hide();
+        $('#customer-name').val('');
+        $('#customer-address_type').val('');
+        $('#customer-state').val('');
+        $('#customer-city').val('');
+        $('#customer-street').val('');
+        $('#customer-country').val('');
+        $('#customer-zipcode').val('');
+        var token = $('input[name="_token"]').val();
+       var email_val = $(this).val();
+       
+       // Perform AJAX request
+       $.ajax({
+        url: 'check-user', // Replace with your server-side script
+        method: 'POST', // You can use 'GET' as well
+        data: { email: email_val, _token: token},
+        success: function(response){
+          // Update the searchResults div with the response from the server
+          var jsonData = JSON.parse(response);
+          $('#user-alreday-exist').show();
+          $('#customer-name').val(jsonData.name);
+          $('#customer-address_type').val(jsonData.address_type);
+          $('#customer-state').val(jsonData.state);
+          $('#customer-city').val(jsonData.city);
+          $('#customer-street').val(jsonData.street);
+          $('#customer-country').val(jsonData.country);
+          $('#customer-zipcode').val(jsonData.zipcode);
+
+        },
+        error: function(error){
+          console.error('Error:', error);
+        }
+      });
+    });
+
 })(jQuery);

@@ -3749,3 +3749,12 @@ button:disabled {
 	max-width: 1200px;
 	margin: 0 auto;
 }
+
+nav.header__menu li.primary-btn {
+    padding: 4px 10px;
+    border-radius: 5px;
+}
+
+nav.header__menu  li.primary-btn a {
+    color: #fff !important;
+}

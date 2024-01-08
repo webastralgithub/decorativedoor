@@ -59,9 +59,16 @@
         </div> -->
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
+                @foreach($categories as $category)
+                            @if(empty($category->parent_id) && $category->name != 'Add On')
+                            <li>
+                                <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
+                            </li>
+                            @endif
+                            @endforeach
+                {{-- <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
                 <li class="{{ request()->is('*shop') ? 'active' : '' }}"><a href="{{route('shop')}}">Shop</a></li>
-                <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li>
+                <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li> --}}
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -134,11 +141,11 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-5 hero hero-normal">
+                <div class="col-lg-2 hero hero-normal">
                 <div class="header__logo">
                         <a href="{{route('home')}}"><img src="{{asset('frontend/img/logo.png')}}" alt=""></a>
                 </div>
-                <div class="hero__categories">
+                {{-- <div class="hero__categories">
                     <div class="hero__categories__all">
                         <i class="fa fa-bars"></i>
                         <span>All Categories</span>
@@ -157,16 +164,22 @@
                         @endif
                         @endforeach
                     </ul>
-                </div>
+                </div> --}}
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-7">
                     <nav class="header__menu">
                         <ul>
+                            @foreach($categories as $category)
+                            @if(empty($category->parent_id) && $category->name != 'Add On')
+                            <li>
+                                <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
+                            </li>
+                            @endif
+                            @endforeach
 
-                            <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
-                            <li class="{{ request()->is('*shop') ? 'active' : '' }}"><a href="{{route('shop')}}">Shop</a></li>
-                            <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li>
+                            <li class="{{ request()->is('*customer') ? 'active' : '' }}"><a href="{{route('customer')}}">Customer</a></li>
+                            <li class="primary-btn"><a href="{{route('neworder')}}">Start New Order</a></li>
                         </ul>
                     </nav>
                 </div>

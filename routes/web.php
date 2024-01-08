@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -37,22 +38,30 @@ Route::get('/admin', function () {
 });
 
 Auth::routes();
+Route::middleware(['auth', 'isAdminWebAccess'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/shop', [ShopController::class, 'index'])->name('shop');
-Route::get('/product/{slug}', [ShopController::class, 'product_details'])->name('product');
-Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-// Route::get('/product-details/{CategoryName}', [ShopController::class, 'product_details'])->name('product_category');
-Route::get('cart', [ShopController::class, 'cart'])->name('cart');
-Route::get('category/{slug}', [ShopController::class, 'category'])->name('category');
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+    Route::get('/product/{slug}', [ShopController::class, 'product_details'])->name('product');
+    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+    Route::get('/start-new-order', [HomeController::class, 'startneworder'])->name('neworder');
+    Route::get('/customer', [CustomerController::class, 'index'])->name('customer');
+    Route::post('/check-user', [CustomerController::class, 'checkuser'])->name('checkuser');
+    Route::post('/store-customer', [CustomerController::class, 'store'])->name('store-customer');
 
-Route::post('add-to-cart', [ShopController::class, 'addToCart'])->name('add.to.cart');
+    // Route::get('/product-details/{CategoryName}', [ShopController::class, 'product_details'])->name('product_category');
+    Route::get('cart', [ShopController::class, 'cart'])->name('cart');
+    Route::get('category/{slug}', [ShopController::class, 'category'])->name('category');
 
-Route::patch('update-cart', [ShopController::class, 'update_cart'])->name('update.cart');
-Route::patch('add_on', [ShopController::class, 'addOn'])->name('add_on.cart');
-Route::delete('remove-from-cart', [ShopController::class, 'remove_cart'])->name('remove.from.cart');
-Route::post('checkout', [ShopController::class, 'checkout'])->name('checkout');
-Route::get('get_price', [ShopController::class, 'get_price'])->name('get.price');
+    Route::post('add-to-cart', [ShopController::class, 'addToCart'])->name('add.to.cart');
+
+    Route::patch('update-cart', [ShopController::class, 'update_cart'])->name('update.cart');
+    Route::patch('add_on', [ShopController::class, 'addOn'])->name('add_on.cart');
+    Route::delete('remove-from-cart', [ShopController::class, 'remove_cart'])->name('remove.from.cart');
+    Route::post('checkout', [ShopController::class, 'checkout'])->name('checkout');
+    Route::get('get_price', [ShopController::class, 'get_price'])->name('get.price');
+});
+
 Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function () {
     //dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

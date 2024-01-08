@@ -50,6 +50,7 @@
         right: 10px;
     }
 </style>
+
 <!-- Categories Section Begin -->
 <!-- <section class="categories">
     <div class="container">
@@ -81,7 +82,7 @@
     </div>
 </section> -->
 
-<section class="hero">
+{{-- <section class="hero">
     <div class="hero__item set-bg" data-setbg="{{asset('frontend/img/banner/banner.jpg')}}">
     <div class="container">
         <div class="row">
@@ -98,7 +99,7 @@
         </div>
     </div>
     </div>
-</section>
+</section> --}}
 <!-- Categories Section End -->
 
 <!-- Featured Section Begin -->
