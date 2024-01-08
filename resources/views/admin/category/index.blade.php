@@ -37,10 +37,10 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
+                    <th scope="col" >Action</th>
                     <th>Parent Category</th>
                     <th>Category Name</th>
                     <th>Category Url</th>
-                    <th scope="col" style="width: 250px;">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +56,7 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <span class="visually-hidden"><i class="bi bi-pencil-square"></i></span>
+                                <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <form action="{{ route('category.destroy', $category->id) }}" method="post">

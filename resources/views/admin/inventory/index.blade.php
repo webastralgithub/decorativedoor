@@ -4,6 +4,9 @@
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
         <h3>Inventory Information</h3>
+        <form >
+            <input type="search" class="form-control" placeholder="Find Inventry" name="q" value="{{ request('q') }}">
+        </form>
         <div class="top-bntspg-hdr">
             <a href="{{ route('inventory.create') }}" class="btn btn-primary btn-sm"> Add Inventory</a>
             <a href="{{ route('inventory.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>

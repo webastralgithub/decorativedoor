@@ -361,13 +361,17 @@ option:disabled {
 
 .sidebar .navbar .dropdown-toggle::after {
     position: absolute;
-    top: 8px;
+    top: 15px;
     right: 15px;
     border: none;
-    content: "\f107";
-    font-family: "Font Awesome 5 Free";
+    /* content: "\f107";
+    font-family: "Font Awesome 5 Free"; */
     font-weight: 900;
     transition: .5s;
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
 }
 
 .sidebar .navbar .dropdown-toggle[aria-expanded=true]::after {
@@ -2395,3 +2399,38 @@ button#remove-input-variant {
 .inventory_info p {
     text-align: left;
 }
+button span.visually-hidden.cogs-btn {
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    position: relative !important;
+}
+
+button span.visually-hidden.cogs-btn i.fa.fa-cog {
+    color: #fff;
+    padding-right: 5px;
+}
+
+.btn-group ul.dropdown-menu.show {
+    padding: 10px;
+    font-size: 14px;
+}
+
+ul.dropdown-menu.show form li {
+    border-bottom: 1px solid #000;
+    width: 70px;
+
+}
+
+ul.dropdown-menu.show {
+    /* width: 70px !important; */
+    box-shadow: 12px 6px -1px 1px #000 !important;
+}
+
+.swal2-html-container#swal2-html-container label{
+    text-align: left !important;
+    font-size: 15px;
+    font-weight: 600;
+    color: #212121;
+}
+

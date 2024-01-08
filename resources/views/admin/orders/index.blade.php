@@ -42,9 +42,9 @@
                     <th>{{__('Accountant')}}</th>
                     <th>{{__('Assembler')}}</th>
                     <th>{{__('Delivery By')}}</th>
-                    <th>{{__('Ready Date')}}</th>
-                    <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Address')}}</th>
+                    <th>{{__('Delivery Date')}}</th>
+                    <th>{{__('Ready Date')}}</th>
                     <th>{{__('Quantity')}}</th>
                     @can('order_price')
                     <th>{{__('Total')}}</th>
@@ -61,7 +61,7 @@
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Make Payment</span>
+                                    <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make Payment</a></li>
@@ -401,7 +401,7 @@
             return false;
         }
         await Swal.fire({
-            title: "Add User Address",
+            // title: "Add User Address",
             html: document.getElementById('addressForm').innerHTML,
             showCancelButton: true,
             preConfirm: () => {
