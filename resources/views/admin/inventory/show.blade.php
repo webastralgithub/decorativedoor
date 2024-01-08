@@ -165,7 +165,7 @@
         // Iterate through each row with the class 'totals' and sum up the prices
         var totalRows = document.querySelectorAll('.table tbody tr.totals');
         totalRows.forEach(function(row) {
-            var priceCell = row.querySelector('.text-center:nth-child(4)'); // Assuming buying_price is in the fourth column
+            var priceCell = row.querySelector('.text-center:nth-child(5)'); // Assuming buying_price is in the fourth column
             var price = parseFloat(priceCell.textContent) || 0;
             total += price;
         });
