@@ -68,7 +68,44 @@
         </div>
     </div>
 </footer>
+
 <!-- Footer Section End -->
+
+
+<!-- Modal share with email -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Product Share With Customer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="shareForm" class="sahre-product-popup" method="Post">
+                @csrf
+                @method('POST')
+                <div class="mb-3 row">
+                    <div class="col-md-12 flex">
+                        <label for="email" class="col-md-3 col-form-label text-md-end text-start">
+                            {{ __('Email') }}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="hidden" id="footer_product_id" name="product_id" value="">
+                        <div class="col-md-12">
+                            <input name="email" id="email" type="email" class="form-control example-date-input" value="{{ old('email') }}" required>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <input name="submit" id="share" type="submit" class="form-control btn primary-btn" value="{{ _('Share') }}">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!-- Js Plugins -->
 <script src="{{asset('frontend/js/jquery-3.3.1.min.js')}}"></script>
@@ -169,6 +206,35 @@
             }
         });
     })
+
+    function share_product(productid){
+        jQuery('form#shareForm #footer_product_id').val(productid);
+        jQuery('#shareForm').submit(function (e) {
+            e.preventDefault();
+            var csrfToken = $('input[name="_token"]').val();
+            var productid = jQuery('#footer_product_id').val();
+            var email = jQuery('#email').val();
+            var domain = window.location.origin;
+            var url = domain+"/share-product/"+productid;
+            jQuery.ajax({
+                url: url,
+                type: "Post",
+                data: {
+                    productid : productid,
+                    email : email,
+                    _token : csrfToken,
+                },
+                success: function (response) {
+                    // Handle the success response here
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response here
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    }
 </script>
 </body>
 

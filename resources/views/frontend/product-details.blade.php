@@ -61,7 +61,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <i class="fa fa-star-half-o"></i>
                         <span>(18 reviews)</span>
                     </div>
-                    <div class="product__details__price">
+                    <div class="product__details__price" id="main-price">
                         ${{number_format($product->buying_price, 2, '.', ',')}}
                     </div>
                     <p>{!!$product->short_description!!}</p>
@@ -103,6 +103,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
                         <button type="submit" class="primary-btn add-to-cart" onclick="return addToCart(event)" @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
+                        <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal" data-target="#exampleModal">Share <i class="fa fa-share"></i></a>    
                     </form>
                     <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
                     <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
@@ -307,9 +308,48 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
     </div>
 </section> -->
 <!-- Related Product Section End -->
+
+
+
+<!-- Modal share with email -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Product Share With Customer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="shareForm" class="sahre-product-popup" method="Post">
+                @csrf
+                @method('POST')
+                <div class="mb-3 row">
+                    <div class="col-md-12 flex">
+                        <label for="email" class="col-md-3 col-form-label text-md-end text-start">
+                            {{ __('Email') }}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="hidden" id="product_id" name="product_id" value=" {{ $product->id }}">
+                        <div class="col-md-12">
+                            <input name="email" id="email" type="email" class="form-control example-date-input" value="{{ old('email') }}" required>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <input name="submit" id="share" type="submit" class="form-control btn primary-btn" value="{{ _('Share') }}">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endsection
 
 @section('scripts')
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function addToCart(event) {
         var allVariants = document.querySelectorAll('.variants');
@@ -343,5 +383,38 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
 
         return false;
     }
+
+    jQuery(document).ready(function () {
+        jQuery('#shareForm').submit(function (e) {
+            e.preventDefault();
+            var csrfToken = $('input[name="_token"]').val();
+            
+            var productid = jQuery('#product_id').val();
+            var email = jQuery('#email').val();
+            var price = jQuery('#main-price').text();
+            var selectvarient = jQuery('.nice-select.variants span.current').text();
+            var url = "{{ route('share-product', $product->id) }}";
+            jQuery.ajax({
+                url: url,
+                type: "Post",
+                data: {
+                    productid : productid,
+                    email : email,
+                    price : price,
+                    selectvarient : selectvarient,
+                    _token : csrfToken,
+                },
+                success: function (response) {
+                    // Handle the success response here
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response here
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+
 </script>
 @endsection

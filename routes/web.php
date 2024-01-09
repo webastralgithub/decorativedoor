@@ -60,6 +60,7 @@ Route::middleware(['auth', 'isAdminWebAccess'])->group(function () {
     Route::delete('remove-from-cart', [ShopController::class, 'remove_cart'])->name('remove.from.cart');
     Route::post('checkout', [ShopController::class, 'checkout'])->name('checkout');
     Route::get('get_price', [ShopController::class, 'get_price'])->name('get.price');
+    Route::Post('share-product/{id}', [ShopController::class, 'share_product'])->name('share-product');
 });
 
 Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function () {

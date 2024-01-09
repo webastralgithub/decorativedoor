@@ -6,6 +6,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\ProductVariant;
+use App\Mail\ShareProductMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
@@ -194,5 +196,35 @@ class ShopController extends Controller
         $productAvailabityStock =  getProductAvailabityStock($request->pid);
         $product->productAvailabityStock =  $productAvailabityStock;
         return $product;
+    }
+
+
+    public function share_product(Request $request, $productid){
+
+        $product = Product::with(['variants','images','categories'])->where('id', $productid)->first();
+        
+        if(!empty($product)){
+
+            $variant = [];
+            foreach($product->variants as $key => $variants){
+                $variant[$key]['name'] = $variants->name;
+            } 
+
+            $emailData = [
+                'title' => $product->title, 
+                'description' => $product->short_description, 
+                'price' => ($request->price) ? $request->price : $product->buying_price, 
+                'variants' => $product->variants, 
+                'images' => $product->images,
+                'selectvarient' => ($request->selectvarient) ? $request->selectvarient : '',
+            ];
+           
+            Mail::to('developer1607@gmail.com')->send(new ShareProductMail($emailData));
+        
+            return 'Email sent successfully!';
+        }
+        
+
+        //dd($productid);
     }
 }
