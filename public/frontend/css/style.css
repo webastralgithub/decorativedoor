@@ -3766,3 +3766,11 @@ nav.header__menu  li.primary-btn a {
     padding: 3px 10px;
     border-radius: 6px;
 }
+
+span#message span {
+    padding: 7px;
+    background: #27a94552;
+    display: flex;
+    color: green;
+    margin-top: 10px;
+}

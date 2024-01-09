@@ -99,6 +99,7 @@
                         <div class="col-md-12 mt-3">
                             <input name="submit" id="share" type="submit" class="form-control btn primary-btn" value="{{ _('Share') }}">
                         </div>
+                        <span id="message"></div>
                     </div>
                 </div>
             </form>
@@ -227,6 +228,13 @@
                 success: function (response) {
                     // Handle the success response here
                     console.log(response);
+                    jQuery('#message').html('<span>Mail Send Successfilly!</span>');
+                    setTimeout(() => {
+                        
+                        jQuery('#message').hide();
+                    }, 2000);
+                   
+                    jQuery('#email').val('');
                 },
                 error: function (xhr, status, error) {
                     // Handle the error response here
