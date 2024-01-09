@@ -15,6 +15,7 @@
             <div class="col-lg-8 check-user-exist">
                 <form action="{{route('store-customer')}}" method="POST">
                     @csrf
+                    <input type="hidden" class="form-control" id="customer-id" name="user_id" value="">
                     <div class="row">
                         <div class="col-md-6">
                             <input type="email" class="form-control" id="customer-email" placeholder="Email" name="email" value="">

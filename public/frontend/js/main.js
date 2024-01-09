@@ -236,6 +236,7 @@
         $('#customer-street').val('');
         $('#customer-country').val('');
         $('#customer-zipcode').val('');
+        $('#customer-id').val('');
         var token = $('input[name="_token"]').val();
        var email_val = $(this).val();
        
@@ -248,6 +249,7 @@
           // Update the searchResults div with the response from the server
           var jsonData = JSON.parse(response);
           $('#user-alreday-exist').show();
+          $('#customer-id').val(jsonData.id);
           $('#customer-name').val(jsonData.name);
           $('#customer-address_type').val(jsonData.address_type);
           $('#customer-state').val(jsonData.state);

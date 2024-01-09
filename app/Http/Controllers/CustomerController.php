@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
-
+use App\Models\OrderDetails;
+use Illuminate\Support\Facades\Hash;
 class CustomerController extends Controller
 {
     /**
@@ -31,21 +32,56 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = $request->id;
-        $email = $request->email;
-        $address_type = $request->address_type;
-        $state = $request->state;
-        $street = $request->street;
-        $city = $request->city;
-        $country = $request->country;
-        $zipcode = $request->zipcode;
-
-        if(isset($user_id) && !empty($user_id)){
+        $user_id = $request->user_id;
         
-
+        if(isset($user_id) && !empty($user_id)){
+            $input = [
+                'email' => $request->email,
+                'name' => $request->name,
+                'password' => Hash::make('javed1234'),
+            ];
+            $user = User::find($user_id);
+            $user = $user->update([
+                'email' => $request->email,
+                'name' => $request->name,
+                'password' => Hash::make('javed1234'),
+            ]);
+    
+            $useraddress = User::find($user_id);
+            $useraddress->address()->updateOrCreate(
+                ['user_id' => $user_id],
+                [
+                    'street' => $request->street,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'country' => $request->country,
+                    'zip_code' => $request->zipcode,
+                ]
+            );
         }else{
-
+            $input = [
+                'email' => $request->email,
+                'name' => $request->name,
+                'password' => Hash::make('javed1234'),
+            ];
+            $user = User::create($input);
+    
+            $lastinsertid = $user->id;
+            $user = User::find($lastinsertid);
+            $user->address()->updateOrCreate(
+                ['user_id' => $lastinsertid],
+                [
+                    'street' => $request->street,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'country' => $request->country,
+                    'zip_code' => $request->zipcode,
+                ]
+            );
         }
+        
+       
+        return back()->json(['success' => 'User Information has been updated!']);
     }
 
     /**
@@ -92,7 +128,7 @@ class CustomerController extends Controller
                 'street' => isset($checkuser->address->street) ? $checkuser->address->street : '',
                 'city' => isset($checkuser->address->city) ? $checkuser->address->city : '',
                 'country' => isset($checkuser->address->country) ? $checkuser->address->country : '',
-                'zipcode' => isset($checkuser->address->zipcode) ? $checkuser->address->zipcode : '',
+                'zipcode' => isset($checkuser->address->zip_code) ? $checkuser->address->zip_code : '',
             ];
             return json_encode($user_info);
         }else{
