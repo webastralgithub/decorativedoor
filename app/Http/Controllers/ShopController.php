@@ -219,7 +219,8 @@ class ShopController extends Controller
                 'selectvarient' => ($request->selectvarient) ? $request->selectvarient : '',
             ];
            
-            Mail::to('developer1607@gmail.com')->send(new ShareProductMail($emailData));
+            $email = $request->email;
+            Mail::to($email)->send(new ShareProductMail($emailData));
         
             return 'Email sent successfully!';
         }
