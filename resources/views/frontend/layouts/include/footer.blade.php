@@ -212,6 +212,7 @@
         jQuery('form#shareForm #footer_product_id').val(productid);
         jQuery('#shareForm').submit(function (e) {
             e.preventDefault();
+            jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
             var productid = jQuery('#footer_product_id').val();
             var email = jQuery('#email').val();
@@ -228,6 +229,7 @@
                 success: function (response) {
                     // Handle the success response here
                     console.log(response);
+                    jQuery('div#loader-container').hide();
                     jQuery('#message').html('<span>Mail Send Successfilly!</span>');
                     setTimeout(() => {
                         

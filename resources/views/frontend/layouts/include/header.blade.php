@@ -31,6 +31,12 @@
         <div class="loader"></div>
     </div>
 
+    <div class="loader-container text-center" id="loader-container">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">

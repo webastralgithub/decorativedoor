@@ -3774,3 +3774,18 @@ span#message span {
     color: green;
     margin-top: 10px;
 }
+
+
+div#loader-container .spinner-border {
+    color: #fff;
+}
+
+div#loader-container {
+	display: none;
+    position: absolute;
+    background: #101010a6;
+    width: 100%;
+    height: 100%;
+	padding: 40%;
+    z-index: 9999;
+}

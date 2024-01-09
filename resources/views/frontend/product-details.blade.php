@@ -388,6 +388,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
     jQuery(document).ready(function () {
         jQuery('#shareForm').submit(function (e) {
             e.preventDefault();
+            jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
             
             var productid = jQuery('#product_id').val();
@@ -408,6 +409,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                 success: function (response) {
                     // Handle the success response here
                     console.log(response);
+                    jQuery('div#loader-container').hide();
                     jQuery('#message').html('<span>Mail Send Successfilly!</span>');
                     setTimeout(() => {
                         jQuery('#message').hide();
