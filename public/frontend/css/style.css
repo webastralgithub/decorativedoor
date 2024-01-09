@@ -3758,7 +3758,7 @@ nav.header__menu li.primary-btn {
 nav.header__menu  li.primary-btn a {
     color: #fff !important;
 }
-.product__item a#share-with-email {
+.product__item a#share-with-email, section.featured.spad a#share-with-email {
     color: #fff;
     margin: auto;
     display: table;
