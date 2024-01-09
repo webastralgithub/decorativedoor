@@ -19,6 +19,7 @@ return new class extends Migration
             $table->tinyInteger('order_status')->default('1');
             $table->integer('total_products');
             $table->integer('sub_total');
+            $table->tinyInteger('sales_person')->default(0);
             $table->integer('vat');
             $table->integer('total');
             $table->string('invoice_no');

@@ -40,6 +40,9 @@ class HomeController extends Controller
         if(session()->has('cart')){
             Session::forget('cart');
         }
+        if(session()->has('assign_customer')){
+            Session::forget('assign_customer');
+        }
         return back();
     }
 }

@@ -25,6 +25,7 @@ class Order extends Model
         'invoice_no',
         'payment_type',
         'payment_status',
+        'sales_person',
         'pay',
         'due',
     ];

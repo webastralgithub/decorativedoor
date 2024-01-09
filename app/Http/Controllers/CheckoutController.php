@@ -31,8 +31,13 @@ class CheckoutController extends Controller
                 $totalProducts += (int)$details['quantity'];
                 $totalPrice += $details['quantity'] * (!empty($details['variant_price']) ? $details['variant_price'] : $details['price']);
             }
+
+            if(empty(session()->get('assign_customer'))){
+                return redirect()->back()->with('success', 'Please assign the customer firstly!');
+            }
+           
             $productsArr = [
-                'user_id' => (Auth::check()) ? Auth::user()->id : 0,
+                'user_id' => (session()->get('assign_customer')) ? session()->get('assign_customer') : 0,
                 'order_date' => Carbon::now(),
                 'order_status' => OrderStatus::IN_PROGRESS,
                 'total_products' => $totalProducts,
@@ -41,9 +46,11 @@ class CheckoutController extends Controller
                 'total' => $totalPrice,
                 'invoice_no' => Random::generate(10),
                 'payment_type' => 'demo',
+                'sales_person' => (Auth::check()) ? Auth::user()->id : 0,
                 'pay' => 0,
                 'due' => 0,
             ];
+            
             $order = Order::create($productsArr);
             if ($order)
                 foreach ($cart as $key => $product) {

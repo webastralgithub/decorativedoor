@@ -55,7 +55,7 @@
 
                     <div class="row mt-4">
                         <div class="col-md-12">
-                            <input type="submit" class="form-control primary-btn" name="submit" value="Submit">
+                            <input type="submit" class="form-control primary-btn" name="submit" value="Submit and use this customer">
                         </div>
                     </div>
                     

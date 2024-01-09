@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\OrderDetails;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 class CustomerController extends Controller
 {
     /**
@@ -58,6 +59,7 @@ class CustomerController extends Controller
                     'zip_code' => $request->zipcode,
                 ]
             );
+            session()->put('assign_customer', $user_id);
         }else{
             $input = [
                 'email' => $request->email,
@@ -78,10 +80,9 @@ class CustomerController extends Controller
                     'zip_code' => $request->zipcode,
                 ]
             );
+            session()->put('assign_customer', $lastinsertid);
         }
-        
-       
-        return back()->json(['success' => 'User Information has been updated!']);
+        return redirect()->back()->with('success', 'Customer assign Succesfully!');
     }
 
     /**
