@@ -37,11 +37,11 @@
                             <div class="product__item">
                                 <a href="{{route('product',$product->slug)}}">
                                     <div class="featured__item__pic set-bg" data-setbg="{{asset((!empty($product->image) ? Storage::url('products/'.$product->image->path) : 'img/featured/feature-1.jpg'))}}">
-                                        <ul class="featured__item__pic__hover">
+                                        {{-- <ul class="featured__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                             <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
+                                        </ul> --}}
                                     </div>
                                     <div class="featured__item__text">
                                         <h6>{{$product->title}}</h6>
