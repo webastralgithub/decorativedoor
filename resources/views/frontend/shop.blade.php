@@ -72,7 +72,7 @@
                                     <h5>${{number_format($product->buying_price, 2, '.', ',')}}</h5>
                                 </div>
                             </a>
-                            <a href="#" id="share-with-email" data-id ="{{$product->id}}" class="btn primary-btn" data-toggle="modal" data-target="#exampleModal" onclick="return share_product('{{$product->id}}');">Share <i class="fa fa-share"></i></a> 
+                            <a href="#" id="share-with-email" data-id ="{{$product->id}}" data-toggle="modal" data-target="#exampleModal" onclick="return share_product('{{$product->id}}');">Share <i class="fa fa-share"></i></a> 
                         </div>
                     </div>
                     @endforeach
