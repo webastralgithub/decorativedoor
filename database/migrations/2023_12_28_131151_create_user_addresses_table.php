@@ -19,6 +19,11 @@ return new class extends Migration
             $table->string('state');
             $table->string('country');
             $table->string('zip_code');
+            $table->string('phone');
+            $table->string('tax_id');
+            $table->string('registration_no');
+            $table->string('gst');
+            $table->text('notes');
             $table->enum('address_type', ['shipping', 'billing'])->default('shipping');
             $table->timestamps();
         });

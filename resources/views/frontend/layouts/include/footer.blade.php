@@ -245,6 +245,63 @@
             });
         });
     }
+
+    async function share_product_email(productid) {
+    const { value: email, isConfirmed } = await Swal.fire({
+        title: 'Enter Email',
+        input: 'email',
+        inputPlaceholder: 'Enter email address',
+        showCancelButton: true,
+        confirmButtonText: 'Share',
+        cancelButtonText: 'Cancel',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Email address is required!';
+            }
+        },
+    });
+
+    if (isConfirmed) {
+        // Show loading spinner
+        $('body').append('<div id="loading-spinner"></div>');
+
+        try {
+            const csrfToken = $('input[name="_token"]').val();
+            const domain = window.location.origin;
+            const url = `${domain}/share-product/${productid}`;
+
+            const response = await jQuery.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    productid: productid,
+                    email: email,
+                    _token: csrfToken,
+                },
+            });
+
+            console.log(response);
+
+            Swal.fire({
+                title: 'Thank You!',
+                text: 'Mail Sent Successfully!',
+                icon: 'success',
+            });
+        } catch (error) {
+            console.error(error);
+
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to send mail. Please try again.',
+                icon: 'error',
+            });
+        } finally {
+            // Hide loading spinner
+            $('#loading-spinner').remove();
+        }
+    }
+}
+
 </script>
 </body>
 

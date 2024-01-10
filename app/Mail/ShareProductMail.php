@@ -14,15 +14,18 @@ class ShareProductMail extends Mailable
     use Queueable, SerializesModels;
 
     public $emailData;
+    private $attachmentPaths;
 
     /**
      * Create a new message instance.
      *
      * @param array $emailData
+     * @param array $attachmentPaths
      */
-    public function __construct($emailData)
+    public function __construct($emailData, $attachmentPaths = [])
     {
         $this->emailData = $emailData;
+        $this->attachmentPaths = $attachmentPaths;
     }
 
     /**
@@ -38,20 +41,22 @@ class ShareProductMail extends Mailable
     /**
      * Get the message content definition.
      */
-  
     public function content(): Content
     {
         return (new Content())->view('emails.share-product')->with('emailData', $this->emailData);
     }
 
-
     /**
-     * Get the attachments for the message.
+     * Build the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return $this
      */
-    public function attachments(): array
+    public function build()
     {
-        return [];
+        foreach ($this->attachmentPaths as $attachmentPath) {
+            $this->attach($attachmentPath);
+        }
+
+        return $this;
     }
 }

@@ -57,6 +57,11 @@ class CustomerController extends Controller
                     'state' => $request->state,
                     'country' => $request->country,
                     'zip_code' => $request->zipcode,
+                    'phone' => $request->phone,
+                    'tax_id' => $request->tax_id,
+                    'registration_no' => $request->registration_no,
+                    'gst' => $request->gst,
+                    'notes' => $request->notes,
                 ]
             );
             session()->put('assign_customer', $user_id);
@@ -78,6 +83,11 @@ class CustomerController extends Controller
                     'state' => $request->state,
                     'country' => $request->country,
                     'zip_code' => $request->zipcode,
+                    'phone' => $request->phone,
+                    'tax_id' => $request->tax_id,
+                    'registration_no' => $request->registration_no,
+                    'gst' => $request->gst,
+                    'notes' => $request->notes
                 ]
             );
             session()->put('assign_customer', $lastinsertid);

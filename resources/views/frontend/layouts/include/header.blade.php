@@ -23,6 +23,10 @@
     <link rel="stylesheet" href="{{asset('frontend/css/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('frontend/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spin@2.3.2/spin.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/spin@2.3.2/spin.min.js"></script>
 </head>
 
 <body>

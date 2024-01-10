@@ -218,9 +218,12 @@ class ShopController extends Controller
                 'images' => $product->images,
                 'selectvarient' => ($request->selectvarient) ? $request->selectvarient : '',
             ];
-           
+            $attachmentPaths = [];
+            foreach ($product->images as $image) {
+                $attachmentPaths[] = storage_path('app/public/products/' . $image->path);
+            }
             $email = $request->email;
-            Mail::to($email)->send(new ShareProductMail($emailData));
+            Mail::to($email)->send(new ShareProductMail($emailData ,$attachmentPaths ));
         
             return 'Email sent successfully!';
         }

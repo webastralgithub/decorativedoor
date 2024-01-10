@@ -49,10 +49,31 @@
                             <input type="text" class="form-control" id="customer-country" placeholder="Country" name="country" value="">
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="customer-zipcode" placeholder="Zip Code" name="zipcode" value="">
+                            <input type="text" class="form-control" id="customer-zipcode" placeholder="Postal Code" name="zipcode" value="">
                         </div>
                     </div>
-
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="customer-phone" placeholder="Phone No" name="phone" value="">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="customer-tax_id" placeholder="Tax ID" name="tax_id" value="">
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="customer-registration_no" placeholder="Registration No" name="registration_no" value="">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="customer-gst_no " placeholder="GST No" name="gst" value="">
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <textarea class="form-control" id="customer-notes" placeholder="Notes"
+                                name="notes"></textarea>
+                        </div>
+                    </div>
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <input type="submit" class="form-control primary-btn" name="submit" value="Submit and use this customer">
