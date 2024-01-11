@@ -65,7 +65,7 @@
                             <input type="text" class="form-control" id="customer-registration_no" placeholder="Registration No" name="registration_no" value="">
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="customer-gst_no " placeholder="GST No" name="gst" value="">
+                            <input type="text" class="form-control" id="customer-gst_no" placeholder="GST No" name="gst" value="">
                         </div>
                     </div>
                     <div class="row mt-4">

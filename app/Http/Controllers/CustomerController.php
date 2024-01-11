@@ -140,6 +140,11 @@ class CustomerController extends Controller
                 'city' => isset($checkuser->address->city) ? $checkuser->address->city : '',
                 'country' => isset($checkuser->address->country) ? $checkuser->address->country : '',
                 'zipcode' => isset($checkuser->address->zip_code) ? $checkuser->address->zip_code : '',
+                'phone' => isset($checkuser->address->phone) ? $checkuser->address->phone : '',
+                'tax_id' => isset($checkuser->address->tax_id) ? $checkuser->address->tax_id : '',
+                'registration_no' => isset($checkuser->address->registration_no) ? $checkuser->address->registration_no : '',
+                'gst' => isset($checkuser->address->gst) ? $checkuser->address->gst : '',
+                'notes' => isset($checkuser->address->notes) ? $checkuser->address->notes : '',
             ];
             return json_encode($user_info);
         }else{

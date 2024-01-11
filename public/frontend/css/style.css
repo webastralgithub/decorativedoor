@@ -3778,7 +3778,6 @@ span#message span {
 
 div#loader-container .spinner-border {
     color: #fff;
-	margin-top: 10%;
 }
 
 div#loader-container {
@@ -3789,6 +3788,7 @@ div#loader-container {
     height: 100%;
 	padding: 50%;
     z-index: 9999;
+	margin-top: 30%;
 }
 .swal2-actions button {
     font-size: 0.9rem !important;

@@ -237,9 +237,14 @@
         $('#customer-country').val('');
         $('#customer-zipcode').val('');
         $('#customer-id').val('');
+        $('#customer-phone').val('');
+        $('#customer-tax_id').val('');
+        $('#customer-registration_no').val('');
+        $('#customer-gst_no').val('');
+        $('#customer-notes').val('');
         var token = $('input[name="_token"]').val();
        var email_val = $(this).val();
-       
+         
        // Perform AJAX request
        $.ajax({
         url: 'check-user', // Replace with your server-side script
@@ -247,16 +252,22 @@
         data: { email: email_val, _token: token},
         success: function(response){
           // Update the searchResults div with the response from the server
-          var jsonData = JSON.parse(response);
-          $('#user-alreday-exist').show();
-          $('#customer-id').val(jsonData.id);
-          $('#customer-name').val(jsonData.name);
-          $('#customer-address_type').val(jsonData.address_type);
-          $('#customer-state').val(jsonData.state);
-          $('#customer-city').val(jsonData.city);
-          $('#customer-street').val(jsonData.street);
-          $('#customer-country').val(jsonData.country);
-          $('#customer-zipcode').val(jsonData.zipcode);
+            var jsonData = JSON.parse(response);
+            console.log(jsonData);
+            $('#user-alreday-exist').show();
+            $('#customer-id').val(jsonData.id);
+            $('#customer-name').val(jsonData.name);
+            $('#customer-address_type').val(jsonData.address_type);
+            $('#customer-state').val(jsonData.state);
+            $('#customer-city').val(jsonData.city);
+            $('#customer-street').val(jsonData.street);
+            $('#customer-country').val(jsonData.country);
+            $('#customer-zipcode').val(jsonData.zipcode);
+            $('#customer-phone').val(jsonData.phone);
+            $('#customer-tax_id').val(jsonData.tax_id);
+            $('#customer-registration_no').val(jsonData.registration_no);
+            $('#customer-gst_no').val(jsonData.gst);
+            $('#customer-notes').val(jsonData.notes);
 
         },
         error: function(error){
