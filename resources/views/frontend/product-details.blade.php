@@ -61,6 +61,17 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <i class="fa fa-star-half-o"></i>
                         <span>(18 reviews)</span>
                     </div>
+                    <form class="apply_discount" action="{{ route('discount', $product->id)}}" method="Post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-4 p-0">
+                                <input type="number" class="form-control" placeholder="Discount Ammount" name="apply_code" value="">
+                            </div>
+                            <div class="col-md-2 p-0">
+                                <input type="submit" name="submit" class="btn primary-btn" value="Apply Now">
+                            </div>
+                        </div>
+                    </form>
                     <div class="product__details__price" id="main-price">
                         ${{number_format($product->buying_price, 2, '.', ',')}}
                     </div>
@@ -368,7 +379,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
         console.log("checkStockAvailability::", checkStockAvailability, "selectedVariants", selectedVariants.length);
         if (checkStockAvailability != 0) {
             // Check if all variants are selected
-            if (selectedVariants.length > 0 && selectedVariants.length === (allVariants.length / 2)) {
+            if (selectedVariants.length >= 0 && selectedVariants.length === (allVariants.length / 2)) {
                 document.getElementById('addToCartForm').submit();
             } else {
                 event.preventDefault(event);

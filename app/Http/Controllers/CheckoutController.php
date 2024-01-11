@@ -30,6 +30,7 @@ class CheckoutController extends Controller
             foreach (session('cart') as $id => $details) {
                 $totalProducts += (int)$details['quantity'];
                 $totalPrice += $details['quantity'] * (!empty($details['variant_price']) ? $details['variant_price'] : $details['price']);
+           
             }
 
             if(empty(session()->get('assign_customer'))){
@@ -53,27 +54,52 @@ class CheckoutController extends Controller
             
             $order = Order::create($productsArr);
             if ($order)
+          
                 foreach ($cart as $key => $product) {
+               
                     $selectedVariant = null;
                     $productData = null;
                     if (!empty($product['variant_data']) && count($product['variant_data']) > 0) {
                         $firstKey = array_key_first($product['variant_data']);
-                        $selectedVariant = $product['variant_data'][$firstKey];
                         $productData =  ProductVariant::find($product['product_id']);
+                        //$selectedVariant = $product['variant_data'][$firstKey];
+                        foreach($product['variant_data']  as $key => $selectedVariant ){
+                            OrderDetails::create([
+                                'order_id' => $order->id,
+                                'product_id' => $product['product_id'],
+                                'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
+                                'quantity' => $product['quantity'],
+                                'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['discount_price'] : 0,
+                                'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->buying_price),
+                                'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->buying_price,
+                            ]);
+                        }
+                        
                     } else {
                         $productData =  Product::find($product['product_id']);
+
+                        OrderDetails::create([
+                            'order_id' => $order->id,
+                            'product_id' => $product['product_id'],
+                            'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
+                            'quantity' => $product['quantity'],
+                            'discount' => (!empty($product['discount_price'])) ? $product['discount_price'] : 0,
+                            'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->buying_price),
+                            'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->buying_price,
+                        ]);
                     }
 
-                    OrderDetails::create([
-                        'order_id' => $order->id,
-                        'product_id' => $product['product_id'],
-                        'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
-                        'quantity' => $product['quantity'],
-                        'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->buying_price),
-                        'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->buying_price,
-                    ]);
+                    // OrderDetails::create([
+                    //     'order_id' => $order->id,
+                    //     'product_id' => $product['product_id'],
+                    //     'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
+                    //     'quantity' => $product['quantity'],
+                    //     'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['discount_price'] : 0,
+                    //     'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->buying_price),
+                    //     'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->buying_price,
+                    // ]);
                 }
-            session()->forget('cart');
+            //session()->forget('cart');
             $orderId = '#' . $order->order_id;
         }
         // dd($order);

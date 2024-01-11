@@ -90,7 +90,7 @@
                 
                     <div class="hero__text">
                         <span>Latest Designs</span>
-                        <h2>Creative &<br /> Decorative Doors</h2>
+                        <h2>Creative &<br /> Sunrise Doorss</h2>
                         <p>Secure you home with modern design doors.</p>
                         <a href="{{ route('shop')}}" class="primary-btn">SHOP NOW</a>
                     </div>

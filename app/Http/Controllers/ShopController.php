@@ -48,15 +48,26 @@ class ShopController extends Controller
     public function addToCart(Request $request)
     {
         $cart = (!session()->has('cart')) ? session()->get('cart', []) : session()->get('cart');
-        // dd($cart);
+    //    echo '<pre>'; print_r($cart);
+    //    echo ' || ';
+    //    print_r($request->all());die;
+
+        $discount = session()->get('discount');
+
+        
         $productId = @$request->product_id;
+          if(!empty($discount[$productId])){
+            $discount_ammount = $discount[$productId]['discount_ammount'];
+          }else{
+            $discount_ammount = 0;
+          }
         $product = Product::findOrFail($productId);
         // dd(count($product->variants));
         if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
             $selectedVariant = json_decode($request->variant, true);
             if (isset($cart[$productId]) && isset($cart[$productId]['variant_data'][$selectedVariant['id']])) {
-                $cart[$productId]['quantity']++;
-                $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"]++;
+                $cart[$productId]['quantity'] += $request->quantity;
+                $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] += $request->quantity;
             } else {
                 if (!isset($cart[$productId]))
                     $cart[$productId] = [
@@ -65,6 +76,7 @@ class ShopController extends Controller
                         "quantity" => !empty($request->quantity) ? $request->quantity : 1,
                         "price" => $product->buying_price,
                         "image" => $product->image,
+                        "discount_price" => ($discount_ammount) ? $discount_ammount : 0,
                         // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
                         // "variant_price" => 0
 
@@ -76,6 +88,7 @@ class ShopController extends Controller
             $cart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
             $cart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
             $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['buying_price'];
+            $cart[$productId]['variant_data'][$selectedVariant['id']]["discount_price"] = $discount_ammount;
             $pricevariant = array_values($cart[$productId]['variant_data']);
             $variant_prices = [];
             foreach ($pricevariant as $price) {
@@ -86,13 +99,14 @@ class ShopController extends Controller
             $cart[$productId]['variant_price'] = $price || $product->buying_price;
         } else {
             if (isset($cart[$productId])) {
-                $cart[$productId]['quantity']++;
+                $cart[$productId]['quantity'] += $request->quantity;
             } else {
                 $cart[$productId] = [
                     "name" => $product->title,
                     "product_id" => $product->id,
                     "quantity" => !empty($request->quantity) ? $request->quantity : 1,
                     "price" => $product->buying_price,
+                    "discount_price" => $discount_ammount,
                     "image" => $product->image,
                     "variant_data" => [],
                     // "variant_price" => $product->buying_price
@@ -100,6 +114,9 @@ class ShopController extends Controller
             }
         }
         session()->put('cart', $cart);
+
+        session()->forget('discount');
+
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
@@ -230,5 +247,15 @@ class ShopController extends Controller
         
 
         //dd($productid);
+    }
+
+    public function product_discount(Request $request, $productId){
+
+        $discount = (!session()->has('discount')) ? session()->get('discount', []) : session()->get('discount');
+        $discount[$productId] = ["product_id" => $productId, "discount_ammount" => $request->apply_code ];
+        session()->put('discount', $discount);
+
+        return redirect()->back()->with('success', 'discount ammount Applied successfully!');
+        
     }
 }

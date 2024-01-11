@@ -37,8 +37,10 @@ class HomeController extends Controller
     }
 
     public function startneworder(){
+        Session::forget('discount');
         if(session()->has('cart')){
             Session::forget('cart');
+            Session::forget('discount');
         }
         if(session()->has('assign_customer')){
             Session::forget('assign_customer');
