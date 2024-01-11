@@ -93,6 +93,8 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
     Route::get('/orders/details/{order_id}/download', [OrderController::class, 'downloadInvoice'])->name('order.downloadInvoice');
     Route::post('/update-order-status', [OrderController::class, 'updateStatus']);
     Route::post('/update-product-status', [OrderController::class, 'updateProductStatus']);
+    Route::get('/delivery-user/{id}', [OrderController::class, 'delivery_user'])->name('orders.delivery_user');
+    Route::post('/delivery-user-save', [OrderController::class, 'delivery_user_save'])->name('orders.delivery_user_save');
     Route::post('/update-user-address', [UserController::class, 'createAddress']);
     Route::get('/assembler-order', [OrderController::class, 'assembler_order'])->name('order.assembler');
     Route::get('/deliverie', [DeliveriesController::class, 'index'])->name('deliveries');
