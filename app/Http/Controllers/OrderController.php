@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\OrderStatus;
 use App\Models\PaymentStatus;
+use App\Models\DeliveryUser;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -231,4 +232,29 @@ class OrderController extends Controller
             return response()->json(['success' => 'Assigned successfully']);
         }
     }
+
+    public function delivery_user(Request $request)
+    {
+        $order = Order::whereId($request->orderid)->first();
+        return view('admin.orders.delivery-user');
+    }
+
+    public function delivery_user_save(Request $request)
+    {
+        if ($request->has('images') && is_array($request->images)) {
+            foreach ($request->images as $key => $image) {
+                $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
+                $image->storeAs('public/products', $imgName);
+            }
+        }
+    
+        $signatureData = $request->input('signature');
+    
+        $signature = new DeliveryUser();
+        $signature->signature_data = $signatureData;
+        $signature->save();
+    
+        return response()->json(['message' => 'Signature saved successfully']);
+    }
+         
 }
