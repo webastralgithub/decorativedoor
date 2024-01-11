@@ -16,6 +16,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'dob',
+        'gender'
     ];
 
     protected $hidden = [
@@ -36,4 +39,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserAddress::class);
     }
+    public function usercompany()
+    {
+        return $this->hasOne(UserCompany::class);
+    }
+    
 }

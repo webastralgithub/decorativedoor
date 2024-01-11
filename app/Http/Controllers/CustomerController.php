@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
-use App\Models\OrderDetails;
+use App\Models\UserCompany;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 class CustomerController extends Controller
@@ -33,35 +33,53 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+
+       // dd($request->all());
         $user_id = $request->user_id;
         
         if(isset($user_id) && !empty($user_id)){
-            $input = [
-                'email' => $request->email,
-                'name' => $request->name,
-                'password' => Hash::make('javed1234'),
-            ];
+            
             $user = User::find($user_id);
             $user = $user->update([
                 'email' => $request->email,
                 'name' => $request->name,
-                'password' => Hash::make('javed1234'),
+                'password' => Hash::make($request->password),
+                'phone' => $request->phone,
+                'dob' => $request->dob,
+                'gender' => $request->gender,
             ]);
     
             $useraddress = User::find($user_id);
             $useraddress->address()->updateOrCreate(
                 ['user_id' => $user_id],
                 [
+                    'address_type' => $request->address_type,
                     'street' => $request->street,
                     'city' => $request->city,
                     'state' => $request->state,
                     'country' => $request->country,
                     'zip_code' => $request->zipcode,
-                    'phone' => $request->phone,
-                    'tax_id' => $request->tax_id,
+                    'billing_address_type' => $request->billing_address_type,
+                    'billing_street' => $request->billing_street,
+                    'billing_city' => $request->billing_city,
+                    'billing_state' => $request->billing_state,
+                    'billing_country' => $request->billing_country,
+                    'billing_zipcode' => $request->billing_zipcode,
+                    'notes' => $request->notes,
+                ]
+            );
+
+            $useraddress->usercompany()->updateOrCreate(
+                ['user_id' => $user_id],
+                [
+                    'company_name' => $request->company_name,
+                    'company_address' => $request->company_address,
+                    'company_phone' => $request->company_phone,
+                    'company_email' => $request->company_email,
+                    'industory_type' => $request->industory_type,
+                    'company_website' => $request->company_website,
                     'registration_no' => $request->registration_no,
                     'gst' => $request->gst,
-                    'notes' => $request->notes,
                 ]
             );
             session()->put('assign_customer', $user_id);
@@ -69,7 +87,10 @@ class CustomerController extends Controller
             $input = [
                 'email' => $request->email,
                 'name' => $request->name,
-                'password' => Hash::make('javed1234'),
+                'password' => Hash::make($request->password),
+                'phone' => $request->phone,
+                'dob' => $request->dob,
+                'gender' => $request->gender,
             ];
             $user = User::create($input);
     
@@ -78,16 +99,33 @@ class CustomerController extends Controller
             $user->address()->updateOrCreate(
                 ['user_id' => $lastinsertid],
                 [
+                    'address_type' => $request->address_type,
                     'street' => $request->street,
                     'city' => $request->city,
                     'state' => $request->state,
                     'country' => $request->country,
                     'zip_code' => $request->zipcode,
-                    'phone' => $request->phone,
-                    'tax_id' => $request->tax_id,
+                    'billing_address_type' => $request->billing_address_type,
+                    'billing_street' => $request->billing_street,
+                    'billing_city' => $request->billing_city,
+                    'billing_state' => $request->billing_state,
+                    'billing_country' => $request->billing_country,
+                    'billing_zipcode' => $request->billing_zipcode,
+                    'notes' => $request->notes,
+                ]
+            );
+
+            $user->usercompany()->updateOrCreate(
+                ['user_id' => $user_id],
+                [
+                    'company_name' => $request->company_name,
+                    'company_address' => $request->company_address,
+                    'company_phone' => $request->company_phone,
+                    'company_email' => $request->company_email,
+                    'industory_type' => $request->industory_type,
+                    'company_website' => $request->company_website,
                     'registration_no' => $request->registration_no,
                     'gst' => $request->gst,
-                    'notes' => $request->notes
                 ]
             );
             session()->put('assign_customer', $lastinsertid);
@@ -129,22 +167,38 @@ class CustomerController extends Controller
 
     public function checkuser(Request $request){
 
-        $checkuser = User::with('address')->where('email', $request->email)->first();
+        $checkuser = User::with('address', 'usercompany')->where('email', $request->email)->first();
         if(isset($checkuser) && !empty($checkuser)){
             $user_info = [
                 'id' => $checkuser->id,
                 'name' => $checkuser->name,
-                'address_type' => isset($checkuser->address->address_type) ? $checkuser->address->address_type : '',
-                'state' => isset($checkuser->address->state) ? $checkuser->address->state : '',
-                'street' => isset($checkuser->address->street) ? $checkuser->address->street : '',
-                'city' => isset($checkuser->address->city) ? $checkuser->address->city : '',
-                'country' => isset($checkuser->address->country) ? $checkuser->address->country : '',
-                'zipcode' => isset($checkuser->address->zip_code) ? $checkuser->address->zip_code : '',
-                'phone' => isset($checkuser->address->phone) ? $checkuser->address->phone : '',
-                'tax_id' => isset($checkuser->address->tax_id) ? $checkuser->address->tax_id : '',
-                'registration_no' => isset($checkuser->address->registration_no) ? $checkuser->address->registration_no : '',
-                'gst' => isset($checkuser->address->gst) ? $checkuser->address->gst : '',
-                'notes' => isset($checkuser->address->notes) ? $checkuser->address->notes : '',
+                'password' => $checkuser->password,
+                'phone' => $checkuser->phone,
+                'dob' => $checkuser->dob,
+                'gender' => $checkuser->gender,
+
+                'address_type' => $checkuser->address->address_type,
+                'street' => $checkuser->address->street,
+                'city' => $checkuser->address->city,
+                'state' => $checkuser->address->state,
+                'country' => $checkuser->address->country,
+                'zip_code' => $checkuser->address->zipcode,
+                'billing_address_type' => $checkuser->address->billing_address_type,
+                'billing_street' => $checkuser->address->billing_street,
+                'billing_city' => $checkuser->address->billing_city,
+                'billing_state' => $checkuser->address->billing_state,
+                'billing_country' => $checkuser->address->billing_country,
+                'billing_zipcode' => $checkuser->address->billing_zipcode,
+                'notes' => $checkuser->address->notes,
+
+                'company_name' => $checkuser->usercompany->company_name,
+                'company_address' => $checkuser->usercompany->company_address,
+                'company_phone' => $checkuser->usercompany->company_phone,
+                'company_email' => $checkuser->usercompany->company_email,
+                'industory_type' => $checkuser->usercompany->industory_type,
+                'company_website' => $checkuser->usercompany->company_website,
+                'registration_no' => $checkuser->usercompany->registration_no,
+                'gst' => $checkuser->usercompany->gst,   
             ];
             return json_encode($user_info);
         }else{

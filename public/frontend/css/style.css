@@ -3822,3 +3822,7 @@ form.apply_discount input.btn.primary-btn {
     margin-left: 10px;
     width: 100%;
 }
+
+section.customer.spad form .nice-select.form-control {
+    width: 100%;
+}

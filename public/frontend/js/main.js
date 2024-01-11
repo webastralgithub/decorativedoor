@@ -228,20 +228,44 @@
     ----------------------*/
     var customeremail = $('#customer-email');
     customeremail.keyup(function(){
+        
         $('#user-alreday-exist').hide();
-        $('#customer-name').val('');
-        $('#customer-address_type').val('');
-        $('#customer-state').val('');
-        $('#customer-city').val('');
-        $('#customer-street').val('');
-        $('#customer-country').val('');
-        $('#customer-zipcode').val('');
         $('#customer-id').val('');
+
+        /**********Personal information ***********/
+
+        $('#customer-name').val('');
         $('#customer-phone').val('');
-        $('#customer-tax_id').val('');
-        $('#customer-registration_no').val('');
-        $('#customer-gst_no').val('');
-        $('#customer-notes').val('');
+        $('#customer-dob').val('');
+        $('#customer-gender').val('');
+        
+        $('#customer-shipping-address_type').val('');
+        $('#customer-shipping-state').val('');
+        $('#customer-shipping-city').val('');
+        $('#customer-shipping-street').val('');
+        $('#customer-shipping-country').val('');
+        $('#customer-shipping-zipcode').val('');
+
+        $('#customer-billing-address_type').val('');
+        $('#customer-billing-state').val('');
+        $('#customer-billing-city').val('');
+        $('#customer-billing-street').val('');
+        $('#customer-billing-country').val('');
+        $('#customer-billing-zipcode').val('');
+        
+        /**********company information ***********/
+
+
+        $('#company-name').val('');
+        $('#company-address').val('');
+        $('#company-phone').val('');
+        $('#company-email').val('');
+        $('#company-industory-type').val('');
+        $('#company-website').val('');
+        $('#company-registration_no').val('');
+        $('#company-gst_no').val('');
+        $('#company-notes').val('');
+       
         var token = $('input[name="_token"]').val();
        var email_val = $(this).val();
          
@@ -256,18 +280,40 @@
             console.log(jsonData);
             $('#user-alreday-exist').show();
             $('#customer-id').val(jsonData.id);
-            $('#customer-name').val(jsonData.name);
-            $('#customer-address_type').val(jsonData.address_type);
-            $('#customer-state').val(jsonData.state);
-            $('#customer-city').val(jsonData.city);
-            $('#customer-street').val(jsonData.street);
-            $('#customer-country').val(jsonData.country);
-            $('#customer-zipcode').val(jsonData.zipcode);
-            $('#customer-phone').val(jsonData.phone);  
-            $('#customer-tax_id').val(jsonData.tax_id);
-            $('#customer-registration_no').val(jsonData.registration_no);
-            $('#customer-gst_no').val(jsonData.gst);
-            $('#customer-notes').val(jsonData.notes);
+
+        /**********Personal information ***********/
+
+        $('#customer-name').val(jsonData.name);
+        $('#customer-phone').val(jsonData.phone);
+        $('#customer-dob').val(jsonData.dob);
+        $('#customer-gender').val(jsonData.gender);
+        
+        $('#customer-shipping-address_type').val(jsonData.address_type);
+        $('#customer-shipping-state').val(jsonData.state);
+        $('#customer-shipping-city').val(jsonData.city);
+        $('#customer-shipping-street').val(jsonData.street);
+        $('#customer-shipping-country').val(jsonData.country);
+        $('#customer-shipping-zipcode').val(jsonData.zipcode);
+
+        $('#customer-billing-address_type').val(jsonData.billing_address_type);
+        $('#customer-billing-state').val(jsonData.billing_state);
+        $('#customer-billing-city').val(jsonData.billing_city);
+        $('#customer-billing-street').val(jsonData.billing_street);
+        $('#customer-billing-country').val(jsonData.billing_country);
+        $('#customer-billing-zipcode').val(jsonData.billing_zipcode);
+        
+        /**********company information ***********/
+
+
+        $('#company-name').val(jsonData.company_name);
+        $('#company-address').val(jsonData.company_address);
+        $('#company-phone').val(jsonData.company_phone);
+        $('#company-email').val(jsonData.company_email);
+        $('#company-industory-type').val(jsonData.industory_type);
+        $('#company-website').val(jsonData.company_website);
+        $('#company-registration_no').val(jsonData.registration_no);
+        $('#company-gst_no').val(jsonData.gst);
+        $('#company-notes').val(jsonData.notes);
 
         },
         error: function(error){

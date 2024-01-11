@@ -14,17 +14,23 @@ return new class extends Migration
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('street');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
-            $table->string('zip_code');
-            $table->string('phone');
-            $table->string('tax_id');
-            $table->string('registration_no');
-            $table->string('gst');
+            $table->enum('address_type', ['shipping'])->default('shipping');
+            $table->string('street')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('zipcode')->nullable();
+          
+            $table->enum('billing_address_type', ['billing'])->default('billing');
+            $table->string('billing_street')->nullable();
+            $table->string('billing_city')->nullable();
+            $table->string('billing_state')->nullable();
+            $table->string('billing_country')->nullable();
+            $table->string('billing_zipcode')->nullable();
+
             $table->text('notes');
-            $table->enum('address_type', ['shipping', 'billing'])->default('shipping');
+           
+            
             $table->timestamps();
         });
     }

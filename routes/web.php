@@ -94,7 +94,7 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
     Route::post('/update-order-status', [OrderController::class, 'updateStatus']);
     Route::post('/update-product-status', [OrderController::class, 'updateProductStatus']);
     Route::post('/update-user-address', [UserController::class, 'createAddress']);
-
+    Route::get('/assembler-order', [OrderController::class, 'assembler_order'])->name('order.assembler');
     Route::get('/deliverie', [DeliveriesController::class, 'index'])->name('deliveries');
     Route::get('/deliveries/track', [DeliveriesController::class, 'orderTrack'])->name('order.track');
     Route::post('deliveries/track/order', [DeliveriesController::class, 'deliveryTrackOrder'])->name('delivery.track.order');
