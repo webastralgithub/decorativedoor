@@ -20,6 +20,7 @@ class OrderDetails extends Model
         'quantity',
         'unitcost',
         'total',
+        'discount',
     ];
 
     protected $casts = [

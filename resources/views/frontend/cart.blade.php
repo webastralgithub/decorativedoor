@@ -8,6 +8,7 @@
             <th style="width:50%">Product</th>
             <th style="width:10%">Price</th>
             <th style="width:8%">Quantity</th>
+            <th style="width:8%">Discount</th>
             <th style="width:10%">SubTotal</th>
             <th style="width:10%"></th>
         </tr>
@@ -21,7 +22,7 @@
         <!-- if product with multiple variants -->
         @if(isset($details['variant_data']))
         @foreach($details['variant_data'] as $variantId => $subVariant)
-        @php $total += $subVariant['price'] * $subVariant['quantity'] @endphp
+        @php $total += $subVariant['price'] * $subVariant['quantity'] - $subVariant['discount_price']  @endphp
         <tr data-id="{{ $id }}" data-variant="{{$variantId}}">
             <td data-th="Product">
                 <div class="row">
@@ -38,8 +39,9 @@
             <td data-th="Quantity">
                 <input type="number" value="{{ $subVariant['quantity'] }}" class="form-control quantity update-cart" />
             </td>
+            <td  data-th="discount">{{ ($subVariant['discount_price']) ? $subVariant['discount_price'] : 0}}</td>
             <td data-th="SubTotal">
-                ${{ number_format($subVariant['price'] * $subVariant['quantity'], 2, '.', ',') }}
+                ${{ number_format($subVariant['price'] * $subVariant['quantity'] - $subVariant['discount_price'], 2, '.', ',') }}
             </td>
             <td class="actions" data-th="">
                 <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
@@ -48,7 +50,7 @@
         @endforeach
 
         @else
-        @php $total += (isset($details['variant_price']) ? $details['variant_price'] : $details['price']) * $details['quantity'] @endphp
+        @php $total += (isset($details['variant_price']) ? $details['variant_price'] - $details['discount_price'] : $details['price']) * $details['quantity'] - $details['discount_price'] @endphp
         <tr data-id="{{ $id }}" data-variant="">
             <td data-th="Product">
                 <div class="row">
@@ -80,7 +82,7 @@
         </tr>
         @endif
         @else
-        @php $total += $details['price'] * $details['quantity'] @endphp
+        @php $total += $details['price'] * $details['quantity'] - $details['discount_price']@endphp
         <tr data-id="{{ $id }}" data-variant="">
             <td data-th="Product">
                 <div class="row">
@@ -96,8 +98,9 @@
             <td data-th="Quantity">
                 <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
             </td>
+            <td data-th="Discount">{{ ($details['discount_price']) ? $details['discount_price'] : 0}}</td>
             <td data-th="SubTotal">
-                ${{ number_format($details['price'] * $details['quantity'], 2, '.', ',') }}
+                ${{ number_format($details['price'] * $details['quantity'] - $details['discount_price'], 2, '.', ',') }}
             </td>
             <td class="actions" data-th="">
                 <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>

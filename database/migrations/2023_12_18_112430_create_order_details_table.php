@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('variant_id')->default(0);
             $table->tinyInteger('order_status')->default('1');
             $table->integer('quantity');
+            $table->integer('discount')->nullable();
             $table->integer('unitcost');
             $table->integer('total');
             $table->timestamps();
