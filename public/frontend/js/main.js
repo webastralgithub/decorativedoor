@@ -263,7 +263,7 @@
             $('#customer-street').val(jsonData.street);
             $('#customer-country').val(jsonData.country);
             $('#customer-zipcode').val(jsonData.zipcode);
-            $('#customer-phone').val(jsonData.phone);
+            $('#customer-phone').val(jsonData.phone);  
             $('#customer-tax_id').val(jsonData.tax_id);
             $('#customer-registration_no').val(jsonData.registration_no);
             $('#customer-gst_no').val(jsonData.gst);
