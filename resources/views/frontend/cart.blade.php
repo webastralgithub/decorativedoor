@@ -119,7 +119,7 @@
         <tr>
             <td colspan="5" class="text-right">
                 <a href="{{ url()->previous() }}" class="btn btn-warning" style="background: #93681a; color: #fff; border-color: #93681a;"><i class="fa fa-angle-left"></i> Continue Shopping</a>
-                <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed To Order</a>
+                <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed Order</a>
             </td>
         </tr>
     </tfoot>
