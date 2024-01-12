@@ -68,6 +68,16 @@ if (!function_exists('generateProductSlug')) {
         }
     }
 
+    if (!function_exists('getUserInfo')) {
+        function getUserInfo($userID = null)
+        {
+            if (!$userID)
+                return null;
+            $user = User::findOrFail($userID);
+            return $user;
+        }
+    }
+
     if (!function_exists('productsInfo')) {
         function productsInfo($productId)
         {
