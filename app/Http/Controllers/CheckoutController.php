@@ -29,7 +29,7 @@ class CheckoutController extends Controller
             $totalPrice = 0;
             foreach (session('cart') as $id => $details) {
                 $totalProducts += (int)$details['quantity'];
-                $totalPrice += $details['quantity'] * (!empty($details['variant_price']) ? $details['variant_price'] : $details['price']);
+                $totalPrice += $details['quantity'] * (!empty($details['selling_price']) ? $details['selling_price'] : $details['price']);
            
             }
 
