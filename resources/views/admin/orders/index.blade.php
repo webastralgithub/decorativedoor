@@ -46,10 +46,13 @@
                     {{-- <th>{{__('Address')}}</th> --}}
                     <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Ready Date')}}</th>
-                    <th>{{__('Quantity')}}</th>
+                    <th>{{__('Quantity')}}</th> 
                     @can('order_price')
                     <th>{{__('Total')}}</th>
                     @endcan
+                    @if(auth()->user()->hasRole('Accountant'))
+                    <th>{{__('Approval')}}</th>
+                    @endif
                     @can('change-order-status')
                     @endcan
                 </thead>
@@ -71,9 +74,9 @@
                             </div>
                             @endif
                             @endcan
-                            <!-- @can('download-invoice')
-                            <a class="btn btn-primary btn-sm" href="{{ route('order.downloadInvoice', $order) }}">Print</a>
-                            @endcan -->
+                            @can('download-invoice')
+                            {{-- <a class="btn btn-primary btn-sm" href="{{ route('order.downloadInvoice', $order) }}">Print</a> --}}
+                            @endcan 
                         </td>
                         <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{ $order->order_id }}</a></td>
                         @can('change-order-status')
@@ -123,6 +126,9 @@
                         @can('order_price')
                         <td>${{ number_format($order->total, 2, '.', ',') }}</td>
                         @endcan
+                        @if(auth()->user()->hasRole('Accountant'))
+                        <td><button class="btn btn-primary btn-sm my-2" onclick="return updateProductStatus('{{$order->id}}', 4)"> Okay to proceed </button></td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -191,6 +197,48 @@
 </div>
 @endsection
 @section('scripts')
+
+
+<script>
+    function updateProductStatus(orderId, newStatus) {
+        // Send AJAX request to update order status
+        jQuery.ajax({
+            url: '/admin/update-order-product-status', // Replace with your actual route
+            type: 'POST',
+            data: {
+                order_id: orderId,
+                new_status: newStatus,
+                _token: '{{ csrf_token() }}' // Add CSRF token if needed
+            },
+            success: function(response) {
+                // Handle success, if needed
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order Status Updated',
+                        text: response.success
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Order Status Error',
+                        text: response.error
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                }
+            },
+            error: function(error) {
+                // Handle error, if needed
+                console.error('Error updating order status', error);
+            }
+        });
+    }
+</script>
+
 <script>
     async function makePayment(orderId) {
         await Swal.fire({

@@ -137,6 +137,24 @@ class OrderController extends Controller
         return response()->json(['success' => 'Order status has been updated!']);
     }
 
+
+    public function updateorderProductStatus(Request $request)
+    {
+        $itemId = $request->order_id;
+        $orderDetails = OrderDetails::where('order_id', $itemId)->get();
+        if (!isset($orderDetails) && empty($orderDetails)) {
+            return response()->json(['error' => 'Order is not valid!']);
+        }
+       // dd($orderDetails);
+
+       foreach($orderDetails as $item){
+          $order_id = $item->order_id;
+          OrderDetails::where('order_id', $order_id)->update(['order_status' => $request->new_status]);
+       }
+       
+       return response()->json(['success' => 'Order status has been updated!']);
+    }
+
     public function updatePaymentMethod(Request $request)
     {
         $orderId = $request->order_id;
