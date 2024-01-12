@@ -215,7 +215,10 @@
                                                 <!-- if product with multiple variants -->
                                                 @if(isset($details['variant_data']))
                                                 @foreach($details['variant_data'] as $variantId => $subVariant)
-                                                @php $total += $subVariant['price'] * $subVariant['quantity'] @endphp
+
+                                                @php 
+                                                print_r($subVariant);
+                                                $total += $subVariant['price'] * $subVariant['quantity'] @endphp
                                                 @endforeach
                                                 @else
                                                 
@@ -237,7 +240,47 @@
                                 </ul>
                             </div>
                         </ul>
-                        <div class="header__cart__price">item: <span>${{ $total }}</span></div>
+                        @php $total = [];
+                        $discount = [];
+                        // echo "<pre>";
+                        // print_r(session('cart'));
+                        // echo "</pre>";
+                        @endphp
+                        @foreach((array) session('cart') as $id => $details)
+                        @php 
+                        
+                   
+                        @endphp
+                            @if(isset($details['variant_price']))
+                            <!-- if product with multiple variants -->
+                                @if(isset($details['variant_data']))
+                                @foreach($details['variant_data'] as $variantId => $subVariant)
+
+                                    @php 
+                                    $discount[] = $subVariant['discount_price']; 
+                                    
+                                    $total[] = $subVariant['price'] * $subVariant['quantity'] 
+                                    @endphp
+                                @endforeach
+                                @else
+                            
+                                @php                                
+                                //$total[] = $details['variant_price'] * $details['quantity'] 
+                                @endphp
+                                @endif
+                            @endif
+                            @php
+                            if(empty($details['variant_data'])){
+                            $total[] = $details['price'] * $details['quantity'];
+                            $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] : 0;                            
+                            }
+                            @endphp
+                        @endforeach
+                        @php 
+                            $total = array_sum($total);
+                            $discount = array_sum($discount);
+                        @endphp
+                        <div class="header__cart__price">item: <span>$ {{$total - $discount }}</span></div>
                     </div>
                 </div>
             </div>
