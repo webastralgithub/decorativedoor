@@ -10,6 +10,7 @@ use App\Models\PaymentStatus;
 use App\Models\DeliveryUser;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Note;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -238,7 +239,7 @@ class OrderController extends Controller
     {
         if (auth()->user()->hasRole('Product Assembler')) {
             // $orders = Order::where('assembler_user_id', Auth::user()->id)->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])->latest()->get();
-            $orders = Order::whereHas('details', function ($query) {
+            $orders = Order::with(['details', 'notes'])->whereHas('details', function ($query) {
                 $query->orWhereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER]);
             })
                 ->where('assembler_user_id', Auth::user()->id)
@@ -246,9 +247,12 @@ class OrderController extends Controller
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
+         
+            $access_status = [4, 5];
         } else {
-            $orders = Order::latest()->get();
+            $orders = Order::with(['details', 'notes'])->latest()->get();
             $order_statuses = OrderStatus::all();
+            $access_status = [1, 2, 3, 4, 5, 6];
         }
 
         return view('admin.orders.assembler-order-index', [
@@ -258,8 +262,17 @@ class OrderController extends Controller
             'delivery_users' => User::role('Delivery User')->get(),
             'assembler_users' => User::role('Product Assembler')->get(),
             'order_statuses' => $order_statuses,
+            'access_status' => $access_status
         ]);
     }
+
+
+    public function add_assembler_note(Request $request){
+        Note::create($request->all());
+        return response()->json(['message' => 'Note saved successfully']);
+    }
+
+
     public function delivery_user($id)
     {
         $order = Order::find($id);

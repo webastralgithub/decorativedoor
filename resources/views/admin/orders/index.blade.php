@@ -38,11 +38,12 @@
                     <th>{{__('Order ID')}}</th>
                     <th>{{__('Status')}}</th>
                     <th>{{__('Order Coordinator')}}</th>
+                    <th>{{__('Customer Name')}}</th>
                     <th>{{__('Sales Person')}}</th>
-                    <th>{{__('Accountant')}}</th>
+                    {{-- <th>{{__('Accountant')}}</th> --}}
                     <th>{{__('Assembler')}}</th>
                     <th>{{__('Delivery By')}}</th>
-                    <th>{{__('Address')}}</th>
+                    {{-- <th>{{__('Address')}}</th> --}}
                     <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Ready Date')}}</th>
                     <th>{{__('Quantity')}}</th>
@@ -90,11 +91,14 @@
                         @endcan
                         <td>-</td>
                         <td class="center">
+                            <span class="@if(!$order->sales_person) dots-assigned @endif cursor-pointer">{{getUserInfo($order->sales_person)['name'] ?? "..."}}</span>
+                        </td>
+                         <td class="center">
                             <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_sales_person') onclick="return assignUser('{{$order->id}}','{{$sales_users}}','sales person','{{$order->user_id}}');" @endcan>{{$order->user->name ?? "..."}}</span>
                         </td>
-                        <td class="center">
+                        {{-- <td class="center">
                             <span class="@if(!$order->accountant) dots-assigned @endif cursor-pointer" @can('change_accountant_user') onclick="return assignUser('{{$order->id}}','{{$accountant_users}}','accountant','{{$order->accountant_user_id}}');" @endcan>{{$order->accountant->name ?? "..."}}</span>
-                        </td>
+                        </td> --}}
                         <td class="center">
                             <span class="@if(!$order->assemble) dots-assigned @endif cursor-pointer" @can('change_assembler_user') onclick="return assignUser('{{$order->id}}','{{$assembler_users}}','assembler','{{$order->assembler_user_id}}');" @endcan>{{$order->assemble->name ?? "..."}}</span>
                         </td>
@@ -103,15 +107,15 @@
                         </td>
                         @can('change-order-status')
                         @php
-                        $address = getUserAddress($order->user_id);
+                        //$address = getUserAddress($order->user_id);
                         @endphp
-                        <td class="@if($address == '') center @endif">
+                        {{-- <td class="@if($address == '') center @endif">
                             @if($address != '')
                             <span class="">{{$address}}</span>
                             @else
                             <span class="dots-assigned cursor-pointer" @can('change_user_address') onclick="return addUserAddress('{{$order->user_id}}');" @endcan>{{"..."}}</span>
                             @endif
-                        </td>
+                        </td> --}}
                         @endcan
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
                         <td>-</td>

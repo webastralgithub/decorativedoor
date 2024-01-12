@@ -3,6 +3,7 @@
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Note;
 use Illuminate\Support\Str;
 
 if (!function_exists('generateProductSlug')) {
@@ -64,6 +65,31 @@ if (!function_exists('generateProductSlug')) {
                 return null;
             $user = User::with('address')->findOrFail($userID);
             return !empty($user->address) ? getFullAddress($user->address) : '';
+        }
+    }
+
+    if (!function_exists('getUserInfo')) {
+        function getUserInfo($userID = null)
+        {
+            if (!$userID)
+                return null;
+            $user = User::findOrFail($userID);
+            return $user;
+        }
+    }
+
+    if (!function_exists('productsInfo')) {
+        function productsInfo($productId)
+        {
+            return Product::where('id', $productId)->first();
+        }
+    }
+
+
+    if (!function_exists('getOrderNotes')) {
+        function getOrderNotes($orderId)
+        {
+            return Note::where('order_id', $orderId)->latest()->first();
         }
     }
 

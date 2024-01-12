@@ -81,12 +81,23 @@
                         @endcan
                         @can('order_price')
                         <th scope="col" class="align-middle text-center">Price</th>
+                        <th scope="col" class="align-middle text-center">Discount</th>
                         <th scope="col" class="align-middle text-center">Total</th>
                         @endcan
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                    $discount = [];
+                    $finaltotal = [];
+                    @endphp
                     @foreach ($order->details as $item)
+                    @php
+                    $discount[] = $item->discount;
+                    $finaltotal[] = $item->total;
+                    
+                    @endphp
+                    
                     <tr>
                         <td class="align-middle text-center">
                             {{ $loop->iteration  }}
@@ -141,11 +152,19 @@
                             ${{ number_format($item->unitcost, 2, '.', ',') }}
                         </td>
                         <td class="align-middle text-center">
-                            ${{ number_format($item->total, 2, '.', ',') }}
+                            ${{ number_format($item->discount, 2, '.', ',') }}
+                        </td>
+                        <td class="align-middle text-center">
+                            ${{ number_format(($item->total - $item->discount), 2, '.', ',') }}
                         </td>
                         @endcan
                     </tr>
                     @endforeach
+                    @php
+                    $finaltotal = array_sum($finaltotal);
+                    $discount = array_sum($discount);
+                    $finaltotal = $finaltotal - $discount;
+                    @endphp
                     @can('order_price')
                     <tr>
                         <td colspan="6" class="text-end">Shipping Charges</td>
@@ -156,8 +175,12 @@
                         <td class="text-center">${{ number_format($order->vat, 2, '.', ',') }}</td>
                     </tr>
                     <tr>
+                        <td colspan="6" class="text-end">Total Discount</td>
+                        <td class="text-center">${{ number_format($discount, 2, '.', ',') }}</td>
+                    </tr>
+                    <tr>
                         <td colspan="6" class="text-end">Total</td>
-                        <td class="text-center">${{ number_format(($order->total + $order->vat) -$order->due, 2, '.', ',') }}</td>
+                        <td class="text-center">${{ number_format(($finaltotal + $order->vat) - $order->due, 2, '.', ',') }}</td>
                     </tr>
                     @endcan
                 </tbody>

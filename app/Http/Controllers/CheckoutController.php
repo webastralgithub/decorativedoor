@@ -99,7 +99,7 @@ class CheckoutController extends Controller
                     //     'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
                     // ]);
                 }
-            //session()->forget('cart');
+            session()->forget('cart');
             $orderId = '#' . $order->order_id;
         }
         // dd($order);

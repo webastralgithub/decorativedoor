@@ -79,4 +79,9 @@ class Order extends Model
     {
         return $this->belongsTo(User::class,'accountant_user_id');
     }
+
+    public function notes()
+    {
+        return $this->belongsTo(Note::class,'order_id');
+    }
 }
