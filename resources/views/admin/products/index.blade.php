@@ -73,7 +73,7 @@
                     <th>{{ getProductOnorderAvailabityStock($product->id) }}</th>
                     <th>{{ getProductAvailabityStock($product->id) }}</th>
                     <td>{{ $product->code }}</td>
-                    <td>${{ number_format($product->buying_price, 2, '.', ',') }}</td>
+                    <td>${{ number_format($product->selling_price, 2, '.', ',') }}</td>
                 </tr>
                 @empty
                 <td colspan="4">

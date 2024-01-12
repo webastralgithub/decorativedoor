@@ -32,6 +32,7 @@ class StoreProductRequest extends FormRequest
             'code' => 'required|unique:products',
             'notes' => 'required',
             'buying_price' => 'required|numeric',
+            'selling_price' => 'required|numeric',
             'tax' => 'required',
             // 'quantity' => 'required|numeric',
             // 'product_images' => 'required|mimes:jpeg,png,jpg',

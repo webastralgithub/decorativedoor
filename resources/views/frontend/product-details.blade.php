@@ -73,7 +73,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         </div>
                     </form>
                     <div class="product__details__price" id="main-price">
-                        ${{number_format($product->buying_price, 2, '.', ',')}}
+                        ${{number_format($product->selling_price, 2, '.', ',')}}
                     </div>
                     <p>{!!$product->short_description!!}</p>
 

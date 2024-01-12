@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="featured__item__text">
                                         <h6>{{$product->title}}</h6>
-                                        <h5>${{$product->buying_price}}</h5>
+                                        <h5>${{$product->selling_price}}</h5>
                                     </div>
                                 </a>
                                 <a href="#" id="share-with-email" data-id ="{{$product->id}}" data-toggle="modal" data-target="#exampleModal" onclick="return share_product('{{$product->id}}');">Share <i class="fa fa-share"></i></a> 

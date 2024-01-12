@@ -155,13 +155,13 @@
             <td>${selectedProductOption.text}</td>
             <td class="text-center">1</td>
             <td class="text-center">${productData.code}</td>
-            <td class="text-center">${productData.buying_price}</td>
-            <td class="text-center ">${productData.buying_price}</td>
+            <td class="text-center">${productData.selling_price}</td>
+            <td class="text-center ">${productData.selling_price}</td>
         `;
         tbody.insertBefore(newRow, tbody.firstChild);
         // Update corresponding fields based on the selected product
         // document.getElementById('tax').innerHTML = productData.tax;
-        document.getElementById('total').innerHTML = parseFloat(productData.tax + productData.buying_price);
+        document.getElementById('total').innerHTML = parseFloat(productData.tax + productData.selling_price);
         // Update more fields as needed
         updateTotalPrice();
     }
@@ -173,7 +173,7 @@
         // Iterate through each row with the class 'totals' and sum up the prices
         var totalRows = document.querySelectorAll('.table tbody tr.totals');
         totalRows.forEach(function(row) {
-            var priceCell = row.querySelector('.text-center:nth-child(4)'); // Assuming buying_price is in the fourth column
+            var priceCell = row.querySelector('.text-center:nth-child(4)'); // Assuming selling_price is in the fourth column
             var price = parseFloat(priceCell.textContent) || 0;
             total += price;
         });

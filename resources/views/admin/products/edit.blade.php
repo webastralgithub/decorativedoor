@@ -136,6 +136,13 @@
                                     <input type="number" label="Buying Price" class="form-control" name="buying_price" id="buying_price" placeholder="0" value="{{ $product->buying_price }}" min="0" />
                                 </div>
 
+                                <div class="col-sm-4 col-md-6">
+                                    <label for="notes" class="form-label">
+                                        {{ __('Selling Price') }}
+                                    </label>
+                                    <input type="number" label="Selling Price" class="form-control" name="selling_price" id="selling_price" placeholder="0" value="{{ $product->selling_price }}" min="0" />
+                                </div>
+
                                 <div class="col-sm-6 col-md-6">
                                     <span class="dots-assigned cursor-pointer btn btn-primary"  onclick="return ManageInventory('{{$product->id}}');">Manage Inventory</span>
                                     {{-- <label for="notes" class="form-label">

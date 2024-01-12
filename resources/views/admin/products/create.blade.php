@@ -135,13 +135,13 @@
                                     <input type="number" label="Buying Price" class="form-control" name="buying_price" id="buying_price" placeholder="0" value="{{ old('buying_price') }}" min="0"  />
                                 </div>
 
-                                <!-- <div class="col-sm-6 col-md-6">
+                                <div class="col-sm-6 col-md-6">
                                     <label for="notes" class="form-label">
-                                        {{ __('Quantity') }}
+                                        {{ __('Selling Price') }}
                                     </label>
-                                    <input type="number" label="Quantity" class="form-control" name="quantity" id="quantity" placeholder="0" value="{{ old('quantity') }}" />
-                                </div> -->
-
+                                    <input type="number" label="Selling Price" class="form-control" name="selling_price" id="selling_price" placeholder="0" value="{{ old('selling_price') }}" min="0"/>
+                                </div>
+                                <input type="hidden" name="quantity" value="0">
                                 <div class="col-sm-6 col-md-6">
                                     <label for="notes" class="form-label">
                                         {{ __('Tax') }}

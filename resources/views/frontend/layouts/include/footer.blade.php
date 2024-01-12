@@ -193,8 +193,8 @@
             success: function(response) {
                 console.log("productAvailabityStock:", response.productAvailabityStock);
                 let price = 0;
-                if (response.buying_price) {
-                    price = response.buying_price
+                if (response.selling_price) {
+                    price = response.selling_price
                 } else {
                     price = 0;
                 }

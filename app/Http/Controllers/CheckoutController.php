@@ -70,8 +70,8 @@ class CheckoutController extends Controller
                                 'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
                                 'quantity' => $product['quantity'],
                                 'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['discount_price'] : 0,
-                                'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->buying_price),
-                                'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->buying_price,
+                                'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
+                                'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
                             ]);
                         }
                         
@@ -84,8 +84,8 @@ class CheckoutController extends Controller
                             'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
                             'quantity' => $product['quantity'],
                             'discount' => (!empty($product['discount_price'])) ? $product['discount_price'] : 0,
-                            'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->buying_price),
-                            'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->buying_price,
+                            'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
+                            'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
                         ]);
                     }
 
@@ -95,8 +95,8 @@ class CheckoutController extends Controller
                     //     'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
                     //     'quantity' => $product['quantity'],
                     //     'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['discount_price'] : 0,
-                    //     'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->buying_price),
-                    //     'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->buying_price,
+                    //     'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
+                    //     'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
                     // ]);
                 }
             //session()->forget('cart');

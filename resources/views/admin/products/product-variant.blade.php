@@ -53,6 +53,7 @@
                         <th>Code</th>
                         <th>Quantity</th>
                         <th>Buying Price</th>
+                        <th>Selling Price</th>
                         <th>Notes</th>
                     </tr>
                 </thead>

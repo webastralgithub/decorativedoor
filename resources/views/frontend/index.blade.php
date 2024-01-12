@@ -133,7 +133,7 @@
                         </div>
                         <div class="featured__item__text">
                             <h6>{{$product->title}}</h6>
-                            <h5>${{number_format($product->buying_price, 2, '.', ',')}}</h5>
+                            <h5>${{number_format($product->selling_price, 2, '.', ',')}}</h5>
                         </div>
                         <a href="#" id="share-with-email" data-id="{{$product->id}}" onclick="return share_product_email('{{$product->id}}')">Share <i class="fa fa-share"></i></a>
                     </a>

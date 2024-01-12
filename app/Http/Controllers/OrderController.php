@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -55,7 +56,6 @@ class OrderController extends Controller
             $orders = Order::latest()->get();
             $order_statuses = OrderStatus::all();
         }
-
         return view('admin.orders.index', [
             'orders' => $orders,
             'sales_users' => User::role('Sales Person')->get(),
@@ -91,8 +91,8 @@ class OrderController extends Controller
             $oDetails['order_id'] = $order['id'];
             $oDetails['product_id'] = $content->product_id;
             $oDetails['quantity'] = $content->quantity;
-            $oDetails['unitcost'] = $content->buying_price;
-            $oDetails['total'] = $content->buying_price;
+            $oDetails['unitcost'] = $content->selling_price;
+            $oDetails['total'] = $content->selling_price;
             $oDetails['created_at'] = Carbon::now();
 
             OrderDetails::insert($oDetails);
@@ -260,28 +260,39 @@ class OrderController extends Controller
             'order_statuses' => $order_statuses,
         ]);
     }
-    public function delivery_user(Request $request)
+    public function delivery_user($id)
     {
-        $order = Order::whereId($request->orderid)->first();
-        return view('admin.orders.delivery-user');
+        $order = Order::find($id);
+        return view('admin.orders.delivery-user',compact('order'));
     }
 
     public function delivery_user_save(Request $request)
     {
+        $request->validate([
+            'signature' => 'required',
+            'images.*' => 'image|mimes:jpeg,png|max:2048',
+        ]);
+    
+        $signatureData = $request->input('signature');
+        $signatureImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureData));
+        $signatureImageName = Carbon::now()->timestamp . '_signature.png';
+        file_put_contents(storage_path('app/public/signatures/' . $signatureImageName), $signatureImage);
+    
+        $imagePaths = [];
         if ($request->has('images') && is_array($request->images)) {
             foreach ($request->images as $key => $image) {
                 $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
-                $image->storeAs('public/products', $imgName);
+                $image->storeAs('public/images', $imgName);
+                $imagePaths[] = 'public/images/' . $imgName;
             }
         }
     
-        $signatureData = $request->input('signature');
+        $deliveryUser = new DeliveryUser();
+        $deliveryUser->order_id = $request->order_id;
+        $deliveryUser->signature = $signatureImageName;
+        $deliveryUser->images = json_encode($imagePaths);
+        $deliveryUser->save();
     
-        $signature = new DeliveryUser();
-        $signature->signature_data = $signatureData;
-        $signature->save();
-    
-        return response()->json(['message' => 'Signature saved successfully']);
+        return back()->with(['success' => 'Signature and images saved successfully']);
     }
-         
 }

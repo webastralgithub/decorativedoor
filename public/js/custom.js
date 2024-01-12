@@ -152,6 +152,7 @@ jQuery(document).ready(function () {
                 <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="${lastTag}-"></td>
                 <td><input type="text" name="variant_quantity[]" class="form-control" placeholder="Enter Quantity"></td>
                 <td><input type="text" name="variant_buying_price[]" class="form-control" placeholder="Enter Buying Price"></td>
+                <td><input type="text" name="variant_selling_price[]" class="form-control" placeholder="Enter Selling Price"></td>
                 <td><textarea name="variant_notes[]" class="form-control" placeholder="Enter Notes"></textarea></td>
             </tr>`;
             variantsTableBody.append(tableTR);
@@ -175,6 +176,7 @@ jQuery(document).ready(function () {
                 <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="${variantCode}-${productCode}"></td>
                 <td><input type="text" name="variant_quantity[]" class="form-control" placeholder="Enter Quantity"></td>
                 <td><input type="text" name="variant_buying_price[]" class="form-control" placeholder="Enter Buying Price"></td>
+                <td><input type="text" name="variant_selling_price[]" class="form-control" placeholder="Enter Selling Price"></td>
                 <td><textarea name="variant_notes[]" class="form-control" placeholder="Enter Notes"></textarea></td>
             </tr>`;
                 variantsTableBody.append(tableTR);

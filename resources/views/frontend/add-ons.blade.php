@@ -29,7 +29,7 @@
                     </div>
                     <div class="product__item__text">
                         <h6><a href="{{ route('product',$product->slug)}}">{{ $product->title}}</a></h6>
-                        <h5>${{ $product->buying_price}}</h5>
+                        <h5>${{ $product->selling_price}}</h5>
                     </div>
                 </div>
             </div>

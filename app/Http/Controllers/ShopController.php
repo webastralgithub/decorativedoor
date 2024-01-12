@@ -74,7 +74,7 @@ class ShopController extends Controller
                         "name" => $product->title,
                         "product_id" => $product->id,
                         "quantity" => !empty($request->quantity) ? $request->quantity : 1,
-                        "price" => $product->buying_price,
+                        "price" => $product->selling_price,
                         "image" => $product->image,
                         "discount_price" => ($discount_ammount) ? $discount_ammount : 0,
                         // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
@@ -87,7 +87,7 @@ class ShopController extends Controller
             // if (!empty($selectedVariant)) {
             $cart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
             $cart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
-            $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['buying_price'];
+            $cart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['selling_price'];
             $cart[$productId]['variant_data'][$selectedVariant['id']]["discount_price"] = $discount_ammount;
             $pricevariant = array_values($cart[$productId]['variant_data']);
             $variant_prices = [];
@@ -96,7 +96,7 @@ class ShopController extends Controller
             }
             $price = array_sum($variant_prices);
             // }
-            $cart[$productId]['variant_price'] = $price || $product->buying_price;
+            $cart[$productId]['variant_price'] = $price || $product->selling_price;
         } else {
             if (isset($cart[$productId])) {
                 $cart[$productId]['quantity'] += $request->quantity;
@@ -105,11 +105,11 @@ class ShopController extends Controller
                     "name" => $product->title,
                     "product_id" => $product->id,
                     "quantity" => !empty($request->quantity) ? $request->quantity : 1,
-                    "price" => $product->buying_price,
+                    "price" => $product->selling_price,
                     "discount_price" => $discount_ammount,
                     "image" => $product->image,
                     "variant_data" => [],
-                    // "variant_price" => $product->buying_price
+                    // "variant_price" => $product->selling_price
                 ];
             }
         }
@@ -143,7 +143,7 @@ class ShopController extends Controller
             $cart = session()->get('cart');
             $cart[$request->pid]['variant_id'][($request->id)]["quantity"] = $request->quantity;
             $cart[$request->pid]['variant_id'][($request->id)]["name"] = $variant->name;
-            $cart[$request->pid]['variant_id'][($request->id)]["price"] = $request->quantity * $variant->buying_price;
+            $cart[$request->pid]['variant_id'][($request->id)]["price"] = $request->quantity * $variant->selling_price;
             $pricevariant = array_values($cart[$request->pid]['variant_id']);
             $variant_prices = [];
             foreach ($pricevariant as $price) {
@@ -230,7 +230,7 @@ class ShopController extends Controller
             $emailData = [
                 'title' => $product->title, 
                 'description' => $product->short_description, 
-                'price' => ($request->price) ? $request->price : $product->buying_price, 
+                'price' => ($request->price) ? $request->price : $product->selling_price, 
                 'variants' => $product->variants, 
                 'images' => $product->images,
                 'selectvarient' => ($request->selectvarient) ? $request->selectvarient : '',

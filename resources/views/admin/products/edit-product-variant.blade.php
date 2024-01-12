@@ -102,6 +102,7 @@
                         <th>Code</th>
                         <th>Quantity</th>
                         <th>Buying Price</th>
+                        <th>Selling Price</th>
                         <th>Notes</th>
                     </tr>
                 </thead>
@@ -114,6 +115,7 @@
                         <td><input type="text" name="variant_code[]" class="form-control" placeholder="Enter Code" value="{{$variant->code}}"></td>
                         <td><input type="text" name="variant_quantity[]" class="form-control" placeholder="Enter Quantity" value="{{$variant->quantity}}"></td>
                         <td><input type="text" name="variant_buying_price[]" class="form-control" placeholder="Enter Buying Price" value="{{$variant->buying_price}}"></td>
+                        <td><input type="text" name="variant_selling_price[]" class="form-control" placeholder="Enter Selling Price" value="{{$variant->selling_price}}"></td>
                         <td><input type="text" name="variant_notes[]" class="form-control" placeholder="Enter Notes" value="{{$variant->notes}}"></td>
                     </tr>
                     @endforeach

@@ -32,9 +32,9 @@
             </div>
         </div>
         <div class="row">
-            <label for="name" class="col-md-4 col-form-label text-md-end text-start"><strong>Quantity:</strong></label>
+            <label for="name" class="col-md-4 col-form-label text-md-end text-start"><strong>Selling Price:</strong></label>
             <div class="col-md-6" style="line-height: 35px;">
-                {{ $product->quantity }}
+                {{ $product->selling_price }}
             </div>
         </div>
 

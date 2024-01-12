@@ -69,8 +69,9 @@ class ProductController extends Controller
         $product->short_description = $request->short_description;
         $product->code = $request->code;
         $product->buying_price = $request->buying_price;
+        $product->selling_price = $request->selling_price;
         $product->tax = $request->tax;
-        // $product->quantity = $request->quantity;
+        $product->quantity = $request->quantity;
 
         $categories = Category::whereIn('id', $request->category_id)->get();
         $product->save();
@@ -104,6 +105,7 @@ class ProductController extends Controller
         $variant_code = $request->input('variant_code');
         $variant_quantity = $request->input('variant_quantity');
         $variant_buying_price = $request->input('variant_buying_price');
+        $variant_selling_price = $request->input('variant_selling_price');
         $variant_notes = $request->input('variant_notes');
 
         foreach ($variantNames as $key => $variant) {
@@ -118,6 +120,7 @@ class ProductController extends Controller
             $product->code  = !empty($variant_code[$key]) ? $variant_code[$key] : Str::random(10, 1200);
             $product->quantity = !empty($variant_quantity[$key]) ? $variant_quantity[$key] : $key;
             $product->buying_price = !empty($variant_buying_price[$key]) ? $variant_buying_price[$key] : $key;
+            $product->selling_price = !empty($variant_selling_price[$key]) ? $variant_selling_price[$key] : $key;
             $product->notes = !empty($variant_notes[$key]) ? $variant_notes[$key] : '';
             $product->save();
         }
@@ -155,7 +158,7 @@ class ProductController extends Controller
         // echo print_r($request->all(), true);die();    
         $product->update($request->only([
             'title', 'sub_title', 'meta_title', 'meta_keywords', 'meta_description',
-            'notes', 'buying_price', 'tax', 'quantity', 'short_description',
+            'notes', 'buying_price', 'tax', 'short_description','selling_price'
         ]));
 
         // Update category
@@ -196,6 +199,7 @@ class ProductController extends Controller
         $variant_code = $request->input('variant_code');
         $variant_quantity = $request->input('variant_quantity');
         $variant_buying_price = $request->input('variant_buying_price');
+        $variant_selling_price = $request->input('variant_selling_price');
         $variant_notes = $request->input('variant_notes');
         if(!empty($variantNames)){
             foreach ($variantNames as $key => $variant) {
@@ -210,6 +214,7 @@ class ProductController extends Controller
                 $product->code  = !empty($variant_code[$key]) ? $variant_code[$key] : Str::random(10, 1200);
                 $product->quantity = !empty($variant_quantity[$key]) ? $variant_quantity[$key] : $key;
                 $product->buying_price = !empty($variant_buying_price[$key]) ? $variant_buying_price[$key] : $key;
+                $product->selling_price = !empty($variant_selling_price[$key]) ? $variant_selling_price[$key] : $key;
                 $product->notes = !empty($variant_notes[$key]) ? $variant_notes[$key] : '';
                 $product->save();
             }
