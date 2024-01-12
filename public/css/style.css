@@ -665,7 +665,7 @@ option:disabled {
 .swal2-title{
     font-size: 25px !important;
     margin-bottom: 20px;
-    color: #ffffff !important;
+    color: #000 !important;
     border-bottom: 1px solid #0000004a;
     padding-bottom: 11px;
     /* background: #004787; */

@@ -8,11 +8,18 @@
              <a class="nav-item nav-link {{ request()->is('*/dashboard') ? 'active' : '' }}" href="{{route('dashboard')}}">
                  <img src="{{asset('img/side-icon1.svg')}}" class="img" /> Dashboard</a>
 
-            @canany(['create-order', 'edit-order', 'delete-order','change-order-status'])
-             <a class="nav-item nav-link {{ request()->is('*/orders') ? 'active' : '' }}" href="{{ route('orders.index') }}">
+         @if (auth()->user()->hasRole('Product Assembler'))            
+             @canany(['create-order', 'edit-order', 'delete-order','change-order-status'])
+             <a class="nav-item nav-link {{ request()->is('*/assembler-order') ? 'active' : '' }}" href="{{ route('order.assembler') }}">
                  <img src="{{asset('img/order-icon.svg')}}" class="img" /> Manage Orders</a>
              @endcanany
-
+        @else
+            @canany(['create-order', 'edit-order', 'delete-order','change-order-status'])
+            <a class="nav-item nav-link {{ request()->is('*/orders') ? 'active' : '' }}" href="{{ route('orders.index') }}">
+                <img src="{{asset('img/order-icon.svg')}}" class="img" /> Manage Orders</a>
+            @endcanany
+        @endif
+        
              @canany(['create-product', 'edit-product', 'delete-product'])
              <a class="nav-item nav-link {{ request()->is('*/inventory') ? 'active' : '' }}" href="{{ route('inventory.index') }}">
                  <img src="{{asset('img/inventory.svg')}}" class="img" /> Manage Inventory</a>
