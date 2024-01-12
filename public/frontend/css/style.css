@@ -3826,3 +3826,14 @@ form.apply_discount input.btn.primary-btn {
 section.customer.spad form .nice-select.form-control {
     width: 100%;
 }
+
+.featured__item__text h6 {
+    margin-bottom: 10px;
+    -webkit-line-clamp: 2 !important;
+    line-height: 25px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 50px;
+    padding: 0 30px;
+}
