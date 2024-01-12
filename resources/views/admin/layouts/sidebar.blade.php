@@ -10,7 +10,7 @@
 
          @if (auth()->user()->hasRole('Product Assembler'))            
              @canany(['create-order', 'edit-order', 'delete-order','change-order-status'])
-             <a class="nav-item nav-link {{ request()->is('*/assembler-order') ? 'active' : '' }}" href="{{ route('order.assembler') }}">
+             <a class="nav-item nav-link {{ request()->is('*/assembler-order') ? 'active' : '' }}" href="{{ route('order-assembler') }}">
                  <img src="{{asset('img/order-icon.svg')}}" class="img" /> Manage Orders</a>
              @endcanany
         @else
