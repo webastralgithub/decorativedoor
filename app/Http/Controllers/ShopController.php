@@ -209,14 +209,20 @@ class ShopController extends Controller
             $min = $_GET['min'];  
             $max = $_GET['max'];
             
-            $products = Category::where('slug', $slug) 
+            $productData = Category::where('slug', $slug) 
             ->with(['products' => function ($query) use ($min, $max) {
                 $query->where('selling_price', '>=', $min)
                     ->where('selling_price', '<=', $max);
             }])->first();
         }else{
-            $products =  Category::with(['products'])->where('slug', $slug)->first();
+            $productData =  Category::with(['products'])->where('slug', $slug)->first();
         }
+        $products = [];
+        foreach($productData->products as $product){
+            $products[] = $product;
+        }
+        $products = array_unique($products);
+        
         $allcategory = Category::with(['children'])->get();
         if (empty($category)) {
             return abort(404);

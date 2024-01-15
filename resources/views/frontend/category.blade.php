@@ -32,8 +32,9 @@
                 <div class="filter__item">
                     <div class="row">
                       
-                    @if(!empty($products->products))
-                        @foreach($products->products as $product)
+                    @if(!empty($products))
+                    
+                        @foreach($products as $product)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <a href="{{route('product',$product->slug)}}">
