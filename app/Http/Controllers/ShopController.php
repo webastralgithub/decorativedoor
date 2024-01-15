@@ -217,12 +217,22 @@ class ShopController extends Controller
         }else{
             $productData =  Category::with(['products'])->where('slug', $slug)->first();
         }
+        // $products = [];
+        // foreach($productData->products as $product){
+        //     $products[] = $product;
+        // }
+        // $products = array_unique($products);
+
         $products = [];
-        foreach($productData->products as $product){
-            $products[] = $product;
+        $seenProductIds = [];
+
+        foreach ($productData->products as $product) {
+            if (!in_array($product->id, $seenProductIds)) {
+                $products[] = $product;
+                $seenProductIds[] = $product->id;
+            }
         }
-        $products = array_unique($products);
-        
+
         $allcategory = Category::with(['children'])->get();
         if (empty($category)) {
             return abort(404);
