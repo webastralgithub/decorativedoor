@@ -27,7 +27,9 @@ class HomeController extends Controller
     public function index()
     {
         return view('frontend.index', [
-            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 10))
+            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 10)),
+            'Interior' => Category::with(['products'])->where('slug', 'interior-doors')->first(),
+            'Exterior' => Category::with(['products'])->where('slug', 'exterior-doors')->first(),
         ]);
     }
 
