@@ -2436,3 +2436,13 @@ ul.dropdown-menu.show {
 table#order tbody tr td a, table#order tbody tr td span {
     font-size: 14px;
 }
+
+.images-preview-div span.delete_image {
+    z-index: 9999;
+    border: 2px solid #080808;
+    height: 20px;
+    border-radius: 52%;
+    width: 20px;
+    font-size: 11px;
+    margin: 5px -33px 0px 0;
+}

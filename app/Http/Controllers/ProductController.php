@@ -232,4 +232,11 @@ class ProductController extends Controller
         return redirect()->route('products.index')
             ->withSuccess('Product is deleted successfully.');
     }
+
+    public function ProductImageDelete(Request $request){
+        $imageid =  $request->image_id;
+        ProductImage::where('id', $imageid)->delete();
+        return redirect()->back()
+        ->withSuccess('Product image delete successfully.');
+    }
 }
