@@ -320,7 +320,7 @@ $(document).ready(function() {
             range: true,
             min: 10,
             max: 1000, 
-            values: [mini, maxi],
+            values: [mini, maxi], 
             slide: function(event, ui) {
                 $("#minamount").val(ui.values[0]);
                 $("#maxamount").val(ui.values[1]);

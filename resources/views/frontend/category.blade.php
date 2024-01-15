@@ -31,6 +31,7 @@
             <div class="col-lg-9 col-md-7">
                 <div class="filter__item">
                     <div class="row">
+                      
                     @if(!empty($products->products))
                         @foreach($products->products as $product)
                         <div class="col-lg-4 col-md-6 col-sm-6">
