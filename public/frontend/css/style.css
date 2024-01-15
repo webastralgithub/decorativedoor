@@ -1245,12 +1245,13 @@ button:disabled {
 
 .sidebar__item ul li {
 	list-style: none;
+	margin-bottom: 10px;
 }
 
 .sidebar__item ul li a {
 	font-size: 16px;
 	color: #1c1c1c;
-	line-height: 39px;
+	line-height: 20px;
 	display: block;
 }
 
@@ -3838,4 +3839,15 @@ section.customer.spad form .nice-select.form-control {
     overflow: hidden;
     height: 50px;
     padding: 0 30px;
+}
+
+
+.btn.primary-btn:hover, .primary-btn:hover {
+    color: #434e6e !important;
+    border: 1px solid #434e6e !important;
+    background: #fff;
+}.sidebar__item ul li
+
+nav.header__menu li.primary-btn a:hover {
+    color: #434e6e !important;
 }

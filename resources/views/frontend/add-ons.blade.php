@@ -31,6 +31,7 @@
                         <h6><a href="{{ route('product',$product->slug)}}">{{ $product->title}}</a></h6>
                         <h5>${{ $product->selling_price}}</h5>
                     </div>
+                    <a href="#" id="share-with-email" data-id ="{{$product->id}}" data-toggle="modal" data-target="#exampleModal" onclick="return share_product('{{$product->id}}');">Share <i class="fa fa-share"></i></a> 
                 </div>
             </div>
             @endforeach
