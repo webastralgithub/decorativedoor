@@ -162,9 +162,11 @@ class ProductController extends Controller
         ]));
 
         // Update category
+        
+        //$category = Category::find($request->category_id);
         $categories = Category::whereIn('id', $request->category_id)->get();
-        //dd($request->all());
-        $product->categories()->attach($categories);
+      
+        $product->categories()->sync($categories);
 
         // Update images
         if (isset($request->product_images) && $request->product_images) {
