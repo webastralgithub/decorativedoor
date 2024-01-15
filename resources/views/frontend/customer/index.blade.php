@@ -79,6 +79,7 @@
                     </div>
 
                     <h5 class="mb-3 mt-3"> Billing Address</h5>
+                    <hr>
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <input type="text" class="form-control" id="customer-billing-address_type"  placeholder="Billing Address" name="billing_address_type" value="">
@@ -108,6 +109,7 @@
 
 
                     <h4 class="mb-3 mt-3">Company Information</h4>
+                    <hr>
                     <div class="row">
                         <div class="col-md-6">
                             <input type="text" class="form-control" id="company-name" placeholder="company Name" name="company_name" value="">

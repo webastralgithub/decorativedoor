@@ -255,7 +255,7 @@ class ShopController extends Controller
         $discount[$productId] = ["product_id" => $productId, "discount_ammount" => $request->apply_code ];
         session()->put('discount', $discount);
 
-        return redirect()->back()->with('success', 'discount ammount Applied successfully!');
+        return redirect()->back()->with('success', 'Discount Applied!');
         
     }
 }
