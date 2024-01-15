@@ -3,10 +3,7 @@
 @section('content')
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
-      <h3>Manage Categories</h3> 
-         <form >
-            <input type="search" class="form-control" placeholder="Find Category" name="q" value="{{ request('q') }}">
-        </form>
+    <h3>Manage Categories</h3>
       <div class="top-bntspg-hdr">
         @can('create-category')
         <a href="{{ route('category.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Category</a>
@@ -33,8 +30,8 @@
         </div>
         @endif
     <div class="content-body">
-
-        <table class="table table-bordered table-striped">
+        <div class="table-order">
+        <table class="table table-bordered table-striped" id="category">
             <thead>
                 <tr>
                     <th scope="col" >Action</th>
@@ -96,8 +93,13 @@
                 @endif
             </tbody>
         </table>
-
-
+        </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+new DataTable('#category');
+</script>
 @endsection

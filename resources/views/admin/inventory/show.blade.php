@@ -66,19 +66,32 @@
                         @foreach($products->inventories as $inventory)
                         <tr class="totals">
                             <td>
-                                <form class="buttons-add-edit" action="{{ route('inventory.destroy', $inventory->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    @can('edit-inventory')
-                                    <a class="dots-assigned cursor-pointer btn btn-primary btn-sm" onclick="return EditInventory('{{$inventory->id}}','{{$inventory->waybill}}','{{$inventory->quantity}}');">{{"Edit"}}</a>
-                                    @endcan
-
-                                    @can('delete-inventory')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this inventory?');"><i class="bi bi-trash"></i> Delete</button>
-                                    @endcan
-                                </form>
-
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <form class="buttons-add-edit" action="{{ route('inventory.destroy', $inventory->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                
+                                            @can('edit-inventory')
+                                            <li><a class="dropdown-item"
+                                                    onclick="return EditInventory('{{$inventory->id}}','{{$inventory->waybill}}','{{$inventory->quantity}}');"><i
+                                                        class="bi bi-pencil-square"></i>{{"Edit"}}</a></li>
+                                            <!-- <a class="dots-assigned cursor-pointer btn btn-primary btn-sm" onclick="return EditInventory('{{$inventory->id}}','{{$inventory->waybill}}','{{$inventory->quantity}}');">{{"Edit"}}</a> -->
+                                            @endcan
+                                
+                                            @can('delete-inventory')
+                                            <li><button type="submit" class="dropdown-item btn-danger"
+                                                    onclick="return confirm('Do you want to delete this inventory?');"><i class="bi bi-trash"></i>
+                                                    Delete</button></li>
+                                            <!-- <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this inventory?');"><i class="bi bi-trash"></i> Delete</button> -->
+                                            @endcan
+                                        </form>
+                                    </ul>
+                                </div>
                             </td>
                             <th scope="col">
                                 {{ $products->title }}

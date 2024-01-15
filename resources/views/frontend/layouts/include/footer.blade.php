@@ -208,43 +208,43 @@
         });
     })
 
-    function share_product(productid){
-        jQuery('form#shareForm #footer_product_id').val(productid);
-        jQuery('#shareForm').submit(function (e) {
-            e.preventDefault();
-            jQuery('div#loader-container').show();
-            var csrfToken = $('input[name="_token"]').val();
-            var productid = jQuery('#footer_product_id').val();
-            var email = jQuery('#email').val();
-            var domain = window.location.origin;
-            var url = domain+"/share-product/"+productid;
-            jQuery.ajax({
-                url: url,
-                type: "Post",
-                data: {
-                    productid : productid,
-                    email : email,
-                    _token : csrfToken,
-                },
-                success: function (response) {
-                    // Handle the success response here
-                    console.log(response);
-                    jQuery('div#loader-container').hide();
-                    jQuery('#message').html('<span>Mail Send Successfilly!</span>');
-                    setTimeout(() => {
-                        
-                        jQuery('#message').hide();
-                    }, 2000);
-                   
-                    jQuery('#email').val('');
-                },
-                error: function (xhr, status, error) {
-                    // Handle the error response here
-                    console.error(xhr.responseText);
-                }
+        function share_product(productid) {
+            jQuery('form#shareForm #footer_product_id').val(productid);
+
+            jQuery('#shareForm').one('submit', function (e) {
+                e.preventDefault();
+                jQuery('div#loader-container').show();
+                var csrfToken = $('input[name="_token"]').val();
+                var productid = jQuery('#footer_product_id').val();
+                var email = jQuery('#email').val();
+                var domain = window.location.origin;
+                var url = domain + "/share-product/" + productid;
+
+                jQuery.ajax({
+                    url: url,
+                    type: "Post",
+                    data: {
+                        productid: productid,
+                        email: email,
+                        _token: csrfToken,
+                    },
+                    success: function (response) {
+                        jQuery('div#loader-container').hide();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Mail Sent Successfully!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+
+                        jQuery('#email').val('');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
             });
-        });
-    }
+        }
 
     async function share_product_email(productid) {
     const { value: email, isConfirmed } = await Swal.fire({
