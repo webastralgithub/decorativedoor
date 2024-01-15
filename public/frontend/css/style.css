@@ -1678,6 +1678,8 @@ button:disabled {
 
 .product__item {
 	margin-bottom: 50px;
+	background: #fbfbfb;
+    border: 1px solid #ebebeb;
 }
 
 .product__item:hover .product__item__pic .product__item__pic__hover {
