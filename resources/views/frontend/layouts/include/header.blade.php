@@ -51,7 +51,7 @@
             <ul>
                 <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>{{ count((array) session('cart')) }}</span></a></li>
             </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
+            <div class="header__cart__price">Total: <span>$150.00</span></div>
         </div>
         <!-- <div class="humberger__menu__widget">
             <div class="header__top__right__language">
@@ -280,7 +280,7 @@
                             $total = array_sum($total);
                             $discount = array_sum($discount);
                         @endphp
-                        <div class="header__cart__price">item: <span>$ {{$total - $discount }}</span></div>
+                        <div class="header__cart__price">Total: <span>$ {{$total - $discount }}</span></div>
                     </div>
                 </div>
             </div>
