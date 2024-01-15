@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\ProductVariant;
+use App\Models\ProductImage;
 use App\Mail\ShareProductMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
@@ -36,13 +37,14 @@ class ShopController extends Controller
 
     public function product_details($slug)
     {
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::with(['image'])->where('slug', $slug)->first();
         if (empty($product)) {
             return abort(404);
         }
+        $productimages = ProductImage::where('product_id', $product->id)->get();
         $allcategory = Category::with(['children'])->get();
         $addOnProducts = Product::where('id', '!=', $product->id)->get();
-        return view('frontend.product-details', compact('addOnProducts', 'allcategory', 'product'));
+        return view('frontend.product-details', compact('addOnProducts', 'productimages', 'allcategory', 'product'));
     }
 
     public function addToCart(Request $request)

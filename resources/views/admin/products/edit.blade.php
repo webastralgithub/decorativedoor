@@ -201,9 +201,9 @@
                            
                             <div class="mt-1 text-center">
                             <div class="images-preview-div">
-                            @foreach($productImages AS $image)
-                            
-                             <img src="{{ asset('storage/products/' . $image->path)}}">
+                            @foreach($productImages AS $image)                           
+                                <span class="delete_image delete_{{$image->id}}" onclick="return ImageDelete('{{$image->id}}');" data-id="{{$image->id}}"><i class="fa fa-close"></i></span>                          
+                                <img class="delete_{{$image->id}}" src="{{ asset('storage/products/' . $image->path)}}" data-id="{{$image->id}}">                            
                             @endforeach
                             </div> 
                             </div>
@@ -286,6 +286,30 @@
     </form>
 </div>
 <script>
+    async function ImageDelete(ImageId){
+        var confirmation = confirm("Are you sure you want to delete this image?");
+        if(confirmation){
+            jQuery.ajax({
+                url: "{{route('product.imges.delete')}}", // Replace with your actual route
+                type: 'post',
+                data: {
+                    image_id: ImageId,
+                    _token: '{{ csrf_token() }}' // Add CSRF token if needed
+                },
+                success: function(response) {
+                    // Handle success, if needed
+                    jQuery('.delete_'+ImageId).remove();
+                   // location.reload();
+                },
+                error: function(error) {
+                    // Handle error, if needed
+                    console.error('Error updating order status', error);
+                }
+            });
+        }
+
+
+    }
      async function ManageInventory(InventoryId, responseType) {
       
       if (InventoryId <= 0) {

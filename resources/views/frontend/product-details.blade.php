@@ -23,7 +23,6 @@
     </div>
 </section>
 <!-- Breadcrumb Section End -->
-
 <!-- Product Details Section Begin -->
 @if(!empty($product->variants) && isset($product->variants))
 @php
@@ -38,14 +37,19 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
+                        @if(isset($productimages) && !empty($productimages[0]))
+                        <img class="product__details__pic__item--large" src="{{ asset('storage/products/' . $productimages[0]['path'])}}" alt="">
+                        @else
                         <img class="product__details__pic__item--large" src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
+                        @endif
                     </div>
+                    @if(isset($productimages) && !empty($productimages))
                     <div class="product__details__pic__slider owl-carousel">
-                        <img data-imgbigurl="{{asset('frontend/img/product/details/product-details-1.jpg')}}" src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
-                        <img data-imgbigurl="{{asset('frontend/img/product/details/product-details-1.jpg')}}" src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
-                        <img data-imgbigurl="{{asset('frontend/img/product/details/product-details-1.jpg')}}" src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
-                        <img data-imgbigurl="{{asset('frontend/img/product/details/product-details-1.jpg')}}" src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
+                        @foreach($productimages as $images)                        
+                        <img data-imgbigurl="{{ asset('storage/products/' . $images->path)}}" src="{{ asset('storage/products/' . $images->path)}}" alt="">
+                        @endforeach
                     </div>
+                    @endif
                 </div>
             </div>
 
@@ -74,12 +78,16 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     </form>
                     <div class="product__details__price" id="main-price">
                         @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
-                          <del style="color: #dd2222c7;">${{number_format($product->selling_price, 2, '.', ',')}}</del> <span>${{number_format($product->selling_price - session()->get('discount')[$product->id]['discount_ammount'], 2, '.', ',')}}</span>
+                          <del style="color: #625c5c;font-size: 18px;">${{number_format($product->selling_price, 2, '.', ',')}}</del> <span>${{number_format($product->selling_price - session()->get('discount')[$product->id]['discount_ammount'], 2, '.', ',')}}</span>
                         @else
                         ${{number_format($product->selling_price, 2, '.', ',')}}
                         @endif
-                        
                     </div>
+                    @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
+                        <input type="hidden" id="discount_price" value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
+                        @else
+                        <input type="hidden" id="discount_price" value="">
+                        @endif
                     <p>{!!$product->short_description!!}</p>
 
                     @if(!empty($product->variants) && !empty($variantOptions))

@@ -80,6 +80,8 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
         'deliveries' =>  DeliveriesController::class,
         // 'orders' =>  \App\Http\Controllers\OrderController::class
     ]);
+
+    Route::post('/product-image-delete', [ProductController::class, 'ProductImageDelete'])->name('product.imges.delete');
     // Route Orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::post('/assign_user', [OrderController::class, 'assign_user'])->name('assign_user');
