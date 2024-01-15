@@ -98,7 +98,7 @@
                                         </label>
 
                                         @if ($categories->count() === 1)
-                                        <select type="text" name="parent_id" class="select-category form-control form-select @error('category_id') is-invalid @enderror" multiple>
+                                        <select type="text" name="parent_id[]" class="select-category form-control form-select @error('category_id') is-invalid @enderror" multiple>
                                             <option value="">None</option>
                                             @if($categories)
                                             @foreach($categories as $category)
@@ -111,7 +111,7 @@
                                             @endif
                                         </select>
                                         @else
-                                        <select name="category_id" id="category_id" class="select-category form-select @error('category_id') is-invalid @enderror" multiple>
+                                        <select name="category_id[]" id="category_id" class="select-category form-select @error('category_id') is-invalid @enderror" multiple>
                                             @foreach ($categories as $category)
                                             <option value="{{ $category->id }}" {{ in_array($category->id, $selectedCategories) ? 'selected' : '' }}>
                                                 {{ $category->name }}

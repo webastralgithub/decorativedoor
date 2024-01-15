@@ -213,7 +213,7 @@ class ShopController extends Controller
             ->with(['products' => function ($query) use ($min, $max) {
                 $query->where('selling_price', '>=', $min)
                     ->where('selling_price', '<=', $max);
-            }])->first();  
+            }])->first();
         }else{
             $products =  Category::with(['products'])->where('slug', $slug)->first();
         }
