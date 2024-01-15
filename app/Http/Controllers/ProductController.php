@@ -162,7 +162,6 @@ class ProductController extends Controller
         ]));
 
         // Update category
-        //$category = Category::find($request->category_id);
         $categories = Category::whereIn('id', $request->category_id)->get();
         //dd($request->all());
         $product->categories()->attach($categories);
