@@ -65,17 +65,22 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <i class="fa fa-star-half-o"></i>
                         <span>(18 reviews)</span>
                     </div>
-                    <form class="apply_discount" action="{{ route('discount', $product->id)}}" method="Post">
+                    <form class="apply_discount" action="{{ route('discount', $product->id)}}" method="Post" id="discountForm">
                         @csrf
                         <div class="row">
                             <div class="col-md-4 p-0">
-                                <input type="number" class="form-control" placeholder="Discount Ammount" name="apply_code" value="">
+                                <input type="number" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="" required>
                             </div>
                             <div class="col-md-2 p-0">
                                 <input type="submit" name="submit" class="btn primary-btn" value="Apply Now">
                             </div>
                         </div>
-                    </form>
+                        @if(session('success'))
+                        <div id="productDiscountMessage" class="product-discount-message">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+                    </form>                    
                     <div class="product__details__price" id="main-price">
                         @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
                           <del style="color: #625c5c;font-size: 18px;">${{number_format($product->selling_price, 2, '.', ',')}}</del> <span>${{number_format($product->selling_price - session()->get('discount')[$product->id]['discount_ammount'], 2, '.', ',')}}</span>
@@ -187,7 +192,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     @endforelse
                     @endif
                 </ul> -->
-
+               
             </div>
             <div class="col-lg-12">
                 @include('frontend.add-ons')
@@ -304,7 +309,9 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <ul class="product__item__pic__hover">
                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            <li><<div class="alert alert-success">
+                Discount Applied!
+            </div>a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                         </ul>
                     </div>
                     <div class="product__item__text">
@@ -313,7 +320,9 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 <div class="alert alert-success">
+                Discount Applied!
+            </div>col-md-4 col-sm-6">
                 <div class="product__item">
                     <div class="product__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
                         <ul class="product__item__pic__hover">
@@ -434,11 +443,12 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     // Handle the success response here
                     console.log(response);
                     jQuery('div#loader-container').hide();
-                    jQuery('#message').html('<span>Mail Send Successfilly!</span>');
-                    setTimeout(() => {
-                        jQuery('#message').hide();
-                    }, 2000);
-                   
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'Mail Sent Successfully!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
                     jQuery('#email').val('');
 
                 },
@@ -450,5 +460,13 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
         });
     });
 
+    function hideMessage() {
+            var productDiscountMessage = document.getElementById('productDiscountMessage');
+            productDiscountMessage.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(hideMessage, 5000);
+        });
 </script>
 @endsection

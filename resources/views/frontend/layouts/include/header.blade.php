@@ -289,10 +289,12 @@
             </div>
         </div>
         <div class="container">
+        @if(Request::segment(1) != 'product')
             @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
             @endif
+        @endif
         </div>
     </header>
