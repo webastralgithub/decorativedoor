@@ -1245,12 +1245,13 @@ button:disabled {
 
 .sidebar__item ul li {
 	list-style: none;
+	margin-bottom: 10px;
 }
 
 .sidebar__item ul li a {
 	font-size: 16px;
 	color: #1c1c1c;
-	line-height: 39px;
+	line-height: 20px;
 	display: block;
 }
 
@@ -3856,4 +3857,26 @@ section.customer.spad form .nice-select.form-control {
 	right: 10px;
 	cursor: pointer;
 	font-weight: bold;
+}
+.btn.primary-btn:hover, .primary-btn:hover {
+    color: #434e6e !important;
+    border: 1px solid #434e6e !important;
+    background: #fff;
+}.sidebar__item ul li
+
+nav.header__menu li.primary-btn a:hover {
+    color: #434e6e !important;
+}
+
+section.related-product .product__item a#share-with-email {
+    margin-top: 10px !important;
+}
+.product__item a#share-with-email:hover, section.featured.spad a#share-with-email:hover {
+    color: #434e6e;
+    margin: 0px auto 14px auto !important;
+    display: table;
+    background: #ffffff;
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: 1px solid #434e6e;
 }
