@@ -122,7 +122,7 @@
                         @endcan
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
                         <td>-</td>
-                        <td>{{ number_format($order->total_products, 2, '.', ',') }}</td>
+                        <td>{{ $order->total_products }}</td>
                         @can('order_price')
                         <td>${{ number_format($order->total, 2, '.', ',') }}</td>
                         @endcan
