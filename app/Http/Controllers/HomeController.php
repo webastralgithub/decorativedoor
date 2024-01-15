@@ -28,8 +28,8 @@ class HomeController extends Controller
     {
         return view('frontend.index', [
             'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 10)),
-            'Interior' => Category::with(['products'])->where('slug', 'interior-doors')->first(),
-            'Exterior' => Category::with(['products'])->where('slug', 'exterior-doors')->first(),
+            'interior' => Category::with(['products'])->where('slug', 'interior-doors')->first(),
+            'exterior' => Category::with(['products'])->where('slug', 'exterior-doors')->first(),
         ]);
     }
 

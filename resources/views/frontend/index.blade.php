@@ -141,8 +141,8 @@
                     </div>
                 </div>
                 @endforeach
-           
-                @foreach($Interior->products as $product)
+              
+                @foreach($interior->products as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6 mix oranges">
                     <div class="featured__item">
                         <a href="{{route('product',$product->slug)}}">
@@ -162,8 +162,8 @@
                     </div>
                 </div>
                 @endforeach
-            
-                @foreach($Exterior->products as $product)
+                
+                @foreach($exterior->products as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat">
                     <div class="featured__item">
                         <a href="{{route('product',$product->slug)}}">
