@@ -78,12 +78,16 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     </form>
                     <div class="product__details__price" id="main-price">
                         @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
-                          <del style="color: #dd2222c7;">${{number_format($product->selling_price, 2, '.', ',')}}</del> <span>${{number_format($product->selling_price - session()->get('discount')[$product->id]['discount_ammount'], 2, '.', ',')}}</span>
+                          <del style="color: #625c5c;font-size: 18px;">${{number_format($product->selling_price, 2, '.', ',')}}</del> <span>${{number_format($product->selling_price - session()->get('discount')[$product->id]['discount_ammount'], 2, '.', ',')}}</span>
                         @else
                         ${{number_format($product->selling_price, 2, '.', ',')}}
                         @endif
-                        
                     </div>
+                    @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
+                        <input type="hidden" id="discount_price" value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
+                        @else
+                        <input type="hidden" id="discount_price" value="">
+                        @endif
                     <p>{!!$product->short_description!!}</p>
 
                     @if(!empty($product->variants) && !empty($variantOptions))

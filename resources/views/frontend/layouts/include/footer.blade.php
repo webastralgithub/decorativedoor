@@ -177,6 +177,7 @@
         var arr = $('select').map(function() {
             return this.value
         }).get()
+        var discount_price = $('#discount_price').val();
         var allVariants = document.querySelectorAll('.variants');
         allVariants.forEach(function(variant) {
             variant.style.border = '';
@@ -199,7 +200,12 @@
                     price = 0;
                 }
                 $('.product-variant-data').val(JSON.stringify(response))
-                $('.product__details__price').text('$' + price);
+                if(discount_price != ''){
+                    $('.product__details__price').html('<del style="color: #625c5c;font-size: 18px;">$'+price+'</del> $' + (price - discount_price));
+                }else{
+                    $('.product__details__price').html('$' + (price - discount_price));
+                }
+                
                 // if (response.productAvailabityStock <= 0)
                 //     $('#availability').text('Out of Stock');
                 // $('.add-to-cart').attr('disabled', (response.productAvailabityStock > 0) ? false : true);
