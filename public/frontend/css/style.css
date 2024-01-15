@@ -3851,3 +3851,7 @@ section.customer.spad form .nice-select.form-control {
 nav.header__menu li.primary-btn a:hover {
     color: #434e6e !important;
 }
+
+section.related-product .product__item a#share-with-email {
+    margin-top: 10px !important;
+}
