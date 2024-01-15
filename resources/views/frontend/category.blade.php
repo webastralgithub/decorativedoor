@@ -31,8 +31,8 @@
             <div class="col-lg-9 col-md-7">
                 <div class="filter__item">
                     <div class="row">
-
-                        @foreach($products as $product)
+                    @if(!empty($products->products))
+                        @foreach($products->products as $product)
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <a href="{{route('product',$product->slug)}}">
@@ -52,6 +52,7 @@
                             </div>
                         </div>
                         @endforeach
+                    @endif
                     </div>
                 </div>
                 <div class="product__pagination">
@@ -63,6 +64,6 @@
             </div>
         </div>
     </div>
-</section>
+</section> 
 <!-- Product Section End -->
 @endsection

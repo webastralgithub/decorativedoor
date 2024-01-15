@@ -19,19 +19,21 @@
         </div>
         <div class="sidebar__item">
             <h4>Price</h4>
-            <div class="price-range-wrap">
-                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="10" data-max="540">
-                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                </div>
-                <div class="range-slider">
-                    <div class="price-input">
-                        <input type="text" id="minamount">
-                        <input type="text" id="maxamount">
+            <form id="price-range-form" method="get">
+                <div class="price-range-wrap">
+                    <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="10" data-max="540">
+                        <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                        <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                        <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                    </div>
+                    <div class="range-slider">
+                        <div class="price-input">
+                            <input type="text" id="minamount" name="min" @if(isset($_GET['min'])) value="{{$_GET['min']}}" @endif>
+                            <input type="text" id="maxamount" name="max" @if(isset($_GET['max'])) value="{{$_GET['max']}}" @endif>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         {{-- <div class="sidebar__item sidebar__item__color--option">
             <h4>Colors</h4>

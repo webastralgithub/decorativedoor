@@ -308,6 +308,31 @@
     }
 }
 
+$(document).ready(function() {
+        // Initialize the slider
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Get the 'min' and 'max' values
+        const mini = urlParams.get('min');
+        const maxi = urlParams.get('max');
+
+        $(".price-range").slider({
+            range: true,
+            min: 10,
+            max: 1000, 
+            values: [mini, maxi],
+            slide: function(event, ui) {
+                $("#minamount").val(ui.values[0]);
+                $("#maxamount").val(ui.values[1]);
+            }
+        });
+
+        // Submit the form on slider change
+        $(".price-range").on("slidechange", function() {
+            $("#price-range-form").submit();
+        });
+    });
+
 </script>
 </body>
 

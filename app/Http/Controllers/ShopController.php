@@ -30,7 +30,17 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        if(isset($_GET['min']) && isset($_GET['max'])){
+            $min = $_GET['min'];
+            $max = $_GET['max'];
+           // dd($max);
+            $products = Product::where('selling_price', '>=', $min)
+                   ->where('selling_price', '<=', $max)
+                   ->get();
+        }else{
+            $products = Product::all();
+        }
+        
         $allcategory = Category::with(['children'])->get();
         return view('frontend.shop', compact('allcategory', 'products'));
     }
@@ -183,19 +193,30 @@ class ShopController extends Controller
     }
 
     public function cart()
-    {
-
-        // $cart = session()->remove('cart');
+    {    // $cart = session()->remove('cart');
         // unset($cart[30]);
         // session()->put('cart', $cart);
         // dd(session()->get('cart'));
         return view('frontend.cart');
     }
 
-    public function category($slug)
+    public function category($slug = '')
     {
         $category =  Category::where('slug', $slug)->first();
-        $products = Product::all();
+       
+        // dd($category->products);
+        if(isset($_GET['min']) && isset($_GET['max'])){
+            $min = $_GET['min'];  
+            $max = $_GET['max'];
+            
+            $products = Category::where('slug', $slug) 
+            ->with(['products' => function ($query) use ($min, $max) {
+                $query->where('selling_price', '>=', $min)
+                    ->where('selling_price', '<=', $max);
+            }])->first();  
+        }else{
+            $products =  Category::with(['products'])->where('slug', $slug)->first();
+        }
         $allcategory = Category::with(['children'])->get();
         if (empty($category)) {
             return abort(404);
