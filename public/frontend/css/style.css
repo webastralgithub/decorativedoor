@@ -3855,3 +3855,12 @@ nav.header__menu li.primary-btn a:hover {
 section.related-product .product__item a#share-with-email {
     margin-top: 10px !important;
 }
+.product__item a#share-with-email:hover, section.featured.spad a#share-with-email:hover {
+    color: #434e6e;
+    margin: 0px auto 14px auto !important;
+    display: table;
+    background: #ffffff;
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: 1px solid #434e6e;
+}
