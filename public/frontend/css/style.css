@@ -1762,7 +1762,9 @@ button:disabled {
 .product__item__text h6 {
 	margin-bottom: 10px;
 }
-
+section.related-product .product__item__text h6 {
+height: 35px;
+}
 .product__item__text h6 a {
 	color: #252525;
 }
@@ -3879,4 +3881,7 @@ section.related-product .product__item a#share-with-email {
     padding: 3px 10px;
     border-radius: 6px;
     border: 1px solid #434e6e;
+}
+form .col-md-12 input.form-control.primary-btn {
+    padding: 0px !important;
 }
