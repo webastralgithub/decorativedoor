@@ -14,7 +14,7 @@
             <div class="col-lg-2"></div>
             <div class="col-lg-8 check-user-exist">
                 
-                <form action="{{route('store-customer')}}" method="POST">
+                <form id="customer-assign" action="{{route('store-customer')}}" method="POST">
                     @csrf
                     <input type="hidden" class="form-control" id="customer-id" name="user_id" value="">
                     <h4 class="mb-3">Prosonal Information</h4>

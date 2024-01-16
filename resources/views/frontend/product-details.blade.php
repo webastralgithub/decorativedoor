@@ -199,9 +199,9 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                 </ul> -->
                
             </div>
-            <div class="col-lg-12">
+            {{-- <div class="col-lg-12">
                 @include('frontend.add-ons')
-            </div>
+            </div> --}}
             <div class="col-lg-12">
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs" role="tablist">

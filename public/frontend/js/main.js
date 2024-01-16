@@ -322,6 +322,28 @@
       });
     });
 
+    // jQuery(document).ready(function (){
+
+    //     jQuery('#customer-assign').submit(function (e) {
+    //         e.preventDefault();
+
+    //         var url = "/store-customer";
+    //         jQuery.ajax({
+    //             url: url,
+    //             type: "Post",
+    //             data:  $(this).serialize(),
+    //             success: function (response) {
+    //                 console.log(response);
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 // Handle the error response here
+    //                 console.error(xhr.responseText);
+    //             }
+    //         });
+    //     });
+
+    // });
+
 
 
 })(jQuery);

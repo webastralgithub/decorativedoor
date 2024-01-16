@@ -24,14 +24,14 @@
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Our Sitemap</a></li>
                     </ul>
-                    <ul>
+                    {{-- <ul>
                         <li><a href="#">Who We Are</a></li>
                         <li><a href="#">Our Services</a></li>
                         <li><a href="#">Projects</a></li>
                         <li><a href="{{ route('contact') }}">Contact</a></li>
                         <li><a href="#">Innovation</a></li>
                         <li><a href="#">Testimonials</a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
             <div class="col-lg-4 col-md-12">
