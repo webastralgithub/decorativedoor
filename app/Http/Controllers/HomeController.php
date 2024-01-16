@@ -27,6 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $productData = Product::latest()->paginate(env('RECORD_PER_PAGE', 10));
+       
         $products = [];
         $seenProductIds = [];
 

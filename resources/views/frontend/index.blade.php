@@ -112,7 +112,7 @@
                 </div>
                 <div class="featured__controls">
                     <ul>
-                        <li class="active" data-filter="all">All</li>
+                        <li class="active mixitup-control-active" data-filter=".all">All</li>
                         <li data-filter=".oranges">Interior Doors</li>
                         <li data-filter=".fresh-meat">Exterior Doors</li>
                     </ul>
@@ -120,9 +120,9 @@
             </div>
         </div>
         <div class="row featured__filter">
-            
-                @foreach($products as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 mix all">
+           
+                {{-- @foreach($products as $product) --}}
+                {{-- <div class="col-lg-3 col-md-4 col-sm-6 mix all">
                     <div class="featured__item">
                         <a href="{{route('product',$product->slug)}}">
                             <div class="featured__item__pic set-bg" data-setbg="{{asset((!empty($product->image) ? Storage::url('products/'.$product->image->path) : 'img/featured/feature-1.jpg'))}}">
@@ -139,11 +139,11 @@
                             <a href="#" id="share-with-email" data-id="{{$product->id}}" onclick="return share_product_email('{{$product->id}}')">Share <i class="fa fa-share"></i></a>
                         </a>
                     </div>
-                </div>
-                @endforeach
+                </div> --}}
+                {{-- @endforeach --}}
               
                 @foreach($interior->products as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges">
+                <div class="col-lg-3 col-md-4 col-sm-6 mix all oranges">
                     <div class="featured__item">
                         <a href="{{route('product',$product->slug)}}">
                             <div class="featured__item__pic set-bg" data-setbg="{{asset((!empty($product->image) ? Storage::url('products/'.$product->image->path) : 'img/featured/feature-1.jpg'))}}">
@@ -164,7 +164,7 @@
                 @endforeach
                 
                 @foreach($exterior->products as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat">
+                <div class="col-lg-3 col-md-4 col-sm-6 mix all fresh-meat">
                     <div class="featured__item">
                         <a href="{{route('product',$product->slug)}}">
                             <div class="featured__item__pic set-bg" data-setbg="{{asset((!empty($product->image) ? Storage::url('products/'.$product->image->path) : 'img/featured/feature-1.jpg'))}}">
