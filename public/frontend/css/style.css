@@ -3851,6 +3851,9 @@ section.customer.spad form .nice-select.form-control {
 	border-radius: 5px;
 	position: relative;
 	width: 300px;
+	position: fixed;
+    top: 0;
+    right: 8px;
 }
 
 .close-message {

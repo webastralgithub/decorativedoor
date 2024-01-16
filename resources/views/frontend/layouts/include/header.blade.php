@@ -265,7 +265,7 @@
                             @php
                             if(empty($details['variant_data'])){
                             $total[] = $details['price'] * $details['quantity'];
-                            $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] : 0;                            
+                            $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] * $details['quantity']: 0;                            
                             }
                             @endphp
                         @endforeach

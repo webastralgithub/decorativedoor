@@ -30,10 +30,9 @@
     .card {
         background: white;
         padding: 60px;
-        border-radius: 4px;
-        box-shadow: 0 2px 3px #C8D0D8;
         display: inline-block;
         margin: 0 auto;
+        border:unset !important;
     }
 </style>
 <div class="card">

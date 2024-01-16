@@ -199,6 +199,7 @@
                 } else {
                     price = 0;
                 }
+            
                 $('.product-variant-data').val(JSON.stringify(response))
                 if(discount_price != ''){
                     $('.product__details__price').html('<del style="color: #625c5c;font-size: 18px;">$'+price+'</del> $' + (price - discount_price));
