@@ -60,10 +60,7 @@ class ShopController extends Controller
     public function addToCart(Request $request)
     {
         $cart = (!session()->has('cart')) ? session()->get('cart', []) : session()->get('cart');
-    //    echo '<pre>'; print_r($cart);
-    //    echo ' || ';
-    //    print_r($request->all());die;
-
+    
         $discount = session()->get('discount');
 
         
@@ -74,7 +71,7 @@ class ShopController extends Controller
             $discount_ammount = 0;
           }
         $product = Product::findOrFail($productId);
-        // dd(count($product->variants));
+       
         if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
             $selectedVariant = json_decode($request->variant, true);
             if (isset($cart[$productId]) && isset($cart[$productId]['variant_data'][$selectedVariant['id']])) {
@@ -129,7 +126,34 @@ class ShopController extends Controller
 
         session()->forget('discount');
 
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        $total = [];
+        $discount = [];
+        foreach((array) session('cart') as $id => $details){
+            if(isset($details['variant_price'])){
+                if(isset($details['variant_data'])){
+                    foreach($details['variant_data'] as $variantId => $subVariant){
+                        $discount[] = $subVariant['discount_price']; 
+                        $total[] = $subVariant['price'] * $subVariant['quantity'];
+                    }
+                }
+            }
+            if(empty($details['variant_data'])){
+                $total[] = $details['price'] * $details['quantity'];
+                $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] : 0;                            
+            }
+        }
+
+        $total = array_sum($total);
+        $discount = array_sum($discount);
+    
+
+        $data = array(
+            'success' => 'Product added to cart successfully!',
+            'total_ammount' => $total - $discount,
+            'product_count' => count(session('cart')),
+        );
+        return response()->json($data);
+        //return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
     public function update_cart(Request $request)
@@ -293,8 +317,11 @@ class ShopController extends Controller
         $discount = (!session()->has('discount')) ? session()->get('discount', []) : session()->get('discount');
         $discount[$productId] = ["product_id" => $productId, "discount_ammount" => $request->apply_code ];
         session()->put('discount', $discount);
-
-        return redirect()->back()->with('success', 'Discount Applied!');
+        $data = array(
+            'success' => 'Discount Applied!',
+            'discount' =>  $request->apply_code,
+        );
+        return response()->json($data);
         
     }
 }

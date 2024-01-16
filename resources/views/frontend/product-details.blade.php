@@ -65,21 +65,18 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <i class="fa fa-star-half-o"></i>
                         <span>(18 reviews)</span>
                     </div>
-                    <form class="apply_discount" action="{{ route('discount', $product->id)}}" method="Post" id="discountForm">
+                    <form class="apply_discount" method="Post" id="discountForm">
                         @csrf
+                        @method('POST')
                         <div class="row">
                             <div class="col-md-4 p-0">
-                                <input type="number" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="" required>
+                                <input type="number" id="discount_value" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="" required>
                             </div>
                             <div class="col-md-2 p-0">
                                 <input type="submit" name="submit" class="btn primary-btn" value="Apply Now">
                             </div>
                         </div>
-                        @if(session('success'))
-                        <div id="productDiscountMessage" class="product-discount-message">
-                            {{ session('success') }}
-                        </div>
-                        @endif
+                        
                     </form>                    
                     <div class="product__details__price" id="main-price">
                         @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
@@ -92,7 +89,8 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <input type="hidden" id="discount_price" value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
                         @else
                         <input type="hidden" id="discount_price" value="">
-                        @endif
+                    @endif
+                    <div id="productDiscountMessage" class="product-discount-message" style="display:none;"></div>
                     <p>{!!$product->short_description!!}</p>
 
                     @if(!empty($product->variants) && !empty($variantOptions))
@@ -116,9 +114,9 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         </div>
                     </div>
                     @endif
-                    <form method="POST" action="{{ route('add.to.cart') }}" id="addToCartForm" class="form-cart-btn">
+                    <form id="addToCartForm" class="form-cart-btn">
                         @csrf
-                        <!-- @method('POST') -->
+                        @method('POST') 
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
@@ -134,6 +132,13 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <button type="submit" class="primary-btn add-to-cart" onclick="return addToCart(event)" @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
                         <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal" data-target="#exampleModal">Share <i class="fa fa-share"></i></a>    
                     </form>
+                     @if(session('success'))
+                        <div id="productDiscountMessage" class="product-discount-message">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+                        <div id="addtocartMessage"></div>
+                      
                     <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
                     <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
                     <li><b>Availability</b> <span id="availability">{{( getProductAvailabityStock($product->id) > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
@@ -402,7 +407,50 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
         if (checkStockAvailability != 0) {
             // Check if all variants are selected
             if (selectedVariants.length >= 0 && selectedVariants.length === (allVariants.length / 2)) {
-                document.getElementById('addToCartForm').submit();
+              //  document.getElementById('addToCartForm').submit();
+                var csrfToken = document.querySelector('input[name="_token"]').value;
+                var product_id = document.querySelector('input[name="product_id"]').value;
+                var variant = document.querySelector('input[name="variant"]').value;
+                var quantity = document.querySelector('input[name="quantity"]').value;
+
+                var xhr = new XMLHttpRequest();
+                var url = "{{ route('add.to.cart') }}";
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            var responseData = JSON.parse(xhr.responseText);
+
+                            // Check if the response contains a 'success' property
+                            if (responseData.success) {
+                                // Display the success message
+                                document.getElementById('addtocartMessage').innerHTML = '<div class="product-discount-message">'+responseData.success+'</div>';
+
+                                var badgeElement = document.getElementById('cart-count');
+                                badgeElement.innerText = responseData.product_count;
+
+                                var cartprice = document.getElementById('header_cart_price');
+                                cartprice.innerHTML = 'Total: <b>$'+responseData.total_ammount+'</b>';
+                            } else {
+                                // Handle other responses or errors
+                                console.error('Error or unexpected response:', responseData);
+                            }
+                            console.log(responseData);
+                        } else {
+                            console.error('Error: ' + xhr.status);
+                        }
+                    }
+                };
+
+                var data = "product_id=" + product_id +
+                        "&variant=" + variant +
+                        "&quantity=" + quantity;
+
+                xhr.send(data);
+                
             } else {
                 event.preventDefault(event);
                 document.getElementById('addToCartForm').disabled = true;
@@ -414,8 +462,9 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                 return false;
             }
         }
-
         return false;
+
+        
     }
 
     jQuery(document).ready(function () {
@@ -460,13 +509,54 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
         });
     });
 
-    function hideMessage() {
-            var productDiscountMessage = document.getElementById('productDiscountMessage');
-            productDiscountMessage.style.display = 'none';
-        }
+    jQuery(document).ready(function () {
+        jQuery('#productDiscountMessage').hide();
+        jQuery('#discountForm').submit(function (e) {
+            e.preventDefault();
+            jQuery('div#loader-container').show();
+            var csrfToken = $('input[name="_token"]').val();
+            
+            var discount_value = jQuery('#discount_value').val();
+            
+            var url = "{{ route('discount', $product->id)}}";
+            jQuery.ajax({
+                url: url,
+                type: "Post",
+                data: {
+                    apply_code : discount_value,
+                    _token : csrfToken,
+                },
+                success: function (response) {
+                    var selling_price = "{{$product->selling_price}}";
+                    var discount_ammount = selling_price - response.discount;
+                    // Handle the success response here
+                    console.log(discount_ammount);
+                    jQuery('div#loader-container').hide();
+                    jQuery('#productDiscountMessage').show();
+                    
+                   jQuery('#main-price').html('<del style="color: #625c5c;font-size: 18px;">$'+selling_price+'</del> <span>$'+ discount_ammount +'</span>');
 
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(hideMessage, 5000);
+                    jQuery('#productDiscountMessage').text(response.success); 
+                    setTimeout(function() {
+                        jQuery('#productDiscountMessage').hide();
+                    }, 2000);
+                    // Swal.fire({
+                    //         icon: 'success',
+                    //         title: 'Mail Sent Successfully!',
+                    //         showConfirmButton: false,
+                    //         timer: 2000
+                    //     });
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response here
+                    console.error(xhr.responseText);
+                }
+            });
         });
+    });
+
+    
+    
 </script>
 @endsection

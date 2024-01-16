@@ -204,7 +204,7 @@
                                     <li class="nav-item dropdown">
                                         <a href="{{ route('cart') }}" role="button">
                                             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                            <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                            <span class="badge badge-pill badge-danger" id="cart-count">{{ count((array) session('cart')) }}</span>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <div class="row total-header-section">
@@ -247,10 +247,7 @@
                         // echo "</pre>";
                         @endphp
                         @foreach((array) session('cart') as $id => $details)
-                        @php 
-                        
-                   
-                        @endphp
+                       
                             @if(isset($details['variant_price']))
                             <!-- if product with multiple variants -->
                                 @if(isset($details['variant_data']))
@@ -259,14 +256,10 @@
                                     @php 
                                     $discount[] = $subVariant['discount_price']; 
                                     
-                                    $total[] = $subVariant['price'] * $subVariant['quantity'] 
+                                    $total[] = $subVariant['price'] * $subVariant['quantity'];
                                     @endphp
                                 @endforeach
-                                @else
-                            
-                                @php                                
-                                //$total[] = $details['variant_price'] * $details['quantity'] 
-                                @endphp
+                                
                                 @endif
                             @endif
                             @php
@@ -280,7 +273,7 @@
                             $total = array_sum($total);
                             $discount = array_sum($discount);
                         @endphp
-                        <div class="header__cart__price">Total: <span>$ {{$total - $discount }}</span></div>
+                        <div class="header__cart__price" id="header_cart_price">Total: <span>$ {{$total - $discount }}</span></div>
                     </div>
                 </div>
             </div>
