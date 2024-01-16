@@ -68,12 +68,30 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     <form class="apply_discount" method="Post" id="discountForm">
                         @csrf
                         @method('POST')
+                        
+                        @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
+                            @php
+                            if(session()->get('discount')[$product->id]['product_id'] == $product->id){
+                                $buttonvalue = 'Applied';
+                                $disbale = 'disabled';
+                            }else{
+                                $buttonvalue = 'Apply Now';
+                                $disbale = '';
+                            }
+                            
+                            @endphp
+                        @else
+                            @php
+                                $buttonvalue = 'Apply Now';
+                                $disbale = '';
+                            @endphp
+                        @endif
                         <div class="row">
-                            <div class="col-md-4 p-0">
-                                <input type="number" id="discount_value" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="" required>
+                            <div class="col-md-4 p-0">                               
+                                <input type="number" id="discount_value" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="" {{$disbale}} required>
                             </div>
                             <div class="col-md-2 p-0">
-                                <input type="submit" name="submit" class="btn primary-btn" value="Apply Now">
+                                <input type="submit" name="submit" id="discount_btn" class="btn primary-btn" value="{{$buttonvalue}}" {{$disbale}}>
                             </div>
                         </div>
                         
@@ -434,6 +452,14 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
 
                                 var cartprice = document.getElementById('header_cart_price');
                                 cartprice.innerHTML = 'Total: <b>$'+responseData.total_ammount+'</b>';
+
+                                var addtocartMessage = document.getElementById('addtocartMessage');
+
+                                // Hide the element after a delay of 2000 milliseconds (2 seconds)
+                                setTimeout(function() {
+                                    addtocartMessage.style.display = 'none';
+                                }, 2000);
+
                             } else {
                                 // Handle other responses or errors
                                 console.error('Error or unexpected response:', responseData);
@@ -536,16 +562,15 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     
                    jQuery('#main-price').html('<del style="color: #625c5c;font-size: 18px;">$'+selling_price+'</del> <span>$'+ discount_ammount +'</span>');
 
+                   jQuery('#discount_value').prop('disabled', true);
+                   jQuery('#discount_btn').val('Applied');
+                   jQuery('#discount_btn').prop('disabled', true);
+
                     jQuery('#productDiscountMessage').text(response.success); 
                     setTimeout(function() {
                         jQuery('#productDiscountMessage').hide();
                     }, 2000);
-                    // Swal.fire({
-                    //         icon: 'success',
-                    //         title: 'Mail Sent Successfully!',
-                    //         showConfirmButton: false,
-                    //         timer: 2000
-                    //     });
+                    
 
                 },
                 error: function (xhr, status, error) {

@@ -68,8 +68,8 @@ class CheckoutController extends Controller
                                 'order_id' => $order->id,
                                 'product_id' => $product['product_id'],
                                 'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
-                                'quantity' => $product['quantity'],
-                                'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['discount_price'] : 0,
+                                'quantity' => $selectedVariant['quantity'],
+                                'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['quantity'] * $selectedVariant['discount_price'] : 0,
                                 'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
                                 'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
                             ]);
@@ -83,8 +83,8 @@ class CheckoutController extends Controller
                             'product_id' => $product['product_id'],
                             'variant_id' => (!empty($selectedVariant)) ? $selectedVariant['id'] : 0,
                             'quantity' => $product['quantity'],
-                            'discount' => (!empty($product['discount_price'])) ? $product['discount_price'] : 0,
-                            'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
+                            'discount' => (!empty($product['discount_price'])) ? $product['discount_price'] * $product['quantity'] : 0,
+                            'total' => (!empty($selectedVariant)) ? ($selectedVariant['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
                             'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
                         ]);
                     }
@@ -100,6 +100,7 @@ class CheckoutController extends Controller
                     // ]);
                 }
             session()->forget('cart');
+            session()->forget('discount');
             $orderId = '#' . $order->order_id;
         }
         // dd($order);

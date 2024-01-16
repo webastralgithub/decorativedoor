@@ -194,10 +194,12 @@ class ShopController extends Controller
 
     public function remove_cart(Request $request)
     {
+        
         if ($request->id) {
             $cart = session()->get('cart');
-            // dd($cart[$request->id]);
+            
             if (isset($request->variant) && !empty($request->variant)) {
+             
                 $variantId = $request->variant;
                 if (isset($cart[$request->id]['variant_data'][$variantId])) {
                     $quantity = $cart[$request->id]['variant_data'][$variantId]['quantity'];
@@ -205,6 +207,9 @@ class ShopController extends Controller
                     // update the price before remove variant with all quantity
                     $cart[$request->id]['variant_price'] = $cart[$request->id]['variant_price'] - ($price * $quantity);
                     unset($cart[$request->id]['variant_data'][$variantId]);
+                    if(count($cart[$request->id]['variant_data']) == 0){
+                        unset($cart[$request->id]);
+                    }
                 }
             } else {
                 if (isset($cart[$request->id])) {
