@@ -124,8 +124,6 @@ class ShopController extends Controller
         }
         session()->put('cart', $cart);
 
-        session()->forget('discount');
-
         $total = [];
         $discount = [];
         foreach((array) session('cart') as $id => $details){
