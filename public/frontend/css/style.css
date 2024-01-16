@@ -3761,7 +3761,7 @@ nav.header__menu li.primary-btn {
 }
 
 nav.header__menu  li.primary-btn a {
-    color: #fff !important;
+    color: #fff;
 }
 .product__item a#share-with-email, section.featured.spad a#share-with-email {
     color: #fff;
@@ -3866,8 +3866,11 @@ section.customer.spad form .nice-select.form-control {
     background: #fff;
 }.sidebar__item ul li
 
-nav.header__menu li.primary-btn a:hover {
-    color: #434e6e !important;
+nav.header__menu li.primary-btn:hover a {
+    color: #434e6e;
+}
+nav.header__menu li.primary-btn a:hover{
+	color: #434e6e;
 }
 
 section.related-product .product__item a#share-with-email {
