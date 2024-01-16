@@ -54,15 +54,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <label class="col-md-4 col-form-label text-md-end text-start">Signature*</label>
-                    <div class="card mt-4">
-                        <canvas id="signature-pad" style="border: 1px;" width="800" height="300"></canvas>
+                    <div class="col-md-12">
+                        <canvas id="signature-pad" style="border: 1px solid;border-radius: 10px;" width="1100" height="200"></canvas>
                         <input type="hidden" name="signature" id="signature" value="">
                     </div>
                 </div>
             </div>
             <br>
-            <div class="mb-1 row">
-                <input type="button" onclick="saveSignature()" class="col-md-4 offset-md-4 btn btn-primary" value="Add">
+            <div class="col-md-12">
+                <input type="button" onclick="saveSignature()" class="col-md-2 offset-md-4 btn btn-primary" value="Add">
+                <input type="button" onclick="clearSignature()" class="col-md-2 offset-md-1 btn btn-primary" value="Clear">
             </div>
         </form>
     </div>
@@ -73,18 +74,21 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/signature_pad"></script>
 <script>
- const signaturePad = new SignaturePad(document.getElementById('signature-pad'));
+    const signaturePad = new SignaturePad(document.getElementById('signature-pad'));
 
-function saveSignature() {
-    if (signaturePad.isEmpty()) {
-        alert('Please provide a signature.');
-        return false; 
+    function saveSignature() {
+        if (signaturePad.isEmpty()) {
+            alert('Please provide a signature.');
+            return false;
+        }
+
+        const signatureData = signaturePad.toDataURL("image/png");
+        document.getElementById('signature').value = signatureData;
+
+        document.forms["form1"].submit();
     }
-
-    const signatureData = signaturePad.toDataURL("image/png");
-    document.getElementById('signature').value = signatureData;
-
-    document.forms["form1"].submit();
-}
+    function clearSignature() {
+        signaturePad.clear();
+    }
 </script>
 @endsection
