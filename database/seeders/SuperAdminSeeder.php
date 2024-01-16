@@ -17,25 +17,42 @@ class SuperAdminSeeder extends Seeder
         // Creating Super Admin User
         $superAdmin = User::create([
             'name' => 'Javed Ur Rehman',
-            'email' => 'javed@allphptricks.com',
-            'password' => Hash::make('javed1234')
+            'email' => 'superadmin@mailinator.com',
+            'password' => Hash::make('superadmin@mailinator')
         ]);
         $superAdmin->assignRole('Super Admin');
 
         // Creating Admin User
         $admin = User::create([
             'name' => 'Syed Ahsan Kamal',
-            'email' => 'ahsan@allphptricks.com',
-            'password' => Hash::make('ahsan1234')
+            'email' => 'sales@mailinator.com',
+            'password' => Hash::make('sales@mailinator')
         ]);
-        $admin->assignRole('Admin');
+        $admin->assignRole('Sales Person');
 
         // Creating Product Manager User
         $productManager = User::create([
             'name' => 'Abdul Muqeet',
-            'email' => 'muqeet@allphptricks.com',
-            'password' => Hash::make('muqeet1234')
+            'email' => 'assembler@mailinator.com',
+            'password' => Hash::make('assembler@mailinator')
         ]);
-        $productManager->assignRole('Product Manager');
+        $productManager->assignRole('Assembler');
+
+         // Creating Product Manager User
+         $productManager = User::create([
+            'name' => 'Abdul Muqeet',
+            'email' => 'accountant@mailinator.com',
+            'password' => Hash::make('accountant@mailinator')
+        ]);
+        $productManager->assignRole('Accountant');
+
+        // Creating Product Manager User
+        $productManager = User::create([
+            'name' => 'Abdul Muqeet',
+            'email' => 'delivery@homedecor.com',
+            'password' => Hash::make('delivery@homedecor')
+        ]);
+        $productManager->assignRole('Delivery User');
+        
     }
 }
