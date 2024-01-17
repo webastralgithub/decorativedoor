@@ -33,6 +33,15 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'email' => 'required',
+            'name' => 'required',
+            'password' => 'required',
+            'phone' => 'required',
+            'dob' => 'required',
+            'gender' => 'required',
+
+        ]);
 
        // dd($request->all());
         $user_id = $request->user_id;

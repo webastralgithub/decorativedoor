@@ -4049,6 +4049,14 @@ div#assignuser .table td {
     border-top: 1px solid #dee2e6;
     font-size: 14px;
 }
+.alert-danger ul li {
+    list-style: none;
+    padding-left: 190px;
+    font-size: 14px;
+}
+.header__top__left ul li a, .footer__about ul li a {
+    color: #fff;
+}
 
 @media only screen and (max-width: 600px) {
 	.apply-cupons-row-sd .col-md-4{
