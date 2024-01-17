@@ -3894,3 +3894,15 @@ section.related-product .product__item a#share-with-email {
 form .col-md-12 input.form-control.primary-btn {
     padding: 0px !important;
 }
+div#assignuser .btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    margin-bottom: 10px;
+}
+div#assignuser .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    font-size: 14px;
+}
