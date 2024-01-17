@@ -74,21 +74,23 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                             if(session()->get('discount')[$product->id]['product_id'] == $product->id){
                                 $buttonvalue = 'Applied';
                                 $disbale = 'disabled';
+                                $ammount = session()->get('discount')[$product->id]['discount_ammount'];
                             }else{
                                 $buttonvalue = 'Apply Now';
                                 $disbale = '';
+                                $ammount = session()->get('discount')[$product->id]['discount_ammount'];
                             }
-                            
                             @endphp
                         @else
                             @php
                                 $buttonvalue = 'Apply Now';
                                 $disbale = '';
+                                $ammount = '';
                             @endphp
                         @endif
                         <div class="row">
                             <div class="col-md-4 p-0">                               
-                                <input type="number" id="discount_value" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="" {{$disbale}} required>
+                                <input type="number" id="discount_value" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="{{$ammount}}" {{$disbale}} required>
                             </div>
                             <div class="col-md-2 p-0">
                                 <input type="submit" name="submit" id="discount_btn" class="btn primary-btn" value="{{$buttonvalue}}" {{$disbale}}>
@@ -557,6 +559,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     var discount_ammount = selling_price - response.discount;
                     // Handle the success response here
                     console.log(discount_ammount);
+                    jQuery('#discount_price').val(response.discount);
                     jQuery('div#loader-container').hide();
                     jQuery('#productDiscountMessage').show();
                     

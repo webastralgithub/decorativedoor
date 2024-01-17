@@ -192,7 +192,7 @@ setTimeout(function() {
         $.ajax({
             url: "{{ route('get.price') }}",
             method: "GET",
-            data: {
+            data: { 
                 _token: '{{ csrf_token() }}',
                 str: str,
                 pid: "{{$product->id ?? 0 }}"
