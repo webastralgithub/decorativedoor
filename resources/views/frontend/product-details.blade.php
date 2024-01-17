@@ -45,7 +45,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                     </div>
                     @if(isset($productimages) && !empty($productimages))
                     <div class="product__details__pic__slider owl-carousel">
-                        @foreach($productimages as $images)                        
+                        @foreach($productimages as $images) 
                         <img data-imgbigurl="{{ asset('storage/products/' . $images->path)}}" src="{{ asset('storage/products/' . $images->path)}}" alt="">
                         @endforeach
                     </div>

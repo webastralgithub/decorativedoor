@@ -53,8 +53,8 @@
     });
 
     /*------------------
-		Navigation
-	--------------------*/
+        Navigation
+    --------------------*/
     $(".mobile-menu").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
@@ -96,7 +96,7 @@
     });
 
 
-    $('.hero__categories__all').on('click', function(){
+    $('.hero__categories__all').on('click', function () {
         $('.hero__categories ul').slideToggle(400);
     });
 
@@ -160,8 +160,8 @@
     });
 
     /*-----------------------
-		Price Range Slider
-	------------------------ */
+        Price Range Slider
+    ------------------------ */
     var rangeSlider = $(".price-range"),
         minamount = $("#minamount"),
         maxamount = $("#maxamount"),
@@ -186,8 +186,8 @@
     $("select").niceSelect();
 
     /*------------------
-		Single Product
-	--------------------*/
+        Single Product
+    --------------------*/
     $('.product__details__pic__slider img').on('click', function () {
 
         var imgurl = $(this).data('imgbigurl');
@@ -200,8 +200,8 @@
     });
 
     /*-------------------
-		Quantity change
-	--------------------- */
+        Quantity change
+    --------------------- */
     var proQty = $('.pro-qty');
     proQty.prepend('<span class="dec qtybtn">-</span>');
     proQty.append('<span class="inc qtybtn">+</span>');
@@ -227,8 +227,8 @@
       email check ajax
     ----------------------*/
     var customeremail = $('#customer-email');
-    customeremail.keyup(function(){
-        
+    customeremail.keyup(function () {
+
         $('#user-alreday-exist').hide();
         $('#customer-id').val('');
 
@@ -238,7 +238,7 @@
         $('#customer-phone').val('');
         $('#customer-dob').val('');
         $('#customer-gender').val('');
-        
+
         $('#customer-shipping-address_type').val('');
         $('#customer-shipping-state').val('');
         $('#customer-shipping-city').val('');
@@ -252,7 +252,7 @@
         $('#customer-billing-street').val('');
         $('#customer-billing-country').val('');
         $('#customer-billing-zipcode').val('');
-        
+
         /**********company information ***********/
 
 
@@ -265,61 +265,129 @@
         $('#company-registration_no').val('');
         $('#company-gst_no').val('');
         $('#company-notes').val('');
-       
+        $('#final_submit').show();
+
         var token = $('input[name="_token"]').val();
-       var email_val = $(this).val();
-         
-       // Perform AJAX request
-       $.ajax({
-        url: 'check-user', // Replace with your server-side script
-        method: 'POST', // You can use 'GET' as well
-        data: { email: email_val, _token: token},
-        success: function(response){
-          // Update the searchResults div with the response from the server
-            var jsonData = JSON.parse(response);
-            console.log(jsonData);
-            $('#user-alreday-exist').show();
-            $('#customer-id').val(jsonData.id);
+        var email_val = $(this).val();
 
-        /**********Personal information ***********/
+        // Perform AJAX request
+        $.ajax({
+            url: 'check-user', // Replace with your server-side script
+            method: 'POST', // You can use 'GET' as well
+            data: { email: email_val, _token: token },
+            success: function (response) {
+                // Update the searchResults div with the response from the server
+                var jsonData = JSON.parse(response);
+                console.log(jsonData);
+                $('#user-alreday-exist').show();
+                $('#final_submit').hide();
+                $('#user-alreday-exist').html('<span id="user-alreday-exist" style="color: green;"><i class="fa fa-check"></i>User Already Exist</span><br><input type="checkbox" id="customerassign" data-id="' + jsonData.id + '"><label class="form-check-label"> Use This Customer </label>');
+                $('#customer-id').val(jsonData.id);
 
-        $('#customer-name').val(jsonData.name);
-        $('#customer-phone').val(jsonData.phone);
-        $('#customer-dob').val(jsonData.dob);
-        $('#customer-gender').val(jsonData.gender);
+                /**********Personal information ***********/
+
+                $('#customer-name').val(jsonData.name);
+                $('#customer-phone').val(jsonData.phone);
+                $('#customer-dob').val(jsonData.dob);
+                $('#customer-gender').val(jsonData.gender);
+
+                $('#customer-shipping-address_type').val(jsonData.address_type);
+                $('#customer-shipping-state').val(jsonData.state);
+                $('#customer-shipping-city').val(jsonData.city);
+                $('#customer-shipping-street').val(jsonData.street);
+                $('#customer-shipping-country').val(jsonData.country);
+                $('#customer-shipping-zipcode').val(jsonData.zipcode);
+
+                $('#customer-billing-address_type').val(jsonData.billing_address_type);
+                $('#customer-billing-state').val(jsonData.billing_state);
+                $('#customer-billing-city').val(jsonData.billing_city);
+                $('#customer-billing-street').val(jsonData.billing_street);
+                $('#customer-billing-country').val(jsonData.billing_country);
+                $('#customer-billing-zipcode').val(jsonData.billing_zipcode);
+
+                /**********company information ***********/
+
+
+                $('#company-name').val(jsonData.company_name);
+                $('#company-address').val(jsonData.company_address);
+                $('#company-phone').val(jsonData.company_phone);
+                $('#company-email').val(jsonData.company_email);
+                $('#company-industory-type').val(jsonData.industory_type);
+                $('#company-website').val(jsonData.company_website);
+                $('#company-registration_no').val(jsonData.registration_no);
+                $('#company-gst_no').val(jsonData.gst);
+                $('#company-notes').val(jsonData.notes);
+
+                jQuery('#customerassign').on('click', function (e) {
+                    e.preventDefault();
+                    var token = $('input[name="_token"]').val();
+                    var userid = jQuery(this).data('id');
+                    var url = "/assign-customer";
+                    jQuery.ajax({
+                        url: url,
+                        type: "Post",
+                        data: { user_id: userid, _token: token },
+                        success: function (response) {
+                            console.log(response);
+                            jQuery('#productDiscountMessage').text(response.success);
+                            jQuery('#productDiscountMessage').show();
+                            setTimeout(function () {
+                                jQuery('#productDiscountMessage').hide();
+                            }, 2000);
         
-        $('#customer-shipping-address_type').val(jsonData.address_type);
-        $('#customer-shipping-state').val(jsonData.state);
-        $('#customer-shipping-city').val(jsonData.city);
-        $('#customer-shipping-street').val(jsonData.street);
-        $('#customer-shipping-country').val(jsonData.country);
-        $('#customer-shipping-zipcode').val(jsonData.zipcode);
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle the error response here
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
 
-        $('#customer-billing-address_type').val(jsonData.billing_address_type);
-        $('#customer-billing-state').val(jsonData.billing_state);
-        $('#customer-billing-city').val(jsonData.billing_city);
-        $('#customer-billing-street').val(jsonData.billing_street);
-        $('#customer-billing-country').val(jsonData.billing_country);
-        $('#customer-billing-zipcode').val(jsonData.billing_zipcode);
-        
-        /**********company information ***********/
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+
+    });
 
 
-        $('#company-name').val(jsonData.company_name);
-        $('#company-address').val(jsonData.company_address);
-        $('#company-phone').val(jsonData.company_phone);
-        $('#company-email').val(jsonData.company_email);
-        $('#company-industory-type').val(jsonData.industory_type);
-        $('#company-website').val(jsonData.company_website);
-        $('#company-registration_no').val(jsonData.registration_no);
-        $('#company-gst_no').val(jsonData.gst);
-        $('#company-notes').val(jsonData.notes);
 
-        },
-        error: function(error){
-          console.error('Error:', error);
-        }
-      });
+    jQuery(document).ready(function () {
+
+        $('#use_shipping_add').change(function (e) {
+            // Check if the checkbox is checked
+            if ($(this).prop('checked')) {
+
+                var address_type = $('#customer-billing-address_type').val();
+                var state = $('#customer-billing-state').val();
+                var city = $('#customer-billing-city').val();
+                var street = $('#customer-billing-street').val();
+                var country = $('#customer-billing-country').val();
+                var zipcode = $('#customer-billing-zipcode').val();
+
+                $('#customer-shipping-address_type').val(address_type);
+                $('#shipping-customer-state').val(state);
+                $('#shipping-customer-city').val(city);
+                $('#shipping-customer-street').val(street);
+                $('#shipping-customer-country').val(country);
+                $('#shipping-customer-zipcode').val(zipcode);
+            } else {
+                $('#customer-shipping-address_type').val('');
+                $('#shipping-customer-street').val('');
+                $('#shipping-customer-city').val('');
+                $('#shipping-customer-street').val('');
+                $('#shipping-customer-country').val('');
+                $('#shipping-customer-zipcode').val('');
+
+            }
+        });
+
+        jQuery('#use_shipping_add').submit(function (e) {
+            e.preventDefault();
+
+        });
+
     });
 
     // jQuery(document).ready(function (){
@@ -344,7 +412,7 @@
 
     // });
 
-    jQuery(document).ready(function (){
+    jQuery(document).ready(function () {
         jQuery('#productDiscountMessage').hide();
         jQuery('.customerassign').on('click', function (e) {
             e.preventDefault();
@@ -354,14 +422,14 @@
             jQuery.ajax({
                 url: url,
                 type: "Post",
-                data:  { user_id: userid, _token: token},
+                data: { user_id: userid, _token: token },
                 success: function (response) {
                     console.log(response);
                     jQuery('button.btn.btn-secondary.close-btn').trigger('click');
-                    jQuery('#productDiscountMessage').text(response.success); 
+                    jQuery('#productDiscountMessage').text(response.success);
                     jQuery('#place-order-btn').html('<a href="/checkout" class="btn btn-success">Proceed Order</a>');
                     jQuery('#productDiscountMessage').show();
-                    setTimeout(function() {
+                    setTimeout(function () {
                         jQuery('#productDiscountMessage').hide();
                     }, 2000);
 
@@ -374,7 +442,7 @@
         });
 
     });
-    
+
 
 
 
