@@ -30,9 +30,18 @@
                                     <tr data-id="{{ $id }}" data-variant="{{ $variantId }}">
                                         <td data-th="Product">
                                             <div class="row">
-                                                <div class="col-sm-3 hidden-xs"><img
+                                                <div class="col-sm-3 hidden-xs">
+                                                  
+                                                    @if($details['image']['path'])
+                                                    <img
+                                                    src="{{ asset('storage/products/' .$details['image']['path'])}}"
+                                                    width="100" height="100" class="img-responsive" />
+                                                    @else
+                                                    <img
                                                         src="{{ asset('frontend/img/product/details/product-details-1.jpg') }}"
-                                                        width="100" height="100" class="img-responsive" /></div>
+                                                        width="100" height="100" class="img-responsive" />
+                                                    @endif
+                                                    </div>
                                                 <div class="col-sm-9">
                                                     <h4 class="nomargin">{{ $details['name'] }}</h4>
                                                     <span class="cart-price-btm">
@@ -172,7 +181,6 @@
                                     <th></th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,7 +189,6 @@
                                     <td><input type="checkbox" class="customerassign" data-id="{{$user->id}}"></td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>{{$user->phone}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
