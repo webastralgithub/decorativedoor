@@ -3,7 +3,7 @@
 @section('content')
 
     @if (session()->has('cart') && !empty(session('cart')))
-        <table id="cart" class="table table-hover table-condensed cart-table">
+        <table id="cart" class="table table-hover table-condensed cart-table mt-5">
             <thead>
                 <tr>
                     <th style="width:50%">Product</th>
