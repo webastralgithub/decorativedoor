@@ -254,7 +254,7 @@
                                 @foreach($details['variant_data'] as $variantId => $subVariant)
 
                                     @php 
-                                    $discount[] = $subVariant['discount_price']; 
+                                    $discount[] = $subVariant['discount_price'] * $subVariant['quantity']; 
                                     
                                     $total[] = $subVariant['price'] * $subVariant['quantity'];
                                     @endphp

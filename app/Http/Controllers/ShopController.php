@@ -131,14 +131,14 @@ class ShopController extends Controller
             if(isset($details['variant_price'])){
                 if(isset($details['variant_data'])){
                     foreach($details['variant_data'] as $variantId => $subVariant){
-                        $discount[] = $subVariant['discount_price']; 
+                        $discount[] = $subVariant['discount_price'] * $subVariant['quantity']; 
                         $total[] = $subVariant['price'] * $subVariant['quantity'];
                     }
                 }
             }
             if(empty($details['variant_data'])){
                 $total[] = $details['price'] * $details['quantity'];
-                $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] : 0;                            
+                $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] * $details['quantity']: 0;                            
             }
         }
 

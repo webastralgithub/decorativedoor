@@ -25,8 +25,7 @@
                             @if (isset($details['variant_data']))
                               
                                 @foreach ($details['variant_data'] as $variantId => $subVariant)
-                                    @php  
-                                     $total = 0;                                   
+                                    @php                                     
                                     $total += $subVariant['price'] * $subVariant['quantity'] - ($subVariant['discount_price'] * $subVariant['quantity'])  @endphp
                                     <tr data-id="{{ $id }}" data-variant="{{ $variantId }}">
                                         <td data-th="Product">
@@ -62,7 +61,6 @@
                                 @endforeach
                             @else
                                 @php
-                                $total = 0;
                                 $total += (isset($details['variant_price']) ? $details['variant_price'] - $details['discount_price'] : $details['price']) * $details['quantity'] - ($details['discount_price'] * $details['quantity']) @endphp
                                 <tr data-id="{{ $id }}" data-variant="">
                                     <td data-th="Product">
@@ -103,7 +101,6 @@
                         @else
                         
                             @php 
-                            $total = 0;
                             $total += $details['price'] * $details['quantity'] - ($details['discount_price'] * $details['quantity']); @endphp
                             <tr data-id="{{ $id }}" data-variant="">
                                 <td data-th="Product">
