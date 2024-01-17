@@ -16,7 +16,7 @@ class SuperAdminSeeder extends Seeder
     {
         // Creating Super Admin User
         $superAdmin = User::create([
-            'name' => 'Javed Ur Rehman',
+            'name' => 'Super admin',
             'email' => 'superadmin@mailinator.com',
             'password' => Hash::make('superadmin@mailinator')
         ]);
@@ -24,7 +24,7 @@ class SuperAdminSeeder extends Seeder
 
         // Creating Admin User
         $admin = User::create([
-            'name' => 'Syed Ahsan Kamal',
+            'name' => 'Sales Person',
             'email' => 'sales@mailinator.com',
             'password' => Hash::make('sales@mailinator')
         ]);
@@ -32,7 +32,7 @@ class SuperAdminSeeder extends Seeder
 
         // Creating Product Manager User
         $productManager = User::create([
-            'name' => 'Abdul Muqeet',
+            'name' => 'Assembler',
             'email' => 'assembler@mailinator.com',
             'password' => Hash::make('assembler@mailinator')
         ]);
@@ -40,7 +40,7 @@ class SuperAdminSeeder extends Seeder
 
          // Creating Product Manager User
          $productManager = User::create([
-            'name' => 'Abdul Muqeet',
+            'name' => 'Accountant',
             'email' => 'accountant@mailinator.com',
             'password' => Hash::make('accountant@mailinator')
         ]);
@@ -48,7 +48,7 @@ class SuperAdminSeeder extends Seeder
 
         // Creating Product Manager User
         $productManager = User::create([
-            'name' => 'Abdul Muqeet',
+            'name' => 'Delivery',
             'email' => 'delivery@homedecor.com',
             'password' => Hash::make('delivery@homedecor')
         ]);

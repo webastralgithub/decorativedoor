@@ -147,11 +147,56 @@
                         <a href="{{ url()->previous() }}" class="btn btn-warning"
                             style="background: #93681a; color: #fff; border-color: #93681a;"><i
                                 class="fa fa-angle-left"></i> Continue Shopping</a>
-                        <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed Order</a>
+                                @if(empty(session()->get('assign_customer')))
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#assignuser">Proceed Order</button>
+                                @else
+                                    <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed Order</a>
+                                @endif
                     </td>
                 </tr>
             </tfoot>
         </table>
+        <div class="modal fade" id="assignuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Assign Customer') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true close-btn">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <a href="{{ route('customer') }}" class="btn btn-success">Add New Customer</a><br>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($users as $user)
+                                <tr>
+                                    <td><input type="checkbox" class="customerassign" data-id="{{$user->id}}"></td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->phone}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">{{ __('Close') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="productDiscountMessage" class="product-discount-message"></div>
     @else
         <section class="featured spad">
             <div class="container">

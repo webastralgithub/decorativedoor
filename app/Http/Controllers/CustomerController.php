@@ -206,4 +206,10 @@ class CustomerController extends Controller
         }
         
     }
+
+    public function assignCartCustomer(Request $request){
+            $user_id = $request->user_id;
+            session()->put('assign_customer', $user_id);
+            return response()->json(['success' => 'Customer Assign Successfully!!']);
+    }
 }

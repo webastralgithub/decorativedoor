@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\User;
 use App\Models\ProductVariant;
 use App\Models\ProductImage;
 use App\Mail\ShareProductMail;
@@ -224,7 +225,8 @@ class ShopController extends Controller
         // unset($cart[30]);
         // session()->put('cart', $cart);
         // dd(session()->get('cart'));
-        return view('frontend.cart');
+        $users = User::all();
+        return view('frontend.cart', compact('users'));
     }
 
     public function category($slug = '')

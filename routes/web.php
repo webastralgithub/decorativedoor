@@ -48,6 +48,7 @@ Route::middleware(['auth', 'isAdminWebAccess'])->group(function () {
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer');
     Route::post('/check-user', [CustomerController::class, 'checkuser'])->name('checkuser');
     Route::post('/store-customer', [CustomerController::class, 'store'])->name('store-customer');
+    Route::post('/assign-customer', [CustomerController::class, 'assignCartCustomer'])->name('assign-cart-customer');
 
     // Route::get('/product-details/{CategoryName}', [ShopController::class, 'product_details'])->name('product_category');
     Route::get('cart', [ShopController::class, 'cart'])->name('cart');
