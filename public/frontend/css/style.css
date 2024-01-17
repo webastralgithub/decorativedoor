@@ -1870,6 +1870,7 @@ height: 35px;
 	padding: 16px 28px 14px;
 	margin-right: 6px;
 	margin-bottom: 5px;
+    border: 1px solid #434e6e !important;
 }
 
 .product__details__text .heart-icon {
@@ -3758,6 +3759,7 @@ height: 35px;
 nav.header__menu li.primary-btn {
     padding: 4px 10px;
     border-radius: 5px;
+	border: 1px solid #434e6e;
 }
 
 nav.header__menu  li.primary-btn a {
@@ -3770,6 +3772,7 @@ nav.header__menu  li.primary-btn a {
     background: #434e6e;
     padding: 3px 10px;
     border-radius: 6px;
+	border: 1px solid #434e6e;
 }
 
 span#message span {
