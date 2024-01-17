@@ -196,7 +196,7 @@
             </div>
         </div>
 
-        <div id="productDiscountMessage" class="product-discount-message"></div>
+        <div id="productDiscountMessage" class="product-discount-message" style="display:none"></div>
     @else
         <section class="featured spad">
             <div class="container">

@@ -284,9 +284,10 @@
         <div class="container">
         @if(Request::segment(1) != 'product')
             @if(session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success product-discount-message">
                 {{ session('success') }}
             </div>
+            
             @endif
         @endif
         </div>

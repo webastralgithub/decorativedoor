@@ -119,6 +119,14 @@
 <script src="{{asset('frontend/js/main.js')}}"></script>
 
 <script type="text/javascript">
+
+
+setTimeout(function() {
+    jQuery('.product-discount-message').hide();
+}, 2000);
+
+
+            
     $(".update-cart").change(function(e) {
         e.preventDefault();
         var ele = $(this);
