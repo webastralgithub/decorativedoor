@@ -54,6 +54,8 @@
                             </div>
                         </div>
                         @endforeach
+                    @else
+                    <h6>Record not found!</h6>
                     @endif
                     </div>
                 </div>
