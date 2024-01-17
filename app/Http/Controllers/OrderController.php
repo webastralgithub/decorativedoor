@@ -11,6 +11,7 @@ use App\Models\DeliveryUser;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Note;
+use App\Models\DeliverQuantity;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -112,6 +113,31 @@ class OrderController extends Controller
         }
         Order::findOrFail($orderId)->update(['order_status' => $request->new_status]);
         return response()->json(['success' => 'Order status has been updated!']);
+    }
+
+    public function updateQuantityStatus(Request $request){
+
+        $itemId = $request->item_id;
+        $orderDetails = OrderDetails::findOrFail($itemId);
+        if (!isset($orderDetails) && empty($orderDetails)) {
+            return response()->json(['error' => 'Order is not valid!']);
+        }
+        // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);
+
+        if ($orderDetails->order->details->count() == 1) {
+            $orderDetails->order->update(['order_status' => $request->new_status]);
+            $orderDetails->update(['order_status' => $request->new_status]);
+            DeliverQuantity::create(['order_id' => $request->order_id, 'item_id' => $itemId, 'order_quantity' => $request->orders_quantity, 'diliver_quantity' => $request->delivery_quantity]);
+            //return response()->json(['success' => 'Order status updated successfully']);
+        } else {
+            $orderDetails->update(['order_status' => $request->new_status]);
+            DeliverQuantity::create(['order_id' => $request->order_id, 'item_id' => $itemId, 'order_quantity' => $request->orders_quantity, 'deliver_quantity' => $request->delivery_quantity]);
+            //return response()->json(['success' => 'Order status updated successfully']);
+        }
+
+        return redirect()
+        ->route('order-assembler')
+        ->with('success', 'Quantity Added successfully');
     }
 
     public function updateProductStatus(Request $request)
@@ -257,7 +283,7 @@ class OrderController extends Controller
     {
         if (auth()->user()->hasRole('Product Assembler')) {
             // $orders = Order::where('assembler_user_id', Auth::user()->id)->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])->latest()->get();
-            $orders = Order::with(['details', 'notes'])->whereHas('details', function ($query) {
+            $orders = Order::with(['details', 'notes', 'deliverorder'])->whereHas('details', function ($query) {
                 $query->orWhereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER]);
             })
                 ->where('assembler_user_id', Auth::user()->id)
@@ -268,7 +294,7 @@ class OrderController extends Controller
          
             $access_status = [4, 5];
         } else {
-            $orders = Order::with(['details', 'notes'])->latest()->get();
+            $orders = Order::with(['details', 'notes', 'deliverorder'])->latest()->get();
             $order_statuses = OrderStatus::all();
             $access_status = [1, 2, 3, 4, 5, 6];
         }

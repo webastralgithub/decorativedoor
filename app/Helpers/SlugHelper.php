@@ -3,6 +3,7 @@
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\DeliverQuantity;
 use App\Models\Note;
 use Illuminate\Support\Str;
 
@@ -160,6 +161,22 @@ if (!function_exists('generateProductSlug')) {
                     $totalrecived += $order->quantity;
                 }
             $FinalQuantity = $totalrecived;
+            return $FinalQuantity;
+        }
+    }
+
+    if (!function_exists('getDeliverQuantity')) {
+        function getDeliverQuantity($orderId = null, $itemId = null)
+        {
+
+            $deliveryorder =  DeliverQuantity::where('item_id', $itemId)->where('order_id', $orderId)->get();
+    
+            $total = 0;
+            if (!empty($deliveryorder))
+                foreach ($deliveryorder as $deliver) {
+                    $total += $deliver->deliver_quantity;
+                }
+            $FinalQuantity = $total;
             return $FinalQuantity;
         }
     }
