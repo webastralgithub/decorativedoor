@@ -183,10 +183,6 @@
                                     <th></th>
                                     <th>Name</th>
                                     <th>Email</th>
-<<<<<<< HEAD
-                                    <!-- <th>Phone</th> -->
-=======
->>>>>>> a5d29932c3e2bd2c461e3e55fdb452146eb90a14
                                 </tr>
                             </thead>
                             <tbody>
@@ -195,10 +191,6 @@
                                     <td><input type="checkbox" class="customerassign" data-id="{{$user->id}}"></td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
-<<<<<<< HEAD
-                                    <!-- <td>{{$user->phone}}</td> -->
-=======
->>>>>>> a5d29932c3e2bd2c461e3e55fdb452146eb90a14
                                 </tr>
                                 @endforeach
                             </tbody>
