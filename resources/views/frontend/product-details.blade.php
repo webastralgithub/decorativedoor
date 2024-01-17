@@ -88,11 +88,11 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                                 $ammount = '';
                             @endphp
                         @endif
-                        <div class="row">
-                            <div class="col-md-4 p-0">                               
+                        <div class="row apply-cupons-row-sd">
+                            <div class="col-md-4 pr-0">                               
                                 <input type="number" id="discount_value" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="{{$ammount}}" {{$disbale}} required>
                             </div>
-                            <div class="col-md-2 p-0">
+                            <div class="col-md-3 ">
                                 <input type="submit" name="submit" id="discount_btn" class="btn primary-btn" value="{{$buttonvalue}}" {{$disbale}}>
                             </div>
                         </div>
@@ -118,16 +118,16 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                         <h3>Variants</h3>
                         <div class="varients-block-flex">
                             @foreach($variantOptions as $variantCombination)
-                            <div class="row varient-block-cn">
-                                <div class="col-sm-6"><label>{{ucwords($variantCombination['variantType'])}}</label></div>
-                                <div class="col-sm-6">
+                            <div class="varient-block-cn">
+                                <label>{{ucwords($variantCombination['variantType'])}}</label>
+                                
                                     <select class="variants">
                                         <option disabled selected value="0">Select {{ucwords($variantCombination['variantType'])}}</option>
                                         @foreach($variantCombination['tagNames'] as $key => $tags)
                                         <option value="{{$tags}}">{{ucwords($tags)}}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                              
                             </div>
                             @endforeach
 
@@ -161,7 +161,7 @@ $variantOptions = (isset($variantSingle->option_type) && !empty($variantSingle->
                       
                     <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
                     <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
-                    <li><b>Availability</b> <span id="availability">{{( getProductAvailabityStock($product->id) > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
+                    <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{( getProductAvailabityStock($product->id) > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
                     <!-- <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li> -->
 
                     <!-- <li><b>Qunatity</b> <span>{{ getProductAvailabityStock($product->id) }}</span></li> -->

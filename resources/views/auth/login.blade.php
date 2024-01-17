@@ -42,7 +42,7 @@
                         <a href="{{ route('password.request') }}"> Forgot your password</a>
                         @endif
                     </div>
-                    <button type="submit" class="btn btn-primary py-3 w-100 mb-4">
+                    <button type="submit" class="login-screen-btn btn btn-primary py-3 w-100 mb-4">
                         {{ __('Login') }}
                     </button>
 

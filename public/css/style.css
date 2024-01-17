@@ -2411,6 +2411,11 @@ button span.visually-hidden.cogs-btn i.fa.fa-cog {
     padding-right: 5px;
 }
 
+.login-screen-btn{
+	background: #434e6e !important;
+	border-color: #434e6e !important;
+}
+
 .btn-group ul.dropdown-menu.show {
     padding: 10px;
     font-size: 14px;

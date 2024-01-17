@@ -140,7 +140,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="text-right">
+                    <td colspan="5" class="text-right cart-page-btm-btns">
                         <a href="{{ url()->previous() }}" class="btn btn-warning"
                             style="background: #93681a; color: #fff; border-color: #93681a;"><i
                                 class="fa fa-angle-left"></i> Continue Shopping</a>
@@ -166,13 +166,15 @@
                     </div>
                     <div class="modal-body">
                         <a href="{{ route('customer') }}" class="btn btn-success">Add New Customer</a><br>
+                       
+                       <div class="cart-pop-up-table-wrapper">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th></th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
+                                    <!-- <th>Phone</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,16 +183,16 @@
                                     <td><input type="checkbox" class="customerassign" data-id="{{$user->id}}"></td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>{{$user->phone}}</td>
+                                    <!-- <td>{{$user->phone}}</td> -->
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        
+                       </div>
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">{{ __('Close') }}</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

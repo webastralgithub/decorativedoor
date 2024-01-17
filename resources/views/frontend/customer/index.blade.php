@@ -3,6 +3,8 @@
 @section('content')
     <section class="customer spad">
         <div class="container">
+
+         <div class="customer-form-page-re">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
@@ -10,13 +12,15 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row customer-form-responsive">
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8 check-user-exist">
 
                     <form id="customer-assign" action="{{ route('store-customer') }}" method="POST">
                         @csrf
                         <input type="hidden" class="form-control" id="customer-id" name="user_id" value="">
+                        
+                        <div class="per-info-sec">
                         <h4 class="mb-3">Prosonal Information</h4>
                         <div class="row">
                             <div class="col-md-6">
@@ -54,8 +58,9 @@
                                 </select>
                             </div>
                         </div>
+                        </div>
 
-
+                        <div class="address-block-sm">
                         <h5 class="mb-3 mt-3"> Billing Address</h5>
                         <hr>
                         <div class="row mt-4">
@@ -93,10 +98,11 @@
 
 
                         <div class="row mt-4">
-                            <div class="col-md-12">
+                            <div class="col-md-12 same-address-block">
                                 <input type="checkbox" class="form-check-input" id="use_shipping_add">
                                 <label class="form-check-label"> Use as same shipping address </label>
                             </div>
+                        </div>
                         </div>
 
                         <div class="shipping_address">
@@ -135,6 +141,8 @@
                             </div>
                         </div>
 
+
+                        <div class="company-info-sec">
                         <h4 class="mb-3 mt-3">Company Information</h4>
                         <hr>
                         <div class="row">
@@ -185,17 +193,22 @@
                                 <textarea class="form-control" id="company-notes" placeholder="Notes" name="notes"></textarea>
                             </div>
                         </div>
+                        </div>
+                        
                         <div class="row mt-4" id="final_submit">
                             <div class="col-md-12">
                                 <input type="submit" class="form-control primary-btn" name="submit"
                                     value="Submit and use this customer">
                             </div>
                         </div>
+                        
 
                     </form>
                     <div id="productDiscountMessage" class="product-discount-message" style="display:none"></div>
                 </div>
                 <div class="col-lg-2"></div>
+
+                </div> 
             </div>
     </section>
 @endsection

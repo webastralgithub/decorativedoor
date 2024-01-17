@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__about__logo">
-                        <a href="/"><img src="{{asset('frontend/img/logo.png')}}" alt=""></a>
+                        <a href="/"><img src="{{asset('frontend/img/logo-white.png')}}" alt=""></a>
                     </div>
                     <ul>
                         <li>Address: 00-00 Road 00000 Dummy Address</li>
