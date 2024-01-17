@@ -60,6 +60,11 @@ class Order extends Model
         return $this->hasMany(OrderDetails::class);
     }
 
+    public function deliverorder()
+    {
+        return $this->hasMany(DeliverQuantity::class);
+    }
+
     public function scopeSearch($query, $value): void
     {
         $query->where('invoice_no', 'like', "%{$value}%")

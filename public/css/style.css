@@ -889,10 +889,10 @@ option:disabled {
 }
 
 .modal .modal-content {
-    width: 77%;
+    width: 100%;
     border: none;
     border-radius: 0;
-    padding: 30px 30px;
+    padding: 10px 10px;
 }
 
 .close-modal {
