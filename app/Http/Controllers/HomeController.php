@@ -59,6 +59,6 @@ class HomeController extends Controller
         if(session()->has('assign_customer')){
             Session::forget('assign_customer');
         }
-        return back();
+       return redirect()->route('customer');
     }
 }

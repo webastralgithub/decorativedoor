@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__about__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                        <a href="/"><img src="{{asset('frontend/img/logo.png')}}" alt=""></a>
                     </div>
                     <ul>
                         <li>Address: 00-00 Road 00000 Dummy Address</li>
@@ -15,14 +15,16 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                 <div class="footer__widget">
-                    <h6>Useful Links</h6>
+                    <h6>Categories</h6>
                     <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">About Our Shop</a></li>
-                        <li><a href="#">Secure Shopping</a></li>
-                        <li><a href="#">Delivery infomation</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Our Sitemap</a></li>
+                        @foreach($categories as $category)
+                        @if(empty($category->parent_id) && $category->name != 'Add On')
+                        <li>
+                            <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
+                        </li>
+                        @endif
+                        @endforeach
+                        
                     </ul>
                     {{-- <ul>
                         <li><a href="#">Who We Are</a></li>

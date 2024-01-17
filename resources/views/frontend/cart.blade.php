@@ -144,11 +144,13 @@
                         <a href="{{ url()->previous() }}" class="btn btn-warning"
                             style="background: #93681a; color: #fff; border-color: #93681a;"><i
                                 class="fa fa-angle-left"></i> Continue Shopping</a>
-                                @if(empty(session()->get('assign_customer')))
-                                    <button class="btn btn-success" data-toggle="modal" data-target="#assignuser">Proceed Order</button>
-                                @else
-                                    <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed Order</a>
-                                @endif
+                        <div id="place-order-btn">
+                            @if(empty(session()->get('assign_customer')))
+                            <button class="btn btn-success" data-toggle="modal" data-target="#assignuser">Proceed Order</button>
+                            @else
+                                <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed Order</a>
+                            @endif
+                        </div>                               
                     </td>
                 </tr>
             </tfoot>

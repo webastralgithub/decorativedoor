@@ -1820,11 +1820,17 @@ height: 35px;
 
 .product__details__pic__item {
 	margin-bottom: 20px;
+	width: 100%;
+    height: 500px;
 }
 
-.product__details__pic__item img {
-	min-width: 100%;
+table#cart div#place-order-btn {
+    display: contents;
 }
+
+/* .product__details__pic__item img {
+	min-width: 100%;
+} */
 
 .product__details__pic__slider img {
 	cursor: pointer;

@@ -359,10 +359,12 @@
                     console.log(response);
                     jQuery('button.btn.btn-secondary.close-btn').trigger('click');
                     jQuery('#productDiscountMessage').text(response.success); 
+                    jQuery('#place-order-btn').html('<a href="/checkout" class="btn btn-success">Proceed Order</a>');
                     jQuery('#productDiscountMessage').show();
                     setTimeout(function() {
                         jQuery('#productDiscountMessage').hide();
                     }, 2000);
+
                 },
                 error: function (xhr, status, error) {
                     // Handle the error response here
