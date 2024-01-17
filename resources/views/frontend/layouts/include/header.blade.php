@@ -90,8 +90,8 @@
         </div>
         <div class="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> hello@dummy.com</li>
-                <li><i class="fa fa-phone"></i> +1 (604) 446-5841</li>
+                <li><i class="fa fa-envelope"></i> <a href="mailto:hello@dummy.com">hello@dummy.com</a></li>
+                <li><i class="fa fa-phone"></i> <a href="tel:604-446-5841">+1 (604) 446-5841</a></li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
@@ -103,8 +103,8 @@
                     <div class="col-lg-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@dummy.com</li>
-                                <li><i class="fa fa-phone"></i> +1 (604) 446-5841</li>
+                                <li><i class="fa fa-envelope"></i> <a href="mailto:hello@dummy.com">hello@dummy.com</a></li>
+                                <li><i class="fa fa-phone"></i> <a href="tel:604-446-5841">+1 (604) 446-5841</a></li>
                                 <li>Free Shipping for all Order of $99</li>
                             </ul>
                         </div>
