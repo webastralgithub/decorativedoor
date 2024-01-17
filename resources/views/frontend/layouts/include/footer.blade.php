@@ -124,9 +124,7 @@
 setTimeout(function() {
     jQuery('.product-discount-message').hide();
 }, 2000);
-
-
-            
+  
     $(".update-cart").change(function(e) {
         e.preventDefault();
         var ele = $(this);
