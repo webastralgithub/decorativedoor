@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 class OrderController extends Controller
 {
 
@@ -261,20 +261,16 @@ class OrderController extends Controller
     // }
 
     public function downloadInvoice($order_id)
-{
-    $order = Order::with(['customer', 'details'])
-        ->where('id', $order_id)
-        ->first();
+    {
+        $order = Order::with(['customer', 'details'])
+            ->where('id', $order_id)
+            ->first();
 
-    $recentSignature = DeliveryUser::where('order_id', $order->id)->first();
+        $recentSignature = DeliveryUser::where('order_id', $order->id)->first();
 
-    $pdf = PDF::loadView('admin.orders.print-invoice', [
-        'order' => $order,
-        'recentSignature' => $recentSignature,
-    ]);
-
-    return $pdf->download('invoice.pdf');
-}
+        $pdf = PDF::loadView('admin.orders.print-invoice', compact("order","recentSignature"));
+        return $pdf->download('invoice.pdf');
+    }
 
     public function assign_user(Request $request)
     {
