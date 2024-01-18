@@ -199,7 +199,7 @@
                             <div class="modal-body">
                                 <!-- <form id="delivery_Quantity" action="{{ route('order.per.product.delivery') }}" method="Post"> -->
                                 <!-- @csrf -->
-                                <div class="mb-3 row">
+                                <div class="mb-3 row delivery-products">
                                     <input type="hidden" name="item_id" id="item_id" value="">
                                     <input type="hidden" name="order_id" id="order_id" value="{{$order->id}}">
                                     <input type="hidden" name="new_status" id="new_status" value="">
@@ -239,7 +239,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer delivery-products-footer">
                                 <div class="row">
                                     <div class="col-md-12 mt-6">
                                         <input type="button" class="btn btn-primary btn-sm" onclick="return updateOrderItemQuantity();" name="submit" value="Submit">
