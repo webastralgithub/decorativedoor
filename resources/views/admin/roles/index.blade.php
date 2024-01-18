@@ -50,7 +50,7 @@
                     
                                     @if ($role->name != 'Super Admin')
                                     @can('edit-role')
-                                    <li><a href="{{ route('roles.edit', $role->id) }}">Edit</a></li>
+                                    <li><a href="{{ route('roles.edit', $role->id) }}" class="dropdown-item">Edit</a></li>
                                     @endcan
                     
                                     @can('delete-role')

@@ -3913,10 +3913,21 @@ section.customer.spad form .nice-select.form-control span.current{
 }
 
 .address-block-sm, .shipping_address{
-	background: #f6f6f6;
+	background: #ededed;
     padding: 10px 27px 40px;
-    margin-top: 40px;
+    margin-top: 0px;
     border-radius: 10px;
+	margin-bottom: 20px;
+}
+
+.customer-form-page-re form input{
+	border: 1px solid #c5c5c5;
+}
+
+.address-block-sm h5, .shipping_address h5{
+	margin-top: 1px !important;
+    font-size: 18px !important;
+    font-weight: 600;
 }
 
 .address-block-sm h4, .shipping_address h4{
@@ -3936,17 +3947,32 @@ section.customer.spad form .nice-select.form-control span.current{
 }
 
 .company-info-sec{
-	padding: 30px 0 20px;
+	padding: 0px ;
 }
 
 .company-info-sec h4,
 .per-info-sec h4	{
-	font-size: 23px;
+	font-size: 18px;
     font-weight: 600;
     margin-bottom: 20px !important;
-    background: #e0e0e0;
+    background: #ededed;
     padding: 10px;
     border-radius: 5px;
+	margin-top: 0 !important;
+}
+
+.middle-block-customer-page{
+	border-left: 1px solid #b5b5b5;
+	border-right: 1px solid #b5b5b5;
+}
+
+.per-info-sec .row, .company-info-sec .row, .address-block-sm .row, .shipping_address .row {
+    gap: 20px;
+}
+
+.customer-form-page-re #final_submit{
+    border-top: 1px solid #b5b5b5;
+	padding-top: 30px;
 }
 
 .product-discount-message {
@@ -3995,22 +4021,36 @@ section.customer.spad form .nice-select.form-control span.current{
 
 .customer-form-page-re{
     border: 1px solid #bababa;
-    padding: 0 0 60px;
+    padding: 0 0 30px;
     border-radius: 10px;
     overflow: hidden;
 }
 
 .customer-form-page-re .section-title{
     background: #434e6e;
-    padding: 20px 0 50px;
+    padding: 13px 35px 25px;
+    text-align: left;
+	margin-bottom: 35px;
+}
+
+.customer-form-page-re .section-title h2:after{
+    bottom: -8px;
+    right: auto;
+    height: 2px;
 }
 
 .customer-form-page-re .section-title h2{
 	color: #ffffff;
+	font-size: 28px;
+    font-weight: 600;
 }
 
 .customer-form-page-re .section-title h2:after{
 	background: #ffffff;
+}
+
+.customer-page-cm-one{
+	padding: 0px 40px !important;
 }
 
 .sidebar__item ul li
@@ -4058,6 +4098,17 @@ div#assignuser .table td {
     color: #fff;
 }
 
+@media only screen and (max-width: 900px) {
+	.middle-block-customer-page {
+		margin: 40px 0;
+		padding: 20px 15px;
+		border-left: none;
+		border-right: none;
+		border-top: 1px solid #b5b5b5;
+		border-bottom: 1px solid #b5b5b5;
+	}
+}
+
 @media only screen and (max-width: 600px) {
 	.apply-cupons-row-sd .col-md-4{
 		padding: 0 15px !important;
@@ -4084,10 +4135,23 @@ div#assignuser .table td {
 	}
 
 	.customer-form-page-re .section-title h2{
-		font-size: 29px;
+		font-size: 24px;
 	}
 
 	.customer-form-page-re .section-title {
-		padding: 12px 0 32px;
+		padding: 12px 25px 26px;
+	}
+
+	.customer-page-cm-one {
+		padding: 0px 15px !important;
+	}
+
+	.middle-block-customer-page {
+		margin: 40px 0;
+		padding: 20px 15px;
+		border-left: none;
+		border-right: none;
+		border-top: 1px solid #b5b5b5;
+		border-bottom: 1px solid #b5b5b5;
 	}
 }

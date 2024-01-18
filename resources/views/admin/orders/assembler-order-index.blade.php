@@ -255,6 +255,7 @@
 
         if (existingNotes.length > 0) {
             existingNotesContainer = `
+            <div class="footer-content-notes">
             <h3>Existing Notes:</h3>
             <table class="swal-table">
                 <thead>
@@ -273,7 +274,9 @@
                         </tr>
                     `).join('')}
                 </tbody>
-            </table>`;
+            </table>
+            </div>
+            `;
         }
 
         await Swal.fire({
