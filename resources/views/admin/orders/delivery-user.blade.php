@@ -36,7 +36,7 @@
                 @endforeach
                 @endforeach
         </div>
-        <div class="mt-4">
+        <div class="mt-4 signature-sec">
             <h4>Recent Signature:</h4>
             <img src="{{ asset('storage/signatures/' . $recentSignature->signature) }}" alt="Recent Signature">
         </div>
