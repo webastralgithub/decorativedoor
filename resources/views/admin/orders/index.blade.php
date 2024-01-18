@@ -14,9 +14,9 @@
         <h3>Manage Orders</h3>
 
         <div class="top-bntspg-hdr">
-        @can('create-order')
-        <a href="{{ route('orders.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Order</a>
-        @endcan
+            @can('create-order')
+            <a href="{{ route('orders.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Order</a>
+            @endcan
         </div>
     </div>
     @if(\Session::has('error'))
@@ -24,7 +24,7 @@
         <li class="alert alert-danger">{!! \Session::get('error') !!}</li>
     </div>
     @endif
-    
+
     @if(\Session::has('success'))
     <div>
         <li class="alert alert-success">{!! \Session::get('success') !!}</li>
@@ -46,7 +46,7 @@
                     {{-- <th>{{__('Address')}}</th> --}}
                     <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Ready Date')}}</th>
-                    <th>{{__('Quantity')}}</th> 
+                    <th>{{__('Quantity')}}</th>
                     @can('order_price')
                     <th>{{__('Total')}}</th>
                     @endcan
@@ -63,8 +63,7 @@
                             @can('make-payment','download-invoice')
                             @if($order->order_status == \App\Models\OrderStatus::IN_PROGRESS)
                             <div class="btn-group">
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
                                 </button>
                                 <ul class="dropdown-menu">
@@ -90,14 +89,12 @@
                             @endforeach
                         </td>
                         @endcan
-                        <td class="center"> <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_order_coordinator')
-                                onclick="return assignUser('{{$order->id}}','{{$coordinators}}','order coordinator','{{$order->user_id}}');"
-                                @endcan>{{$order->coordinator->name ?? "..."}}</span>
+                        <td class="center"> <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_order_coordinator') onclick="return assignUser('{{$order->id}}','{{$coordinators}}','order coordinator','{{$order->user_id}}');" @endcan>{{$order->coordinator->name ?? "..."}}</span>
                         </td>
                         <td class="center">
                             <span class="@if(!$order->sales_person) dots-assigned @endif cursor-pointer">{{getUserInfo($order->sales_person)['name'] ?? "..."}}</span>
                         </td>
-                         <td class="center">
+                        <td class="center">
                             <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_sales_person') onclick="return assignUser('{{$order->id}}','{{$sales_users}}','sales person','{{$order->user_id}}');" @endcan>{{$order->user->name ?? "..."}}</span>
                         </td>
                         {{-- <td class="center">
@@ -116,9 +113,9 @@
                         {{-- <td class="@if($address == '') center @endif">
                             @if($address != '')
                             <span class="">{{$address}}</span>
-                            @else
-                            <span class="dots-assigned cursor-pointer" @can('change_user_address') onclick="return addUserAddress('{{$order->user_id}}');" @endcan>{{"..."}}</span>
-                            @endif
+                        @else
+                        <span class="dots-assigned cursor-pointer" @can('change_user_address') onclick="return addUserAddress('{{$order->user_id}}');" @endcan>{{"..."}}</span>
+                        @endif
                         </td> --}}
                         @endcan
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
@@ -305,7 +302,7 @@
             // title: "Assigne the " + type,
             input: "select",
             inputOptions: inputOptions,
-            inputPlaceholder: "Select " +type.charAt(0).toUpperCase() + type.slice(1).toLowerCase(),
+            inputPlaceholder: "Select " + type.charAt(0).toUpperCase() + type.slice(1).toLowerCase(),
             inputValue: selectedUser,
             showCancelButton: true,
             inputValidator: (value) => {
@@ -448,7 +445,7 @@
     async function addUserAddress(userId, responseType) {
         if (userId <= 0) {
             Swal.fire({
-               // icon: 'warning',
+                // icon: 'warning',
                 //title: 'User not valid!',
                 text: "Please select Sales Person"
             });

@@ -120,14 +120,20 @@ class OrderController extends Controller
     public function updateQuantityStatus(Request $request)
     {
 
-        $this->validate($request, [
+        $validator = validator($request->all(), [
             'delivery_quantity' => [
                 'required',
                 'numeric',
-                'min:0',
-                'max:' . $request->input('orders_quantity'),
+                'min:1',
+                'max:' . $request->input('order_quantity'),
             ],
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ]);
+        }
         $itemId = $request->item_id;
         $orderDetails = OrderDetails::findOrFail($itemId);
         if (!isset($orderDetails) && empty($orderDetails)) {
@@ -138,17 +144,14 @@ class OrderController extends Controller
         if ($orderDetails->order->details->count() == 1) {
             $orderDetails->order->update(['order_status' => $request->new_status]);
             $orderDetails->update(['order_status' => $request->new_status]);
-            DeliverQuantity::create(['order_id' => $request->order_id, 'item_id' => $itemId, 'order_quantity' => $request->orders_quantity, 'diliver_quantity' => $request->delivery_quantity]);
+            DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
             //return response()->json(['success' => 'Order status updated successfully']);
         } else {
             $orderDetails->update(['order_status' => $request->new_status]);
-            DeliverQuantity::create(['order_id' => $request->order_id, 'item_id' => $itemId, 'order_quantity' => $request->orders_quantity, 'deliver_quantity' => $request->delivery_quantity]);
+            DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
             //return response()->json(['success' => 'Order status updated successfully']);
         }
-
-        return redirect()
-            ->route('order-assembler')
-            ->with('success', 'Quantity Added successfully');
+        return response()->json(['success' => 'Quantity Added successfully!']);
     }
 
     public function updateProductStatus(Request $request)
@@ -368,7 +371,7 @@ class OrderController extends Controller
     public function get_existing_notes(Request $request)
     {
         $orderId = $request->input('order_id');
-    
+
         $notes = Note::where('order_id', $orderId)
             ->select('note', 'created_at')
             ->orderBy('created_at', 'desc')
@@ -379,9 +382,7 @@ class OrderController extends Controller
                     'created_at' => $note->created_at->format('d-m-Y'),
                 ];
             });
-    
+
         return response()->json(['notes' => $notes]);
     }
-    
-    
 }

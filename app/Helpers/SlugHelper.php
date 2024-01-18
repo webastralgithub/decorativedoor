@@ -170,7 +170,7 @@ if (!function_exists('generateProductSlug')) {
         {
 
             $deliveryorder =  DeliverQuantity::where('item_id', $itemId)->where('order_id', $orderId)->get();
-    
+
             $total = 0;
             if (!empty($deliveryorder))
                 foreach ($deliveryorder as $deliver) {

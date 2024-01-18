@@ -40,7 +40,7 @@
         <div class="table-order">
             <table class="table table-striped table-bordered" id="order" style="display: table;">
                 <thead>
-                    <th>{{ __('Action') }}</th>
+                    <!-- <th>{{ __('Action') }}</th> -->
                     <th>{{ __('Order ID') }}</th>
                     <th>{{ __('Customer Name') }}</th>
                     <th>{{ __('Missing Items') }}</th>
@@ -56,18 +56,14 @@
                     @foreach ($orders as $key => $order)
                     <tr>
 
-                        <th><span class="accordion-header" data-id="{{ $order->order_id }}"><img
-                                    src="{{ asset('img/order-icon.svg') }}" class="img" width="30"></span>
-                        </th>
-                        {{-- <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{
-                                $order->order_id }}</a></td> --}}
-                        <td>#{{ $order->order_id }}</td>
+                        <!-- <th><span class="accordion-header" data-id="{{ $order->order_id }}"><img src="{{ asset('img/order-icon.svg') }}" class="img" width="30"></span>
+                        </th> -->
+                        <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{
+                                $order->order_id }}</a></td> 
+                        <!-- <td>#{{ $order->order_id }}</td> -->
 
                         <td class="center">
-                            <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer"
-                                @can('change_cusmtoer')
-                                onclick="return assignUser('{{ $order->id }}','{{ $customers }}','customers','{{ $order->user_id }}');"
-                                @endcan>{{ $order->user->name ?? '...' }}
+                            <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_cusmtoer') onclick="return assignUser('{{ $order->id }}','{{ $customers }}','customers','{{ $order->user_id }}');" @endcan>{{ $order->user->name ?? '...' }}
                             </span>
                         </td>
                         @php
@@ -102,52 +98,14 @@
                     <tr class="show-accordin-{{ $order->order_id }}" style="display:none;">
                         <th>{{ __('Product Name') }}</th>
                         <th>{{ __('Quantity') }}</th>
-                        <th>{{ __('Status') }}</th>
                         <th>{{ __('Discount') }}</th>
                         <th>{{ __('Price') }}</th>
                         <th>{{ __('Total') }}</th>
                     </tr>
                     @foreach ($order->details as $items)
                     <tr class="show-accordin-{{ $order->order_id }}" style="display:none;">
-                        <td>{{ productsInfo($items->product_id)['title'] }}</td>
+                        <td class="highlight">{{ productsInfo($items->product_id)['title'] }}</td>
                         <td>{{ $items->quantity }}</td>
-                        <td>
-                            <select class="form-select form-control-solid" id="order_status" name="order_status"
-                                onchange="return updateSpecificProductrStatus('{{$items->order_id}}', '{{ $items->id }}',this, '{{ $items->quantity }}', '{{ getDeliverQuantity($items->order_id, $items->id) }}')">
-                                @foreach ($order_statuses as $status)
-                                @if (\App\Models\OrderStatus::COMPLETE == $status->id)
-                                <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                    @selected($items->order_status == $status->id)>
-                                    {{ convertToReadableStatus($status->name) }}</option>
-                                @endif
-                                @if (\App\Models\OrderStatus::IN_PROGRESS == $status->id)
-                                <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                    @selected($items->order_status == $status->id)>
-                                    {{ convertToReadableStatus($status->name) }}</option>
-                                @endif
-                                @if (\App\Models\OrderStatus::FAILED == $status->id)
-                                <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                    @selected($items->order_status == $status->id)>
-                                    {{ convertToReadableStatus($status->name) }}</option>
-                                @endif
-                                @if (\App\Models\OrderStatus::READY_TO_ASSEMBLE == $status->id)
-                                <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                    @selected($items->order_status == $status->id)>
-                                    {{ convertToReadableStatus($status->name) }}</option>
-                                @endif
-                                @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id)
-                                <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                    @selected($items->order_status == $status->id)>
-                                    {{ convertToReadableStatus($status->name) }}</option>
-                                @endif
-                                @if (\App\Models\OrderStatus::DISPATCHED == $status->id)
-                                <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                    @selected($items->order_status == $status->id)>
-                                    {{ convertToReadableStatus($status->name) }}</option>
-                                @endif
-                                @endforeach
-                            </select>
-                        </td>
                         <td>{{ '$' . (isset($items->discount) ? $items->discount : 0) }}</td>
                         <td>{{ '$' . $items->unitcost }}</td>
                         <td>{{ '$' . $items->total - $items->discount }}</td>
@@ -165,76 +123,12 @@
                             {{ __('Note') }}
                         </label>
                         <div class="col-md-9" style="line-height: 35px;">
-                            <textarea name="note" id="note"
-                                class="form-control example-date-input @error('note') is-invalid @enderror"
-                                value="{{ old('note') }}" required></textarea>
+                            <textarea name="note" id="note" class="form-control example-date-input @error('note') is-invalid @enderror" value="{{ old('note') }}" required></textarea>
                         </div>
                     </div>
                 </div>
                 <!-- <button type="button" onclick="submitAddressForm()">Submit</button> -->
             </form>
-
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Add Dilivery product Quantity') }}
-                            </h5>
-                            <button type="button" class="close" aria-label="Close" onclick="closeModal()">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="delivery_Quantity" action="{{ route('order.per.product.delivery') }}"
-                                method="Post">
-                                @csrf
-                                <div class="mb-3 row">
-                                    <input type="hidden" name="item_id" id="item_id" value="">
-                                    <input type="hidden" name="order_id" id="order_id" value="">
-                                    <input type="hidden" name="new_status" id="new_status" value="">
-                                    <input type="hidden" name="orders_quantity" id="orders_quantity" value="">
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="note" class="col-md-12 col-form-label text-md-end text-start">
-                                                {{ __('Order Quantity :') }} <span id="order_quantity"></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="note" class="col-md-12 col-form-label text-md-end text-start">
-                                                {{ __('Delivered Quantity :') }} <span id="delivery_order"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="note" class="col-md-12 col-form-label text-md-end text-start">
-                                                {{ __('To be Delivered Quantity :') }}
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="col-md-12" style="line-height: 35px;">
-                                                <input type="number" name="delivery_quantity" id="delivery"
-                                                    class="form-control example-date-input"
-                                                    value="{{ old('delivery_quantity') }}" required min="0">
-                                                @error('delivery_quantity')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <center>
-                                        <div class="col-md-12 mt-6">
-                                            <input type="submit" class="btn btn-primary btn-sm" name="submit"
-                                                value="Submit">
-                                    </center>
-                                </div>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -243,7 +137,7 @@
 @endsection
 @section('scripts')
 <script>
-    jQuery('.accordion-header').on('click', function (e) {
+    jQuery('.accordion-header').on('click', function(e) {
         var id = jQuery(this).data('id');
         jQuery('.show-accordin-' + id).toggle();
     });
@@ -299,10 +193,8 @@
                             note: note,
                             _token: '{{ csrf_token() }}'
                         },
-                        success: function (response) {
-                        },
-                        error: function (error) {
-                        }
+                        success: function(response) {},
+                        error: function(error) {}
                     });
                     Swal.close();
                 }
@@ -330,9 +222,6 @@
             return [];
         }
     }
-
-
-
 </script>
 <script>
     function updateSpecificProductrStatus(orderId, itemId, selectElement, order_quantity = '0', deliver_quantity = '0') {

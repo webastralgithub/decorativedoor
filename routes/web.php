@@ -62,8 +62,7 @@ Route::middleware(['auth', 'isAdminWebAccess'])->group(function () {
     Route::post('checkout', [ShopController::class, 'checkout'])->name('checkout');
     Route::get('get_price', [ShopController::class, 'get_price'])->name('get.price');
     Route::Post('share-product/{id}', [ShopController::class, 'share_product'])->name('share-product');
-    Route::Post('discount/{id}',[ShopController::class, 'product_discount'])->name('discount');
-
+    Route::Post('discount/{id}', [ShopController::class, 'product_discount'])->name('discount');
 });
 
 Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function () {
@@ -104,7 +103,7 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
     Route::get('/assembler-order', [OrderController::class, 'assembler_order'])->name('order-assembler');
     Route::Post('/add-assembler-note', [OrderController::class, 'add_assembler_note'])->name('order.add_assembler_note');
     Route::Post('/get-existing-notes', [OrderController::class, 'get_existing_notes'])->name('order.get_existing_notes');
-    
+
     Route::get('/deliverie', [DeliveriesController::class, 'index'])->name('deliveries');
     Route::get('/deliveries/track', [DeliveriesController::class, 'orderTrack'])->name('order.track');
     Route::post('deliveries/track/order', [DeliveriesController::class, 'deliveryTrackOrder'])->name('delivery.track.order');
