@@ -69,7 +69,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make Payment</a></li>
                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Add Signature</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('order.downloadInvoice', $order) }}">Print</a></li>
+                                    <!-- <li><a class="dropdown-item" href="{{ route('order.downloadInvoice', $order) }}">Print</a></li> -->
                                 </ul>
                             </div>
                             @endif

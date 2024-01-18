@@ -2597,3 +2597,15 @@ div#exampleModal .modal-content .modal-header h5 {
 div#exampleModal .modal-content .modal-header button.close span {
     color: #fff !important;
 }
+
+.body-content-new .mt-4 img {
+    width: 15% !important;
+    height: 250px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+.body-content-new .mt-4.signature-sec img {
+    width: 20% !important;
+    height: 50px;
+    object-fit: contain;
+}

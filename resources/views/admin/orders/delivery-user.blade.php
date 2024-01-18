@@ -9,7 +9,7 @@
         <div class="top-bntspg-hdr">
             <a href="{{ route('orders.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
             <a href="javascript:window.print()" class="btn btn-primary text-capitalize border0" data-mdb-ripple-color="dark" onclick="hidePrintContent()"><i class="fas fa-print text-primary"></i> Print</a>
-            <a href="{{ route('order.downloadInvoice', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm"> Invoice</a>
+            <!-- <a href="{{ route('order.downloadInvoice', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm"> Invoice</a> -->
         </div>
     </div>
     @if(\Session::has('error'))
@@ -36,7 +36,7 @@
                 @endforeach
                 @endforeach
         </div>
-        <div class="mt-4">
+        <div class="mt-4 signature-sec">
             <h4>Recent Signature:</h4>
             <img src="{{ asset('storage/signatures/' . $recentSignature->signature) }}" alt="Recent Signature">
         </div>
