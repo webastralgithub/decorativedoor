@@ -891,8 +891,37 @@ option:disabled {
 .modal .modal-content {
     width: 100%;
     border: none;
-    border-radius: 0;
-    padding: 10px 10px;
+    border-radius: 8px;
+    padding: 0px;
+}
+
+.modal .modal-content .modal-header{
+    background: #004686;
+}
+
+.modal .modal-content .modal-header h5{
+    color: #fff !important;
+}
+
+.modal .modal-content .modal-header button{
+    opacity: 1;
+}
+
+.modal .modal-content .modal-header button span{
+    color: #fff !important;
+}
+
+.modal .modal-content form label{
+    font-size: 15px;
+    font-weight: 500;
+    color: #2e2e2e;
+}
+
+.modal .modal-content form input[type="submit"]{
+    background: #004686;
+    border-color: #004686;
+    padding: 7px 30px;
+    margin-top: 30px;
 }
 
 .close-modal {
@@ -944,6 +973,68 @@ option:disabled {
     font-weight: 500;
     margin-bottom: 10px;
     text-transform: uppercase;
+}
+
+.footer-content-notes h3{
+    font-size: 20px;
+    font-weight: 600;
+    color: #1c1c1c !important;
+}
+
+.footer-content-notes table{
+    border: 1px solid #b5b1b1;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 14px;
+    display: table;
+    width: 100%;
+}
+
+.footer-content-notes table td,
+.footer-content-notes table th{
+    padding: 5px 7px;
+    text-align: left;
+    font-size: 15px;
+    color: #262626;
+}
+
+.footer-content-notes table th{
+    background: #004787;
+    color: #fff;
+}
+
+.swal2-popup {
+    padding-bottom: 0;
+}
+
+.btn-group .dropdown-menu{
+    /* box-shadow: 0 2px 6px #0000004f; */
+    min-width: unset;
+    max-width: unset;
+    /* width: 110px; */
+    padding: 5px 10px !important;
+}
+
+.btn-group .dropdown-menu li{
+    border-bottom: none !important;
+    width: auto !important;
+}
+
+.btn-group .dropdown-menu li:last-child{
+    border: none !important;
+}
+
+.btn-group .dropdown-menu li a,
+.btn-group .dropdown-menu li button{
+    padding: 3px 20px !important;
+    text-align: center !important;
+    border-radius: 4px;
+}
+
+.swal2-footer{
+    background: #f3f3f3;
+    border-top: 1px solid #cdcaca;
+    padding: 20px;
 }
 
 .model-content-box form .from-row-wrapper .from-row-block input,
@@ -2444,10 +2535,43 @@ table#order tbody tr td a, table#order tbody tr td span {
 
 .images-preview-div span.delete_image {
     z-index: 9999;
-    border: 2px solid #080808;
+    /* border: 2px solid #080808; */
     height: 20px;
     border-radius: 52%;
     width: 20px;
     font-size: 11px;
     margin: 5px -33px 0px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+.images-preview-div span.delete_image i {
+    font-size: 16px;
+}
+.manage-inv {
+    display: flex;
+    align-items: end;
+}
+.table-bordered tbody tr th span.accordion-header img {
+    width: 25px;
+}
+
+div#exampleModal .modal-content {
+    padding: 0;
+}
+
+div#exampleModal .modal-content .modal-header {
+    background-color: #112537;
+}
+
+div#exampleModal .modal-content .modal-header h5 {
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+div#exampleModal .modal-content .modal-header button.close span {
+    color: #fff !important;
 }

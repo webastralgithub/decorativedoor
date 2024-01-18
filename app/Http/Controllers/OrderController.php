@@ -17,7 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\View;
+use PDF;
 class OrderController extends Controller
 {
 
@@ -249,19 +250,34 @@ class OrderController extends Controller
         $order->delete();
     }
 
-    public function downloadInvoice($order)
-    {
-        $order = Order::with(['customer', 'details'])
-            ->where('id', $order)
-            ->first();
+    // public function downloadInvoice($order)
+    // {
+    //     $order = Order::with(['customer', 'details'])
+    //         ->where('id', $order)
+    //         ->first();
 
-        $deliveryUser = DeliveryUser::where('order_id', $order->id)->first();
+    //     $recentSignature = DeliveryUser::where('order_id', $order->id)->first();
+    //     return view('admin.orders.print-invoice', [
+    //         'order' => $order,
+    //         'recentSignature' => $recentSignature,
+    //     ]);
+    // }
 
-        return view('admin.orders.print-invoice', [
-            'order' => $order,
-            'deliveryUser' => $deliveryUser,
-        ]);
-    }
+    public function downloadInvoice($order_id)
+{
+    $order = Order::with(['customer', 'details'])
+        ->where('id', $order_id)
+        ->first();
+
+    $recentSignature = DeliveryUser::where('order_id', $order->id)->first();
+
+    $pdf = PDF::loadView('admin.orders.print-invoice', [
+        'order' => $order,
+        'recentSignature' => $recentSignature,
+    ]);
+
+    return $pdf->download('invoice.pdf');
+}
 
     public function assign_user(Request $request)
     {
@@ -335,22 +351,29 @@ class OrderController extends Controller
 
     public function delivery_user($id)
     {
+        $recentSignature = DeliveryUser::latest()->first();
+        $images =  DeliveryUser::where('order_id', $id)->get();
         $order = Order::find($id);
-        return view('admin.orders.delivery-user', compact('order'));
+        return view('admin.orders.delivery-user', compact('order','recentSignature','images'));
     }
 
     public function delivery_user_save(Request $request)
     {
         $request->validate([
-            'signature' => 'required',
             'images.*' => 'image|mimes:jpeg,png|max:2048',
         ]);
 
         $signatureData = $request->input('signature');
+      
+        if(!empty($request->signature)){
         $signatureImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureData));
         $signatureImageName = Carbon::now()->timestamp . '_signature.png';
         file_put_contents(storage_path('app/public/signatures/' . $signatureImageName), $signatureImage);
-
+        }
+        else{
+            $signatureImageName =DeliveryUser::where('order_id',$request->order_id)->latest()->first();
+            $signatureImageName = $signatureImageName->signature;
+        }
         $imagePaths = [];
         if ($request->has('images') && is_array($request->images)) {
             foreach ($request->images as $key => $image) {
@@ -366,6 +389,10 @@ class OrderController extends Controller
         $deliveryUser->images = json_encode($imagePaths);
         $deliveryUser->save();
 
+        $recentSignature = DeliveryUser::latest()->first();
+        $order = Order::find($request->order_id);
+        View::share(['recentSignature' => $recentSignature, 'order' => $order]);
+    
         return back()->with(['success' => 'Signature and images saved successfully']);
     }
     public function get_existing_notes(Request $request)

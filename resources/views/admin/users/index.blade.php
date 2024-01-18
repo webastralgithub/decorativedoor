@@ -57,16 +57,16 @@
                     
                                     @if (in_array('Super Admin', $user->getRoleNames()->toArray() ?? []) )
                                     @if (Auth::user()->hasRole('Super Admin'))
-                                    <li><a href="{{ route('users.edit', $user->id) }}">Edit</a></li>
+                                    <li><a href="{{ route('users.edit', $user->id) }}" class="dropdown-item">Edit</a></li>
                                     @endif
                                     @else
                                     @can('edit-user')
-                                    <li><a href="{{ route('users.edit', $user->id) }}">Edit</a></li>
+                                    <li><a href="{{ route('users.edit', $user->id) }}"class="dropdown-item">Edit</a></li>
                                     @endcan
                     
                                     @can('delete-user')
                                     @if (Auth::user()->id!=$user->id)
-                                    <li><a type="submit" onclick="return confirm('Do you want to delete this user?');">
+                                    <li><a class="dropdown-item" type="submit" onclick="return confirm('Do you want to delete this user?');">
                                             Delete</a></li>
                                     @endif
                                     @endcan
