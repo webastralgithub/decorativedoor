@@ -89,4 +89,9 @@ class Order extends Model
     {
         return $this->belongsTo(Note::class,'order_id');
     }
+    public function coordinator()
+    {
+        return $this->belongsTo(User::class,'coordinator_user_id');
+    }
+    
 }

@@ -60,7 +60,7 @@
                     @foreach ($orders as $order)
                     <tr>
                         <td>
-                            @can('make-payment')
+                            @can('make-payment','download-invoice')
                             @if($order->order_status == \App\Models\OrderStatus::IN_PROGRESS)
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
@@ -70,13 +70,11 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make Payment</a></li>
                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Add Signature</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('order.downloadInvoice', $order) }}">Print</a></li>
                                 </ul>
                             </div>
                             @endif
                             @endcan
-                            @can('download-invoice')
-                            {{-- <a class="btn btn-primary btn-sm" href="{{ route('order.downloadInvoice', $order) }}">Print</a> --}}
-                            @endcan 
                         </td>
                         <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{ $order->order_id }}</a></td>
                         @can('change-order-status')
@@ -92,7 +90,10 @@
                             @endforeach
                         </td>
                         @endcan
-                        <td>-</td>
+                        <td class="center"> <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_order_coordinator')
+                                onclick="return assignUser('{{$order->id}}','{{$coordinators}}','order coordinator','{{$order->user_id}}');"
+                                @endcan>{{$order->coordinator->name ?? "..."}}</span>
+                        </td>
                         <td class="center">
                             <span class="@if(!$order->sales_person) dots-assigned @endif cursor-pointer">{{getUserInfo($order->sales_person)['name'] ?? "..."}}</span>
                         </td>

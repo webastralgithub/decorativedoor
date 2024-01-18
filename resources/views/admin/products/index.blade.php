@@ -3,7 +3,7 @@
 @section('content')
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
-    <h3>Product List</h3>
+    <h3>Products List</h3>
         <form >
             <input type="search" class="form-control" placeholder="Find Products" name="q" value="{{ request('q') }}">
         </form>

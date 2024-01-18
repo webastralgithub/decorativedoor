@@ -16,12 +16,13 @@ class AdminRoleWebMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $allowedRoles = ['Super Admin', 'Delivery User', 'Product Assembler', 'Accountant', 'Admin', 'Sales Person', 'Order Coordinator', 'Project Manager'];
 
-        if (auth()->check() && (auth()->user()->hasRole('Super Admin') || auth()->user()->hasRole('Delivery User') || auth()->user()->hasRole('Product Assembler') || auth()->user()->hasRole('Accountant') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Sales Person') || auth()->user()->hasRole('Order Coordinator') || auth()->user()->hasRole('Project Manager'))) {
-            return $next($request);
+        if (auth()->check() && auth()->user()->hasAnyRole($allowedRoles)) {
+            return redirect('/admin');
         }
-
-        return redirect('/');
+    
+        return $next($request);
         
     }
 }

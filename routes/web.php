@@ -103,6 +103,7 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
     Route::post('/update-user-address', [UserController::class, 'createAddress']);
     Route::get('/assembler-order', [OrderController::class, 'assembler_order'])->name('order-assembler');
     Route::Post('/add-assembler-note', [OrderController::class, 'add_assembler_note'])->name('order.add_assembler_note');
+    Route::Post('/get-existing-notes', [OrderController::class, 'get_existing_notes'])->name('order.get_existing_notes');
     
     Route::get('/deliverie', [DeliveriesController::class, 'index'])->name('deliveries');
     Route::get('/deliveries/track', [DeliveriesController::class, 'orderTrack'])->name('order.track');

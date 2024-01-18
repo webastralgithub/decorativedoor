@@ -61,6 +61,8 @@ class OrderController extends Controller
         return view('admin.orders.index', [
             'orders' => $orders,
             'sales_users' => User::role('Sales Person')->get(),
+            'coordinators' => User::role('Order Coordinator')->get(),
+            'cusmoters' => User::role('Cusmoter')->get(),
             'accountant_users' => User::role('Accountant')->get(),
             'delivery_users' => User::role('Delivery User')->get(),
             'assembler_users' => User::role('Product Assembler')->get(),
@@ -115,8 +117,17 @@ class OrderController extends Controller
         return response()->json(['success' => 'Order status has been updated!']);
     }
 
-    public function updateQuantityStatus(Request $request){
+    public function updateQuantityStatus(Request $request)
+    {
 
+        $this->validate($request, [
+            'delivery_quantity' => [
+                'required',
+                'numeric',
+                'min:0',
+                'max:' . $request->input('orders_quantity'),
+            ],
+        ]);
         $itemId = $request->item_id;
         $orderDetails = OrderDetails::findOrFail($itemId);
         if (!isset($orderDetails) && empty($orderDetails)) {
@@ -136,8 +147,8 @@ class OrderController extends Controller
         }
 
         return redirect()
-        ->route('order-assembler')
-        ->with('success', 'Quantity Added successfully');
+            ->route('order-assembler')
+            ->with('success', 'Quantity Added successfully');
     }
 
     public function updateProductStatus(Request $request)
@@ -171,14 +182,14 @@ class OrderController extends Controller
         if (!isset($orderDetails) && empty($orderDetails)) {
             return response()->json(['error' => 'Order is not valid!']);
         }
-       // dd($orderDetails);
+        // dd($orderDetails);
 
-       foreach($orderDetails as $item){
-          $order_id = $item->order_id;
-          OrderDetails::where('order_id', $order_id)->update(['order_status' => $request->new_status]);
-       }
-       
-       return response()->json(['success' => 'Order status has been updated!']);
+        foreach ($orderDetails as $item) {
+            $order_id = $item->order_id;
+            OrderDetails::where('order_id', $order_id)->update(['order_status' => $request->new_status]);
+        }
+
+        return response()->json(['success' => 'Order status has been updated!']);
     }
 
     public function updatePaymentMethod(Request $request)
@@ -237,16 +248,15 @@ class OrderController extends Controller
 
     public function downloadInvoice($order)
     {
-        // TODO: Need refactor
-        //dd($order);
-
-        //$order = Order::with('customer')->where('id', $order_id)->first();
         $order = Order::with(['customer', 'details'])
             ->where('id', $order)
             ->first();
 
+        $deliveryUser = DeliveryUser::where('order_id', $order->id)->first();
+
         return view('admin.orders.print-invoice', [
             'order' => $order,
+            'deliveryUser' => $deliveryUser,
         ]);
     }
 
@@ -291,7 +301,7 @@ class OrderController extends Controller
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
-         
+
             $access_status = [4, 5];
         } else {
             $orders = Order::with(['details', 'notes', 'deliverorder'])->latest()->get();
@@ -302,6 +312,8 @@ class OrderController extends Controller
         return view('admin.orders.assembler-order-index', [
             'orders' => $orders,
             'sales_users' => User::role('Sales Person')->get(),
+            'coordinators' => User::role('Order Coordinator')->get(),
+            'customers' => User::role('Cusmoter')->get(),
             'accountant_users' => User::role('Accountant')->get(),
             'delivery_users' => User::role('Delivery User')->get(),
             'assembler_users' => User::role('Product Assembler')->get(),
@@ -311,7 +323,8 @@ class OrderController extends Controller
     }
 
 
-    public function add_assembler_note(Request $request){
+    public function add_assembler_note(Request $request)
+    {
         Note::create($request->all());
         return response()->json(['message' => 'Note saved successfully']);
     }
@@ -320,7 +333,7 @@ class OrderController extends Controller
     public function delivery_user($id)
     {
         $order = Order::find($id);
-        return view('admin.orders.delivery-user',compact('order'));
+        return view('admin.orders.delivery-user', compact('order'));
     }
 
     public function delivery_user_save(Request $request)
@@ -329,12 +342,12 @@ class OrderController extends Controller
             'signature' => 'required',
             'images.*' => 'image|mimes:jpeg,png|max:2048',
         ]);
-    
+
         $signatureData = $request->input('signature');
         $signatureImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureData));
         $signatureImageName = Carbon::now()->timestamp . '_signature.png';
         file_put_contents(storage_path('app/public/signatures/' . $signatureImageName), $signatureImage);
-    
+
         $imagePaths = [];
         if ($request->has('images') && is_array($request->images)) {
             foreach ($request->images as $key => $image) {
@@ -343,13 +356,32 @@ class OrderController extends Controller
                 $imagePaths[] = 'public/images/' . $imgName;
             }
         }
-    
+
         $deliveryUser = new DeliveryUser();
         $deliveryUser->order_id = $request->order_id;
         $deliveryUser->signature = $signatureImageName;
         $deliveryUser->images = json_encode($imagePaths);
         $deliveryUser->save();
-    
+
         return back()->with(['success' => 'Signature and images saved successfully']);
     }
+    public function get_existing_notes(Request $request)
+    {
+        $orderId = $request->input('order_id');
+    
+        $notes = Note::where('order_id', $orderId)
+            ->select('note', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($note) {
+                return [
+                    'note' => $note->note,
+                    'created_at' => $note->created_at->format('d-m-Y'),
+                ];
+            });
+    
+        return response()->json(['notes' => $notes]);
+    }
+    
+    
 }
