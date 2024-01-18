@@ -2554,3 +2554,24 @@ table#order tbody tr td a, table#order tbody tr td span {
     display: flex;
     align-items: end;
 }
+.table-bordered tbody tr th span.accordion-header img {
+    width: 25px;
+}
+
+div#exampleModal .modal-content {
+    padding: 0;
+}
+
+div#exampleModal .modal-content .modal-header {
+    background-color: #112537;
+}
+
+div#exampleModal .modal-content .modal-header h5 {
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+div#exampleModal .modal-content .modal-header button.close span {
+    color: #fff !important;
+}
