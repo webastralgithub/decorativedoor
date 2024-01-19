@@ -282,6 +282,12 @@
             </div>
         </div>
         <div class="container">
+           
+            @if(session()->has('assign_customer'))
+            <p>Current Order for this Customer: {{getUserInfo(session()->get('assign_customer'))->name}}</p>
+            @endif
+         
+        
         @if(Request::segment(1) != 'product')
             @if(session('success'))
             <div class="alert alert-success product-discount-message">
