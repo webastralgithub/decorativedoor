@@ -91,18 +91,18 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3" class="text-end">Total Inventory</td>
-                                    <td class="text-center total" id="total">
+                                    <td class="text-center total" id="total"> 0
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3" class="text-end">Order Recived</td>
-                                    <td class="text-center recived" id="recived">
+                                    <td class="text-center recived" id="recived"> 0
                                     </td>
                                 </tr>
                                 
                                 <tr>
                                     <td colspan="3" class="text-end">Current Inventory</td>
-                                    <td class="text-center total" id="current_total">
+                                    <td class="text-center total" id="current_total"> 0
                                     </td>
                                 </tr>
                             </tbody>
