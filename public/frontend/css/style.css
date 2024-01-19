@@ -3988,6 +3988,19 @@ section.customer.spad form .nice-select.form-control span.current{
     right: 8px;
 }
 
+.product-discount-message-error {
+	background-color: #c52a2a;
+	color: white;
+	padding: 13px;
+	margin: 10px 0;
+	border-radius: 5px;
+	position: relative;
+	width: 300px;
+	position: fixed;
+    top: 0;
+    right: 8px;
+}
+
 .close-message {
 	position: absolute;
 	top: 10px;

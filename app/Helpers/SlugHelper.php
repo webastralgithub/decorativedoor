@@ -4,6 +4,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\DeliverQuantity;
+use App\Models\OrderDetails;
 use App\Models\Note;
 use Illuminate\Support\Str;
 
@@ -82,7 +83,7 @@ if (!function_exists('generateProductSlug')) {
     if (!function_exists('productsInfo')) {
         function productsInfo($productId)
         {
-            return Product::where('id', $productId)->first();
+            return Product::with('image')->where('id', $productId)->first();
         }
     }
 
@@ -178,6 +179,40 @@ if (!function_exists('generateProductSlug')) {
                 }
             $FinalQuantity = $total;
             return $FinalQuantity;
+        }
+    }
+
+    if (!function_exists('getTotalQuantity')) {
+        function getTotalQuantity($orderId = null)
+        {
+
+            $order =  OrderDetails::where('order_id', $orderId)->get();
+
+            $total = 0;
+            if (!empty($order))
+                foreach ($order as $deliver) {
+                    $total += $deliver->quantity;
+                }
+            $FinalQuantity = $total;
+            return $FinalQuantity;
+        }
+    }
+
+    if (!function_exists('getOrderTotalprice')) {
+        function getOrderTotalprice($orderId = null)
+        {
+
+            $order =  OrderDetails::where('order_id', $orderId)->get();
+
+            $total = 0;
+            $discount = 0;
+            if (!empty($order))
+                foreach ($order as $deliver) {
+                    $total += $deliver->total;
+                    $discount += $deliver->discount;
+                }
+            $FinalTotal = abs($total - $discount);
+            return $FinalTotal;
         }
     }
 }

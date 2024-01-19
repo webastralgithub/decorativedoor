@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                <div class="content-body">
+                <div class="content-body inventery-createtable-btm">
                     <div class="table-responsive">
                         
                         <table class="table table-striped table-bordered align-middle">
@@ -188,12 +188,12 @@
             var price = parseFloat(priceCell.textContent) || 0;
             total += price;
         });
-         var final = total - recived;
+         var final = recived - total;
         // Update the total price in the designated element
         totalElement.textContent = total.toFixed(2); // Adjust as needed
-
+        var absolutefinal = Math.abs(final);
         var currenttotalElement = document.getElementById('current_total');
-        currenttotalElement.textContent = final.toFixed(2);
+        currenttotalElement.textContent = absolutefinal.toFixed(2);
     }
 
     var inputElement = document.getElementById('enter_quantity');
@@ -217,9 +217,10 @@
         var recived = document.getElementById('recived');
        var recivedqun = parseFloat(recived.innerHTML) || 0;
         total.innerHTML = inputValue + maintotal;
-        var finaltotal = inputValue + maintotal - recivedqun;
+        var finaltotal =  recivedqun - inputValue + maintotal;
+        var absolutefinaltotal = Math.abs(finaltotal);
         var currenttotalElement = document.getElementById('current_total');
-        currenttotalElement.textContent = finaltotal.toFixed(2);
+        currenttotalElement.textContent = absolutefinaltotal.toFixed(2);
     });
 </script>
 @endsection

@@ -60,11 +60,11 @@
                 </label>
             </div>
 
-            <div class="col">
+            {{-- <div class="col">
                 <label for="payment_type" class="form-label required">
                     <strong>{{ __('Payment Via') }}:</strong> {{ @$order->payment_type }}
                 </label>
-            </div>
+            </div> --}}
         </div>
 
         <div class="content-body">
@@ -97,15 +97,14 @@
                         $finaltotal[] = $item->total;
 
                         @endphp
-
                         <tr>
                             <td class="align-middle text-center">
                                 {{ $loop->iteration }}
                             </td>
                             <td class="align-middle text-center">
                                 <div style="max-height: 80px; max-width: 80px;">
-                                    <img class="img-fluid"
-                                        src="{{asset((!empty($item->product->product_image) ? Storage::url('products/'.$item->product->product_image) : 'img/featured/feature-1.jpg'))}}">
+                               
+                                    <img class="img-fluid" src="{{asset((!empty(productsInfo($item->product->id)->image->path) ? Storage::url('products/'.productsInfo($item->product->id)->image->path) : 'img/featured/feature-1.jpg'))}}">
                                 </div>
                             </td>
                             <td class="align-middle text-center">
@@ -178,7 +177,7 @@
                                 ${{ number_format($item->discount, 2, '.', ',') }}
                             </td>
                             <td class="align-middle text-center">
-                                ${{ number_format(($item->total - $item->discount), 2, '.', ',') }}
+                                ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
                             </td>
                             @endcan
                         </tr>
@@ -203,8 +202,7 @@
                         </tr>
                         <tr>
                             <td colspan="6" class="text-end">Total</td>
-                            <td class="text-center">${{ number_format(($finaltotal + $order->vat) - $order->due, 2, '.',
-                                ',') }}</td>
+                            <td class="text-center">${{ number_format(abs($order->due - ($finaltotal + $order->vat)), 2, '.', ',') }}</td>
                         </tr>
                         @endcan
                     </tbody>

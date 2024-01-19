@@ -31,17 +31,17 @@ class ShopController extends Controller
      */
     public function index()
     {
-        if(isset($_GET['min']) && isset($_GET['max'])){
+        if (isset($_GET['min']) && isset($_GET['max'])) {
             $min = $_GET['min'];
             $max = $_GET['max'];
-           // dd($max);
+            // dd($max);
             $products = Product::where('selling_price', '>=', $min)
-                   ->where('selling_price', '<=', $max)
-                   ->get();
-        }else{
+                ->where('selling_price', '<=', $max)
+                ->get();
+        } else {
             $products = Product::all();
         }
-        
+
         $allcategory = Category::with(['children'])->get();
         return view('frontend.shop', compact('allcategory', 'products'));
     }
@@ -61,18 +61,18 @@ class ShopController extends Controller
     public function addToCart(Request $request)
     {
         $cart = (!session()->has('cart')) ? session()->get('cart', []) : session()->get('cart');
-    
+
         $discount = session()->get('discount');
 
-        
+
         $productId = @$request->product_id;
-          if(!empty($discount[$productId])){
+        if (!empty($discount[$productId])) {
             $discount_ammount = $discount[$productId]['discount_ammount'];
-          }else{
+        } else {
             $discount_ammount = 0;
-          }
+        }
         $product = Product::findOrFail($productId);
-       
+
         if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
             $selectedVariant = json_decode($request->variant, true);
             if (isset($cart[$productId]) && isset($cart[$productId]['variant_data'][$selectedVariant['id']])) {
@@ -127,24 +127,24 @@ class ShopController extends Controller
 
         $total = [];
         $discount = [];
-        foreach((array) session('cart') as $id => $details){
-            if(isset($details['variant_price'])){
-                if(isset($details['variant_data'])){
-                    foreach($details['variant_data'] as $variantId => $subVariant){
-                        $discount[] = $subVariant['discount_price'] * $subVariant['quantity']; 
+        foreach ((array) session('cart') as $id => $details) {
+            if (isset($details['variant_price'])) {
+                if (isset($details['variant_data'])) {
+                    foreach ($details['variant_data'] as $variantId => $subVariant) {
+                        $discount[] = $subVariant['discount_price'] * $subVariant['quantity'];
                         $total[] = $subVariant['price'] * $subVariant['quantity'];
                     }
                 }
             }
-            if(empty($details['variant_data'])){
+            if (empty($details['variant_data'])) {
                 $total[] = $details['price'] * $details['quantity'];
-                $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] * $details['quantity']: 0;                            
+                $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] * $details['quantity'] : 0;
             }
         }
 
         $total = array_sum($total);
         $discount = array_sum($discount);
-    
+
 
         $data = array(
             'success' => 'Product added to cart successfully!',
@@ -157,15 +157,21 @@ class ShopController extends Controller
 
     public function update_cart(Request $request)
     {
+      
         if ($request->id && $request->quantity) {
-            $cart = session()->get('cart');
-            if (isset($request->variant) && !empty($request->variant)) {
-                $variantId = $request->variant;
-                $cart[$request->id]['variant_data'][$variantId]["quantity"] = $request->quantity;
-            } else {
-                $cart[$request->id]["quantity"] = $request->quantity;
+            if(getProductAvailabityStock($request->id) < $request->quantity){
+               return session()->flash('error', 'We have '.getProductAvailabityStock($request->id).' stock in our Inventory');
+            }else{
+                $cart = session()->get('cart');
+                if (isset($request->variant) && !empty($request->variant)) {
+                    $variantId = $request->variant;
+                    $cart[$request->id]['variant_data'][$variantId]["quantity"] = $request->quantity;
+                } else {
+                    $cart[$request->id]["quantity"] = $request->quantity;
+                }
+                session()->put('cart', $cart);
             }
-            session()->put('cart', $cart);
+            
             session()->flash('success', 'Cart updated successfully');
         }
     }
@@ -193,12 +199,12 @@ class ShopController extends Controller
 
     public function remove_cart(Request $request)
     {
-        
+
         if ($request->id) {
             $cart = session()->get('cart');
-            
+
             if (isset($request->variant) && !empty($request->variant)) {
-             
+
                 $variantId = $request->variant;
                 if (isset($cart[$request->id]['variant_data'][$variantId])) {
                     $quantity = $cart[$request->id]['variant_data'][$variantId]['quantity'];
@@ -206,7 +212,7 @@ class ShopController extends Controller
                     // update the price before remove variant with all quantity
                     $cart[$request->id]['variant_price'] = $cart[$request->id]['variant_price'] - ($price * $quantity);
                     unset($cart[$request->id]['variant_data'][$variantId]);
-                    if(count($cart[$request->id]['variant_data']) == 0){
+                    if (count($cart[$request->id]['variant_data']) == 0) {
                         unset($cart[$request->id]);
                     }
                 }
@@ -225,25 +231,28 @@ class ShopController extends Controller
         // unset($cart[30]);
         // session()->put('cart', $cart);
         // dd(session()->get('cart'));
-        $users = User::all();
+        $roleName = 'Customer';
+        $users = User::whereHas('roles', function ($query) use ($roleName) {
+            $query->where('name', $roleName);
+        })->get();
         return view('frontend.cart', compact('users'));
     }
 
     public function category($slug = '')
     {
         $category =  Category::where('slug', $slug)->first();
-       
+
         // dd($category->products);
-        if(isset($_GET['min']) && isset($_GET['max'])){
-            $min = $_GET['min'];  
+        if (isset($_GET['min']) && isset($_GET['max'])) {
+            $min = $_GET['min'];
             $max = $_GET['max'];
-            
-            $productData = Category::where('slug', $slug) 
-            ->with(['products' => function ($query) use ($min, $max) {
-                $query->where('selling_price', '>=', $min)
-                    ->where('selling_price', '<=', $max);
-            }])->first();
-        }else{
+
+            $productData = Category::where('slug', $slug)
+                ->with(['products' => function ($query) use ($min, $max) {
+                    $query->where('selling_price', '>=', $min)
+                        ->where('selling_price', '<=', $max);
+                }])->first();
+        } else {
             $productData =  Category::with(['products'])->where('slug', $slug)->first();
         }
         // $products = [];
@@ -284,22 +293,23 @@ class ShopController extends Controller
     }
 
 
-    public function share_product(Request $request, $productid){
+    public function share_product(Request $request, $productid)
+    {
 
-        $product = Product::with(['variants','images','categories'])->where('id', $productid)->first();
-        
-        if(!empty($product)){
+        $product = Product::with(['variants', 'images', 'categories'])->where('id', $productid)->first();
+
+        if (!empty($product)) {
 
             $variant = [];
-            foreach($product->variants as $key => $variants){
+            foreach ($product->variants as $key => $variants) {
                 $variant[$key]['name'] = $variants->name;
-            } 
+            }
 
             $emailData = [
-                'title' => $product->title, 
-                'description' => $product->short_description, 
-                'price' => ($request->price) ? $request->price : $product->selling_price, 
-                'variants' => $product->variants, 
+                'title' => $product->title,
+                'description' => $product->short_description,
+                'price' => ($request->price) ? $request->price : $product->selling_price,
+                'variants' => $product->variants,
                 'images' => $product->images,
                 'selectvarient' => ($request->selectvarient) ? $request->selectvarient : '',
             ];
@@ -308,25 +318,25 @@ class ShopController extends Controller
                 $attachmentPaths[] = storage_path('app/public/products/' . $image->path);
             }
             $email = $request->email;
-            Mail::to($email)->send(new ShareProductMail($emailData ,$attachmentPaths ));
-        
+            Mail::to($email)->send(new ShareProductMail($emailData, $attachmentPaths));
+
             return 'Email sent successfully!';
         }
-        
+
 
         //dd($productid);
     }
 
-    public function product_discount(Request $request, $productId){
+    public function product_discount(Request $request, $productId)
+    {
 
         $discount = (!session()->has('discount')) ? session()->get('discount', []) : session()->get('discount');
-        $discount[$productId] = ["product_id" => $productId, "discount_ammount" => $request->apply_code ];
+        $discount[$productId] = ["product_id" => $productId, "discount_ammount" => $request->apply_code];
         session()->put('discount', $discount);
         $data = array(
             'success' => 'Discount Applied!',
             'discount' =>  $request->apply_code,
         );
         return response()->json($data);
-        
     }
 }

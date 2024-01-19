@@ -2610,6 +2610,14 @@ div#exampleModal .modal-content .modal-header button.close span {
     object-fit: contain;
 }
 
+.inventery-createtable-btm table thead th{
+    background: none !important;
+    color: #fff !important;
+}
+
+.inventery-createtable-btm table thead tr{
+        border: none;
+}
 .nav-item.dropdown .dropdown-menu{
     background: #ffffff0a !important;
 }

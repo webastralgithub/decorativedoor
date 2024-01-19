@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+
 class CustomerController extends Controller
 {
     /**
@@ -43,11 +44,11 @@ class CustomerController extends Controller
 
         ]);
 
-       // dd($request->all());
+        // dd($request->all());
         $user_id = $request->user_id;
-        
-        if(isset($user_id) && !empty($user_id)){
-            
+
+        if (isset($user_id) && !empty($user_id)) {
+
             $user = User::find($user_id);
             $user = $user->update([
                 'email' => $request->email,
@@ -57,7 +58,7 @@ class CustomerController extends Controller
                 'dob' => $request->dob,
                 'gender' => $request->gender,
             ]);
-    
+
             $useraddress = User::find($user_id);
             $useraddress->address()->updateOrCreate(
                 ['user_id' => $user_id],
@@ -92,7 +93,7 @@ class CustomerController extends Controller
                 ]
             );
             session()->put('assign_customer', $user_id);
-        }else{
+        } else {
             $input = [
                 'email' => $request->email,
                 'name' => $request->name,
@@ -102,7 +103,7 @@ class CustomerController extends Controller
                 'gender' => $request->gender,
             ];
             $user = User::create($input);
-    
+
             $lastinsertid = $user->id;
             $user = User::find($lastinsertid);
             $user->address()->updateOrCreate(
@@ -174,10 +175,11 @@ class CustomerController extends Controller
         //
     }
 
-    public function checkuser(Request $request){
+    public function checkuser(Request $request)
+    {
 
         $checkuser = User::with('address', 'usercompany')->where('email', $request->email)->first();
-        if(isset($checkuser) && !empty($checkuser)){
+        if (isset($checkuser) && !empty($checkuser)) {
             $user_info = [
                 'id' => $checkuser->id,
                 'name' => $checkuser->name,
@@ -207,18 +209,18 @@ class CustomerController extends Controller
                 'industory_type' => $checkuser->usercompany->industory_type,
                 'company_website' => $checkuser->usercompany->company_website,
                 'registration_no' => $checkuser->usercompany->registration_no,
-                'gst' => $checkuser->usercompany->gst,   
+                'gst' => $checkuser->usercompany->gst,
             ];
             return json_encode($user_info);
-        }else{
+        } else {
             return;
         }
-        
     }
 
-    public function assignCartCustomer(Request $request){
-            $user_id = $request->user_id;
-            session()->put('assign_customer', $user_id);
-            return response()->json(['success' => 'Customer Assign Successfully!!']);
+    public function assignCartCustomer(Request $request)
+    {
+        $user_id = $request->user_id;
+        session()->put('assign_customer', $user_id);
+        return response()->json(['success' => 'Customer Assign Successfully!!']);
     }
 }

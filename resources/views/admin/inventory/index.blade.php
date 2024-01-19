@@ -54,8 +54,7 @@
                     <td><a href="{{ route('inventory.show', $product->id) }}">{{ $product->title }}</a></td>
                     <td>{{ $inventoryquantity }}</td>
                     <td>{{ $orderdetails }}</td>
-                    <td>{{ $inventoryquantity - $orderdetails }}</td>
-                   
+                    <td>{{ abs($orderdetails - $inventoryquantity) }}</td>
                 </tr>
                 @endforeach
             </tbody>

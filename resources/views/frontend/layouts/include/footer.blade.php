@@ -129,11 +129,12 @@
 <script type="text/javascript">
 
 
-    setTimeout(function () {
-        jQuery('.product-discount-message').hide();
-    }, 2000);
-
-    $(".update-cart").change(function (e) {
+setTimeout(function() {
+    jQuery('.product-discount-message').hide();
+    jQuery('.product-discount-message-error').hide();
+}, 2000);
+  
+    $(".update-cart").change(function(e) {
         e.preventDefault();
         var ele = $(this);
         $.ajax({
