@@ -335,9 +335,7 @@
 															</td>
 														</tr>
 													</table>
-
-
-
+                                                    @if(count($emailData['images']) > 1)
 													<table border="0" cellpadding="0" cellspacing="0"
 														class="paragraph_block block-5" role="presentation"
 														style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
@@ -355,7 +353,7 @@
 															</td>
 														</tr>
 													</table>
-
+                                                    @endif
 													<div class="spacer_block block-6"
 														style="height:20px;line-height:20px;font-size:1px;"> </div>
 												</td>
