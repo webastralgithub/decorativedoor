@@ -60,11 +60,11 @@
                 </label>
             </div>
 
-            <div class="col">
+            {{-- <div class="col">
                 <label for="payment_type" class="form-label required">
                     <strong>{{ __('Payment Via') }}:</strong> {{ @$order->payment_type }}
                 </label>
-            </div>
+            </div> --}}
         </div>
 
         <div class="content-body">
@@ -155,7 +155,7 @@
                                 ${{ number_format($item->discount, 2, '.', ',') }}
                             </td>
                             <td class="align-middle text-center">
-                                ${{ number_format(($item->total - $item->discount), 2, '.', ',') }}
+                                ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
                             </td>
                             @endcan
                         </tr>
@@ -180,7 +180,7 @@
                         </tr>
                         <tr>
                             <td colspan="6" class="text-end">Total</td>
-                            <td class="text-center">${{ number_format(($finaltotal + $order->vat) - $order->due, 2, '.', ',') }}</td>
+                            <td class="text-center">${{ number_format(abs($order->due - ($finaltotal + $order->vat)), 2, '.', ',') }}</td>
                         </tr>
                         @endcan
                     </tbody>

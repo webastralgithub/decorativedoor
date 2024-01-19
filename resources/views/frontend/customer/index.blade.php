@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            @if($errors->any())
+           {{-- @if($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach($errors->all() as $error)
@@ -20,7 +20,7 @@
                     @endforeach
                 </ul>
             </div>
-            @endif
+            @endif --}}
             <div class="row customer-form-responsive">
                 <div class="col-lg-12 customer-page-cm-one">
                     <form id="customer-assign" action="{{ route('store-customer') }}" method="POST">
@@ -33,38 +33,60 @@
                                     <h4 class="mb-3">Prosonal Information</h4>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <input type="email" class="form-control" id="customer-email"
-                                                placeholder="Email" name="email" value="">
+                                            <input type="email"
+                                                class="form-control @error('email') is-invalid @enderror"
+                                                id="customer-email" placeholder="Email" name="email" value="">
+                                            @error('email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+
                                             <div id="user-alreday-exist"></div>
                                         </div>
                                         <div class="col-md-12">
-                                            <input type="text" class="form-control" id="customer-name"
-                                                placeholder="Full Name" name="name" value="">
+                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                                id="customer-name" placeholder="Full Name" name="name" value="">
+                                            @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="row mt-4">
                                         <div class="col-md-12">
-                                            <input type="password" class="form-control" id="customer-password"
-                                                placeholder="Password" name="password" value="">
+                                            <input type="password"
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                id="customer-password" placeholder="Password" name="password" value="">
+                                            @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-md-12">
-                                            <input type="text" class="form-control" id="customer-phone"
-                                                placeholder="Phone No" name="phone" value="">
+                                            <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                                id="customer-phone" placeholder="Phone No" name="phone" value="">
+                                            @error('phone')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="row mt-4">
                                         <div class="col-md-12">
-                                            <input type="date" class="form-control" id="customer-dob"
-                                                placeholder="Date Of Birth" name="dob" value="">
+                                            <input type="date" class="form-control @error('dob') is-invalid @enderror"
+                                                id="customer-dob" placeholder="Date Of Birth" name="dob" value="">
+                                            @error('dob')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-md-12">
-                                            <select name="gender" id="customer-gender" class="form-control">
+                                            <select name="gender" id="customer-gender"
+                                                class="form-control @error('gender') is-invalid @enderror">
                                                 <option value=""> Select Gender </option>
                                                 <option value="male"> Male </option>
                                                 <option value="female"> Female </option>
                                             </select>
+                                            @error('gender')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +138,7 @@
                                     </div>
                                 </div>
 
-                                <div class="shipping_address">
+                                <div class="shipping_address" style="display:none;">
                                     <h5 class="mb-3 mt-3"> Shipping Address</h5>
                                     <div class="row mt-4">
                                         <div class="col-md-12">
