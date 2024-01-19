@@ -2609,3 +2609,12 @@ div#exampleModal .modal-content .modal-header button.close span {
     height: 50px;
     object-fit: contain;
 }
+
+.inventery-createtable-btm table thead th{
+    background: none !important;
+    color: #fff !important;
+}
+
+.inventery-createtable-btm table thead tr{
+        border: none;
+}
