@@ -100,11 +100,12 @@
 
                         <tr>
                             <td class="align-middle text-center">
-                                {{ $loop->iteration  }}
+                                {{ $loop->iteration }}
                             </td>
                             <td class="align-middle text-center">
                                 <div style="max-height: 80px; max-width: 80px;">
-                                    <img class="img-fluid" src="{{asset((!empty($item->product->product_image) ? Storage::url('products/'.$item->product->product_image) : 'img/featured/feature-1.jpg'))}}">
+                                    <img class="img-fluid"
+                                        src="{{asset((!empty($item->product->product_image) ? Storage::url('products/'.$item->product->product_image) : 'img/featured/feature-1.jpg'))}}">
                                 </div>
                             </td>
                             <td class="align-middle text-center">
@@ -118,29 +119,51 @@
                             @can('change-order-status')
                             <td class="align-middle text-center">
                                 @php
-                                $disabled = ((auth()->user()->hasRole('Product Assembler') && !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-dispatch']) && in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::DISPATCHED]))
-                                ||(auth()->user()->hasRole('Delivery User') && !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-ready-to-assemble']) && in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::READY_TO_ASSEMBLE]))
-                                ||(auth()->user()->hasRole('Accountant') && !auth()->user()->can(['order-status-complete','order-status-dispatch']))&& in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::READY_TO_DELIVER,\App\Models\OrderStatus::DISPATCHED]));
+                                $disabled = ((auth()->user()->hasRole('Product Assembler') &&
+                                !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-dispatch'])
+                                &&
+                                in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::DISPATCHED]))
+                                ||(auth()->user()->hasRole('Delivery User') &&
+                                !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-ready-to-assemble'])
+                                &&
+                                in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::READY_TO_ASSEMBLE]))
+                                ||(auth()->user()->hasRole('Accountant') &&
+                                !auth()->user()->can(['order-status-complete','order-status-dispatch']))&&
+                                in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::READY_TO_DELIVER,\App\Models\OrderStatus::DISPATCHED]));
                                 @endphp
-                                <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id)}}')" @disabled($disabled)>
+                                <select class="form-select form-control-solid" id="order_status" name="order_status"
+                                    onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id)}}')"
+                                    @disabled($disabled)>
                                     @foreach($order_statuses as $status)
                                     @if (\App\Models\OrderStatus::COMPLETE == $status->id )
-                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}" @selected($item->order_status == $status->id)>{{convertToReadableStatus($status->name)}}</option>
+                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
+                                        @selected($item->order_status ==
+                                        $status->id)>{{convertToReadableStatus($status->name)}}</option>
                                     @endif
                                     @if (\App\Models\OrderStatus::IN_PROGRESS == $status->id)
-                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}" @selected($item->order_status == $status->id)>{{convertToReadableStatus($status->name)}}</option>
+                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
+                                        @selected($item->order_status ==
+                                        $status->id)>{{convertToReadableStatus($status->name)}}</option>
                                     @endif
                                     @if (\App\Models\OrderStatus::FAILED == $status->id)
-                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}" @selected($item->order_status == $status->id)>{{convertToReadableStatus($status->name)}}</option>
+                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
+                                        @selected($item->order_status ==
+                                        $status->id)>{{convertToReadableStatus($status->name)}}</option>
                                     @endif
                                     @if (\App\Models\OrderStatus::READY_TO_ASSEMBLE == $status->id)
-                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}" @selected($item->order_status == $status->id)>{{convertToReadableStatus($status->name)}}</option>
+                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
+                                        @selected($item->order_status ==
+                                        $status->id)>{{convertToReadableStatus($status->name)}}</option>
                                     @endif
                                     @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id)
-                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}" @selected($item->order_status == $status->id)>{{convertToReadableStatus($status->name)}}</option>
+                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
+                                        @selected($item->order_status ==
+                                        $status->id)>{{convertToReadableStatus($status->name)}}</option>
                                     @endif
                                     @if (\App\Models\OrderStatus::DISPATCHED == $status->id)
-                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}" @selected($item->order_status == $status->id)>{{convertToReadableStatus($status->name)}}</option>
+                                    <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
+                                        @selected($item->order_status ==
+                                        $status->id)>{{convertToReadableStatus($status->name)}}</option>
                                     @endif
 
                                     @endforeach
@@ -180,13 +203,15 @@
                         </tr>
                         <tr>
                             <td colspan="6" class="text-end">Total</td>
-                            <td class="text-center">${{ number_format(($finaltotal + $order->vat) - $order->due, 2, '.', ',') }}</td>
+                            <td class="text-center">${{ number_format(($finaltotal + $order->vat) - $order->due, 2, '.',
+                                ',') }}</td>
                         </tr>
                         @endcan
                     </tbody>
                 </table>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -224,7 +249,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="col-md-12" style="line-height: 35px;">
-                                                <input type="number" name="delivery_quantity" id="delivery_quantity" class="form-control example-date-input" value="{{ old('delivery_quantity') }}" required min="0">
+                                                <input type="number" name="delivery_quantity" id="delivery_quantity"
+                                                    class="form-control example-date-input"
+                                                    value="{{ old('delivery_quantity') }}" required min="0">
                                                 @error('delivery_quantity')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -242,7 +269,8 @@
                             <div class="modal-footer delivery-products-footer">
                                 <div class="row">
                                     <div class="col-md-12 mt-6">
-                                        <input type="button" class="btn btn-primary btn-sm" onclick="return updateOrderItemQuantity();" name="submit" value="Submit">
+                                        <input type="button" class="btn btn-primary btn-sm"
+                                            onclick="return updateOrderItemQuantity();" name="submit" value="Submit">
                                     </div>
                                 </div>
                             </div>
@@ -280,28 +308,27 @@
                     new_status: newStatus,
                     _token: '{{ csrf_token() }}' // Add CSRF token if needed
                 },
-                success: function(response) {
-                    // Handle success, if needed
+                success: function (response) {
+
                     if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Order Status Updated',
-                            text: response.success
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Order Status Error',
-                            text: response.error
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
+                        jQuery('#success-message').text('Order Status Updated!').show();
+                        setTimeout(() => {
+                            jQuery('#success-message').hide();
                             if (result.isConfirmed) {
                                 location.reload();
                             }
-                        });
+                        }, 2000);
+                    } else {
+                        jQuery('#error-message').text('Order Status Error!').show();
+                        setTimeout(() => {
+                            jQuery('#error-message').hide();
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        }, 2000);
                     }
                 },
-                error: function(error) {
+                error: function (error) {
                     // Handle error, if needed
                     console.error('Error updating order status', error);
                 }
@@ -340,16 +367,15 @@
                     orderId: orderId,
                     _token: '{{ csrf_token() }}' // Add CSRF token if needed
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log("response", response);
                     // Handle success, if needed
                     if (response.success) {
                         jQuery('#exampleModal').modal('hide');
-                        Swal.fire({
-                            icon: 'success',
-                            // title: 'Order Updated',
-                            text: "Order Status and Quantity updated"
-                        });
+                        jQuery('#success-message').text('Order Status and Quantity updated!').show();
+                        setTimeout(() => {
+                            jQuery('#success-message').hide();
+                        }, 2000);
                     } else {
                         errorCheck = true;
                         // Iterate over the error messages
@@ -366,7 +392,7 @@
                         hideErrors();
                     }
                 },
-                error: function(error) {
+                error: function (error) {
                     // Handle error, if needed
                     console.error('Error updating order status', error);
                 }
@@ -377,7 +403,7 @@
 
         function hideErrors() {
             setTimeout(() => {
-                jQuery('.errors span.text-danger').fadeOut('slow', function() {
+                jQuery('.errors span.text-danger').fadeOut('slow', function () {
                     jQuery(this).remove();
                 });
             }, 5000);

@@ -4155,3 +4155,25 @@ div#assignuser .table td {
 		border-bottom: 1px solid #b5b5b5;
 	}
 }
+
+.alert-success, .success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    position: fixed !important;
+    top: 25px;
+    width: 30%;
+    z-index: 99999;
+    right: 6px;
+}
+
+.alert-error, .error-message {
+    color: #692020;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    position: fixed !important;
+    top: 25px;
+    width: 30%;
+    z-index: 99999;
+    right: 6px;
+}
