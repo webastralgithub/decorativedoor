@@ -259,6 +259,7 @@ setTimeout(function() {
                 success: function (response) {
                     jQuery('div#loader-container').hide();
                     jQuery('#success-message').text('Mail Sent Successfully!').show();
+                    jQuery('#exampleModal').modal('hide');
                     setTimeout(() => {
                         jQuery('#success-message').hide();
                     }, 2000);
