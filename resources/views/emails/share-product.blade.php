@@ -218,7 +218,7 @@
 																			href="www.example.com" style="outline:none"
 																			tabindex="-1" target="_blank"><img
 																				alt="your-logo"
-																				src="$emailData['logo']"
+																				src="{{$emailData['logo']}}"
 																				style="display: block; height: auto; border: 0; width: 100%;"
 																				title="your-logo" width="126" /></a>
 																	</div>
@@ -264,7 +264,7 @@
 																			<div class="fullWidth"
 																				style="max-width: 576px;">
 																				<img alt="Product Image"
-																					src="$emailData['image']"
+																					src="{{$emailData['image']}}"
 																					style="display: block; height: auto; border: 0; width: 100%;"
 																					title="Product Image"
 																					width="576" />
@@ -335,12 +335,13 @@
 															</td>
 														</tr>
 													</table>
-                                                    @if(count($emailData['images']) > 1)
+                                                   
 													<table border="0" cellpadding="0" cellspacing="0"
 														class="paragraph_block block-5" role="presentation"
 														style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
 														width="100%">
 														<tr>
+														@if(count($emailData['images']) > 1)
 															<td class="pad">
 																<div
 																	style="color:#2b2d49;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:30px;line-height:120%;text-align:center;mso-line-height-alt:36px;">
@@ -351,9 +352,10 @@
 																				images</strong></span></p>
 																</div>
 															</td>
+															@endif
 														</tr>
 													</table>
-                                                    @endif
+                                                    
 													<div class="spacer_block block-6"
 														style="height:20px;line-height:20px;font-size:1px;"> </div>
 												</td>
@@ -392,7 +394,7 @@
 																	<div style="max-width: 144px;"><a
 																			href="www.example.com" style="outline:none"
 																			tabindex="-1" target="_blank"><img
-																				alt="your-logo" src="$emailData['logo']"
+																				alt="your-logo" src="{{$emailData['logo']}}"
 																				style="display: block; height: auto; border: 0; width: 100%;"
 																				title="your-logo" width="144" /></a>
 																	</div>
