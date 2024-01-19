@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
 
-                                <div class="shipping_address">
+                                <div class="shipping_address" style="display:none;">
                                     <h5 class="mb-3 mt-3"> Shipping Address</h5>
                                     <div class="row mt-4">
                                         <div class="col-md-12">

@@ -358,7 +358,7 @@
         $('#use_shipping_add').change(function (e) {
             // Check if the checkbox is checked
             if ($(this).prop('checked')) {
-
+                $('.shipping_address').show();
                 var address_type = $('#customer-billing-address_type').val();
                 var state = $('#customer-billing-state').val();
                 var city = $('#customer-billing-city').val();
@@ -373,6 +373,7 @@
                 $('#shipping-customer-country').val(country);
                 $('#shipping-customer-zipcode').val(zipcode);
             } else {
+                $('.shipping_address').hide();
                 $('#customer-shipping-address_type').val('');
                 $('#shipping-customer-street').val('');
                 $('#shipping-customer-city').val('');
