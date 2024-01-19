@@ -335,7 +335,7 @@
                             setTimeout(function () {
                                 jQuery('#productDiscountMessage').hide();
                             }, 2000);
-        
+
                         },
                         error: function (xhr, status, error) {
                             // Handle the error response here

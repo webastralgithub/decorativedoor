@@ -157,17 +157,23 @@ class ShopController extends Controller
 
     public function update_cart(Request $request)
     {
+
         $cart = session()->get('cart');
         $totalQuantity = 0;
-        foreach($cart[$request->id]['variant_data'] as $variant){
-            //dd($variant);
-            $totalQuantity += $variant['quantity'];
-        }
-       
-        if ($request->id && $request->quantity) {
-            if(getProductAvailabityStock($request->id) < $request->quantity || getProductAvailabityStock($request->id) <= $totalQuantity){
-               return session()->flash('error', 'We have '.getProductAvailabityStock($request->id).' stock in our Inventory');
+
+        foreach ($cart[$request->id]['variant_data'] as $key => $variant) {
+        
+            if($variant['quantity'] >  $request->quantity){
+                $totalQuantity += $variant['quantity'] - 1;
             }else{
+                $totalQuantity += $variant['quantity'];
+            }
+           
+        }
+        if ($request->id && $request->quantity) {
+            if (getProductAvailabityStock($request->id) < $request->quantity || getProductAvailabityStock($request->id) <= $totalQuantity) {
+                return session()->flash('error', 'We have ' . getProductAvailabityStock($request->id) . ' stock in our Inventory');
+            } else {
                 $cart = session()->get('cart');
                 if (isset($request->variant) && !empty($request->variant)) {
                     $variantId = $request->variant;
@@ -177,7 +183,7 @@ class ShopController extends Controller
                 }
                 session()->put('cart', $cart);
             }
-            
+
             session()->flash('success', 'Cart updated successfully');
         }
     }
@@ -318,7 +324,7 @@ class ShopController extends Controller
                 'price' => ($request->price) ? $request->price : $product->selling_price,
                 'variants' => $product->variants,
                 'images' => $product->images,
-                'image' => asset('storage/products/'.$product->image->path),
+                'image' => asset('storage/products/' . $product->image->path),
                 'selectvarient' => ($request->selectvarient) ? $request->selectvarient : '',
             ];
             $attachmentPaths = [];

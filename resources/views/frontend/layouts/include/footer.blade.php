@@ -32,8 +32,8 @@
                         <li><a href="#">Our Services</a></li>
                         <li><a href="#">Projects</a></li>
                         <li><a href="{{ route('contact') }}">Contact</a></li>
-                        <li><a href="#">Innovation</a></li>
-                        <li><a href="#">Testimonials</a></li>
+                    <li><a href="#">Innovation</a></li>
+                    <li><a href="#">Testimonials</a></li>
                     </ul> --}}
                 </div>
             </div>
@@ -77,8 +77,7 @@
 
 
 <!-- Modal share with email -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -99,12 +98,10 @@
                             </label>
                             <input type="hidden" id="footer_product_id" name="product_id" value="">
                             <div class="col-md-12">
-                                <input name="email" id="email" type="email" class="form-control example-date-input"
-                                    value="{{ old('email') }}" required>
+                                <input name="email" id="email" type="email" class="form-control example-date-input" value="{{ old('email') }}" required>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn"
-                                    value="{{ _('Share') }}">
+                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn" value="{{ _('Share') }}">
                             </div>
                             <span id="message">
                         </div>
@@ -127,19 +124,18 @@
 <script src="{{asset('frontend/js/main.js')}}"></script>
 
 <script type="text/javascript">
+    jQuery(document).ready(function(e) {
+        setTimeout(function() {
+            jQuery('.featured__controls li.active').trigger('click');
+        }, 500);
+    });
 
-jQuery(document).ready(function(e) {
     setTimeout(function() {
         jQuery('.featured__controls li.active').trigger('click');
-    }, 500);
-});
+        jQuery('.product-discount-message').hide();
+        jQuery('.product-discount-message-error').hide();
+    }, 2000);
 
-setTimeout(function() {
-    jQuery('.featured__controls li.active').trigger('click');
-    jQuery('.product-discount-message').hide();
-    jQuery('.product-discount-message-error').hide();
-}, 2000);
-  
     $(".update-cart").change(function(e) {
         e.preventDefault();
         var ele = $(this);
@@ -152,12 +148,12 @@ setTimeout(function() {
                 variant: ele.parents("tr").attr("data-variant"),
                 quantity: ele.parents("tr").find(".quantity").val()
             },
-            success: function (response) {
+            success: function(response) {
                 window.location.reload();
             }
         });
     });
-    $(".remove-from-cart").click(function (e) {
+    $(".remove-from-cart").click(function(e) {
         e.preventDefault();
         var ele = $(this);
         if (confirm("Are you sure want to remove?")) {
@@ -169,7 +165,7 @@ setTimeout(function() {
                     id: ele.parents("tr").attr("data-id"),
                     variant: ele.parents("tr").attr("data-variant"),
                 },
-                success: function (response) {
+                success: function(response) {
                     window.location.reload();
                 }
             });
@@ -188,19 +184,19 @@ setTimeout(function() {
                 pid: "{{$product->id ?? 0}}"
             },
 
-            success: function (response) {
+            success: function(response) {
                 window.location.reload();
             }
         });
     };
 
-    $(".variants").change(function () {
-        var arr = $('select').map(function () {
+    $(".variants").change(function() {
+        var arr = $('select').map(function() {
             return this.value
         }).get()
         var discount_price = $('#discount_price').val();
         var allVariants = document.querySelectorAll('.variants');
-        allVariants.forEach(function (variant) {
+        allVariants.forEach(function(variant) {
             variant.style.border = '';
         });
         var str = arr.join("/");
@@ -212,7 +208,7 @@ setTimeout(function() {
                 str: str,
                 pid: "{{$product->id ?? 0 }}"
             },
-            success: function (response) {
+            success: function(response) {
                 console.log("productAvailabityStock:", response.productAvailabityStock);
                 let price = 0;
                 if (response.selling_price) {
@@ -239,7 +235,7 @@ setTimeout(function() {
     function share_product(productid) {
         jQuery('form#shareForm #footer_product_id').val(productid);
 
-        jQuery('#shareForm').one('submit', function (e) {
+        jQuery('#shareForm').one('submit', function(e) {
             e.preventDefault();
             jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
@@ -256,7 +252,7 @@ setTimeout(function() {
                     email: email,
                     _token: csrfToken,
                 },
-                success: function (response) {
+                success: function(response) {
                     jQuery('div#loader-container').hide();
                     jQuery('#success-message').text('Mail Sent Successfully!').show();
                     jQuery('#exampleModal').modal('hide');
@@ -266,7 +262,7 @@ setTimeout(function() {
 
                     jQuery('#email').val('');
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             });
@@ -274,7 +270,10 @@ setTimeout(function() {
     }
 
     async function share_product_email(productid) {
-        const { value: email, isConfirmed } = await Swal.fire({
+        const {
+            value: email,
+            isConfirmed
+        } = await Swal.fire({
             title: 'Enter Email',
             input: 'email',
             inputPlaceholder: 'Enter email address',
@@ -314,10 +313,10 @@ setTimeout(function() {
 
             } catch (error) {
                 console.error(error);
-            jQuery('#error-message').text('Failed to send mail. Please try again!').show();
-            setTimeout(() => {
-                jQuery('#error-message').hide();
-            }, 2000);
+                jQuery('#error-message').text('Failed to send mail. Please try again!').show();
+                setTimeout(() => {
+                    jQuery('#error-message').hide();
+                }, 2000);
             } finally {
                 // Hide loading spinner
                 jQuery('#loading-spinner').remove();
@@ -325,7 +324,7 @@ setTimeout(function() {
         }
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Initialize the slider
         const urlParams = new URLSearchParams(window.location.search);
 
@@ -338,19 +337,17 @@ setTimeout(function() {
             min: 10,
             max: 1000,
             values: [mini, maxi],
-            slide: function (event, ui) {
+            slide: function(event, ui) {
                 $("#minamount").val(ui.values[0]);
                 $("#maxamount").val(ui.values[1]);
             }
         });
 
         // Submit the form on slider change
-        $(".price-range").on("slidechange", function () {
+        $(".price-range").on("slidechange", function() {
             $("#price-range-form").submit();
         });
     });
-
-
 </script>
 </body>
 
