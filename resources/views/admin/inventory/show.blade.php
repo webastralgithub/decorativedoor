@@ -212,7 +212,7 @@
         var recived = document.getElementById('recived');
         var recivedqun = parseFloat(recived.innerHTML) || 0;
         total.innerHTML = inputValue + maintotal;
-        var finaltotal = inputValue + maintotal - recivedqun;
+        var finaltotal = recivedqun - inputValue + maintotal;
         var currenttotalElement = document.getElementById('current_total');
         currenttotalElement.textContent = finaltotal.toFixed(2);
     });
