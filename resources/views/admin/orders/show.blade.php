@@ -155,7 +155,7 @@
                                 ${{ number_format($item->discount, 2, '.', ',') }}
                             </td>
                             <td class="align-middle text-center">
-                                ${{ number_format(($item->discount - $item->total), 2, '.', ',') }}
+                                ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
                             </td>
                             @endcan
                         </tr>
@@ -180,7 +180,7 @@
                         </tr>
                         <tr>
                             <td colspan="6" class="text-end">Total</td>
-                            <td class="text-center">${{ number_format($order->due - ($finaltotal + $order->vat), 2, '.', ',') }}</td>
+                            <td class="text-center">${{ number_format(abs($order->due - ($finaltotal + $order->vat)), 2, '.', ',') }}</td>
                         </tr>
                         @endcan
                     </tbody>
