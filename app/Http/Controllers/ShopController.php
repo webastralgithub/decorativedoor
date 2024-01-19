@@ -165,7 +165,7 @@ class ShopController extends Controller
         }
        
         if ($request->id && $request->quantity) {
-            if(getProductAvailabityStock($request->id) < $request->quantity || getProductAvailabityStock($request->id) < $totalQuantity){
+            if(getProductAvailabityStock($request->id) < $request->quantity || getProductAvailabityStock($request->id) <= $totalQuantity){
                return session()->flash('error', 'We have '.getProductAvailabityStock($request->id).' stock in our Inventory');
             }else{
                 $cart = session()->get('cart');

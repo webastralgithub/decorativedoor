@@ -215,7 +215,7 @@
 																<div align="center" class="alignment"
 																	style="line-height:10px; padding-top: 30px;">
 																	<div style="max-width: 126px;"><a
-																			href="www.example.com" style="outline:none"
+																			href="#" style="outline:none"
 																			tabindex="-1" target="_blank"><img
 																				alt="your-logo"
 																				src="{{$emailData['logo']}}"
@@ -392,7 +392,7 @@
 																<div align="center" class="alignment"
 																	style="line-height:10px">
 																	<div style="max-width: 144px;"><a
-																			href="www.example.com" style="outline:none"
+																			href="#" style="outline:none"
 																			tabindex="-1" target="_blank"><img
 																				alt="your-logo" src="{{$emailData['logo']}}"
 																				style="display: block; height: auto; border: 0; width: 100%;"
