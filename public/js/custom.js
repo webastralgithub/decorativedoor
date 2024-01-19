@@ -1,4 +1,8 @@
 jQuery(document).ready(function () {
+
+    jQuery('.toggle-menu-dropdown').click(function () {
+        jQuery('.toggle-menu').slideToggle(300); // 300 milliseconds for the animation
+    });
     // Add More Variant button click event
     jQuery('.add-more-variant').on('click', function () {
         // Clone the last row of fields
@@ -45,10 +49,10 @@ jQuery(document).ready(function () {
         // Append the cloned row to the form
         jQuery('.variantForm').append(cloanhtml);
 
-        jQuery('button.close-row.btn.btn-primary').on('click', function(){
+        jQuery('button.close-row.btn.btn-primary').on('click', function () {
             var parentclass = jQuery(this).parent().parent().parent().remove();
             console.log(parentclass);
-       });
+        });
     });
 
     // ADD TAGS 
@@ -167,7 +171,7 @@ jQuery(document).ready(function () {
                     variantCode = ele.join('/');
                 else
                     variantCode = ele;
-                    let productCode = jQuery('#productcode').val()
+                let productCode = jQuery('#productcode').val()
                 let tableTR =
                     `<tr>
                 <input type="hidden" name="variant_option_type[]" class="form-control" value='${JSON.stringify(variantsArr, null, 2)}'>
@@ -213,26 +217,26 @@ jQuery(document).ready(function () {
         jQuery('.product-slug').val(slug);
     });
 });
-    ClassicEditor
+ClassicEditor
     .create(document.querySelector('#editor'))
     .then(editor => { console.log(editor); })
     .catch(error => { console.error(error); });
 
-    ClassicEditor
+ClassicEditor
     .create(document.querySelector('#notes'))
     .then(editor => { console.log(editor); })
     .catch(error => { console.error(error); });
 
-    ClassicEditor
+ClassicEditor
     .create(document.querySelector('#short_description'))
     .then(editor => { console.log(editor); })
     .catch(error => { console.error(error); });
 
-    jQuery('.category-name').on('input', function () {
-        var name = jQuery(this).val();
-        var slug = jQuery.trim(name).replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
-        jQuery('.category-slug').val(slug);
-    });
+jQuery('.category-name').on('input', function () {
+    var name = jQuery(this).val();
+    var slug = jQuery.trim(name).replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+    jQuery('.category-slug').val(slug);
+});
 // Multiple images preview with JavaScript
 var previewImages = function (input, imgPreviewPlaceholder) {
 
@@ -252,9 +256,9 @@ var previewImages = function (input, imgPreviewPlaceholder) {
 
 };
 
-jQuery('button.close-row.btn.btn-primary').on('click', function(){
-     var parentclass = jQuery(this).parent().parent().parent().remove();
-     console.log(parentclass);
+jQuery('button.close-row.btn.btn-primary').on('click', function () {
+    var parentclass = jQuery(this).parent().parent().parent().remove();
+    console.log(parentclass);
 });
 
 // jQuery('#images').on('change', function () {
