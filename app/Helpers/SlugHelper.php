@@ -197,4 +197,22 @@ if (!function_exists('generateProductSlug')) {
             return $FinalQuantity;
         }
     }
+
+    if (!function_exists('getOrderTotalprice')) {
+        function getOrderTotalprice($orderId = null)
+        {
+
+            $order =  OrderDetails::where('order_id', $orderId)->get();
+
+            $total = 0;
+            $discount = 0;
+            if (!empty($order))
+                foreach ($order as $deliver) {
+                    $total += $deliver->total;
+                    $discount += $deliver->discount;
+                }
+            $FinalTotal = abs($total - $discount);
+            return $FinalTotal;
+        }
+    }
 }

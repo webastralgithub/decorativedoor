@@ -157,15 +157,21 @@ class ShopController extends Controller
 
     public function update_cart(Request $request)
     {
+      
         if ($request->id && $request->quantity) {
-            $cart = session()->get('cart');
-            if (isset($request->variant) && !empty($request->variant)) {
-                $variantId = $request->variant;
-                $cart[$request->id]['variant_data'][$variantId]["quantity"] = $request->quantity;
-            } else {
-                $cart[$request->id]["quantity"] = $request->quantity;
+            if(getProductAvailabityStock($request->id) < $request->quantity){
+               return session()->flash('error', 'We have '.getProductAvailabityStock($request->id).' stock in our Inventory');
+            }else{
+                $cart = session()->get('cart');
+                if (isset($request->variant) && !empty($request->variant)) {
+                    $variantId = $request->variant;
+                    $cart[$request->id]['variant_data'][$variantId]["quantity"] = $request->quantity;
+                } else {
+                    $cart[$request->id]["quantity"] = $request->quantity;
+                }
+                session()->put('cart', $cart);
             }
-            session()->put('cart', $cart);
+            
             session()->flash('success', 'Cart updated successfully');
         }
     }

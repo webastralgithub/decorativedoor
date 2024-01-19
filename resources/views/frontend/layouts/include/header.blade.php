@@ -287,7 +287,10 @@
             <div class="alert alert-success product-discount-message">
                 {{ session('success') }}
             </div>
-            
+            @elseif(session('error'))
+            <div class="alert alert-error product-discount-message-error">
+                {{ session('error') }}
+            </div>
             @endif
         @endif
         </div>
