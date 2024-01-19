@@ -34,7 +34,9 @@
         <div class="table-order">
             <table class="table table-striped table-bordered" id="order">
                 <thead>
+                    @can('make-payment','download-invoice')
                     <th>{{__('Action')}}</th>
+                    @endcan
                     <th>{{__('Order ID')}}</th>
                     <th>{{__('Status')}}</th>
                     <th>{{__('Order Coordinator')}}</th>
@@ -61,18 +63,18 @@
                     <tr>
                         <td>
                             @can('make-payment','download-invoice')
-                            @if($order->order_status == \App\Models\OrderStatus::IN_PROGRESS)
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
                                 </button>
                                 <ul class="dropdown-menu">
+                                    @can('make-payment')
                                     <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make Payment</a></li>
+                                    @endcan
                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Add Signature</a></li>
                                     <!-- <li><a class="dropdown-item" href="{{ route('order.downloadInvoice', $order) }}">Print</a></li> -->
                                 </ul>
                             </div>
-                            @endif
                             @endcan
                         </td>
                         <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{ $order->order_id }}</a></td>
