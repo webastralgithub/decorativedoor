@@ -23,8 +23,10 @@ class AdminRoleWebMiddleware
         // }
     
         // return $next($request);
-
-        if (auth()->check() && (auth()->user()->hasRole('Super Admin') || auth()->user()->hasRole('Delivery User') || auth()->user()->hasRole('Product Assembler') || auth()->user()->hasRole('Accountant') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Sales Person'))) {
+       
+        if (auth()->check() && (auth()->user()->hasRole('Super Admin') || auth()->user()->hasRole('Delivery User') || auth()->user()->hasRole('Product Assembler') || auth()->user()->hasRole('Accountant') || auth()->user()->hasRole('Admin'))) {
+            return redirect('/admin');
+        }else if(auth()->user()->hasRole('Sales Person')){
             return $next($request);
         }
 
