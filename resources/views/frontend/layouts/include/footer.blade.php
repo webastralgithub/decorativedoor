@@ -128,8 +128,14 @@
 
 <script type="text/javascript">
 
+jQuery(document).ready(function(e) {
+    setTimeout(function() {
+        jQuery('.featured__controls li.active').trigger('click');
+    }, 500);
+});
 
 setTimeout(function() {
+    jQuery('.featured__controls li.active').trigger('click');
     jQuery('.product-discount-message').hide();
     jQuery('.product-discount-message-error').hide();
 }, 2000);
