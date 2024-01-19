@@ -281,7 +281,7 @@
                 <i class="fa fa-bars"></i>
             </div>
         </div>
-        <div class="container">
+        <div class="customer-message">
            
             @if(session()->has('assign_customer'))
             <p>Current Order for this Customer: {{getUserInfo(session()->get('assign_customer'))->name}}</p>

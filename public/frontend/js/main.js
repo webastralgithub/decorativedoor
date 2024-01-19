@@ -417,7 +417,7 @@
     jQuery(document).ready(function () {
         jQuery('#productDiscountMessage').hide();
         jQuery('.customerassign').on('click', function (e) {
-            e.preventDefault();
+            jQuery(this).prop('checked', true);
             var token = $('input[name="_token"]').val();
             var userid = jQuery(this).data('id');
             var url = "/assign-customer";
@@ -431,6 +431,7 @@
                     jQuery('#productDiscountMessage').text(response.success);
                     jQuery('#place-order-btn').html('<a href="/checkout" class="btn btn-success">Proceed Order</a>');
                     jQuery('#productDiscountMessage').show();
+                    jQuery('#assignuser').modal('hide');
                     setTimeout(function () {
                         jQuery('#productDiscountMessage').hide();
                     }, 2000);

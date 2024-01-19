@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div class="card-body ">
+    <div class="mt-2">
         <div class="row row-cards mb-3 order-table-topb">
             <div class="col">
                 <label for="order_date" class="form-label required">
@@ -67,7 +67,7 @@
             </div> --}}
         </div>
 
-        <div class="content-body">
+        <div class="content-body inventery-createtable-btm">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered align-middle">
                     <thead class="thead-light">
