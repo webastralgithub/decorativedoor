@@ -60,11 +60,11 @@
                 </label>
             </div>
 
-            <div class="col">
+            {{-- <div class="col">
                 <label for="payment_type" class="form-label required">
                     <strong>{{ __('Payment Via') }}:</strong> {{ @$order->payment_type }}
                 </label>
-            </div>
+            </div> --}}
         </div>
 
         <div class="content-body">
