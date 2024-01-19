@@ -187,8 +187,10 @@
         // Update the total price in the designated element
         totalElement.textContent = total.toFixed(2); // Adjust as needed
 
+        var absoluteFinal = Math.abs(final);
+
         var currenttotalElement = document.getElementById('current_total');
-        currenttotalElement.textContent = final.toFixed(2);
+        currenttotalElement.textContent = absoluteFinal.toFixed(2);
     }
 
     var inputElement = document.getElementById('enter_quantity');
@@ -213,8 +215,9 @@
         var recivedqun = parseFloat(recived.innerHTML) || 0;
         total.innerHTML = inputValue + maintotal;
         var finaltotal = recivedqun - inputValue + maintotal;
+        var absoluteFinaltotal = Math.abs(finaltotal);
         var currenttotalElement = document.getElementById('current_total');
-        currenttotalElement.textContent = finaltotal.toFixed(2);
+        currenttotalElement.textContent = absoluteFinaltotal.toFixed(2);
     });
 
     async function EditInventory(InventoryId, wayBill, quantity) {
