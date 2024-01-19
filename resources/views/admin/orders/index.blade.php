@@ -15,7 +15,8 @@
 
         <div class="top-bntspg-hdr">
             @can('create-order')
-            <a href="{{ route('orders.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Order</a>
+            <a href="{{ route('orders.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i>
+                Add New Order</a>
             @endcan
         </div>
     </div>
@@ -64,20 +65,26 @@
                         <td>
                             @can('make-payment','download-invoice')
                             <div class="btn-group">
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden cogs-btn"><i class="fa fa-cog" aria-hidden="true"></i></span>
+                                <button type="button"
+                                    class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden cogs-btn"><i class="fa fa-cog"
+                                            aria-hidden="true"></i></span>
                                 </button>
                                 <ul class="dropdown-menu">
                                     @can('make-payment')
-                                    <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make Payment</a></li>
+                                    <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make
+                                            Payment</a></li>
                                     @endcan
-                                    <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Add Signature</a></li>
+                                    <li><a href="{{ route('orders.delivery_user', $order->id) }}"
+                                            class="dropdown-item">Add Signature</a></li>
                                     <!-- <li><a class="dropdown-item" href="{{ route('order.downloadInvoice', $order) }}">Print</a></li> -->
                                 </ul>
                             </div>
                             @endcan
                         </td>
-                        <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{ $order->order_id }}</a></td>
+                        <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{
+                                $order->order_id }}</a></td>
                         @can('change-order-status')
                         <td class="center status-links">
                             <!-- <a class="text-info" onclick="return changeOrderStatus('{{$order->id}}','{{$order_statuses}}','{{$order->order_status}}');">
@@ -90,7 +97,10 @@
                             @endforeach
                         </td>
                         @endcan
-                        <td class="center"> <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_order_coordinator') onclick="return assignUser('{{$order->id}}','{{$coordinators}}','order coordinator','{{$order->user_id}}');" @endcan>{{$order->coordinator->name ?? "..."}}</span>
+                        <td class="center"> <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer"
+                                @can('change_order_coordinator')
+                                onclick="return assignUser('{{$order->id}}','{{$coordinators}}','order coordinator','{{$order->user_id}}');"
+                                @endcan>{{$order->coordinator->name ?? "..."}}</span>
                         </td>
                         <td class="center">
                             <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_sales_person') onclick="return assignUser('{{$order->id}}','{{$sales_users}}','sales person','{{$order->user_id}}');" @endcan>{{$order->user->name ?? "..."}}</span>
@@ -100,13 +110,22 @@
                         </td>
                        
                         {{-- <td class="center">
-                            <span class="@if(!$order->accountant) dots-assigned @endif cursor-pointer" @can('change_accountant_user') onclick="return assignUser('{{$order->id}}','{{$accountant_users}}','accountant','{{$order->accountant_user_id}}');" @endcan>{{$order->accountant->name ?? "..."}}</span>
+                            <span class="@if(!$order->accountant) dots-assigned @endif cursor-pointer"
+                                @can('change_accountant_user')
+                                onclick="return assignUser('{{$order->id}}','{{$accountant_users}}','accountant','{{$order->accountant_user_id}}');"
+                                @endcan>{{$order->accountant->name ?? "..."}}</span>
                         </td> --}}
                         <td class="center">
-                            <span class="@if(!$order->assemble) dots-assigned @endif cursor-pointer" @can('change_assembler_user') onclick="return assignUser('{{$order->id}}','{{$assembler_users}}','assembler','{{$order->assembler_user_id}}');" @endcan>{{$order->assemble->name ?? "..."}}</span>
+                            <span class="@if(!$order->assemble) dots-assigned @endif cursor-pointer"
+                                @can('change_assembler_user')
+                                onclick="return assignUser('{{$order->id}}','{{$assembler_users}}','assembler','{{$order->assembler_user_id}}');"
+                                @endcan>{{$order->assemble->name ?? "..."}}</span>
                         </td>
                         <td class="center">
-                            <span class="@if(!$order->delivery) dots-assigned @endif cursor-pointer" @can('change_delivery_user') onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','delivery','{{$order->delivery_user_id}}');" @endcan>{{$order->delivery->name ?? "..."}}</span>
+                            <span class="@if(!$order->delivery) dots-assigned @endif cursor-pointer"
+                                @can('change_delivery_user')
+                                onclick="return assignUser('{{$order->id}}','{{$delivery_users}}','delivery','{{$order->delivery_user_id}}');"
+                                @endcan>{{$order->delivery->name ?? "..."}}</span>
                         </td>
                         @can('change-order-status')
                         @php
@@ -115,9 +134,10 @@
                         {{-- <td class="@if($address == '') center @endif">
                             @if($address != '')
                             <span class="">{{$address}}</span>
-                        @else
-                        <span class="dots-assigned cursor-pointer" @can('change_user_address') onclick="return addUserAddress('{{$order->user_id}}');" @endcan>{{"..."}}</span>
-                        @endif
+                            @else
+                            <span class="dots-assigned cursor-pointer" @can('change_user_address')
+                                onclick="return addUserAddress('{{$order->user_id}}');" @endcan>{{"..."}}</span>
+                            @endif
                         </td> --}}
                         @endcan
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
@@ -127,7 +147,9 @@
                         <td>${{ number_format(getOrderTotalprice($order->id), 2, '.', ',') }}</td>
                         @endcan
                         @if(auth()->user()->hasRole('Accountant'))
-                        <td><button class="btn btn-primary btn-sm my-2" onclick="return updateProductStatus('{{$order->id}}', 4)"> Okay to proceed </button></td>
+                        <td><button class="btn btn-primary btn-sm my-2"
+                                onclick="return updateProductStatus('{{$order->id}}', 4)"> Okay to proceed </button>
+                        </td>
                         @endif
                     </tr>
                     @endforeach
@@ -142,7 +164,9 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9" style="line-height: 35px;">
-                            <input name="street" id="street" type="text" class="form-control example-date-input @error('street') is-invalid @enderror" value="{{ old('street') }}" required>
+                            <input name="street" id="street" type="text"
+                                class="form-control example-date-input @error('street') is-invalid @enderror"
+                                value="{{ old('street') }}" required>
                         </div>
                     </div>
                 </div>
@@ -153,7 +177,9 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9" style="line-height: 35px;">
-                            <input name="city" id="city" type="text" class="form-control example-date-input @error('city') is-invalid @enderror" value="{{ old('city') }}" required>
+                            <input name="city" id="city" type="text"
+                                class="form-control example-date-input @error('city') is-invalid @enderror"
+                                value="{{ old('city') }}" required>
                         </div>
                     </div>
                 </div>
@@ -164,7 +190,9 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9" style="line-height: 35px;">
-                            <input name="state" id="state" type="text" class="form-control example-date-input @error('state') is-invalid @enderror" value="{{ old('state') }}" required>
+                            <input name="state" id="state" type="text"
+                                class="form-control example-date-input @error('state') is-invalid @enderror"
+                                value="{{ old('state') }}" required>
                         </div>
                     </div>
                 </div>
@@ -175,7 +203,9 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9" style="line-height: 35px;">
-                            <input name="country" id="country" type="text" class="form-control example-date-input @error('country') is-invalid @enderror" value="{{ old('country') }}" required>
+                            <input name="country" id="country" type="text"
+                                class="form-control example-date-input @error('country') is-invalid @enderror"
+                                value="{{ old('country') }}" required>
                         </div>
                     </div>
                 </div>
@@ -186,7 +216,9 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-9" style="line-height: 35px;">
-                            <input name="zip_code" id="zip_code" type="text" class="form-control example-date-input @error('zip_code') is-invalid @enderror" value="{{ old('zip_code') }}" required>
+                            <input name="zip_code" id="zip_code" type="text"
+                                class="form-control example-date-input @error('zip_code') is-invalid @enderror"
+                                value="{{ old('zip_code') }}" required>
                         </div>
                     </div>
                 </div>
@@ -210,28 +242,24 @@
                 new_status: newStatus,
                 _token: '{{ csrf_token() }}' // Add CSRF token if needed
             },
-            success: function(response) {
+            success: function (response) {
                 // Handle success, if needed
                 if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Order Status Updated',
-                        text: response.success
-                    });
+
+                    jQuery('#success-message').text('Order Status Updated').show();
+                    setTimeout(() => {
+                        jQuery('#success-message').hide();
+                    }, 2000);
                 } else {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Order Status Error',
-                        text: response.error
-                    }).then((result) => {
-                        /* Read more about isConfirmed, isDenied below */
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
+
+                    jQuery('#error-message').text('Order Status Error').show();
+                    setTimeout(() => {
+                        jQuery('#error-message').hide();
+                        location.reload();
+                    }, 2000);
                 }
             },
-            error: function(error) {
+            error: function (error) {
                 // Handle error, if needed
                 console.error('Error updating order status', error);
             }
@@ -263,23 +291,22 @@
                                 method: value,
                                 _token: '{{ csrf_token() }}' // Add CSRF token if needed
                             },
-                            success: function(response) {
+                            success: function (response) {
                                 // Handle success, if needed
                                 if (response.success) {
                                     resolve();
-                                    Swal.fire({
-                                        title: "Thank You!",
-                                        text: "Payment status updated successfully!",
-                                        icon: "success"
-                                    }).then((result) => {
+
+                                    jQuery('#success-message').text('Payment status updated successfully!').show();
+                                    setTimeout(() => {
+                                        jQuery('#success-message').hide();
                                         /* Read more about isConfirmed, isDenied below */
                                         if (result.isConfirmed) {
                                             location.reload();
                                         }
-                                    });
+                                    }, 2000);
                                 }
                             },
-                            error: function(error) {
+                            error: function (error) {
                                 // Handle error, if needed
                                 console.error('Error updating order status', error);
                             }
@@ -320,23 +347,20 @@
                                 type: type,
                                 _token: '{{ csrf_token() }}' // Add CSRF token if needed
                             },
-                            success: function(response) {
-                                // Handle success, if needed
+                            success: function (response) {
                                 if (response.success) {
                                     resolve();
-                                    Swal.fire({
-                                        title: "Thank You!",
-                                        text: "Assigned Successfully",
-                                        icon: "success"
-                                    }).then((result) => {
-                                        /* Read more about isConfirmed, isDenied below */
+
+                                    jQuery('#success-message').text('Assigned Successfully!').show();
+                                    setTimeout(() => {
+                                        jQuery('#success-message').hide();
                                         if (result.isConfirmed) {
                                             location.reload();
                                         }
-                                    });
+                                    }, 2000);
                                 }
                             },
-                            error: function(error) {
+                            error: function (error) {
                                 // Handle error, if needed
                                 console.error('Error updating order status', error);
                             }
@@ -350,7 +374,7 @@
         });
 
     }
-    $(".select-sales_users").change(function() {
+    $(".select-sales_users").change(function () {
 
         $.ajax({
             url: "{{ route('assign_user') }}",
@@ -362,17 +386,14 @@
                 userid: $(this).val()
             },
 
-            success: function(response) {
-                Swal.fire({
-                    title: "Thank You!",
-                    text: "Assigned successfully!",
-                    icon: "success"
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
+            success: function (response) {
+                jQuery('#success-message').text('Assigned Successfully!').show();
+                setTimeout(() => {
+                    jQuery('#success-message').hide();
                     if (result.isConfirmed) {
                         location.reload();
                     }
-                });
+                }, 2000);
             }
         });
     })
@@ -403,33 +424,27 @@
                                 new_status: value,
                                 _token: '{{ csrf_token() }}' // Add CSRF token if needed
                             },
-                            success: function(response) {
+                            success: function (response) {
                                 // Handle success, if needed
                                 if (response.success) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Order Status Updated',
-                                        text: response.success
-                                    }).then((result) => {
-                                        /* Read more about isConfirmed, isDenied below */
+                                    jQuery('#success-message').text('Order Status Updated!').show();
+                                    setTimeout(() => {
+                                        jQuery('#success-message').hide();
                                         if (result.isConfirmed) {
                                             location.reload();
                                         }
-                                    });
+                                    }, 2000);
                                 } else {
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Order Status Error',
-                                        text: response.error
-                                    }).then((result) => {
-                                        /* Read more about isConfirmed, isDenied below */
+                                    jQuery('#error-message').text('Order Status Error!').show();
+                                    setTimeout(() => {
+                                        jQuery('#error-message').hide();
                                         if (result.isConfirmed) {
                                             location.reload();
                                         }
-                                    });
+                                    }, 2000);
                                 }
                             },
-                            error: function(error) {
+                            error: function (error) {
                                 // Handle error, if needed
                                 console.error('Error updating order status', error);
                             }
@@ -480,28 +495,24 @@
                             zipCode: zipCode,
                             _token: '{{ csrf_token() }}' // Add CSRF token if needed
                         },
-                        success: function(response) {
+                        success: function (response) {
                             // Handle success, if needed
                             if (response.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'User Address Updated',
-                                    text: response.success
-                                });
+                                jQuery('#success-message').text('User Address Updated!').show();
+                                setTimeout(() => {
+                                    jQuery('#success-message').hide();
+                                }, 2000);
                             } else {
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'User Address Error',
-                                    text: response.error
-                                }).then((result) => {
-                                    /* Read more about isConfirmed, isDenied below */
+                                jQuery('#error-message').text('User Address Error!').show();
+                                setTimeout(() => {
+                                    jQuery('#error-message').hide();
                                     if (result.isConfirmed) {
                                         location.reload();
                                     }
-                                });
+                                }, 2000);
                             }
                         },
-                        error: function(error) {
+                        error: function (error) {
                             // Handle error, if needed
                             console.error('Error updating order status', error);
                         }

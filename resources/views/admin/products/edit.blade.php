@@ -313,11 +313,10 @@
      async function ManageInventory(InventoryId, responseType) {
       
       if (InventoryId <= 0) {
-          Swal.fire({
-              icon: 'warning',
-              title: 'User not valid!',
-              text: "Please select Sales Person"
-          });
+          jQuery('#success-message').text('Please select Sales Person!').show();
+          setTimeout(() => {
+              jQuery('#success-message').hide();
+          }, 2000);
           return false;
       }
       await Swal.fire({

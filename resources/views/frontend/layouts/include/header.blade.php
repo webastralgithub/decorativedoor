@@ -300,4 +300,7 @@
             @endif
         @endif
         </div>
+
+        <div class="success-message" id="success-message" style="display:none;"></div>
+`       <div class="error-message" id="error-message" style="display:none;"></div>
     </header>

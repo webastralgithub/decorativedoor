@@ -128,7 +128,7 @@
                                             @$order->user->name }}</span></li>
                                     <li class="text-muted text-sn-addrs">{{ @$order->user->address->street .' '.
                                         @$order->user->address->city }}</li>
-                                    <li class="text-muted text-sn-addrs">{{@$order->user->address->state}},
+                                    <li class="text-muted text-sn-addrs">{{@$order->user->address->state}} 
                                         {{@$order->user->address->country}}</li>
                                     <li class="text-muted text-sn-addrs"><i class="fas fa-phone"></i> {{
                                         @$order->user->phone }}</li>

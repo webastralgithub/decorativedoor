@@ -20,11 +20,12 @@
                         @foreach($categories as $category)
                         @if(empty($category->parent_id) && $category->name != 'Add On')
                         <li>
-                            <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
+                            <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ?
+                                $category->name : '' }}</a>
                         </li>
                         @endif
                         @endforeach
-                        
+
                     </ul>
                     {{-- <ul>
                         <li><a href="#">Who We Are</a></li>
@@ -58,7 +59,8 @@
                 <div class="footer__copyright">
                     <div class="footer__copyright__text">
                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>
+                            Copyright &copy;
+                            <script>
                                 document.write(new Date().getFullYear());
                             </script> All rights reserved
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -75,40 +77,44 @@
 
 
 <!-- Modal share with email -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Product Share With Customer</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form id="shareForm" class="sahre-product-popup" method="Post">
-                @csrf
-                @method('POST')
-                <div class="mb-3 row">
-                    <div class="col-md-12 flex">
-                        <label for="email" class="col-md-3 col-form-label text-md-end text-start">
-                            {{ __('Email') }}
-                            <span class="text-danger">*</span>
-                        </label>
-                        <input type="hidden" id="footer_product_id" name="product_id" value="">
-                        <div class="col-md-12">
-                            <input name="email" id="email" type="email" class="form-control example-date-input" value="{{ old('email') }}" required>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Product Share With Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="shareForm" class="sahre-product-popup" method="Post">
+                    @csrf
+                    @method('POST')
+                    <div class="mb-3 row">
+                        <div class="col-md-12 flex">
+                            <label for="email" class="col-md-3 col-form-label text-md-end text-start">
+                                {{ __('Email') }}
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="hidden" id="footer_product_id" name="product_id" value="">
+                            <div class="col-md-12">
+                                <input name="email" id="email" type="email" class="form-control example-date-input"
+                                    value="{{ old('email') }}" required>
+                            </div>
+                            <div class="col-md-12 mt-3">
+                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn"
+                                    value="{{ _('Share') }}">
+                            </div>
+                            <span id="message">
                         </div>
-                        <div class="col-md-12 mt-3">
-                            <input name="submit" id="share" type="submit" class="form-control btn primary-btn" value="{{ _('Share') }}">
-                        </div>
-                        <span id="message"></div>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+</div>
 
 <!-- Js Plugins -->
 <script src="{{asset('frontend/js/jquery-3.3.1.min.js')}}"></script>
@@ -140,12 +146,12 @@ setTimeout(function() {
                 variant: ele.parents("tr").attr("data-variant"),
                 quantity: ele.parents("tr").find(".quantity").val()
             },
-            success: function(response) {
+            success: function (response) {
                 window.location.reload();
             }
         });
     });
-    $(".remove-from-cart").click(function(e) {
+    $(".remove-from-cart").click(function (e) {
         e.preventDefault();
         var ele = $(this);
         if (confirm("Are you sure want to remove?")) {
@@ -157,7 +163,7 @@ setTimeout(function() {
                     id: ele.parents("tr").attr("data-id"),
                     variant: ele.parents("tr").attr("data-variant"),
                 },
-                success: function(response) {
+                success: function (response) {
                     window.location.reload();
                 }
             });
@@ -176,31 +182,31 @@ setTimeout(function() {
                 pid: "{{$product->id ?? 0}}"
             },
 
-            success: function(response) {
+            success: function (response) {
                 window.location.reload();
             }
         });
     };
 
-    $(".variants").change(function() {
-        var arr = $('select').map(function() {
+    $(".variants").change(function () {
+        var arr = $('select').map(function () {
             return this.value
         }).get()
         var discount_price = $('#discount_price').val();
         var allVariants = document.querySelectorAll('.variants');
-        allVariants.forEach(function(variant) {
+        allVariants.forEach(function (variant) {
             variant.style.border = '';
         });
         var str = arr.join("/");
         $.ajax({
             url: "{{ route('get.price') }}",
             method: "GET",
-            data: { 
+            data: {
                 _token: '{{ csrf_token() }}',
                 str: str,
                 pid: "{{$product->id ?? 0 }}"
             },
-            success: function(response) {
+            success: function (response) {
                 console.log("productAvailabityStock:", response.productAvailabityStock);
                 let price = 0;
                 if (response.selling_price) {
@@ -208,14 +214,14 @@ setTimeout(function() {
                 } else {
                     price = 0;
                 }
-            
+
                 $('.product-variant-data').val(JSON.stringify(response))
-                if(discount_price != ''){
-                    $('.product__details__price').html('<del style="color: #625c5c;font-size: 18px;">$'+price+'</del> $' + (price - discount_price));
-                }else{
+                if (discount_price != '') {
+                    $('.product__details__price').html('<del style="color: #625c5c;font-size: 18px;">$' + price + '</del> $' + (price - discount_price));
+                } else {
                     $('.product__details__price').html('$' + (price - discount_price));
                 }
-                
+
                 // if (response.productAvailabityStock <= 0)
                 //     $('#availability').text('Out of Stock');
                 // $('.add-to-cart').attr('disabled', (response.productAvailabityStock > 0) ? false : true);
@@ -224,104 +230,98 @@ setTimeout(function() {
         });
     })
 
-        function share_product(productid) {
-            
-            jQuery('form#shareForm #footer_product_id').val(productid);
-            jQuery('#shareForm').one('submit', function (e) {
-                e.preventDefault();
-                //jQuery('div#loader-container').show();
-                var csrfToken = $('input[name="_token"]').val();
-                var productid = jQuery('#footer_product_id').val();
-                var email = jQuery('#email').val();
-                var domain = window.location.origin;
-                var url = domain + "/share-product/" + productid;
+    function share_product(productid) {
+        jQuery('form#shareForm #footer_product_id').val(productid);
 
-                jQuery.ajax({
-                    url: url,
-                    type: "Post",
-                    data: {
-                        productid: productid,
-                        email: email,
-                        _token: csrfToken,
-                    },
-                    success: function (response) {
-                       // jQuery('div#loader-container').hide();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Mail Sent Successfully!',
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
+        jQuery('#shareForm').one('submit', function (e) {
+            e.preventDefault();
+            jQuery('div#loader-container').show();
+            var csrfToken = $('input[name="_token"]').val();
+            var productid = jQuery('#footer_product_id').val();
+            var email = jQuery('#email').val();
+            var domain = window.location.origin;
+            var url = domain + "/share-product/" + productid;
 
-                        jQuery('#email').val('');
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            });
-        }
-
-    async function share_product_email(productid) {
-    const { value: email, isConfirmed } = await Swal.fire({
-        title: 'Enter Email',
-        input: 'email',
-        inputPlaceholder: 'Enter email address',
-        showCancelButton: true,
-        confirmButtonText: 'Share',
-        cancelButtonText: 'Cancel',
-        inputValidator: (value) => {
-            if (!value) {
-                return 'Email address is required!';
-            }
-        },
-    });
-
-    if (isConfirmed) {
-        // Show loading spinner
-        $('body').append('<div id="loading-spinner"></div>');
-
-        try {
-            const csrfToken = $('input[name="_token"]').val();
-            const domain = window.location.origin;
-            const url = `${domain}/share-product/${productid}`;
-
-            const response = await jQuery.ajax({
+            jQuery.ajax({
                 url: url,
-                type: 'POST',
+                type: "Post",
                 data: {
                     productid: productid,
                     email: email,
                     _token: csrfToken,
                 },
-            });
+                success: function (response) {
+                    jQuery('div#loader-container').hide();
+                    jQuery('#success-message').text('Mail Sent Successfully!').show();
+                    setTimeout(() => {
+                        jQuery('#success-message').hide();
+                    }, 2000);
 
-            console.log(response);
-
-            Swal.fire({
-                title: 'Thank You!',
-                text: 'Mail Sent Successfully!',
-                icon: 'success',
+                    jQuery('#email').val('');
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
             });
-        } catch (error) {
-            console.error(error);
+        });
+    }
 
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed to send mail. Please try again.',
-                icon: 'error',
-            });
-        } finally {
-            // Hide loading spinner
-            $('#loading-spinner').remove();
+    async function share_product_email(productid) {
+        const { value: email, isConfirmed } = await Swal.fire({
+            title: 'Enter Email',
+            input: 'email',
+            inputPlaceholder: 'Enter email address',
+            showCancelButton: true,
+            confirmButtonText: 'Share',
+            cancelButtonText: 'Cancel',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Email address is required!';
+                }
+            },
+        });
+
+        if (isConfirmed) {
+            // Show loading spinner
+            $('body').append('<div id="loading-spinner"></div>');
+
+            try {
+                const csrfToken = $('input[name="_token"]').val();
+                const domain = window.location.origin;
+                const url = `${domain}/share-product/${productid}`;
+
+                const response = await jQuery.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        productid: productid,
+                        email: email,
+                        _token: csrfToken,
+                    },
+                });
+
+                jQuery('#success-message').text('Mail Sent Successfully!').show();
+                setTimeout(() => {
+                    jQuery('#success-message').hide();
+                }, 2000);
+
+            } catch (error) {
+                console.error(error);
+            jQuery('#error-message').text('Failed to send mail. Please try again!').show();
+            setTimeout(() => {
+                jQuery('#error-message').hide();
+            }, 2000);
+            } finally {
+                // Hide loading spinner
+                jQuery('#loading-spinner').remove();
+            }
         }
     }
-}
 
-$(document).ready(function() {
+    $(document).ready(function () {
         // Initialize the slider
         const urlParams = new URLSearchParams(window.location.search);
-        
+
         // Get the 'min' and 'max' values
         const mini = urlParams.get('min');
         const maxi = urlParams.get('max');
@@ -329,16 +329,16 @@ $(document).ready(function() {
         $(".price-range").slider({
             range: true,
             min: 10,
-            max: 1000, 
-            values: [mini, maxi], 
-            slide: function(event, ui) {
+            max: 1000,
+            values: [mini, maxi],
+            slide: function (event, ui) {
                 $("#minamount").val(ui.values[0]);
                 $("#maxamount").val(ui.values[1]);
             }
         });
 
         // Submit the form on slider change
-        $(".price-range").on("slidechange", function() {
+        $(".price-range").on("slidechange", function () {
             $("#price-range-form").submit();
         });
     });

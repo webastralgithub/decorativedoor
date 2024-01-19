@@ -8,25 +8,25 @@
             <img src="{{ asset('img/toggle.svg') }}" />
         </a>
         @if (Route::is('dashboard'))
-            <h5>Dashborard</h5>
+        <h5>Dashborard</h5>
         @elseif(Route::is('client.index'))
-            <h5>Clients</h5>
+        <h5>Clients</h5>
         @elseif(Route::is('client.clients_prv'))
-            <h5><span>Clients</span> <img src="{{ asset('img/arrow-right.svg') }}" /> Pierre Dupont</h5>
+        <h5><span>Clients</span> <img src="{{ asset('img/arrow-right.svg') }}" /> Pierre Dupont</h5>
         @elseif(Route::is('projets.index'))
-            <h5>Projets</h5>
+        <h5>Projets</h5>
         @elseif(Route::is('projets.projets_prv'))
-            <h5><span>Projets</span> <img src="{{ asset('img/arrow-right.svg') }}"> ABCD SAS</h5>
+        <h5><span>Projets</span> <img src="{{ asset('img/arrow-right.svg') }}"> ABCD SAS</h5>
         @elseif(Route::is('fournisseurs.index'))
-            <h5>Fournisseurs</h5>
+        <h5>Fournisseurs</h5>
         @elseif(Route::is('financiers.index'))
-            <h5>Financiers</h5>
+        <h5>Financiers</h5>
         @elseif(Route::is('paramètres.index'))
-            <h5>Paramètres</h5>
+        <h5>Paramètres</h5>
         @elseif(Route::is('statistiques.index'))
-            <h5>Statistiques</h5>
+        <h5>Statistiques</h5>
         @elseif(Route::is('utilisateurs.index'))
-            <h5>Utilisateurs</h5>
+        <h5>Utilisateurs</h5>
         @endif
 
         <div class="navbar-nav align-items-center ms-auto">
@@ -40,10 +40,8 @@
                 <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                     <!-- <a href="#" class="dropdown-item">Mon Profil</a>
                     <a href="#" class="dropdown-item">Paramètres</a> -->
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                  document.getElementById('logout-form').submit();"
-                        class="dropdown-item">Logout</a>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                  document.getElementById('logout-form').submit();" class="dropdown-item">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
@@ -52,4 +50,7 @@
         </div>
     </div>
 </nav>
+
+<div class="success-message" id="success-message" style="display:none;"></div>
+<div class="error-message" id="error-message" style="display:none;"></div>
 <!-- Navbar End -->

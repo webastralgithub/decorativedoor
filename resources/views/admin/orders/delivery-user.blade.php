@@ -26,12 +26,10 @@
     <div class="body-content-new delevery-user-pg">
         @if($recentSignature)
         <div class="mt-0 recent-img-sec">
-            <h4>Recent Images:</h4>
+            <h4>Images:</h4>
 
             <div class="rc-images-wrapper">
             @foreach($images as $image)
-      
-    
             @foreach(json_decode($image->images) as $single)
                 <img src="{{ asset('storage/images/'.basename($single)) }}" alt="Recent Image">
                 @endforeach
@@ -39,8 +37,10 @@
             </div>    
         </div>
         <div class="mt-4 signature-sec">
-            <h4>Recent Signature:</h4>
+            <h4>Signature:</h4>
+            @if(!empty($recentSignature->signature))
             <img src="{{ asset('storage/signatures/' . $recentSignature->signature) }}" alt="Recent Signature">
+            @endif
         </div>
         @endif
         <div id="print-content">
@@ -60,7 +60,7 @@
                                 JPG or PNG no larger than 2 MB
                             </div>
                             <input type="file" accept="image/*" id="image" name="images[]"
-                                class="form-control @error('product_images') is-invalid @enderror"
+                                class="form-control @error('images') is-invalid @enderror"
                                 onchange="previewImages(this, 'div.images-preview-div')" multiple required>
                             @error('images')
                             <div class="invalid-feedback">
