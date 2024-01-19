@@ -4,12 +4,12 @@
 
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
-        <h3>Add Signature</h3>
+        <h4>Add Signature</h4>
 
         <div class="top-bntspg-hdr">
             <a href="{{ route('orders.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
-            <a href="javascript:window.print()" class="btn btn-primary text-capitalize border0" data-mdb-ripple-color="dark" onclick="hidePrintContent()"><i class="fas fa-print text-primary"></i> Print</a>
-            <!-- <a href="{{ route('order.downloadInvoice', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm"> Invoice</a> -->
+            <a href="javascript:window.print()" class="btn btn-primary text-capitalize border0" data-mdb-ripple-color="dark" onclick="hidePrintContent()"><i class="fas fa-print text-primary"></i> Download</a>
+            <a href="{{ route('order.downloadInvoice', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm"> Invoice</a>
         </div>
     </div>
     @if(\Session::has('error'))
@@ -23,11 +23,12 @@
         <li class="alert alert-success">{!! \Session::get('success') !!}</li>
     </div>
     @endif
-    <div class="body-content-new">
+    <div class="body-content-new delevery-user-pg">
         @if($recentSignature)
-        <div class="mt-4">
+        <div class="mt-0 recent-img-sec">
             <h4>Recent Images:</h4>
 
+            <div class="rc-images-wrapper">
             @foreach($images as $image)
       
     
@@ -35,6 +36,7 @@
                 <img src="{{ asset('storage/images/'.basename($single)) }}" alt="Recent Image">
                 @endforeach
                 @endforeach
+            </div>    
         </div>
         <div class="mt-4 signature-sec">
             <h4>Recent Signature:</h4>
@@ -47,7 +49,7 @@
             @csrf
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card mt-4">
+                    <div class="mt-4">
                         <div class="card-body delivery-user-imguploads">
                             <input type="hidden" name="order_id" value="{{$order->id}}">
                             <label class="col-md-4 col-form-label text-md-end text-start">Images*</label>
@@ -73,19 +75,26 @@
             <br>
             <div class="row">
                 <div class="col-lg-12">
-                    <label class="col-md-4 col-form-label text-md-end text-start">Signature*</label>
-                    <div class="col-md-12">
-                        <canvas id="signature-pad" style="border: 1px solid;border-radius: 10px;" width="940"
+                    <div class="signature-sec-btm">
+
+                    <div class="col-md-12 signature-tp-bar p-0">
+                    <label class="col-form-label text-md-end text-start">Signature*</label>
+                    <input type="button" onclick="clearSignature()" class="col-md-2 offset-md-1 btn btn-primary"
+                    value="Clear">
+                    </div>   
+
+                    <div class="col-md-12 p-0 signatire-canvas">
+                        <canvas id="signature-pad" style="border: 1px solid;border-radius: 10px;" width="600px"
                             height="200"></canvas>
                         <input type="hidden" name="signature" id="signature" value="">
+                    </div>
                     </div>
                 </div>
             </div>
             <br>
             <div class="col-md-12">
-                <input type="button" onclick="saveSignature()" class="col-md-2 offset-md-4 btn btn-primary" value="Add">
-                <input type="button" onclick="clearSignature()" class="col-md-2 offset-md-1 btn btn-primary"
-                    value="Clear">
+                <input type="button" onclick="saveSignature()" class="col-md-2 signature-add-btn btn btn-primary" value="Save">
+                
             </div>
         </form>
 </div>
