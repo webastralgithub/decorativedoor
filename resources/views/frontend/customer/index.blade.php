@@ -133,7 +133,7 @@
                                     <div class="row mt-4">
                                         <div class="col-md-12 same-address-block">
                                             <input type="checkbox" class="form-check-input" id="use_shipping_add">
-                                            <label class="form-check-label"> Use as same shipping address </label>
+                                            <label class="form-check-label"> Ship to a different address? </label>
                                         </div>
                                     </div>
                                 </div>

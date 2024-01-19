@@ -296,7 +296,7 @@ class ShopController extends Controller
     public function share_product(Request $request, $productid)
     {
 
-        $product = Product::with(['variants', 'images', 'categories'])->where('id', $productid)->first();
+        $product = Product::with(['variants', 'images', 'image', 'categories'])->where('id', $productid)->first();
 
         if (!empty($product)) {
 
@@ -306,11 +306,13 @@ class ShopController extends Controller
             }
 
             $emailData = [
+                'logo' => asset('frontend/img/logo.png'),
                 'title' => $product->title,
                 'description' => $product->short_description,
                 'price' => ($request->price) ? $request->price : $product->selling_price,
                 'variants' => $product->variants,
                 'images' => $product->images,
+                'image' => asset('storage/products/'.$product->image->path),
                 'selectvarient' => ($request->selectvarient) ? $request->selectvarient : '',
             ];
             $attachmentPaths = [];
