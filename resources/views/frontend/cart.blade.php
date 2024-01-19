@@ -55,7 +55,7 @@
                                         <td data-th="Price">${{ number_format($subVariant['price'], 2, '.', ',') }}</td>
                                         <td data-th="Quantity">
                                             <input type="number" value="{{ $subVariant['quantity'] }}"
-                                                class="form-control quantity update-cart" />
+                                                class="form-control quantity update-cart" max="{{getProductAvailabityStock($details['product_id'])}}"/>
                                         </td>
                                         <td data-th="discount">
                                             {{ $subVariant['discount_price'] ? $subVariant['discount_price'] : 0 }}</td>
