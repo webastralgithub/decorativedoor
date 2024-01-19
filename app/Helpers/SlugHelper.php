@@ -4,6 +4,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\DeliverQuantity;
+use App\Models\OrderDetails;
 use App\Models\Note;
 use Illuminate\Support\Str;
 
@@ -175,6 +176,22 @@ if (!function_exists('generateProductSlug')) {
             if (!empty($deliveryorder))
                 foreach ($deliveryorder as $deliver) {
                     $total += $deliver->deliver_quantity;
+                }
+            $FinalQuantity = $total;
+            return $FinalQuantity;
+        }
+    }
+
+    if (!function_exists('getTotalQuantity')) {
+        function getTotalQuantity($orderId = null)
+        {
+
+            $order =  OrderDetails::where('order_id', $orderId)->get();
+
+            $total = 0;
+            if (!empty($order))
+                foreach ($order as $deliver) {
+                    $total += $deliver->quantity;
                 }
             $FinalQuantity = $total;
             return $FinalQuantity;

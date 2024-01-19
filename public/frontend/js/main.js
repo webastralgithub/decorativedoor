@@ -331,6 +331,7 @@
                             console.log(response);
                             jQuery('#productDiscountMessage').text(response.success);
                             jQuery('#productDiscountMessage').show();
+                            jQuery('#assignuser').modal('hide');
                             setTimeout(function () {
                                 jQuery('#productDiscountMessage').hide();
                             }, 2000);

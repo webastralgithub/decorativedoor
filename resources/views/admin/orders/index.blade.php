@@ -93,11 +93,12 @@
                         <td class="center"> <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_order_coordinator') onclick="return assignUser('{{$order->id}}','{{$coordinators}}','order coordinator','{{$order->user_id}}');" @endcan>{{$order->coordinator->name ?? "..."}}</span>
                         </td>
                         <td class="center">
-                            <span class="@if(!$order->sales_person) dots-assigned @endif cursor-pointer">{{getUserInfo($order->sales_person)['name'] ?? "..."}}</span>
-                        </td>
-                        <td class="center">
                             <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_sales_person') onclick="return assignUser('{{$order->id}}','{{$sales_users}}','sales person','{{$order->user_id}}');" @endcan>{{$order->user->name ?? "..."}}</span>
                         </td>
+                        <td class="center">
+                            <span class="@if(!$order->sales_person) dots-assigned @endif cursor-pointer">{{getUserInfo($order->sales_person)['name'] ?? "..."}}</span>
+                        </td>
+                       
                         {{-- <td class="center">
                             <span class="@if(!$order->accountant) dots-assigned @endif cursor-pointer" @can('change_accountant_user') onclick="return assignUser('{{$order->id}}','{{$accountant_users}}','accountant','{{$order->accountant_user_id}}');" @endcan>{{$order->accountant->name ?? "..."}}</span>
                         </td> --}}
@@ -121,7 +122,7 @@
                         @endcan
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
                         <td>-</td>
-                        <td>{{ $order->total_products }}</td>
+                        <td>{{ getTotalQuantity($order->id) }}</td>
                         @can('order_price')
                         <td>${{ number_format($order->total, 2, '.', ',') }}</td>
                         @endcan
