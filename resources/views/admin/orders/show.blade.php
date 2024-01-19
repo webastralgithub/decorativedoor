@@ -97,14 +97,14 @@
                         $finaltotal[] = $item->total;
 
                         @endphp
-
                         <tr>
                             <td class="align-middle text-center">
                                 {{ $loop->iteration  }}
                             </td>
                             <td class="align-middle text-center">
                                 <div style="max-height: 80px; max-width: 80px;">
-                                    <img class="img-fluid" src="{{asset((!empty($item->product->product_image) ? Storage::url('products/'.$item->product->product_image) : 'img/featured/feature-1.jpg'))}}">
+                               
+                                    <img class="img-fluid" src="{{asset((!empty(productsInfo($item->product->id)->image->path) ? Storage::url('products/'.productsInfo($item->product->id)->image->path) : 'img/featured/feature-1.jpg'))}}">
                                 </div>
                             </td>
                             <td class="align-middle text-center">

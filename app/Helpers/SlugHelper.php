@@ -83,7 +83,7 @@ if (!function_exists('generateProductSlug')) {
     if (!function_exists('productsInfo')) {
         function productsInfo($productId)
         {
-            return Product::where('id', $productId)->first();
+            return Product::with('image')->where('id', $productId)->first();
         }
     }
 
