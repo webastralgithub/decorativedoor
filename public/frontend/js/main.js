@@ -367,12 +367,12 @@
                 var country = $('#customer-billing-country').val();
                 var zipcode = $('#customer-billing-zipcode').val();
 
-                $('#customer-shipping-address_type').val(address_type);
-                $('#shipping-customer-state').val(state);
-                $('#shipping-customer-city').val(city);
-                $('#shipping-customer-street').val(street);
-                $('#shipping-customer-country').val(country);
-                $('#shipping-customer-zipcode').val(zipcode);
+                // $('#customer-shipping-address_type').val(address_type);
+                // $('#shipping-customer-state').val(state);
+                // $('#shipping-customer-city').val(city);
+                // $('#shipping-customer-street').val(street);
+                // $('#shipping-customer-country').val(country);
+                // $('#shipping-customer-zipcode').val(zipcode);
             } else {
                 $('.shipping_address').hide();
                 $('#customer-shipping-address_type').val('');
