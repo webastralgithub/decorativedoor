@@ -188,7 +188,7 @@
             var price = parseFloat(priceCell.textContent) || 0;
             total += price;
         });
-         var final = total - recived;
+         var final = recived - total;
         // Update the total price in the designated element
         totalElement.textContent = total.toFixed(2); // Adjust as needed
 
