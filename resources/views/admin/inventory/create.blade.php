@@ -64,7 +64,7 @@
                     </div>
                 </div>
 
-                <div class="content-body">
+                <div class="content-body inventery-createtable-btm">
                     <div class="table-responsive">
                         
                         <table class="table table-striped table-bordered align-middle">
