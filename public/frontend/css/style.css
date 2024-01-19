@@ -3844,6 +3844,39 @@ div#loader-container .spinner-border{
     left: 48%;
 }
 
+.customer.spad{
+
+}
+
+.customer-message{
+    text-align: center;
+    padding-top: 14px;
+    border-bottom: 1px solid #000;
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 116px;
+    background: #fff;
+}
+
+.customer-message p{
+	font-size: 20px;
+    font-weight: 700;
+    color: #434e6e;
+    
+    padding-bottom: 10px;
+
+	animation: bounce2 2s ease infinite;
+	margin-bottom: 0;
+}
+  @keyframes bounce2 {
+	  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+	  40% {transform: translateY(-15px);}
+	  60% {transform: translateY(-15px);}
+  }
+
 .swal2-actions button {
     font-size: 0.9rem !important;
 }

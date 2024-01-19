@@ -70,12 +70,12 @@
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 @foreach($categories as $category)
-                            @if(empty($category->parent_id) && $category->name != 'Add On')
-                            <li>
-                                <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
-                            </li>
-                            @endif
-                            @endforeach
+                @if(empty($category->parent_id) && $category->name != 'Add On')
+                <li>
+                    <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
+                </li>
+                @endif
+                @endforeach
                 {{-- <li class="{{ request()->is('*home') ? 'active' : '' }}"><a href="{{route('home')}}">Home</a></li>
                 <li class="{{ request()->is('*shop') ? 'active' : '' }}"><a href="{{route('shop')}}">Shop</a></li>
                 <li class="{{ request()->is('*contact') ? 'active' : '' }}"><a href="{{route('contact')}}">Contact</a></li> --}}
@@ -152,10 +152,10 @@
             <div class="row">
 
                 <div class="col-lg-2 hero hero-normal">
-                <div class="header__logo">
+                    <div class="header__logo">
                         <a href="{{route('home')}}"><img src="{{asset('frontend/img/logo.png')}}" alt=""></a>
-                </div>
-                {{-- <div class="hero__categories">
+                    </div>
+                    {{-- <div class="hero__categories">
                     <div class="hero__categories__all">
                         <i class="fa fa-bars"></i>
                         <span>All Categories</span>
@@ -165,142 +165,138 @@
                         @if(empty($category->parent_id) && $category->name != 'Add On')
                         <li>
                             <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
-                            <ul class="under_ul sub">
-                                @foreach($category->children as $subcategory)
-                                <li><a class="sub-sub" href="{{route('category', $subcategory->slug )}}">{{ isset($subcategory->name) ? $subcategory->name : '' }}</a></li>
-                                @endforeach
-                            </ul>
+                    <ul class="under_ul sub">
+                        @foreach($category->children as $subcategory)
+                        <li><a class="sub-sub" href="{{route('category', $subcategory->slug )}}">{{ isset($subcategory->name) ? $subcategory->name : '' }}</a></li>
+                        @endforeach
+                    </ul>
+                    </li>
+                    @endif
+                    @endforeach
+                    </ul>
+                </div> --}}
+            </div>
+
+            <div class="col-lg-7">
+                <nav class="header__menu">
+                    <ul>
+                        @foreach($categories as $category)
+                        @if(empty($category->parent_id) && $category->name != 'Add On')
+                        <li>
+                            <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
                         </li>
                         @endif
                         @endforeach
+
+                        <li class="{{ request()->is('*customer') ? 'active' : '' }}"><a href="{{route('customer')}}">Customer</a></li>
+                        <li class="primary-btn"><a href="{{route('neworder')}}">Start New Order</a></li>
                     </ul>
-                </div> --}}
-                </div>
-
-                <div class="col-lg-7">
-                    <nav class="header__menu">
-                        <ul>
-                            @foreach($categories as $category)
-                            @if(empty($category->parent_id) && $category->name != 'Add On')
-                            <li>
-                                <a href="{{route('category', $category->slug )}}">{{ isset($category->name) ? $category->name : '' }}</a>
-                            </li>
-                            @endif
-                            @endforeach
-
-                            <li class="{{ request()->is('*customer') ? 'active' : '' }}"><a href="{{route('customer')}}">Customer</a></li>
-                            <li class="primary-btn"><a href="{{route('neworder')}}">Start New Order</a></li>
-                        </ul>
-                    </nav>
-                </div>
+                </nav>
+            </div>
 
 
 
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <div class="dropdown">
-                                <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item dropdown">
-                                        <a href="{{ route('cart') }}" role="button">
-                                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                            <span class="badge badge-pill badge-danger" id="cart-count">{{ count((array) session('cart')) }}</span>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <div class="row total-header-section">
+            <div class="col-lg-3">
+                <div class="header__cart">
+                    <ul>
+                        <div class="dropdown">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item dropdown">
+                                    <a href="{{ route('cart') }}" role="button">
+                                        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                                        <span class="badge badge-pill badge-danger" id="cart-count">{{ count((array) session('cart')) }}</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <div class="row total-header-section">
 
-                                                @php $total = 0 @endphp
-                                                @foreach((array) session('cart') as $id => $details)
-                                                @if(isset($details['variant_price']))
-                                                <!-- if product with multiple variants -->
-                                                @if(isset($details['variant_data']))
-                                                @foreach($details['variant_data'] as $variantId => $subVariant)
+                                            @php $total = 0 @endphp
+                                            @foreach((array) session('cart') as $id => $details)
+                                            @if(isset($details['variant_price']))
+                                            <!-- if product with multiple variants -->
+                                            @if(isset($details['variant_data']))
+                                            @foreach($details['variant_data'] as $variantId => $subVariant)
 
-                                                @php 
-                                                print_r($subVariant);
-                                                $total += $subVariant['price'] * $subVariant['quantity'] @endphp
-                                                @endforeach
-                                                @else
-                                                
-                                                @php $total += $details['variant_price'] * $details['quantity'] @endphp
-                                                @endif
-                                                @endif
-                                                @endforeach
-                                                <div class="col-lg-12 col-sm-12 col-12 total-section text-center">
-                                                    <p>Total: <span class="text-info">$ {{ $total }}</span></p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                                                    <a href="{{ route('cart') }}" class="btn btn-primary btn-block">View all</a>
-                                                </div>
+                                            @php
+                                            print_r($subVariant);
+                                            $total += $subVariant['price'] * $subVariant['quantity'] @endphp
+                                            @endforeach
+                                            @else
+
+                                            @php $total += $details['variant_price'] * $details['quantity'] @endphp
+                                            @endif
+                                            @endif
+                                            @endforeach
+                                            <div class="col-lg-12 col-sm-12 col-12 total-section text-center">
+                                                <p>Total: <span class="text-info">$ {{ $total }}</span></p>
                                             </div>
                                         </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </ul>
-                        @php $total = [];
-                        $discount = [];
-                        // echo "<pre>";
-                        // print_r(session('cart'));
-                        // echo "</pre>";
-                        @endphp
-                        @foreach((array) session('cart') as $id => $details)
-                       
-                            @if(isset($details['variant_price']))
-                            <!-- if product with multiple variants -->
-                                @if(isset($details['variant_data']))
-                                @foreach($details['variant_data'] as $variantId => $subVariant)
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                                                <a href="{{ route('cart') }}" class="btn btn-primary btn-block">View all</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </ul>
+                    @php
+                    $total = [];
+                    $discount = [];
+                    @endphp
+                    @foreach((array) session('cart') as $id => $details)
 
-                                    @php 
-                                    $discount[] = $subVariant['discount_price'] * $subVariant['quantity']; 
-                                    
-                                    $total[] = $subVariant['price'] * $subVariant['quantity'];
-                                    @endphp
-                                @endforeach
-                                
-                                @endif
-                            @endif
-                            @php
-                            if(empty($details['variant_data'])){
-                            $total[] = $details['price'] * $details['quantity'];
-                            $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] * $details['quantity']: 0;                            
-                            }
-                            @endphp
-                        @endforeach
-                        @php 
-                            $total = array_sum($total);
-                            $discount = array_sum($discount);
-                        @endphp
-                        <div class="header__cart__price" id="header_cart_price">Total: <span>$ {{$total - $discount }}</span></div>
-                    </div>
+                    @if(isset($details['variant_price']))
+                    <!-- if product with multiple variants -->
+                    @if(isset($details['variant_data']))
+                    @foreach($details['variant_data'] as $variantId => $subVariant)
+
+                    @php
+                    $discount[] = $subVariant['discount_price'] * $subVariant['quantity'];
+
+                    $total[] = $subVariant['price'] * $subVariant['quantity'];
+                    @endphp
+                    @endforeach
+
+                    @endif
+                    @endif
+                    @php
+                    if(empty($details['variant_data'])){
+                    $total[] = $details['price'] * $details['quantity'];
+                    $discount[] = (isset($details['discount_price'])) ? $details['discount_price'] * $details['quantity']: 0;
+                    }
+                    @endphp
+                    @endforeach
+                    @php
+                    $total = array_sum($total);
+                    $discount = array_sum($discount);
+                    @endphp
+                    <div class="header__cart__price" id="header_cart_price">Total: <span>$ {{$total - $discount }}</span></div>
                 </div>
             </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
         </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+        </div>
+        @if(session()->has('assign_customer'))
         <div class="customer-message">
-           
-            @if(session()->has('assign_customer'))
             <p>Current Order for this Customer: {{getUserInfo(session()->get('assign_customer'))->name}}</p>
-            @endif
-         
-        
-        @if(Request::segment(1) != 'product')
-            @if(session('success'))
-            <div class="alert alert-success product-discount-message">
-                {{ session('success') }}
-            </div>
-            @elseif(session('error'))
-            <div class="alert alert-error product-discount-message-error">
-                {{ session('error') }}
-            </div>
-            @endif
-        @endif
         </div>
+        @endif
+
+        @if(Request::segment(1) != 'product')
+        @if(session('success'))
+        <div class="alert alert-success product-discount-message">
+            {{ session('success') }}
+        </div>
+        @elseif(session('error'))
+        <div class="alert alert-error product-discount-message-error">
+            {{ session('error') }}
+        </div>
+        @endif
+        @endif
 
         <div class="success-message" id="success-message" style="display:none;"></div>
-`       <div class="error-message" id="error-message" style="display:none;"></div>
+        ` <div class="error-message" id="error-message" style="display:none;"></div>
     </header>
