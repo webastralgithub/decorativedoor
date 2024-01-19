@@ -143,7 +143,7 @@
                 {{-- @endforeach --}}
               
                 @foreach($interior->products as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 mix all oranges">
+                <div class="col-lg-3 col-md-4 col-sm-6 mix all oranges" style="display:block;">
                     <div class="featured__item">
                         <a href="{{route('product',$product->slug)}}">
                             <div class="featured__item__pic set-bg" data-setbg="{{asset((!empty($product->image) ? Storage::url('products/'.$product->image->path) : 'img/featured/feature-1.jpg'))}}">
@@ -157,14 +157,15 @@
                                 <h6>{{$product->title}}</h6>
                                 <h5>${{number_format($product->selling_price, 2, '.', ',')}}</h5>
                             </div>
-                            <a href="#" id="share-with-email" data-id="{{$product->id}}" onclick="return share_product_email('{{$product->id}}')">Share <i class="fa fa-share"></i></a>
+                            {{-- <a href="#" id="share-with-email" data-id="{{$product->id}}" onclick="return share_product_email('{{$product->id}}')">Share <i class="fa fa-share"></i></a> --}}
+                         <a href="#" id="share-with-email" data-id ="{{$product->id}}" data-toggle="modal" data-target="#exampleModal" onclick="return share_product('{{$product->id}}');">Share <i class="fa fa-share"></i></a> 
                         </a>
                     </div>
                 </div>
                 @endforeach
                 
                 @foreach($exterior->products as $product)
-                <div class="col-lg-3 col-md-4 col-sm-6 mix all fresh-meat">
+                <div class="col-lg-3 col-md-4 col-sm-6 mix all fresh-meat" style="display:block;">
                     <div class="featured__item">
                         <a href="{{route('product',$product->slug)}}">
                             <div class="featured__item__pic set-bg" data-setbg="{{asset((!empty($product->image) ? Storage::url('products/'.$product->image->path) : 'img/featured/feature-1.jpg'))}}">
@@ -178,7 +179,7 @@
                                 <h6>{{$product->title}}</h6>
                                 <h5>${{number_format($product->selling_price, 2, '.', ',')}}</h5>
                             </div>
-                            <a href="#" id="share-with-email" data-id="{{$product->id}}" onclick="return share_product_email('{{$product->id}}')">Share <i class="fa fa-share"></i></a>
+                            <a href="#" id="share-with-email" data-id ="{{$product->id}}" data-toggle="modal" data-target="#exampleModal" onclick="return share_product('{{$product->id}}');">Share <i class="fa fa-share"></i></a> 
                         </a>
                     </div>
                 </div>

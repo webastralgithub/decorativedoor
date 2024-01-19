@@ -225,11 +225,11 @@ setTimeout(function() {
     })
 
         function share_product(productid) {
+            
             jQuery('form#shareForm #footer_product_id').val(productid);
-
             jQuery('#shareForm').one('submit', function (e) {
                 e.preventDefault();
-                jQuery('div#loader-container').show();
+                //jQuery('div#loader-container').show();
                 var csrfToken = $('input[name="_token"]').val();
                 var productid = jQuery('#footer_product_id').val();
                 var email = jQuery('#email').val();
@@ -245,7 +245,7 @@ setTimeout(function() {
                         _token: csrfToken,
                     },
                     success: function (response) {
-                        jQuery('div#loader-container').hide();
+                       // jQuery('div#loader-container').hide();
                         Swal.fire({
                             icon: 'success',
                             title: 'Mail Sent Successfully!',
@@ -342,6 +342,7 @@ $(document).ready(function() {
             $("#price-range-form").submit();
         });
     });
+
 
 </script>
 </body>
