@@ -8,8 +8,8 @@
 
         <div class="top-bntspg-hdr">
             <a href="{{ route('orders.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
-            <a href="javascript:window.print()" class="btn btn-primary text-capitalize border0" data-mdb-ripple-color="dark" onclick="hidePrintContent()"><i class="fas fa-print text-primary"></i> Download</a>
-            <a href="{{ route('order.downloadInvoice', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm"> Invoice</a>
+            <!-- <a href="javascript:window.print()" class="btn btn-primary text-capitalize border0" data-mdb-ripple-color="dark" onclick="hidePrintContent()"><i class="fas fa-print text-primary"></i> Download</a> -->
+            <a href="{{ route('order.downloadInvoice', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm"> Download</a>
         </div>
     </div>
     @if(\Session::has('error'))

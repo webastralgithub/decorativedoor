@@ -37,9 +37,9 @@
             @canany(['create-category', 'edit-category', 'delete-category,create-product', 'edit-product',
             'delete-product','create-user', 'edit-user', 'delete-user,create-role', 'edit-role', 'delete-role'])
             <div class="nav-item dropdown">
-                <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <a href="#" class="nav-item nav-link dropdown-toggle toggle-menu-dropdown" data-bs-toggle="dropdown">
                     <img src="{{asset('img/administration.svg')}}" class="img" /></i>Administration</a>
-                <div class="dropdown-menu bg-transparent border-0">
+                <div class="dropdown-menu bg-transparent border-0 toggle-menu">
                     @endcanany
                     @canany(['create-user', 'edit-user', 'delete-user'])
                     <a class="nav-item nav-link {{ request()->is('*/users') ? 'active' : '' }}"

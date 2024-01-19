@@ -109,7 +109,7 @@
 
                         <tr>
                             <td colspan="4" class="text-end">Total Inventory</td>
-                            <td class="text-center total" id="total">
+                            <td class="text-center total" id="total"> 0
                             </td>
                         </tr>
                         <tr>
@@ -121,13 +121,13 @@
                                 $totalrecived += $order->quantity;
                                 @endphp
                                 @endforeach
-                                {{$totalrecived}}
+                                {{($totalrecived) ? $totalrecived : '0'}}
                             </td>
                         </tr>
 
                         <tr>
                             <td colspan="4" class="text-end">Current Inventory</td>
-                            <td class="text-center total" id="current_total">
+                            <td class="text-center total" id="current_total"> 0
                             </td>
                         </tr>
                     </tbody>
