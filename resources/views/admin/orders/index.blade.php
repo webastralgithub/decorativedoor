@@ -95,7 +95,7 @@
                             @foreach ($order->details->unique('order_status') as $item)
                             <a class="text-info-product " href="{{ route('orders.show', $order->order_id) }}">
                                 {{ \App\Models\OrderStatus::getStatusNameById($item->order_status)}}
-                            </a>
+                            </a><br> 
                             @endforeach
                         </td>
                         @endcan
