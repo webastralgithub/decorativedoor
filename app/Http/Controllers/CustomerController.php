@@ -17,7 +17,7 @@ class CustomerController extends Controller
     public function index()
     {
         return view('frontend.customer.index', [
-            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 10))
+            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 50))
         ]);
     }
 

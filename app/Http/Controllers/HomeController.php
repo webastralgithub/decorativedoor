@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $productData = Product::latest()->paginate(env('RECORD_PER_PAGE', 10));
+        $productData = Product::latest()->paginate(env('RECORD_PER_PAGE', 50));
        
         $products = [];
         $seenProductIds = [];
@@ -38,7 +38,7 @@ class HomeController extends Controller
             }
         }
         return view('frontend.index', [
-            //'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 10)),
+            //'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 50)),
             'products' => $products,
             'interior' => Category::with(['products'])->where('slug', 'interior-doors')->first(),
             'exterior' => Category::with(['products'])->where('slug', 'exterior-doors')->first(),
