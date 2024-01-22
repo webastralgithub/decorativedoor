@@ -74,24 +74,23 @@ class Order extends Model
 
     public function assemble()
     {
-        return $this->belongsTo(User::class,'assembler_user_id');
+        return $this->belongsTo(User::class, 'assembler_user_id');
     }
     public function delivery()
     {
-        return $this->belongsTo(User::class,'delivery_user_id');
+        return $this->belongsTo(User::class, 'delivery_user_id');
     }
     public function accountant()
     {
-        return $this->belongsTo(User::class,'accountant_user_id');
+        return $this->belongsTo(User::class, 'accountant_user_id');
     }
 
     public function notes()
     {
-        return $this->belongsTo(Note::class,'order_id');
+        return $this->belongsTo(Note::class, 'order_id');
     }
     public function coordinator()
     {
-        return $this->belongsTo(User::class,'coordinator_user_id');
+        return $this->belongsTo(User::class, 'coordinator_user_id');
     }
-    
 }

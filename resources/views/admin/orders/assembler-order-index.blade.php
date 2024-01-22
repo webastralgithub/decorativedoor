@@ -38,7 +38,7 @@
 
     <div class="content-body">
         <div class="table-order">
-            <table class="table table-striped table-bordered" id="order" style="display: table;">
+            <table class="table table-striped table-bordered" id="orderAssembler" style="display: table;">
                 <thead>
                     <!-- <th>{{ __('Action') }}</th> -->
                     <th>{{ __('Order ID') }}</th>
@@ -55,14 +55,11 @@
 
                     @foreach ($orders as $key => $order)
                     <tr>
-
-                        <!-- <th><span class="accordion-header" data-id="{{ $order->order_id }}"><img src="{{ asset('img/order-icon.svg') }}" class="img" width="30"></span>
-                        </th> -->
                         <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{
-                                $order->order_id }}</a></td> 
+                                $order->order_id }}</a></td>
                         <!-- <td>#{{ $order->order_id }}</td> -->
 
-                        <td class="center">
+                        <td>
                             <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_cusmtoer') onclick="return assignUser('{{ $order->id }}','{{ $customers }}','customers','{{ $order->user_id }}');" @endcan>{{ $order->user->name ?? '...' }}
                             </span>
                         </td>
@@ -95,22 +92,6 @@
                         <td>{{ $order->updated_at->format('d-m-Y') }}</td>
 
                     </tr>
-                    <tr class="show-accordin-{{ $order->order_id }}" style="display:none;">
-                        <th>{{ __('Product Name') }}</th>
-                        <th>{{ __('Quantity') }}</th>
-                        <th>{{ __('Discount') }}</th>
-                        <th>{{ __('Price') }}</th>
-                        <th>{{ __('Total') }}</th>
-                    </tr>
-                    @foreach ($order->details as $items)
-                    <tr class="show-accordin-{{ $order->order_id }}" style="display:none;">
-                        <td class="highlight">{{ productsInfo($items->product_id)['title'] }}</td>
-                        <td>{{ $items->quantity }}</td>
-                        <td>{{ '$' . (isset($items->discount) ? $items->discount : 0) }}</td>
-                        <td>{{ '$' . $items->unitcost }}</td>
-                        <td>{{ '$' . $items->total - $items->discount }}</td>
-                    </tr>
-                    @endforeach
                     @endforeach
 
                 </tbody>
@@ -137,6 +118,12 @@
 @endsection
 @section('scripts')
 <script>
+    new DataTable('#orderAssembler', {
+        order: [
+            [0, 'desc']
+        ]
+    });
+
     jQuery('.accordion-header').on('click', function(e) {
         var id = jQuery(this).data('id');
         jQuery('.show-accordin-' + id).toggle();

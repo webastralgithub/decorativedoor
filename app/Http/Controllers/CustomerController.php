@@ -178,38 +178,41 @@ class CustomerController extends Controller
     public function checkuser(Request $request)
     {
 
-        $checkuser = User::with('address', 'usercompany')->where('email', $request->email)->first();
+        $checkuser = User::with('address', 'usercompany')->where('email', $request->email)
+            ->whereHas('roles', function ($query) {
+                $query->where('name', 'Customer');
+            })->first();
         if (isset($checkuser) && !empty($checkuser)) {
             $user_info = [
-                'id' => $checkuser->id,
-                'name' => $checkuser->name,
-                'password' => $checkuser->password,
-                'phone' => $checkuser->phone,
-                'dob' => $checkuser->dob,
-                'gender' => $checkuser->gender,
+                'id' => $checkuser->id ?? '',
+                'name' => $checkuser->name ?? '',
+                'password' => $checkuser->password ?? '',
+                'phone' => $checkuser->phone ?? '',
+                'dob' => $checkuser->dob ?? '',
+                'gender' => $checkuser->gender ?? '',
 
-                'address_type' => $checkuser->address->address_type,
-                'street' => $checkuser->address->street,
-                'city' => $checkuser->address->city,
-                'state' => $checkuser->address->state,
-                'country' => $checkuser->address->country,
-                'zip_code' => $checkuser->address->zipcode,
-                'billing_address_type' => $checkuser->address->billing_address_type,
-                'billing_street' => $checkuser->address->billing_street,
-                'billing_city' => $checkuser->address->billing_city,
-                'billing_state' => $checkuser->address->billing_state,
-                'billing_country' => $checkuser->address->billing_country,
-                'billing_zipcode' => $checkuser->address->billing_zipcode,
-                'notes' => $checkuser->address->notes,
+                'address_type' => $checkuser->address->address_type ?? '',
+                'street' => $checkuser->address->street ?? '',
+                'city' => $checkuser->address->city ?? '',
+                'state' => $checkuser->address->state ?? '',
+                'country' => $checkuser->address->country ?? '',
+                'zip_code' => $checkuser->address->zipcode ?? '',
+                'billing_address_type' => $checkuser->address->billing_address_type ?? '',
+                'billing_street' => $checkuser->address->billing_street ?? '',
+                'billing_city' => $checkuser->address->billing_city ?? '',
+                'billing_state' => $checkuser->address->billing_state ?? '',
+                'billing_country' => $checkuser->address->billing_country ?? '',
+                'billing_zipcode' => $checkuser->address->billing_zipcode ?? '',
+                'notes' => $checkuser->address->notes ?? '',
 
-                'company_name' => $checkuser->usercompany->company_name,
-                'company_address' => $checkuser->usercompany->company_address,
-                'company_phone' => $checkuser->usercompany->company_phone,
-                'company_email' => $checkuser->usercompany->company_email,
-                'industory_type' => $checkuser->usercompany->industory_type,
-                'company_website' => $checkuser->usercompany->company_website,
-                'registration_no' => $checkuser->usercompany->registration_no,
-                'gst' => $checkuser->usercompany->gst,
+                'company_name' => $checkuser->usercompany->company_name ?? '',
+                'company_address' => $checkuser->usercompany->company_address ?? '',
+                'company_phone' => $checkuser->usercompany->company_phone ?? '',
+                'company_email' => $checkuser->usercompany->company_email ?? '',
+                'industory_type' => $checkuser->usercompany->industory_type ?? '',
+                'company_website' => $checkuser->usercompany->company_website ?? '',
+                'registration_no' => $checkuser->usercompany->registration_no ?? '',
+                'gst' => $checkuser->usercompany->gst ?? '',
             ];
             return json_encode($user_info);
         } else {

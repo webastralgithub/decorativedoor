@@ -35,21 +35,25 @@ class OrderController extends Controller
     public function index()
     {
         if (auth()->user()->hasRole('Product Assembler')) {
-            // $orders = Order::where('assembler_user_id', Auth::user()->id)->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])->latest()->get();
-            $orders = Order::whereHas('details', function ($query) {
-                $query->orWhereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER]);
-            })
+            $orders = Order::with(['details', 'notes', 'deliverorder'])
                 ->where('assembler_user_id', Auth::user()->id)
-                ->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])
+                ->where(function ($query) {
+                    $query->orWhereHas('details', function ($subQuery) {
+                        $subQuery->where('order_status', OrderStatus::READY_TO_ASSEMBLE);
+                    })->orWhereHas('details', function ($subQuery) {
+                        $subQuery->where('order_status', OrderStatus::READY_TO_DELIVER);
+                    });
+                })
+                // ->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
         } else if (auth()->user()->hasRole('Delivery User')) {
             $orders = Order::whereHas('details', function ($query) {
-                $query->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED]);
+                $query->orWhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED]);
             })
                 ->where('delivery_user_id', Auth::user()->id)
-                ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED])
+                // ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED])
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
@@ -65,7 +69,7 @@ class OrderController extends Controller
             'sales_users' => User::role('Sales Person')->get(),
             'coordinators' => User::role('Order Coordinator')->get(),
             'customers' => User::role('Customer')->get(),
-            'accountant_users' => User::role('Accountant')->get(),
+            'accountant_usersgetProductAvailabityStock($request->id)' => User::role('Accountant')->get(),
             'delivery_users' => User::role('Delivery User')->get(),
             'assembler_users' => User::role('Product Assembler')->get(),
             'order_statuses' => $order_statuses,
@@ -142,6 +146,14 @@ class OrderController extends Controller
             return response()->json(['error' => 'Order is not valid!']);
         }
         // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);
+        // echo getDeliverQuantity($orderDetails->order->id, $itemId);
+        // echo  ' || ';
+        // echo "PRODUCT::" . $orderDetails->product->id . '  || ';
+        // echo getProductAvailabityStock($orderDetails->product->id);
+        // dd('test');
+        // if (getDeliverQuantity($orderDetails->order->id, $itemId) >= getProductAvailabityStock($orderDetails->order->id)) {
+        //     return response()->json(['error' => 'All items have been delivered!']);
+        // }
 
         if ($orderDetails->order->details->count() == 1) {
             $orderDetails->order->update(['order_status' => $request->new_status]);
@@ -163,6 +175,10 @@ class OrderController extends Controller
         if (!isset($orderDetails) && empty($orderDetails)) {
             return response()->json(['error' => 'Order is not valid!']);
         }
+
+        // if ($orderDetails->order->order_status ==  OrderStatus::IN_PROGRESS) {
+        //     Order::find($orderDetails->order->id)->update(['order_status' => OrderStatus::READY_TO_ASSEMBLE]);
+        // }
         // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);
 
         if ($orderDetails->order->details->count() == 1) {
@@ -187,8 +203,6 @@ class OrderController extends Controller
         if (!isset($orderDetails) && empty($orderDetails)) {
             return response()->json(['error' => 'Order is not valid!']);
         }
-        // dd($orderDetails);
-
         foreach ($orderDetails as $item) {
             $order_id = $item->order_id;
             OrderDetails::where('order_id', $order_id)->update(['order_status' => $request->new_status]);
@@ -308,12 +322,16 @@ class OrderController extends Controller
     public function assembler_order()
     {
         if (auth()->user()->hasRole('Product Assembler')) {
-            // $orders = Order::where('assembler_user_id', Auth::user()->id)->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])->latest()->get();
-            $orders = Order::with(['details', 'notes', 'deliverorder'])->whereHas('details', function ($query) {
-                $query->orWhereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER]);
-            })
+            $orders = Order::with(['details', 'notes', 'deliverorder'])
                 ->where('assembler_user_id', Auth::user()->id)
-                ->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])
+                ->where(function ($query) {
+                    $query->orWhereHas('details', function ($subQuery) {
+                        $subQuery->where('order_status', OrderStatus::READY_TO_ASSEMBLE);
+                    })->orWhereHas('details', function ($subQuery) {
+                        $subQuery->where('order_status', OrderStatus::READY_TO_DELIVER);
+                    });
+                })
+                // ->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
@@ -324,7 +342,6 @@ class OrderController extends Controller
             $order_statuses = OrderStatus::all();
             $access_status = [1, 2, 3, 4, 5, 6];
         }
-
         return view('admin.orders.assembler-order-index', [
             'orders' => $orders,
             'sales_users' => User::role('Sales Person')->get(),
@@ -368,7 +385,7 @@ class OrderController extends Controller
             file_put_contents(storage_path('app/public/signatures/' . $signatureImageName), $signatureImage);
         } else {
             $signatureImageName = DeliveryUser::where('order_id', $request->order_id)->latest()->first();
-                $signatureImageName = @$signatureImageName->signature;
+            $signatureImageName = @$signatureImageName->signature;
         }
         $imagePaths = [];
         if ($request->has('images') && is_array($request->images)) {

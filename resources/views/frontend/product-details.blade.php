@@ -39,18 +39,15 @@ json_decode($variantSingle->option_type, true) : null;
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
                         @if(isset($productimages) && !empty($productimages[0]))
-                        <img class="product__details__pic__item--large"
-                            src="{{ asset('storage/products/' . $productimages[0]['path'])}}" alt="">
+                        <img class="product__details__pic__item--large" src="{{ asset('storage/products/' . $productimages[0]['path'])}}" alt="">
                         @else
-                        <img class="product__details__pic__item--large"
-                            src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
+                        <img class="product__details__pic__item--large" src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
                         @endif
                     </div>
                     @if(isset($productimages) && !empty($productimages))
                     <div class="product__details__pic__slider owl-carousel">
                         @foreach($productimages as $images)
-                        <img data-imgbigurl="{{ asset('storage/products/' . $images->path)}}"
-                            src="{{ asset('storage/products/' . $images->path)}}" alt="">
+                        <img data-imgbigurl="{{ asset('storage/products/' . $images->path)}}" src="{{ asset('storage/products/' . $images->path)}}" alt="">
                         @endforeach
                     </div>
                     @endif
@@ -94,13 +91,10 @@ json_decode($variantSingle->option_type, true) : null;
                         @endif
                         <div class="row apply-cupons-row-sd">
                             <div class="col-md-4 pr-0">
-                                <input type="number" id="discount_value" class="form-control"
-                                    max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code"
-                                    value="{{$ammount}}" {{$disbale}} required>
+                                <input type="number" id="discount_value" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="{{$ammount}}" {{$disbale}} required>
                             </div>
                             <div class="col-md-3 ">
-                                <input type="submit" name="submit" id="discount_btn" class="btn primary-btn"
-                                    value="{{$buttonvalue}}" {{$disbale}}>
+                                <input type="submit" name="submit" id="discount_btn" class="btn primary-btn" value="{{$buttonvalue}}" {{$disbale}}>
                             </div>
                         </div>
 
@@ -115,8 +109,7 @@ json_decode($variantSingle->option_type, true) : null;
                         @endif
                     </div>
                     @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
-                    <input type="hidden" id="discount_price"
-                        value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
+                    <input type="hidden" id="discount_price" value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
                     @else
                     <input type="hidden" id="discount_price" value="">
                     @endif
@@ -133,7 +126,8 @@ json_decode($variantSingle->option_type, true) : null;
 
                                 <select class="variants">
                                     <option disabled selected value="0">Select
-                                        {{ucwords($variantCombination['variantType'])}}</option>
+                                        {{ucwords($variantCombination['variantType'])}}
+                                    </option>
                                     @foreach($variantCombination['tagNames'] as $key => $tags)
                                     <option value="{{$tags}}">{{ucwords($tags)}}</option>
                                     @endforeach
@@ -158,13 +152,10 @@ json_decode($variantSingle->option_type, true) : null;
                             </div>
                         </div>
 
-                        <input type="hidden" name="variant" class="product-variant-data"
-                            value="{{json_encode($variantSingle)}}" />
+                        <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
-                        <button type="submit" class="primary-btn add-to-cart" onclick="return addToCart(event)"
-                            @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
-                        <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal"
-                            data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
+                        <button type="button" class="primary-btn add-to-cart " onclick="return addToCart(event)" @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
+                        <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal" data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
                     </form>
                     @if(session('success'))
                     <div id="productDiscountMessage" class="product-discount-message">
@@ -176,7 +167,7 @@ json_decode($variantSingle->option_type, true) : null;
                     <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
                     <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
                     <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
-                            getProductAvailabityStock($product->id) > 0 ) ? 'In' : 'Out of'}} Stock</span></li>
+                            getProductAvailabityStock($product->id) > 0  && (getProductAvailabityStock($product->id) > getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
                     <!-- <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li> -->
 
                     <!-- <li><b>Qunatity</b> <span>{{ getProductAvailabityStock($product->id) }}</span></li> -->
@@ -241,16 +232,13 @@ json_decode($variantSingle->option_type, true) : null;
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
-                                aria-selected="true">Description</a>
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Description</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
-                                aria-selected="false">Information</a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                aria-selected="false">Reviews <span>(1)</span></a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab" aria-selected="false">Reviews <span>(1)</span></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -388,8 +376,7 @@ json_decode($variantSingle->option_type, true) : null;
 
 
 <!-- Modal share with email -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -410,12 +397,10 @@ json_decode($variantSingle->option_type, true) : null;
                             </label>
                             <input type="hidden" id="product_id" name="product_id" value=" {{ $product->id }}">
                             <div class="col-md-12">
-                                <input name="email" id="email" type="email" class="form-control example-date-input"
-                                    value="{{ old('email') }}" required>
+                                <input name="email" id="email" type="email" class="form-control example-date-input" value="{{ old('email') }}" required>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn"
-                                    value="{{ _('Share') }}">
+                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn" value="{{ _('Share') }}">
                             </div>
                             <span id="message">
                         </div>
@@ -433,10 +418,11 @@ json_decode($variantSingle->option_type, true) : null;
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function addToCart(event) {
+        var quantity = document.querySelector('input[name="quantity"]').value;
         var allVariants = document.querySelectorAll('.variants');
         var selectedVariants = [];
         // Iterate through all variant dropdowns
-        allVariants.forEach(function (variant) {
+        allVariants.forEach(function(variant) {
             var selectedValue = variant.value;
             console.log("selectedValue", selectedValue);
             // Check if the variant is selected
@@ -445,7 +431,17 @@ json_decode($variantSingle->option_type, true) : null;
             }
         });
         let checkStockAvailability = "{{ getProductAvailabityStock($product->id) }}";
-        console.log("checkStockAvailability::", checkStockAvailability, "selectedVariants", selectedVariants.length);
+        let getProductStockOnCart = "{{ getProductStockOnCart($product->id) }}";
+        console.log("checkStockAvailability::", checkStockAvailability, "getProductStockOnCart", getProductStockOnCart, "selectedVariants", selectedVariants.length);
+        var addtocartMessage = document.getElementById('addtocartMessage');
+        if (checkStockAvailability < getProductStockOnCart || (quantity > checkStockAvailability)) {
+            addtocartMessage.innerHTML = '<div class="product-discount-message-error">Product is out of Stock</div>';
+            addtocartMessage.style.display = 'block';
+            setTimeout(function() {
+                addtocartMessage.style.display = 'none';
+            }, 5000);
+            return false;
+        }
         if (checkStockAvailability != 0) {
             // Check if all variants are selected
             if (selectedVariants.length >= 0 && selectedVariants.length === (allVariants.length / 2)) {
@@ -453,7 +449,6 @@ json_decode($variantSingle->option_type, true) : null;
                 var csrfToken = document.querySelector('input[name="_token"]').value;
                 var product_id = document.querySelector('input[name="product_id"]').value;
                 var variant = document.querySelector('input[name="variant"]').value;
-                var quantity = document.querySelector('input[name="quantity"]').value;
 
                 var xhr = new XMLHttpRequest();
                 var url = "{{ route('add.to.cart') }}";
@@ -461,11 +456,10 @@ json_decode($variantSingle->option_type, true) : null;
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 
-                xhr.onreadystatechange = function () {
+                xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
                             var responseData = JSON.parse(xhr.responseText);
-
                             // Check if the response contains a 'success' property
                             if (responseData.success) {
                                 // Display the success message
@@ -477,20 +471,15 @@ json_decode($variantSingle->option_type, true) : null;
                                 var cartprice = document.getElementById('header_cart_price');
                                 cartprice.innerHTML = 'Total: <b>$' + responseData.total_ammount + '</b>';
 
-                                var addtocartMessage = document.getElementById('addtocartMessage');
-
-                                // Hide the element after a delay of 2000 milliseconds (2 seconds)
-                                setTimeout(function () {
-                                    addtocartMessage.style.display = 'none';
-                                }, 2000);
-
+                                addtocartMessage.style.display = 'block';
                             } else {
                                 // Handle other responses or errors
                                 console.error('Error or unexpected response:', responseData);
                             }
                             console.log(responseData);
                         } else {
-                            console.error('Error: ' + xhr.status);
+                            addtocartMessage.innerHTML = '<div class="product-discount-message-error">Product is out of Stock</div>';
+                            addtocartMessage.style.display = 'block';
                         }
                     }
                 };
@@ -505,20 +494,23 @@ json_decode($variantSingle->option_type, true) : null;
                 event.preventDefault(event);
                 document.getElementById('addToCartForm').disabled = true;
 
-                allVariants.forEach(function (variant) {
+                allVariants.forEach(function(variant) {
                     variant.style.border = '2px solid red';
                 });
                 // alert('Please select all variants before adding to the cart.');
                 return false;
             }
         }
+        setTimeout(function() {
+            addtocartMessage.style.display = 'none';
+        }, 5000);
         return false;
 
 
     }
 
-    jQuery(document).ready(function () {
-        jQuery('#shareForm').submit(function (e) {
+    jQuery(document).ready(function() {
+        jQuery('#shareForm').submit(function(e) {
             e.preventDefault();
             jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
@@ -538,7 +530,7 @@ json_decode($variantSingle->option_type, true) : null;
                     selectvarient: selectvarient,
                     _token: csrfToken,
                 },
-                success: function (response) {
+                success: function(response) {
                     // Handle the success response here
                     console.log(response);
                     jQuery('div#loader-container').hide();
@@ -550,7 +542,7 @@ json_decode($variantSingle->option_type, true) : null;
                     }, 2000);
                     jQuery('#email').val('');
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     // Handle the error response here
                     console.error(xhr.responseText);
                 }
@@ -558,9 +550,9 @@ json_decode($variantSingle->option_type, true) : null;
         });
     });
 
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
         jQuery('#productDiscountMessage').hide();
-        jQuery('#discountForm').submit(function (e) {
+        jQuery('#discountForm').submit(function(e) {
             e.preventDefault();
             jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
@@ -575,7 +567,7 @@ json_decode($variantSingle->option_type, true) : null;
                     apply_code: discount_value,
                     _token: csrfToken,
                 },
-                success: function (response) {
+                success: function(response) {
                     var selling_price = "{{$product->selling_price}}";
                     var discount_ammount = selling_price - response.discount;
                     // Handle the success response here
@@ -591,21 +583,18 @@ json_decode($variantSingle->option_type, true) : null;
                     jQuery('#discount_btn').prop('disabled', true);
 
                     jQuery('#productDiscountMessage').text(response.success);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         jQuery('#productDiscountMessage').hide();
                     }, 2000);
 
 
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     // Handle the error response here
                     console.error(xhr.responseText);
                 }
             });
         });
     });
-
-
-
 </script>
 @endsection

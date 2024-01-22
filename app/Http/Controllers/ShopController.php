@@ -61,10 +61,7 @@ class ShopController extends Controller
     public function addToCart(Request $request)
     {
         $cart = (!session()->has('cart')) ? session()->get('cart', []) : session()->get('cart');
-
         $discount = session()->get('discount');
-
-
         $productId = @$request->product_id;
         if (!empty($discount[$productId])) {
             $discount_ammount = $discount[$productId]['discount_ammount'];
@@ -72,6 +69,12 @@ class ShopController extends Controller
             $discount_ammount = 0;
         }
         $product = Product::findOrFail($productId);
+        if (getProductAvailabityStock($product->id) <= 0) {
+            $data = array(
+                'error' => 'Product is out of stock!',
+            );
+            return response()->json($data, 403);
+        }
 
         if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
             $selectedVariant = json_decode($request->variant, true);
@@ -157,21 +160,20 @@ class ShopController extends Controller
 
     public function update_cart(Request $request)
     {
-
         $cart = session()->get('cart');
         $totalQuantity = 0;
 
         foreach ($cart[$request->id]['variant_data'] as $key => $variant) {
-        
-            if($variant['quantity'] >  $request->quantity){
-                $totalQuantity += $variant['quantity'] - 1;
-            }else{
+            if ($variant['quantity'] > $request->quantity) {
+                $totalQuantity += $variant['quantity'] - ($variant['quantity'] - $request->quantity);
+            } else {
                 $totalQuantity += $variant['quantity'];
             }
-           
         }
         if ($request->id && $request->quantity) {
-            if (getProductAvailabityStock($request->id) < $request->quantity || getProductAvailabityStock($request->id) <= $totalQuantity) {
+            if ((getProductAvailabityStock($request->id) < $request->quantity && getProductAvailabityStock($request->id) <= $totalQuantity) && ($request->quantity != $totalQuantity)) {
+
+                // if (getProductAvailabityStock($request->id) <= 0) {
                 return session()->flash('error', 'We have ' . getProductAvailabityStock($request->id) . ' stock in our Inventory');
             } else {
                 $cart = session()->get('cart');
@@ -239,10 +241,7 @@ class ShopController extends Controller
     }
 
     public function cart()
-    {    // $cart = session()->remove('cart');
-        // unset($cart[30]);
-        // session()->put('cart', $cart);
-        // dd(session()->get('cart'));
+    {
         $roleName = 'Customer';
         $users = User::whereHas('roles', function ($query) use ($roleName) {
             $query->where('name', $roleName);

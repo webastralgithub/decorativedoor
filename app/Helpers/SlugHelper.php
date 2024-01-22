@@ -132,7 +132,8 @@ if (!function_exists('generateProductSlug')) {
                     $total += $product->quantity;
                 }
             $FinalQuantity = $total - $totalrecived;
-            return $FinalQuantity;
+            $getProductStockOnCart = getProductStockOnCart($productId);
+            return ($FinalQuantity > $getProductStockOnCart) ? $FinalQuantity : 0;
         }
     }
 
@@ -150,7 +151,23 @@ if (!function_exists('generateProductSlug')) {
         }
     }
 
-
+    if (!function_exists('getProductStockOnCart')) {
+        function getProductStockOnCart($productId = null)
+        {
+            $totalQuantity = 0;
+            if (session()->has('cart')) {
+                $cart = session()->get('cart');
+                if (!empty($cart[$productId]['variant_data']))
+                    foreach ($cart[$productId]['variant_data'] as $key => $variant) {
+                        $totalQuantity += $variant['quantity'];
+                    }
+            }
+            //  else {
+            //     $totalQuantity = getProductAvailabityStock($productId);
+            // }
+            return $totalQuantity;
+        }
+    }
 
     if (!function_exists('getProductOnorderAvailabityStock')) {
         function getProductOnorderAvailabityStock($productId = null)

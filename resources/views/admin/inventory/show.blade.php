@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="content-body">
+        <div class="content-body inventery-createtable-btm">
             <div class="table-responsive">
 
                 <table class="table table-striped table-bordered align-middle">
@@ -108,13 +108,13 @@
                         @endforeach
 
                         <tr>
-                            <td colspan="4" class="text-end">Total Inventory</td>
-                            <td class="text-center total" id="total"> 0
+                            <td colspan="4" class="text-end"><strong>Total Inventory</strong></td>
+                            <td class=" total" id="total"> 0
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="text-end">Order Recived</td>
-                            <td class="text-center recived" id="recived">
+                            <td colspan="4" class="text-end"><strong>Order Recived</strong></td>
+                            <td class=" recived" id="recived">
                                 @php $totalrecived = 0; @endphp
                                 @foreach($products->orderdetails as $order)
                                 @php
@@ -126,8 +126,8 @@
                         </tr>
 
                         <tr>
-                            <td colspan="4" class="text-end">Current Inventory</td>
-                            <td class="text-center total" id="current_total"> 0
+                            <td colspan="4" class="text-end"><strong>Current Inventory</strong></td>
+                            <td class=" total" id="current_total"> 0
                             </td>
                         </tr>
                     </tbody>

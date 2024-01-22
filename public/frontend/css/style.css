@@ -3865,10 +3865,8 @@ div#loader-container .spinner-border{
 	font-size: 20px;
     font-weight: 700;
     color: #434e6e;
-    
     padding-bottom: 10px;
-
-	animation: bounce2 2s ease infinite;
+	/* animation: bounce2 2s ease infinite; */
 	margin-bottom: 0;
 }
   @keyframes bounce2 {
