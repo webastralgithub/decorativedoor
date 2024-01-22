@@ -123,7 +123,8 @@
     new DataTable('#orderAssembler', {
         order: [
             [0, 'desc']
-        ]
+        ],
+        pageLength: 50
     });
 
     jQuery('.accordion-header').on('click', function(e) {

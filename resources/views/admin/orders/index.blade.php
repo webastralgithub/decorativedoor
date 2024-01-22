@@ -376,7 +376,8 @@
     new DataTable('#order', {
         order: [
             [2, 'desc']
-        ]
+        ],
+        pageLength: 50 
     });
 
     async function changeOrderStatus(orderId, allStatuses, selectedStatus) {
