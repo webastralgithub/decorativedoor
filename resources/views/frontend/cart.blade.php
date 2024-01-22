@@ -136,11 +136,7 @@
             <td colspan="5" class="text-right cart-page-btm-btns">
                 <a href="{{ url()->previous() }}" class="btn btn-warning" style="background: #93681a; color: #fff; border-color: #93681a;"><i class="fa fa-angle-left"></i> Continue Shopping</a>
                 <div id="place-order-btn">
-                    @if(empty(session()->get('assign_customer')))
-                    <a href="{{ route('customer') }}" class="btn btn-success">Proceed Order</a>
-                    @else
                     <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed Order</a>
-                    @endif
                 </div>
             </td>
         </tr>

@@ -34,7 +34,7 @@ class CheckoutController extends Controller
             }
 
             if(empty(session()->get('assign_customer'))){
-                return redirect()->back()->with('success', 'Please assign the customer firstly!');
+                return redirect('customer')->with('success', 'Customer not Assign!');
             }
            
             $productsArr = [
