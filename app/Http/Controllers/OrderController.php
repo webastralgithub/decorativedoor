@@ -430,9 +430,17 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId)->get();
         if (isset($order) && !empty($order)) {
             Order::where('id', $orderId)->update(['order_status' => 4]);
-            return response()->json(['success' => 'Order status has been updated!']);
+
+            $itemId = $orderId;
+            $orderDetails = OrderDetails::where('order_id', $itemId)->get();
+            
+            foreach ($orderDetails as $item) {
+                $order_id = $item->order_id;
+                OrderDetails::where('order_id', $order_id)->update(['order_status' => 4]);
+            }
+            return back()->with(['success' => 'Order status has been Confirmed!']);
         }else{
-            return response()->json(['success' => 'Order status has been not updated!']);
+            return back()->with(['success' => 'Order status has been not Confirmed!']);
         }
         
         
