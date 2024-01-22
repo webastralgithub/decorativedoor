@@ -299,7 +299,8 @@ json_decode($variantSingle->option_type, true) : null;
                                 var cartprice = document.getElementById('header_cart_price');
                                 cartprice.innerHTML = 'Total: <b>$' + responseData.total_ammount + '</b>';
 
-                                addtocartMessage.style.display = 'block';
+                                addtocartMessage.style.display = 'none';
+                                window.location.replace("/add-to-cart");
                             } else {
                                 // Handle other responses or errors
                                 console.error('Error or unexpected response:', responseData);

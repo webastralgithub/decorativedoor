@@ -60,7 +60,10 @@ class ShopController extends Controller
 
     public function addToCart(Request $request)
     {
+        session()->forget('succescart');
+
         $cart = (!session()->has('cart')) ? session()->get('cart', []) : session()->get('cart');
+        $succescart = (!session()->has('succescart')) ? session()->get('succescart', []) : session()->get('succescart');
         $discount = session()->get('discount');
         $productId = @$request->product_id;
         if (!empty($discount[$productId])) {
@@ -126,7 +129,62 @@ class ShopController extends Controller
                 ];
             }
         }
+
+
+        if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
+            $selectedVariant = json_decode($request->variant, true);
+            if (isset($succescart[$productId]) && isset($succescart[$productId]['variant_data'][$selectedVariant['id']])) {
+                $succescart[$productId]['quantity'] += $request->quantity;
+                $succescart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] += $request->quantity;
+            } else {
+                if (!isset($succescart[$productId]))
+                    $succescart[$productId] = [
+                        "name" => $product->title,
+                        "product_id" => $product->id,
+                        "quantity" => !empty($request->quantity) ? $request->quantity : 1,
+                        "price" => $product->selling_price,
+                        "image" => $product->image,
+                        "description" => $product->notes,
+                        "discount_price" => ($discount_ammount) ? $discount_ammount : 0,
+                        // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
+                        // "variant_price" => 0
+
+                    ];
+                // if (!empty($selectedVariant))
+                $succescart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] = !empty($request->quantity) ? $request->quantity : 1;
+            }
+            // if (!empty($selectedVariant)) {
+            $succescart[$productId]['variant_data'][$selectedVariant['id']]["id"] = $selectedVariant['id'];
+            $succescart[$productId]['variant_data'][$selectedVariant['id']]["name"] = $selectedVariant['name'];
+            $succescart[$productId]['variant_data'][$selectedVariant['id']]["price"] = $selectedVariant['selling_price'];
+            $succescart[$productId]['variant_data'][$selectedVariant['id']]["discount_price"] = $discount_ammount;
+            $pricevariant = array_values($succescart[$productId]['variant_data']);
+            $variant_prices = [];
+            foreach ($pricevariant as $price) {
+                $variant_prices[] = $price['price'];
+            }
+            $price = array_sum($variant_prices);
+            // }
+            $succescart[$productId]['variant_price'] = $price || $product->selling_price;
+        } else {
+            if (isset($succescart[$productId])) {
+                $succescart[$productId]['quantity'] += $request->quantity;
+            } else {
+                $succescart[$productId] = [
+                    "name" => $product->title,
+                    "product_id" => $product->id,
+                    "quantity" => !empty($request->quantity) ? $request->quantity : 1,
+                    "price" => $product->selling_price,
+                    "discount_price" => $discount_ammount,
+                    "description" => $product->notes,
+                    "image" => $product->image,
+                    "variant_data" => [],
+                    // "variant_price" => $product->selling_price
+                ];
+            }
+        }
         session()->put('cart', $cart);
+        session()->put('succescart', $succescart);
 
         $total = [];
         $discount = [];
@@ -155,7 +213,7 @@ class ShopController extends Controller
             'product_count' => count(session('cart')),
         );
         return response()->json($data);
-        //return redirect()->back()->with('success', 'Product added to cart successfully!');
+        //return redirect('add-to-cart')->back()->with('success', 'Product added to cart successfully!');
     }
 
     public function update_cart(Request $request)
@@ -351,5 +409,11 @@ class ShopController extends Controller
             'discount' =>  $request->apply_code,
         );
         return response()->json($data);
+    }
+
+    public function AddtoCartSubmit(){
+       
+        $succescart = (!session()->has('succescart')) ? session()->get('succescart', []) : session()->get('succescart');
+        return view('frontend.add-to-cart', compact('succescart'));
     }
 }

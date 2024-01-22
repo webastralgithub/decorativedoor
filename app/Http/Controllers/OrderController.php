@@ -436,7 +436,7 @@ class OrderController extends Controller
             
             foreach ($orderDetails as $item) {
                 $order_id = $item->order_id;
-                OrderDetails::where('order_id', $order_id)->update(['order_status' => 4]);
+                OrderDetails::where('order_id', $order_id)->update(['order_status' => 4]);    
             }
             return back()->with(['success' => 'Order status has been Confirmed!']);
         }else{

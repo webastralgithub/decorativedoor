@@ -52,6 +52,7 @@ Route::middleware(['auth', 'isAdminWebAccess'])->group(function () {
 
     // Route::get('/product-details/{CategoryName}', [ShopController::class, 'product_details'])->name('product_category');
     Route::get('cart', [ShopController::class, 'cart'])->name('cart');
+    Route::get('/add-to-cart', [ShopController::class, 'AddtoCartSubmit'])->name('addtocart');
     Route::get('category/{slug}', [ShopController::class, 'category'])->name('category');
 
     Route::post('add-to-cart', [ShopController::class, 'addToCart'])->name('add.to.cart');
