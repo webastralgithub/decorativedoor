@@ -28,7 +28,7 @@
                     @if (\App\Models\OrderStatus::FAILED == $status->id && auth()->user()->can('order-status-failed'))
                     <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
                     @endif
-                    @if (\App\Models\OrderStatus::READY_TO_ASSEMBLE == $status->id && auth()->user()->can('order-status-ready-to-assemble'))
+                    @if (\App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id && auth()->user()->can('order-status-ready-to-production'))
                     <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
                     @endif
                     @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id && auth()->user()->can('order-status-deliver'))
@@ -123,9 +123,9 @@
                             &&
                             in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::DISPATCHED]))
                             ||(auth()->user()->hasRole('Delivery User') &&
-                            !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-ready-to-assemble'])
+                            !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-ready-to-production'])
                             &&
-                            in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::READY_TO_ASSEMBLE]))
+                            in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::READY_TO_PRODUCTION]))
                             ||(auth()->user()->hasRole('Accountant') &&
                             !auth()->user()->can(['order-status-complete','order-status-dispatch']))&&
                             in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::READY_TO_DELIVER,\App\Models\OrderStatus::DISPATCHED]));
@@ -147,7 +147,7 @@
                                     @selected($item->order_status ==
                                     $status->id)>{{convertToReadableStatus($status->name)}}</option>
                                 @endif
-                                @if (\App\Models\OrderStatus::READY_TO_ASSEMBLE == $status->id)
+                                @if (\App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id)
                                 <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
                                     @selected($item->order_status ==
                                     $status->id)>{{convertToReadableStatus($status->name)}}</option>

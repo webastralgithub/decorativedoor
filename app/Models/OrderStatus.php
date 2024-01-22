@@ -11,7 +11,7 @@ class OrderStatus extends Model
     const IN_PROGRESS = '1';
     const COMPLETE = '2';
     const FAILED = '3';
-    const READY_TO_ASSEMBLE = '4';
+    const READY_TO_PRODUCTION = '4';
     const READY_TO_DELIVER = '5';
     const DISPATCHED = '6';
 

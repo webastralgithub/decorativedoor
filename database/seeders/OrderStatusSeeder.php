@@ -17,7 +17,7 @@ class OrderStatusSeeder extends Seeder
             ['name' => 'IN_PROGRESS'],
             ['name' => 'COMPLETE'],
             ['name' => 'FAILED'],
-            ['name' => 'READY_TO_ASSEMBLE'],
+            ['name' => 'READY_TO_PRODUCTION'],
             ['name' => 'READY_TO_DELIVER'],
             ['name' => 'DISPATCHED'],
         ];

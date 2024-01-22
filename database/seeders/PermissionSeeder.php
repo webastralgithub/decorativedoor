@@ -34,7 +34,7 @@ class PermissionSeeder extends Seeder
             'order-status-complete',
             'order-status-progress',
             'order-status-failed',
-            'order-status-ready-to-assemble',
+            'order-status-ready-to-production',
             'order-status-deliver',
             'order-status-dispatch',
             'change-order-status',
