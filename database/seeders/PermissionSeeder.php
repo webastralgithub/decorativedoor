@@ -32,7 +32,7 @@ class PermissionSeeder extends Seeder
             'view-order',
             'download-invoice',
             'order-status-complete',
-            'order-status-progress',
+            'order-status-pending-order-confirmation',
             'order-status-failed',
             'order-status-ready-to-production',
             'order-status-deliver',

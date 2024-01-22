@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderStatus extends Model
 {
     use HasFactory;
-    const IN_PROGRESS = '1';
+    const PENDING_ORDER_CONFIRMATION = '1';
     const COMPLETE = '2';
     const FAILED = '3';
     const READY_TO_PRODUCTION = '4';

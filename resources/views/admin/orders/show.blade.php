@@ -22,7 +22,7 @@
                     @if (\App\Models\OrderStatus::COMPLETE == $status->id && auth()->user()->can('order-status-complete'))
                     <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
                     @endif
-                    @if (\App\Models\OrderStatus::IN_PROGRESS == $status->id && auth()->user()->can('order-status-progress'))
+                    @if (\App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id && auth()->user()->can('order-status-pending-order-confirmation'))
                     <option value="{{$status->id}}" @selected($order->order_status == $status->id)>{{$status->name}}</option>
                     @endif
                     @if (\App\Models\OrderStatus::FAILED == $status->id && auth()->user()->can('order-status-failed'))
@@ -81,7 +81,6 @@
                         @endcan
                         @can('order_price')
                         <th scope="col" class="align-middle text-center">Price</th>
-                        <th scope="col" class="align-middle text-center">Discount</th>
                         <th scope="col" class="align-middle text-center">Total</th>
                         @endcan
                     </tr>
@@ -119,13 +118,13 @@
                         <td class="align-middle ">
                             @php
                             $disabled = ((auth()->user()->hasRole('Product Assembler') &&
-                            !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-dispatch'])
+                            !auth()->user()->can(['order-status-pending-order-confirmation','order-status-complete','order-status-failed','order-status-dispatch'])
                             &&
-                            in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::DISPATCHED]))
+                            in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::DISPATCHED]))
                             ||(auth()->user()->hasRole('Delivery User') &&
-                            !auth()->user()->can(['order-status-progress','order-status-complete','order-status-failed','order-status-ready-to-production'])
+                            !auth()->user()->can(['order-status-pending-order-confirmation','order-status-complete','order-status-failed','order-status-ready-to-production'])
                             &&
-                            in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::IN_PROGRESS,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::READY_TO_PRODUCTION]))
+                            in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION,\App\Models\OrderStatus::FAILED,\App\Models\OrderStatus::READY_TO_PRODUCTION]))
                             ||(auth()->user()->hasRole('Accountant') &&
                             !auth()->user()->can(['order-status-complete','order-status-dispatch']))&&
                             in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::READY_TO_DELIVER,\App\Models\OrderStatus::DISPATCHED]));
@@ -137,7 +136,7 @@
                                     @selected($item->order_status ==
                                     $status->id)>{{convertToReadableStatus($status->name)}}</option>
                                 @endif
-                                @if (\App\Models\OrderStatus::IN_PROGRESS == $status->id)
+                                @if (\App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id)
                                 <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
                                     @selected($item->order_status ==
                                     $status->id)>{{convertToReadableStatus($status->name)}}</option>
@@ -171,9 +170,7 @@
                         <td class="align-middle ">
                             ${{ number_format($item->unitcost, 2, '.', ',') }}
                         </td>
-                        <td class="align-middle ">
-                            ${{ number_format($item->discount, 2, '.', ',') }}
-                        </td>
+                        
                         <td class="align-middle ">
                             ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
                         </td>
@@ -187,19 +184,15 @@
                     @endphp
                     @can('order_price')
                     <tr>
-                        <td colspan="7" class="text-end">Shipping Charges</td>
+                        <td colspan="6" class="text-end">Shipping Charges</td>
                         <td class="">${{ number_format($order->due, 2, '.', ',') }}</td>
                     </tr>
                     <tr>
-                        <td colspan="7" class="text-end">VAT</td>
+                        <td colspan="6" class="text-end">VAT</td>
                         <td class="">${{ number_format($order->vat, 2, '.', ',') }}</td>
                     </tr>
                     <tr>
-                        <td colspan="7" class="text-end">Total Discount</td>
-                        <td class="">${{ number_format($discount, 2, '.', ',') }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="7" class="text-end">Total</td>
+                        <td colspan="6" class="text-end">Total</td>
                         <td class="">${{ number_format(abs($order->due - ($finaltotal + $order->vat)), 2, '.', ',') }}</td>
                     </tr>
                     @endcan

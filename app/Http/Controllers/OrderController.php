@@ -58,7 +58,7 @@ class OrderController extends Controller
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
         } else if (auth()->user()->hasRole('Accountant')) {
-            $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::IN_PROGRESS])->latest()->get();
+            $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::PENDING_ORDER_CONFIRMATION])->latest()->get();
             $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
         } else {
             $orders = Order::latest()->get();
@@ -176,7 +176,7 @@ class OrderController extends Controller
             return response()->json(['error' => 'Order is not valid!']);
         }
 
-        // if ($orderDetails->order->order_status ==  OrderStatus::IN_PROGRESS) {
+        // if ($orderDetails->order->order_status ==  OrderStatus::PENDING_ORDER_CONFIRMATION) {
         //     Order::find($orderDetails->order->id)->update(['order_status' => OrderStatus::READY_TO_PRODUCTION]);
         // }
         // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);

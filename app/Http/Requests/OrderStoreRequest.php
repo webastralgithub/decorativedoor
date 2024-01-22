@@ -29,7 +29,7 @@ class OrderStoreRequest extends FormRequest
     {
         $this->merge([
             'order_date' => Carbon::now()->format('Y-m-d'),
-            'order_status' => OrderStatus::IN_PROGRESS,
+            'order_status' => OrderStatus::PENDING_ORDER_CONFIRMATION,
             // 'total_products' => Cart::count(),
             // 'sub_total' => Cart::subtotal(),
             // 'vat' => Cart::tax(),

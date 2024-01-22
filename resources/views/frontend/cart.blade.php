@@ -9,7 +9,6 @@
             <th style="width:50%">Product</th>
             <th style="width:10%">Price</th>
             <th style="width:8%">Quantity</th>
-            <th style="width:8%">Discount</th>
             <th style="width:10%">SubTotal</th>
             <th style="width:10%"></th>
         </tr>
@@ -52,9 +51,7 @@
             <td data-th="Quantity">
                 <input type="number" value="{{ (getProductAvailabityStock($details['product_id'] > $subVariant['quantity'])) ? getProductAvailabityStock($details['product_id']) : $subVariant['quantity'] }}" class="form-control quantity update-cart" />
             </td>
-            <td data-th="discount">
-                {{ $subVariant['discount_price'] ? $subVariant['discount_price'] : 0 }}
-            </td>
+            
             <td data-th="SubTotal">
                 ${{ number_format($subVariant['price'] * $subVariant['quantity'] - $subVariant['discount_price'] * $subVariant['quantity'], 2, '.', ',') }}
             </td>
@@ -117,8 +114,7 @@
             <td data-th="Quantity">
                 <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
             </td>
-            <td data-th="Discount">{{ $details['discount_price'] ? $details['discount_price'] : 0 }}
-            </td>
+            
             <td data-th="SubTotal">
                 ${{ number_format($details['price'] * $details['quantity'] - $details['discount_price'] * $details['quantity'], 2, '.', ',') }}
             </td>
@@ -141,7 +137,7 @@
                 <a href="{{ url()->previous() }}" class="btn btn-warning" style="background: #93681a; color: #fff; border-color: #93681a;"><i class="fa fa-angle-left"></i> Continue Shopping</a>
                 <div id="place-order-btn">
                     @if(empty(session()->get('assign_customer')))
-                    <button class="btn btn-success" data-toggle="modal" data-target="#assignuser">Proceed Order</button>
+                    <a href="{{ route('customer') }}" class="btn btn-success">Proceed Order</a>
                     @else
                     <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed Order</a>
                     @endif

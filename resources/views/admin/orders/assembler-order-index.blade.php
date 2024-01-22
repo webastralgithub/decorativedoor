@@ -42,6 +42,7 @@
                 <thead>
                     <!-- <th>{{ __('Action') }}</th> -->
                     <th>{{ __('Order ID') }}</th>
+                    <th>{{ __('Order Coordinator') }}</th>
                     <th>{{ __('Customer Name') }}</th>
                     <th>{{ __('Missing Items') }}</th>
                     <th>{{ __('Notes') }}</th>
@@ -58,7 +59,8 @@
                         <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{
                                 $order->order_id }}</a></td>
                         <!-- <td>#{{ $order->order_id }}</td> -->
-
+                        <td > <span class="@if(!$order->user_id) dots-assigned @endif cursor-pointer">{{$order->coordinator->name ?? "..."}}</span>
+                        </td>
                         <td>
                             <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer" @can('change_cusmtoer') onclick="return assignUser('{{ $order->id }}','{{ $customers }}','customers','{{ $order->user_id }}');" @endcan>{{ $order->user->name ?? '...' }}
                             </span>

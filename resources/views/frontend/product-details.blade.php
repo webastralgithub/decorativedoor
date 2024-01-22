@@ -66,39 +66,7 @@ json_decode($variantSingle->option_type, true) : null;
                         <i class="fa fa-star-half-o"></i>
                         <span>(18 reviews)</span>
                     </div>
-                    <form class="apply_discount" method="Post" id="discountForm">
-                        @csrf
-                        @method('POST')
-
-                        @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
-                        @php
-                        if(session()->get('discount')[$product->id]['product_id'] == $product->id){
-                        $buttonvalue = 'Applied';
-                        $disbale = 'disabled';
-                        $ammount = session()->get('discount')[$product->id]['discount_ammount'];
-                        }else{
-                        $buttonvalue = 'Apply Now';
-                        $disbale = '';
-                        $ammount = session()->get('discount')[$product->id]['discount_ammount'];
-                        }
-                        @endphp
-                        @else
-                        @php
-                        $buttonvalue = 'Apply Now';
-                        $disbale = '';
-                        $ammount = '';
-                        @endphp
-                        @endif
-                        <div class="row apply-cupons-row-sd">
-                            <div class="col-md-4 pr-0">
-                                <input type="number" id="discount_value" class="form-control" max="{{ $product->selling_price }}" placeholder="Discount Ammount" name="apply_code" value="{{$ammount}}" {{$disbale}} required>
-                            </div>
-                            <div class="col-md-3 ">
-                                <input type="submit" name="submit" id="discount_btn" class="btn primary-btn" value="{{$buttonvalue}}" {{$disbale}}>
-                            </div>
-                        </div>
-
-                    </form>
+                    
                     <div class="product__details__price" id="main-price">
                         @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
                         <del style="color: #625c5c;font-size: 18px;">${{number_format($product->selling_price, 2, '.',
@@ -164,70 +132,13 @@ json_decode($variantSingle->option_type, true) : null;
                     @endif
                     <div id="addtocartMessage"></div>
 
-                    <!-- <a href="{{ route('add.to.cart', $product->id) }}" class="primary-btn">ADD TO CART</a> -->
-                    <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
+                    
                     <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
                             getProductAvailabityStock($product->id) > 0  && (getProductAvailabityStock($product->id) > getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
-                    <!-- <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li> -->
-
-                    <!-- <li><b>Qunatity</b> <span>{{ getProductAvailabityStock($product->id) }}</span></li> -->
-                    <!-- <li><b>Description</b> <span>{{$product->notes}}</span></li> -->
-                    <!-- <li><b>Share on</b>
-                            <div class="share">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </li> -->
-
                     </ul>
                 </div>
-                <!-- <form method="POST" action="{{ route('add.to.cart') }}" class="form-cart-btn">
-                    <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
-                    <input type="hidden" name="product_id" value="{{$product->id}}" />
-                    <button type="submit" class="primary-btn add-to-cart">ADD TO CART</button>
-                </form> -->
-                <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
-                <!-- <ul>
-                    <li><b>Availability</b> <span>In Stock</span></li>
-                    <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                    <li><b>Qunatity</b> <span>{{$product->quantity}}</span></li>
-                    <li><b>Share on</b>
-                        <div class="share">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </li>
-                    <h3>Variants</h3> 
-                    @if(!empty($product->variants))
-                    @forelse($product->variants as $key => $variant)
-                    <ul data-id="{{ $variant->id }}">
-                        @php
-                        if(session()->has('cart') &&
-                        isset(session('cart')[$product->id]['variant_id']) &&
-                        isset(session('cart')[$product->id]['variant_id'][$variant->id]['quantity'])) {
-                        $quantity = session('cart')[$product->id]['variant_id'][$variant->id]['quantity'];
-                        } else {
-                        // Handle case where the keys or values are not set
-                        $quantity = 0; // or any default value you prefer
-                        } @endphp
-                        <li><b>Name</b> <span>{{$variant->name}}</span></li>
-                        <li><b>Quantity</b><input type="number" value="{{$quantity ?? 0}}" class="form-control quantity add-on" />
-                        </li>
-                    </ul>
-                    @empty
-                    No data
-                    @endforelse
-                    @endif
-                </ul> -->
-
             </div>
-            {{-- <div class="col-lg-12">
-                @include('frontend.add-ons')
-            </div> --}}
+          
             <div class="col-lg-12">
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs" role="tablist">
@@ -291,89 +202,6 @@ json_decode($variantSingle->option_type, true) : null;
         </div>
     </div>
 </section>
-<!-- Product Details Section End -->
-
-<!-- Related Product Section Begin -->
-<!-- <section class="related-product">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title related__product__title">
-                    <h2>Related Product</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
-                        <h5>$76.000</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
-                        <h5>$76.000</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><<div class="alert alert-success">
-                Discount Applied!
-            </div>a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
-                        <h5>$76.000</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 <div class="alert alert-success">
-                Discount Applied!
-            </div>col-md-4 col-sm-6">
-                <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="{{asset('frontend/img/featured/feature-1.jpg')}}">
-                        <ul class="product__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="product__item__text">
-                        <h6><a href="{{route('product',getRandomProductSlug())}}">Heavy Double Door</a></h6>
-                        <h5>$76.000</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
-<!-- Related Product Section End -->
-
-
 
 <!-- Modal share with email -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
