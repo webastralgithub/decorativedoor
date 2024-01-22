@@ -100,6 +100,8 @@
 
 @section('scripts')
 <script>
-new DataTable('#category');
+new DataTable('#category', {
+        pageLength: 50 
+    });
 </script>
 @endsection

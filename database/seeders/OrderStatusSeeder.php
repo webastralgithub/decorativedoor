@@ -14,10 +14,10 @@ class OrderStatusSeeder extends Seeder
     public function run(): void
     {
         $statuses = [
-            ['name' => 'IN_PROGRESS'],
+            ['name' => 'PENDING_ORDER_CONFIRMATION'],
             ['name' => 'COMPLETE'],
             ['name' => 'FAILED'],
-            ['name' => 'READY_TO_ASSEMBLE'],
+            ['name' => 'READY_TO_PRODUCTION'],
             ['name' => 'READY_TO_DELIVER'],
             ['name' => 'DISPATCHED'],
         ];

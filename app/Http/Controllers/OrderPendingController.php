@@ -10,7 +10,7 @@ class OrderPendingController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $orders = Order::where('order_status', OrderStatus::IN_PROGRESS)
+        $orders = Order::where('order_status', OrderStatus::PENDING_ORDER_CONFIRMATION)
             ->latest()
             ->get();
 

@@ -33,7 +33,7 @@ class UserController extends Controller
         $users = User::when(isset($request->q), function ($query) use ($request) {
 
             $query->whereRaw("(name LIKE '%" . $request->q . "%' or email LIKE '%" . $request->q . "%')");
-        })->latest('id')->paginate(env('RECORD_PER_PAGE', 10));
+        })->latest('id')->paginate(env('RECORD_PER_PAGE', 50));
         
         return view('admin.users.index', compact('users'));
     }

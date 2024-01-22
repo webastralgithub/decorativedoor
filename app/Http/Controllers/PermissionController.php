@@ -23,7 +23,7 @@ class PermissionController extends Controller
     public function index()
     {
         return view('admin.permissions.index', [
-            'permissions' => Permission::latest('id')->paginate(env('RECORD_PER_PAGE', 10))
+            'permissions' => Permission::latest('id')->paginate(env('RECORD_PER_PAGE', 50))
         ]);
     }
 

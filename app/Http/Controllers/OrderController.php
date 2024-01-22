@@ -39,12 +39,12 @@ class OrderController extends Controller
                 ->where('assembler_user_id', Auth::user()->id)
                 ->where(function ($query) {
                     $query->orWhereHas('details', function ($subQuery) {
-                        $subQuery->where('order_status', OrderStatus::READY_TO_ASSEMBLE);
+                        $subQuery->where('order_status', OrderStatus::READY_TO_PRODUCTION);
                     })->orWhereHas('details', function ($subQuery) {
                         $subQuery->where('order_status', OrderStatus::READY_TO_DELIVER);
                     });
                 })
-                // ->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])
+                // ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
@@ -58,7 +58,7 @@ class OrderController extends Controller
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
         } else if (auth()->user()->hasRole('Accountant')) {
-            $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::FAILED, OrderStatus::IN_PROGRESS])->latest()->get();
+            $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::PENDING_ORDER_CONFIRMATION])->latest()->get();
             $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
         } else {
             $orders = Order::latest()->get();
@@ -176,8 +176,8 @@ class OrderController extends Controller
             return response()->json(['error' => 'Order is not valid!']);
         }
 
-        // if ($orderDetails->order->order_status ==  OrderStatus::IN_PROGRESS) {
-        //     Order::find($orderDetails->order->id)->update(['order_status' => OrderStatus::READY_TO_ASSEMBLE]);
+        // if ($orderDetails->order->order_status ==  OrderStatus::PENDING_ORDER_CONFIRMATION) {
+        //     Order::find($orderDetails->order->id)->update(['order_status' => OrderStatus::READY_TO_PRODUCTION]);
         // }
         // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);
 
@@ -214,7 +214,7 @@ class OrderController extends Controller
     public function updatePaymentMethod(Request $request)
     {
         $orderId = $request->order_id;
-        Order::findOrFail($orderId)->update(['order_status' => OrderStatus::READY_TO_ASSEMBLE, 'payment_status' => PaymentStatus::PAID, 'payment_type' => $request->method]);
+        Order::findOrFail($orderId)->update(['order_status' => OrderStatus::READY_TO_PRODUCTION, 'payment_status' => PaymentStatus::PAID, 'payment_type' => $request->method]);
         return response()->json(['success' => 'Payment method has been updated!']);
     }
 
@@ -326,12 +326,12 @@ class OrderController extends Controller
                 ->where('assembler_user_id', Auth::user()->id)
                 ->where(function ($query) {
                     $query->orWhereHas('details', function ($subQuery) {
-                        $subQuery->where('order_status', OrderStatus::READY_TO_ASSEMBLE);
+                        $subQuery->where('order_status', OrderStatus::READY_TO_PRODUCTION);
                     })->orWhereHas('details', function ($subQuery) {
                         $subQuery->where('order_status', OrderStatus::READY_TO_DELIVER);
                     });
                 })
-                // ->whereIn('order_status', [OrderStatus::READY_TO_ASSEMBLE, OrderStatus::READY_TO_DELIVER])
+                // ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();

@@ -40,7 +40,7 @@ class CheckoutController extends Controller
             $productsArr = [
                 'user_id' => (session()->get('assign_customer')) ? session()->get('assign_customer') : 0,
                 'order_date' => Carbon::now(),
-                'order_status' => OrderStatus::IN_PROGRESS,
+                'order_status' => OrderStatus::PENDING_ORDER_CONFIRMATION,
                 'total_products' => $totalProducts,
                 'sub_total' => $totalPrice,
                 'vat' => 0,

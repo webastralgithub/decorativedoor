@@ -30,7 +30,7 @@ class RoleController extends Controller
         $roles = Role::when(isset($request->q), function ($query) use ($request) {
 
             $query->whereRaw("(name LIKE '%" . $request->q . "%')");
-        })->orderBy('id', 'DESC')->paginate(env('RECORD_PER_PAGE', 10));
+        })->orderBy('id', 'DESC')->paginate(env('RECORD_PER_PAGE', 50));
         
         return view('admin.roles.index', compact('roles'));
     }

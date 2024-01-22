@@ -37,7 +37,7 @@ class ProductController extends Controller
         $products = Product::when(isset($request->q), function ($query) use ($request) {
 
             $query->whereRaw("(title LIKE '%" . $request->q . "%')");
-        })->latest()->paginate(env('RECORD_PER_PAGE', 10));
+        })->latest()->paginate(env('RECORD_PER_PAGE', 50));
         return view('admin.products.index', compact('products'));
 
     }

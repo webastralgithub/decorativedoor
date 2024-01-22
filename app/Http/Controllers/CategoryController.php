@@ -30,7 +30,7 @@ class CategoryController extends Controller
         $categories = Category::when(isset($request->q), function ($query) use ($request) {
 
             $query->whereRaw("(name LIKE '%" . $request->q . "%')");
-        })->with('children')->whereNull('parent_id')->orderBy('id', 'DESC')->paginate(env('RECORD_PER_PAGE', 10));
+        })->with('children')->whereNull('parent_id')->orderBy('id', 'DESC')->paginate(env('RECORD_PER_PAGE', 50));
         return view('admin.category.index', compact('categories'));
     }
 
