@@ -310,7 +310,11 @@ class OrderController extends Controller
                 $key = "delivery_user_id";
                 $value = $request->userid;
                 break;
-        }
+            case "order coordinator":
+                $key = "coordinator_user_id";
+                $value = $request->userid;
+                break;
+    }
 
         $order = Order::whereId($request->orderid)->update([$key => $value]);
         if ($order) {
