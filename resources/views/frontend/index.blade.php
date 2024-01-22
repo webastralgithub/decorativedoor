@@ -113,8 +113,8 @@
                 <div class="featured__controls">
                     <ul>
                         <li class="active mixitup-control-active" data-filter=".all">All</li>
-                        <li data-filter=".oranges">Interior Doors</li>
                         <li data-filter=".fresh-meat">Exterior Doors</li>
+                        <li data-filter=".oranges">Interior Doors</li>
                     </ul>
                 </div>
             </div>
