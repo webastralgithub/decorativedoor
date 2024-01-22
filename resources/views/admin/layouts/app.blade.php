@@ -52,6 +52,7 @@
         </div>
         <!-- Spinner End -->
         @if(Auth::check())
+     
         @include('admin.layouts.sidebar')
 
         <div class="content pb-4">

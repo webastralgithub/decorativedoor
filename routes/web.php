@@ -97,6 +97,7 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
     Route::post('/update-order-quantity-status', [OrderController::class, 'updateQuantityStatus'])->name('order.per.product.delivery');
     Route::post('/update-product-status', [OrderController::class, 'updateProductStatus']);
     Route::post('/update-order-product-status', [OrderController::class, 'updateorderProductStatus']);
+    Route::get('/confirm-order/{id}', [OrderController::class, 'confirmOrder'])->name('order.confirm-order');
     Route::get('/delivery-user/{id}', [OrderController::class, 'delivery_user'])->name('orders.delivery_user');
     Route::post('/delivery-user-save', [OrderController::class, 'delivery_user_save'])->name('orders.delivery_user_save');
     Route::post('/update-user-address', [UserController::class, 'createAddress']);

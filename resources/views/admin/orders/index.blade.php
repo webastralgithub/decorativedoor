@@ -74,7 +74,13 @@
                                             Payment</a></li>
                                     @endcan
                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Add Signature</a></li>
+
+                                    @if(auth()->user()->hasRole('Accountant') || auth()->user()->hasRole('Super Admin'))
+                                    <li><a class="dropdown-item" href="{{ route('order.confirm-order', $order->id) }}">Confirm Order</a></li> 
+                                    @endif
+                                    
                                     <!-- <li><a class="dropdown-item" href="{{ route('order.downloadInvoice', $order) }}">Print</a></li> -->
+                                    
                                 </ul>
                             </div>
                         </td>
@@ -377,7 +383,7 @@
         order: [
             [2, 'desc']
         ],
-        pageLength: 50 
+        
     });
 
     async function changeOrderStatus(orderId, allStatuses, selectedStatus) {

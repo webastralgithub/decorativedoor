@@ -425,4 +425,16 @@ class OrderController extends Controller
 
         return response()->json(['notes' => $notes]);
     }
+
+    public function confirmOrder(Request $request, $orderId = null) {
+        $order = Order::where('id', $orderId)->get();
+        if (isset($order) && !empty($order)) {
+            Order::where('id', $orderId)->update(['order_status' => 4]);
+            return response()->json(['success' => 'Order status has been updated!']);
+        }else{
+            return response()->json(['success' => 'Order status has been not updated!']);
+        }
+        
+        
+    }
 }

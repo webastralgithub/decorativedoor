@@ -7,6 +7,17 @@
         overflow-x: auto;
         white-space: nowrap;
     }
+    .content.pb-4 {
+        margin: 0;
+        width: 100%;
+    }
+    .sidebar.pe-4.pb-3 {
+        display: none;
+    }
+    a.sidebar-toggler.flex-shrink-0 {
+        display: none !important;
+    }
+    
 </style>
 
 <div class="mx-4 content-p-mobile">
