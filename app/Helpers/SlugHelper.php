@@ -252,9 +252,6 @@ if (!function_exists('generateProductSlug')) {
     if (!function_exists('getOrderDeliveryQuantity')) {
         function getOrderDeliveryQuantity($orderId = null)
         {
-
-           
-
             $order =  Order::with(['details','deliverorder'])->where('id', $orderId)->first();
             
                 $orderQuantity = 0;
@@ -282,7 +279,7 @@ if (!function_exists('generateProductSlug')) {
                     $missingqty += $deliver->missingqty;
                    
                 }
-            $pendingQuantity = abs($orderQuantity - $delivery_quantity + $missingqty);
+            $pendingQuantity = abs($delivery_quantity + $missing_quantiy);
 
             $data = array(
                 'order_quantity' => $orderQuantity,
