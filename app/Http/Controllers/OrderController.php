@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Note;
 use App\Models\DeliverQuantity;
+use App\Models\DeliveryuserQuantity;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,7 @@ class OrderController extends Controller
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
         } else if (auth()->user()->hasRole('Delivery User')) {
-            $orders = Order::with(['deliverorder'])->whereHas('details', function ($query) {
+            $orders = Order::with(['deliverorder', 'deliveruserorder'])->whereHas('details', function ($query) {
                 $query->orWhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED]);
             })
                 ->where('delivery_user_id', Auth::user()->id)
@@ -60,7 +61,7 @@ class OrderController extends Controller
         } else if (auth()->user()->hasRole('Accountant')) {
             $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::PENDING_ORDER_CONFIRMATION])->latest()->get();
             $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
-        }  else if (auth()->user()->hasRole('Order Coordinator')) {
+        } else if (auth()->user()->hasRole('Order Coordinator')) {
             $orders = Order::Where('coordinator_user_id', Auth::user()->id)->latest()->get();
             $order_statuses = '';
         } else {
@@ -128,7 +129,7 @@ class OrderController extends Controller
 
     public function updateQuantityStatus(Request $request)
     {
-
+      
         $validator = validator($request->all(), [
             'delivery_quantity' => [
                 'required',
@@ -148,33 +149,77 @@ class OrderController extends Controller
         if (!isset($orderDetails) && empty($orderDetails)) {
             return response()->json(['error' => 'Order is not valid!']);
         }
-        // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);
-        // echo getDeliverQuantity($orderDetails->order->id, $itemId);
-        // echo  ' || ';
-        // echo "PRODUCT::" . $orderDetails->product->id . '  || ';
-        // echo getProductAvailabityStock($orderDetails->product->id);
-        // dd('test');
-        // if (getDeliverQuantity($orderDetails->order->id, $itemId) >= getProductAvailabityStock($orderDetails->order->id)) {
-        //     return response()->json(['error' => 'All items have been delivered!']);
-        // }
+
 
         if ($orderDetails->order->details->count() == 1) {
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
             $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
-            if($deliverQuan == 0 || $request->order_quantity == $finalorderquan){
-               $orderDetails->order->update(['order_status' => $request->new_status]);
-               $orderDetails->update(['order_status' => $request->new_status]); 
+            if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
+                $orderDetails->order->update(['order_status' => $request->new_status]);
+                $orderDetails->update(['order_status' => $request->new_status]);
             }
+                DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
             
-            DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
             //return response()->json(['success' => 'Order status updated successfully']);
         } else {
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
             $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
-            if($deliverQuan == 0 || $request->order_quantity == $finalorderquan){
-               $orderDetails->update(['order_status' => $request->new_status]); 
+            if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
+                $orderDetails->update(['order_status' => $request->new_status]);
             }
-            DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
+
+            
+                DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
+            
+            //return response()->json(['success' => 'Order status updated successfully']);
+        }
+        return response()->json(['success' => 'Quantity Added successfully!']);
+    }
+
+
+    public function updateDeliveryQuantityStatus(Request $request)
+    {
+      
+        $validator = validator($request->all(), [
+            'delivery_quantity' => [
+                'required',
+                'numeric',
+                'min:1',
+                'max:' . $request->input('order_quantity'),
+            ],
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ]);
+        }
+        $itemId = $request->item_id;
+        $orderDetails = OrderDetails::findOrFail($itemId);
+        if (!isset($orderDetails) && empty($orderDetails)) {
+            return response()->json(['error' => 'Order is not valid!']);
+        }
+
+
+        if ($orderDetails->order->details->count() == 1) {
+            $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
+            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
+            if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
+                $orderDetails->order->update(['order_status' => $request->new_status]);
+                $orderDetails->update(['order_status' => $request->new_status]);
+            }
+
+                DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
+        
+            //return response()->json(['success' => 'Order status updated successfully']);
+        } else {
+            $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
+            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
+            if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
+                $orderDetails->update(['order_status' => $request->new_status]);
+            }
+                DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
+            
             //return response()->json(['success' => 'Order status updated successfully']);
         }
         return response()->json(['success' => 'Quantity Added successfully!']);
@@ -326,7 +371,7 @@ class OrderController extends Controller
                 $key = "coordinator_user_id";
                 $value = $request->userid;
                 break;
-    }
+        }
 
         $order = Order::whereId($request->orderid)->update([$key => $value]);
         if ($order) {
@@ -442,23 +487,22 @@ class OrderController extends Controller
         return response()->json(['notes' => $notes]);
     }
 
-    public function confirmOrder(Request $request, $orderId = null) {
+    public function confirmOrder(Request $request, $orderId = null)
+    {
         $order = Order::where('id', $orderId)->get();
         if (isset($order) && !empty($order)) {
             Order::where('id', $orderId)->update(['order_status' => 4, 'order_confirm' => 1]);
 
             $itemId = $orderId;
             $orderDetails = OrderDetails::where('order_id', $itemId)->get();
-            
+
             foreach ($orderDetails as $item) {
                 $order_id = $item->order_id;
-                OrderDetails::where('order_id', $order_id)->update(['order_status' => 4]);    
+                OrderDetails::where('order_id', $order_id)->update(['order_status' => 4]);
             }
             return back()->with(['success' => 'Order status has been Confirmed!']);
-        }else{
+        } else {
             return back()->with(['success' => 'Order status has been not Confirmed!']);
         }
-        
-        
     }
 }

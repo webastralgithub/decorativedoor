@@ -44,8 +44,8 @@
                         @can('change-order-status')
                             <th>{{ __('Status') }}</th>
                         @endcan
-                        <th>{{ __('Order Coordinator') }}</th>
                         <th>{{ __('Customer Name') }}</th>
+                        <th>{{ __('Order Coordinator') }}</th>
                         @can('show-quantity-listing')
                             <th>{{ __('Ordered Quantity') }}</th>
                             <th>{{ __('Production Ready Qty') }}</th>
@@ -96,7 +96,7 @@
                                                 @endcan
                                                 @if (auth()->user()->hasRole('Accountant') ||
                                                         auth()->user()->hasRole('Super Admin'))
-                                                    @if($order->order_confirm != 1)
+                                                    @if ($order->order_confirm != 1)
                                                         <li><a class="dropdown-item"
                                                                 href="{{ route('order.confirm-order', $order->id) }}">Confirm
                                                                 Order</a></li>
@@ -114,8 +114,8 @@
                                 @can('change-order-status')
                                     <td class=" status-links">
                                         <!-- <a class="text-info" onclick="return changeOrderStatus('{{ $order->id }}','{{ $order_statuses }}','{{ $order->order_status }}');">
-                                        {{ \App\Models\OrderStatus::getStatusNameById($order->order_status) }}
-                                    </a> -->
+                                                {{ \App\Models\OrderStatus::getStatusNameById($order->order_status) }}
+                                            </a> -->
                                         @foreach ($order->details->unique('order_status') as $item)
                                             <a class="text-info-product " href="{{ route('orders.show', $order->order_id) }}">
                                                 {{ \App\Models\OrderStatus::getStatusNameById($item->order_status) }}
@@ -123,16 +123,17 @@
                                         @endforeach
                                     </td>
                                 @endcan
-                                <td> <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer"
-                                        @can('change_order_coordinator') onclick="return assignUser(this,'{{ $order->id }}','{{ $coordinators }}','order coordinator','{{ $order->user_id }}');" @endcan>{{ $order->coordinator->name ?? '...' }}</span>
-                                </td>
-
                                 <td>
                                     <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer"
                                         @can('change_sales_person') onclick="return assignUser(this,'{{ $order->id }}','{{ $sales_users }}','sales person','{{ $order->user_id }}');" @endcan>{{ $order->user->name ?? '...' }}</span>
                                 </td>
+                                <td> <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer"
+                                        @can('change_order_coordinator') onclick="return assignUser(this,'{{ $order->id }}','{{ $coordinators }}','order coordinator','{{ $order->user_id }}');" @endcan>{{ $order->coordinator->name ?? '...' }}</span>
+                                </td>
 
                                 @can('show-quantity-listing')
+                                    @php  $Quantities =  getOrderDeliveryQuantity($order->id); @endphp
+
                                     @php
                                         $orderQuantity = 0;
                                         $deliver_quantity = 0;
@@ -147,17 +148,15 @@
                                             $deliver_quantity += $items->deliver_quantity;
                                         @endphp
                                     @endforeach
-                                    @php
-                                    $backlogqty = $orderQuantity - $deliver_quantity;
-                                    @endphp
+
                                     <td>{{ $orderQuantity }}</td>
                                     <td>{{ $deliver_quantity }}</td>
-                                    <td style="color:red;"><b>{{ $backlogqty }}</b></td>
-                                    <td>{{ getlatestDeliverdQuantity($order->id) }}</td>
-                                    <td>{{ $backlogqty - getlatestDeliverdQuantity($order->id)}}</td>
+                                    <td style="color:red;"><b>{{ $orderQuantity - $deliver_quantity }}</b></td>
+                                    <td>{{ $Quantities['delivery_quantity'] }}</td>
+                                    <td>{{ $Quantities['pendingQuantity'] }}</td>
                                 @endcan
 
-                                
+
                                 <td>
                                     <span
                                         class="@if (!$order->sales_person) dots-assigned @endif cursor-pointer">{{ getUserInfo($order->sales_person)['name'] ?? '...' }}</span>
@@ -547,7 +546,7 @@
                     const zipCode = Swal.getPopup().querySelector('#zip_code').value;
 
                     if (country.trim() === '' || street.trim() === '' || city.trim() === '' || state
-                    .trim() === '' || zipCode.trim() === '') {
+                        .trim() === '' || zipCode.trim() === '') {
                         Swal.showValidationMessage('All fields are required');
                     } else {
                         jQuery.ajax({

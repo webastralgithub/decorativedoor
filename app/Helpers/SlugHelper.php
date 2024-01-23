@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\DeliverQuantity;
 use App\Models\OrderDetails;
+use App\Models\DeliveryuserQuantity;
 use App\Models\Note;
 use Illuminate\Support\Str;
 
@@ -245,6 +246,52 @@ if (!function_exists('generateProductSlug')) {
                 }
             $FinalTotal = abs($total - $discount);
             return $FinalTotal;
+        }
+    }
+
+    if (!function_exists('getOrderDeliveryQuantity')) {
+        function getOrderDeliveryQuantity($orderId = null)
+        {
+
+           
+
+            $order =  Order::with(['details','deliverorder'])->where('id', $orderId)->first();
+            
+                $orderQuantity = 0;
+                $deliver_quantity = 0;
+            
+            foreach ($order->details as $key => $items){
+                
+                    $orderQuantity += $items->quantity;
+            }
+            foreach ($order->deliverorder as $key => $items){
+                $deliver_quantity += $items->deliver_quantity;
+            }
+
+            $missing_quantiy = $orderQuantity - $deliver_quantity;
+                                               
+            $order =  DeliveryuserQuantity::where('order_id', $orderId)->get();
+
+            $delivery_order = 0;
+            $delivery_quantity = 0;
+            $missingqty = 0;
+            if (!empty($order))
+                foreach ($order as $deliver) {
+                    
+                    $delivery_quantity += $deliver->delivery_quantity;
+                    $missingqty += $deliver->missingqty;
+                   
+                }
+            $pendingQuantity = abs($orderQuantity - $delivery_quantity + $missing_quantiy);
+
+            $data = array(
+                'order_quantity' => $orderQuantity,
+                'delivery_order' => $delivery_order,
+                'missingqty' => $missingqty,
+                'delivery_quantity' => $delivery_quantity,                
+                'pendingQuantity' => $pendingQuantity,
+            );
+            return $data;
         }
     }
 }
