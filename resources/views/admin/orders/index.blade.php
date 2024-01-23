@@ -35,9 +35,9 @@
         <div class="table-order">
             <table class="table table-striped table-bordered" id="order">
                 <thead>
-                    @can('make-payment','download-invoice')
+                    @if(auth()->user()->can('make-payment') || auth()->user()->can('download-invoice')|| auth()->user()->can('add-signature'))
                     <th>{{__('Action')}}</th>
-                    @endcan
+                    @endif
                     <th>{{__('Order ID')}}</th>
                     <th>{{__('Status')}}</th>
                     <th>{{__('Order Coordinator')}}</th>
@@ -64,7 +64,7 @@
                 <tbody>
                     @foreach ($orders as $order)
                     <tr>
-                        @can('make-payment','download-invoice')
+                        @if(auth()->user()->can('make-payment') || auth()->user()->can('download-invoice')|| auth()->user()->can('add-signature'))
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,8 +75,9 @@
                                     <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make
                                             Payment</a></li>
                                     @endcan
+                                    @can('add-signature')
                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Add Signature</a></li>
-
+                                    @endcan
                                     @if(auth()->user()->hasRole('Accountant') || auth()->user()->hasRole('Super Admin'))
                                     <li><a class="dropdown-item" href="{{ route('order.confirm-order', $order->id) }}">Confirm Order</a></li> 
                                     @endif
@@ -86,7 +87,7 @@
                                 </ul>
                             </div>
                         </td>
-                        @endcan
+                        @endif
                         <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{
                                 $order->order_id }}</a></td>
                         @can('change-order-status')
