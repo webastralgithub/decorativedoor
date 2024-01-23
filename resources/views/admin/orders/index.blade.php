@@ -39,7 +39,9 @@
                     <th>{{__('Action')}}</th>
                     @endif
                     <th>{{__('Order ID')}}</th>
+                    @can('change-order-status')
                     <th>{{__('Status')}}</th>
+                    @endcan
                     <th>{{__('Order Coordinator')}}</th>
                     <th>{{__('Customer Name')}}</th>
                     <th>{{__('Sales Person')}}</th>
@@ -58,8 +60,6 @@
                     @if(auth()->user()->hasRole('Accountant'))
                     <th>{{__('Approval')}}</th>
                     @endif
-                    @can('change-order-status')
-                    @endcan
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)

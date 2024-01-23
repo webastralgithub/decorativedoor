@@ -55,7 +55,9 @@
                     <th>{{ __('Order ID') }}</th>
                     <th>{{ __('Order Coordinator') }}</th>
                     <th>{{ __('Customer Name') }}</th>
-                    <th>{{ __('Missing Items') }}</th>
+                    <th>{{ __('Ordered Quantity') }}</th>
+                    <th>{{ __('Production Ready Qty') }}</th>
+                    <th>{{ __('Backorder Quantity') }}</th>
                     <th>{{ __('Notes') }}</th>
                     <th>{{ __('Last Updated Date') }}</th>
                     @can('order_price')
@@ -90,8 +92,9 @@
                         $deliver_quantity += $items->deliver_quantity;
                         @endphp
                         @endforeach
-
-                        <td>{{($orderQuantity - $deliver_quantity)}}</td>
+                        <td>{{($orderQuantity)}}</td>
+                        <td>{{($deliver_quantity)}}</td>
+                        <td style="color:red;"><b>{{($orderQuantity - $deliver_quantity)}}</b></td>
                         <td>
                             @if (isset(getOrderNotes($order->id)['note']))
                             <a href="#"><span onclick="return addAssemberNote('{{ $order->order_id }}');">{{

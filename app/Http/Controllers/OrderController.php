@@ -60,6 +60,9 @@ class OrderController extends Controller
         } else if (auth()->user()->hasRole('Accountant')) {
             $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::PENDING_ORDER_CONFIRMATION])->latest()->get();
             $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
+        }  else if (auth()->user()->hasRole('Order Coordinator')) {
+            $orders = Order::Where('coordinator_user_id', Auth::user()->id)->latest()->get();
+            $order_statuses = '';
         } else {
             $orders = Order::latest()->get();
             $order_statuses = OrderStatus::all();

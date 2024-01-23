@@ -184,6 +184,7 @@
                     $discount = array_sum($discount);
                     $finaltotal = $finaltotal - $discount;
                     @endphp
+                    
                     @can('order_price')
                     <tr>
                         <td colspan="6" class="text-end">Shipping Charges</td>
