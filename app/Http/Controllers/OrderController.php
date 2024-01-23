@@ -158,15 +158,8 @@ class OrderController extends Controller
                 $orderDetails->order->update(['order_status' => $request->new_status]);
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
-
-
-
-            if (isset($request->missingqty) && !empty($request->missingqty) || $request->missingqty == 0) {
-                
-                DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
-            } else {
                 DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
-            }
+            
             //return response()->json(['success' => 'Order status updated successfully']);
         } else {
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
@@ -175,12 +168,58 @@ class OrderController extends Controller
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
 
-            if (isset($request->missingqty) && !empty($request->missingqty) || $request->missingqty == 0) {
-                
-                DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
-            } else {
+            
                 DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
+            
+            //return response()->json(['success' => 'Order status updated successfully']);
+        }
+        return response()->json(['success' => 'Quantity Added successfully!']);
+    }
+
+
+    public function updateDeliveryQuantityStatus(Request $request)
+    {
+      
+        $validator = validator($request->all(), [
+            'delivery_quantity' => [
+                'required',
+                'numeric',
+                'min:1',
+                'max:' . $request->input('order_quantity'),
+            ],
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ]);
+        }
+        $itemId = $request->item_id;
+        $orderDetails = OrderDetails::findOrFail($itemId);
+        if (!isset($orderDetails) && empty($orderDetails)) {
+            return response()->json(['error' => 'Order is not valid!']);
+        }
+
+
+        if ($orderDetails->order->details->count() == 1) {
+            $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
+            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
+            if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
+                $orderDetails->order->update(['order_status' => $request->new_status]);
+                $orderDetails->update(['order_status' => $request->new_status]);
             }
+
+                DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
+        
+            //return response()->json(['success' => 'Order status updated successfully']);
+        } else {
+            $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
+            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
+            if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
+                $orderDetails->update(['order_status' => $request->new_status]);
+            }
+                DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
+            
             //return response()->json(['success' => 'Order status updated successfully']);
         }
         return response()->json(['success' => 'Quantity Added successfully!']);

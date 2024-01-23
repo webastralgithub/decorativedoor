@@ -497,7 +497,7 @@
             return false;
         }
         jQuery.ajax({
-            url: "{{ route('order.per.product.delivery') }}", // Replace with your actual route
+            url: "{{ route('order.per.product.delivery-user') }}", // Replace with your actual route
             type: 'POST',
             data: {
                 orderId: orderId,
