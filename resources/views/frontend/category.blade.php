@@ -35,6 +35,11 @@
                     @if(!empty($products))
                     
                         @foreach($products as $product)
+                        @php
+                        $stockAvailability = getProductAvailabityStock($product->id);
+                        $stockOnCart = getProductStockOnCart($product->id);
+                        $inStock = $stockAvailability > 0 && $stockAvailability > $stockOnCart;
+                        @endphp
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <a href="{{route('product',$product->slug)}}">
@@ -47,6 +52,9 @@
                                     </div>
                                     <div class="featured__item__text">
                                         <h6>{{$product->title}}</h6>
+                                        <h4 class="stock" style="color: {{ $inStock ? 'green' : 'red' }}">
+                                            {{ $inStock ? 'In' : 'Out of' }} Stock
+                                        </h4>                            
                                         <h5>${{number_format($product->selling_price, 2, '.', ',')}}</h5>
                                     </div>
                                 </a>

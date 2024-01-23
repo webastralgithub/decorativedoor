@@ -4242,3 +4242,8 @@ div#assignuser .table td {
     height: 200px;
     overflow: auto;
 }
+
+.stock{
+	font-size:15px;
+	margin: 10px;
+}

@@ -61,7 +61,7 @@ class LoginController extends Controller
         }else {
             $redirecturl = '/';
         }
-        return $redirecturl;
+        return redirect($redirecturl);
 
     }
 }

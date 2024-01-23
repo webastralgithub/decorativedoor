@@ -48,16 +48,19 @@
                         <th>{{ __('Order Coordinator') }}</th>
                         @can('show-quantity-listing')
                             <th>{{ __('Ordered Quantity') }}</th>
-                            <th>{{ __('Production Ready Qty') }}</th> 
+                            <th>{{ __('Production Ready Qty') }}</th>
                             <th>{{ __('Backorder Quantity') }}</th>
                             <th>{{ __('Delivered Quantity') }}</th>
                             <th>{{ __('Pending Quantity') }}</th>
                         @endcan
+                        @if (!auth()->user()->hasRole('Delivery User'))
                         <th>{{ __('Sales Person') }}</th>
                         {{-- <th>{{__('Accountant')}}</th> --}}
                         <th>{{ __('Assembler') }}</th>
+                        @endif
                         <th>{{ __('Delivery By') }}</th>
                         {{-- <th>{{__('Address')}}</th> --}}
+                        
                         <th>{{ __('Delivery Date') }}</th>
                         <th>{{ __('Ready Date') }}</th>
                         @if (!auth()->user()->hasRole('Delivery User'))
@@ -96,7 +99,7 @@
                                                 @endcan
                                                 @if (auth()->user()->hasRole('Accountant') ||
                                                         auth()->user()->hasRole('Super Admin'))
-                                                    @if($order->order_confirm != 1)
+                                                    @if ($order->order_confirm != 1)
                                                         <li><a class="dropdown-item"
                                                                 href="{{ route('order.confirm-order', $order->id) }}">Confirm
                                                                 Order</a></li>
@@ -114,8 +117,8 @@
                                 @can('change-order-status')
                                     <td class=" status-links">
                                         <!-- <a class="text-info" onclick="return changeOrderStatus('{{ $order->id }}','{{ $order_statuses }}','{{ $order->order_status }}');">
-                                        {{ \App\Models\OrderStatus::getStatusNameById($order->order_status) }}
-                                    </a> -->
+                                                {{ \App\Models\OrderStatus::getStatusNameById($order->order_status) }}
+                                            </a> -->
                                         @foreach ($order->details->unique('order_status') as $item)
                                             <a class="text-info-product " href="{{ route('orders.show', $order->order_id) }}">
                                                 {{ \App\Models\OrderStatus::getStatusNameById($item->order_status) }}
@@ -129,49 +132,50 @@
                                 </td>
                                 <td> <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer"
                                         @can('change_order_coordinator') onclick="return assignUser(this,'{{ $order->id }}','{{ $coordinators }}','order coordinator','{{ $order->user_id }}');" @endcan>{{ $order->coordinator->name ?? '...' }}</span>
-                                </td>                               
+                                </td>
 
                                 @can('show-quantity-listing')
-                                  @php  $Quantities =  getOrderDeliveryQuantity($order->id); @endphp
-                                    <td>{{ $Quantities['order_quantity'] }}</td>
-                                    <td>{{ $Quantities['delivery_order'] }}</td>
-                                    <td style="color:red;"><b>{{ $Quantities['missingqty'] }}</b></td>
+                                    @php  $Quantities =  getOrderDeliveryQuantity($order->id); @endphp
+
+                                    @php
+                                        $orderQuantity = 0;
+                                        $deliver_quantity = 0;
+                                    @endphp
+                                    @foreach ($order->details as $key => $items)
+                                        @php
+                                            $orderQuantity += $items->quantity;
+                                        @endphp
+                                    @endforeach
+                                    @foreach ($order->deliverorder as $key => $items)
+                                        @php
+                                            $deliver_quantity += $items->deliver_quantity;
+                                        @endphp
+                                    @endforeach
+
+                                    <td>{{ $orderQuantity }}</td>
+                                    <td>{{ $deliver_quantity }}</td>
+                                    <td style="color:red;"><b>{{ $orderQuantity - $deliver_quantity }}</b></td>
                                     <td>{{ $Quantities['delivery_quantity'] }}</td>
-                                    <td>{{ $Quantities['pendingQuantity']}}</td>
+                                    <td>{{ $Quantities['pendingQuantity'] }}</td>
                                 @endcan
 
-                                
+                                @if (!auth()->user()->hasRole('Delivery User'))
                                 <td>
                                     <span
                                         class="@if (!$order->sales_person) dots-assigned @endif cursor-pointer">{{ getUserInfo($order->sales_person)['name'] ?? '...' }}</span>
                                 </td>
-
-                                {{-- <td >
-                            <span class="@if (!$order->accountant) dots-assigned @endif cursor-pointer"
-                                @can('change_accountant_user')
-                                onclick="return assignUser(this, '{{$order->id}}','{{$accountant_users}}','accountant','{{$order->accountant_user_id}}');"
-                        @endcan>{{$order->accountant->name ?? "..."}}</span>
-                        </td> --}}
+                              
                                 <td>
                                     <span class="@if (!$order->assemble) dots-assigned @endif cursor-pointer"
                                         @can('change_assembler_user') onclick="return assignUser(this, '{{ $order->id }}','{{ $assembler_users }}','assembler','{{ $order->assembler_user_id }}');" @endcan>{{ $order->assemble->name ?? '...' }}</span>
                                 </td>
+                                @endif
                                 <td>
                                     <span class="@if (!$order->delivery) dots-assigned @endif cursor-pointer"
                                         @can('change_delivery_user') onclick="return assignUser(this, '{{ $order->id }}','{{ $delivery_users }}','delivery','{{ $order->delivery_user_id }}');" @endcan>{{ $order->delivery->name ?? '...' }}</span>
                                 </td>
-                                @can('change-order-status')
-                                    @php
-                                        //$address = getUserAddress($order->user_id);
-                                    @endphp
-                                    {{-- <td class="@if ($address == '') center @endif">
-                            @if ($address != '')
-                            <span class="">{{$address}}</span>
-                        @else
-                        <span class="dots-assigned cursor-pointer" @can('change_user_address') onclick="return addUserAddress('{{$order->user_id}}');" @endcan>{{"..."}}</span>
-                        @endif
-                        </td> --}}
-                                @endcan
+                               
+                               
                                 <td>{{ $order->order_date->format('d-m-Y') }}</td>
                                 <td>-</td>
                                 @if (!auth()->user()->hasRole('Delivery User'))
@@ -530,7 +534,7 @@
                     const zipCode = Swal.getPopup().querySelector('#zip_code').value;
 
                     if (country.trim() === '' || street.trim() === '' || city.trim() === '' || state
-                    .trim() === '' || zipCode.trim() === '') {
+                        .trim() === '' || zipCode.trim() === '') {
                         Swal.showValidationMessage('All fields are required');
                     } else {
                         jQuery.ajax({
