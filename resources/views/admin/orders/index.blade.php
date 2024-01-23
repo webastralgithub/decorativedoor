@@ -49,7 +49,9 @@
                     {{-- <th>{{__('Address')}}</th> --}}
                     <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Ready Date')}}</th>
+                    @if(!auth()->user()->hasRole('Delivery User'))
                     <th>{{__('Quantity')}}</th>
+                    @endif
                     @can('order_price')
                     <th>{{__('Total')}}</th>
                     @endcan
@@ -134,7 +136,9 @@
                         @endcan
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
                         <td>-</td>
+                        @if(!auth()->user()->hasRole('Delivery User'))
                         <td>{{ getTotalQuantity($order->id) }}</td>
+                        @endif
                         @can('order_price')
                         <td>${{ number_format(getOrderTotalprice($order->id), 2, '.', ',') }}</td>
                         @endcan
