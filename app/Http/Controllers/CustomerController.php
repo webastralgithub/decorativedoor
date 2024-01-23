@@ -60,6 +60,7 @@ class CustomerController extends Controller
             ]);
 
             $useraddress = User::find($user_id);
+            $user->assignRole('Customer');
             $useraddress->address()->updateOrCreate(
                 ['user_id' => $user_id],
                 [
@@ -106,6 +107,7 @@ class CustomerController extends Controller
 
             $lastinsertid = $user->id;
             $user = User::find($lastinsertid);
+            $user->assignRole('Customer');
             $user->address()->updateOrCreate(
                 ['user_id' => $lastinsertid],
                 [
@@ -140,7 +142,11 @@ class CustomerController extends Controller
             );
             session()->put('assign_customer', $lastinsertid);
         }
-        return redirect()->back()->with('success', 'Customer assign Succesfully!');
+        if (session()->has('cart')) {
+            return redirect()->route('cart')->with('success', 'Customer assign Succesfully!');
+        } else {
+            return redirect()->route('home')->with('success', 'Customer assign Succesfully!');
+        }
     }
 
     /**

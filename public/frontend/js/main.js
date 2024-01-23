@@ -11,6 +11,7 @@
 
 (function ($) {
 
+    $(".assignedCustomer").delay(2000).fadeOut("slow");
     /*------------------
         Preloader
     --------------------*/
@@ -232,8 +233,98 @@
         $('#user-alreday-exist').hide();
         $('#customer-id').val('');
 
-        /**********Personal information ***********/
+        var token = $('input[name="_token"]').val();
+        var email_val = $(this).val();
 
+        // Perform AJAX request
+        $.ajax({
+            url: 'check-user', // Replace with your server-side script
+            method: 'POST', // You can use 'GET' as well
+            data: { email: email_val, _token: token },
+            success: function (response) {
+                console.log("response", response);
+                if (response) {
+                    clearInoutFields();
+                    // Update the searchResults div with the response from the server
+                    var jsonData = JSON.parse(response);
+                    console.log(jsonData);
+                    $('#user-alreday-exist').show();
+                    $('#final_submit').hide();
+                    $('#user-alreday-exist').html('<span id="user-alreday-exist" style="color: green;"><i class="fa fa-check"></i>User Already Exist</span><br><input type="checkbox" id="customerassign" data-id="' + jsonData.id + '"><label class="form-check-label" style="padding-left: 10px;"> Use This Customer </label>');
+                    $('#customer-id').val(jsonData.id);
+
+                    /**********Personal information ***********/
+
+                    $('#customer-name').val(jsonData.name);
+                    $('#customer-phone').val(jsonData.phone);
+                    $('#customer-dob').val(jsonData.dob);
+                    $('#customer-gender').val(jsonData.gender);
+
+                    $('#customer-shipping-address_type').val(jsonData.address_type);
+                    $('#customer-shipping-state').val(jsonData.state);
+                    $('#customer-shipping-city').val(jsonData.city);
+                    $('#customer-shipping-street').val(jsonData.street);
+                    $('#customer-shipping-country').val(jsonData.country);
+                    $('#customer-shipping-zipcode').val(jsonData.zipcode);
+
+                    $('#customer-billing-address_type').val(jsonData.billing_address_type);
+                    $('#customer-billing-state').val(jsonData.billing_state);
+                    $('#customer-billing-city').val(jsonData.billing_city);
+                    $('#customer-billing-street').val(jsonData.billing_street);
+                    $('#customer-billing-country').val(jsonData.billing_country);
+                    $('#customer-billing-zipcode').val(jsonData.billing_zipcode);
+
+                    /**********company information ***********/
+
+
+                    $('#company-name').val(jsonData.company_name);
+                    $('#company-address').val(jsonData.company_address);
+                    $('#company-phone').val(jsonData.company_phone);
+                    $('#company-email').val(jsonData.company_email);
+                    $('#company-industory-type').val(jsonData.industory_type);
+                    $('#company-website').val(jsonData.company_website);
+                    $('#company-registration_no').val(jsonData.registration_no);
+                    $('#company-gst_no').val(jsonData.gst);
+                    $('#company-notes').val(jsonData.notes);
+
+                    jQuery('#customerassign').on('click', function (e) {
+                        // e.preventDefault()
+                        var token = $('input[name="_token"]').val();
+                        var userid = jQuery(this).data('id');
+                        var url = "/assign-customer";
+                        jQuery.ajax({
+                            url: url,
+                            type: "Post",
+                            data: { user_id: userid, _token: token },
+                            success: function (response) {
+                                console.log(response);
+                                jQuery('#productDiscountMessage').text(response.success);
+                                jQuery('#productDiscountMessage').show();
+                                jQuery('#assignuser').modal('hide');
+                                setTimeout(function () {
+                                    jQuery('#productDiscountMessage').hide();
+                                }, 2000);
+                                window.location.href = "/";
+
+                            },
+                            error: function (xhr, status, error) {
+                                // Handle the error response here
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    });
+                }
+
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+
+    });
+
+    function clearInoutFields() {
+        /**********Personal information ***********/
         $('#customer-name').val('');
         $('#customer-phone').val('');
         $('#customer-dob').val('');
@@ -266,93 +357,7 @@
         $('#company-gst_no').val('');
         $('#company-notes').val('');
         $('#final_submit').show();
-
-        var token = $('input[name="_token"]').val();
-        var email_val = $(this).val();
-
-        // Perform AJAX request
-        $.ajax({
-            url: 'check-user', // Replace with your server-side script
-            method: 'POST', // You can use 'GET' as well
-            data: { email: email_val, _token: token },
-            success: function (response) {
-                // Update the searchResults div with the response from the server
-                var jsonData = JSON.parse(response);
-                console.log(jsonData);
-                $('#user-alreday-exist').show();
-                $('#final_submit').hide();
-                $('#user-alreday-exist').html('<span id="user-alreday-exist" style="color: green;"><i class="fa fa-check"></i>User Already Exist</span><br><input type="checkbox" id="customerassign" data-id="' + jsonData.id + '"><label class="form-check-label"> Use This Customer </label>');
-                $('#customer-id').val(jsonData.id);
-
-                /**********Personal information ***********/
-
-                $('#customer-name').val(jsonData.name);
-                $('#customer-phone').val(jsonData.phone);
-                $('#customer-dob').val(jsonData.dob);
-                $('#customer-gender').val(jsonData.gender);
-
-                $('#customer-shipping-address_type').val(jsonData.address_type);
-                $('#customer-shipping-state').val(jsonData.state);
-                $('#customer-shipping-city').val(jsonData.city);
-                $('#customer-shipping-street').val(jsonData.street);
-                $('#customer-shipping-country').val(jsonData.country);
-                $('#customer-shipping-zipcode').val(jsonData.zipcode);
-
-                $('#customer-billing-address_type').val(jsonData.billing_address_type);
-                $('#customer-billing-state').val(jsonData.billing_state);
-                $('#customer-billing-city').val(jsonData.billing_city);
-                $('#customer-billing-street').val(jsonData.billing_street);
-                $('#customer-billing-country').val(jsonData.billing_country);
-                $('#customer-billing-zipcode').val(jsonData.billing_zipcode);
-
-                /**********company information ***********/
-
-
-                $('#company-name').val(jsonData.company_name);
-                $('#company-address').val(jsonData.company_address);
-                $('#company-phone').val(jsonData.company_phone);
-                $('#company-email').val(jsonData.company_email);
-                $('#company-industory-type').val(jsonData.industory_type);
-                $('#company-website').val(jsonData.company_website);
-                $('#company-registration_no').val(jsonData.registration_no);
-                $('#company-gst_no').val(jsonData.gst);
-                $('#company-notes').val(jsonData.notes);
-
-                jQuery('#customerassign').on('click', function (e) {
-                    e.preventDefault();
-                    var token = $('input[name="_token"]').val();
-                    var userid = jQuery(this).data('id');
-                    var url = "/assign-customer";
-                    jQuery.ajax({
-                        url: url,
-                        type: "Post",
-                        data: { user_id: userid, _token: token },
-                        success: function (response) {
-                            console.log(response);
-                            jQuery('#productDiscountMessage').text(response.success);
-                            jQuery('#productDiscountMessage').show();
-                            jQuery('#assignuser').modal('hide');
-                            setTimeout(function () {
-                                jQuery('#productDiscountMessage').hide();
-                            }, 2000);
-
-                        },
-                        error: function (xhr, status, error) {
-                            // Handle the error response here
-                            console.error(xhr.responseText);
-                        }
-                    });
-                });
-
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-
-    });
-
-
+    }
 
     jQuery(document).ready(function () {
 

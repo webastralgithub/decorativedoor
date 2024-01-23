@@ -286,7 +286,7 @@
         @endif
 
         @if(Request::segment(1) != 'product')
-        @if(session('success'))
+        @if(session('success') && !request()->is('customer'))
         <div class="alert alert-success product-discount-message">
             {{ session('success') }}
         </div>
