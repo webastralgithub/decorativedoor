@@ -43,27 +43,25 @@ class LoginController extends Controller
     public function redirectTo()
     {
 
-        if (auth()->check() && (auth()->user()->hasRole('Super Admin') || auth()->user()->hasRole('Delivery User') || auth()->user()->hasRole('Product Assembler') || auth()->user()->hasRole('Accountant') || auth()->user()->hasRole('Admin'))) {
-            return '/admin/dashboard';
-        }else{
-            return '/';
+        
+        $user = Auth::user();
+        // Get the roles associated with the user
+        $roles = $user->getRoleNames();
+        
+        if ($roles[0] == 'Super Admin') {
+            $redirecturl = '/admin/dashboard';
+        } else if ($roles[0] == 'Delivery User') {
+            $redirecturl = '/admin/orders';
+        } else if ($roles[0] == 'Product Assembler') {
+            $redirecturl = '/admin/assembler-order';
+        } else if ($roles[0] == 'Accountant') {
+            $redirecturl = '/admin/dashboard';
+        } else if ($roles[0] == 'Admin') {
+            $redirecturl = '/admin/dashboard';
+        }else {
+            $redirecturl = '/';
         }
+        return $redirecturl;
 
-        // dd(Auth::user()->id);
-        // $user = User::find(Auth::user()->id);
-        // // dd($user->hasRole('Accountant'));
-        // if ($user->hasRole('Super Admin')) {
-        //     return '/admin/dashboard';
-        // } else if ($user->hasRole('Delivery User')) {
-        //     return '/admin/dashboard';
-        // } else if ($user->hasRole('Product Assembler')) {
-        //     return '/admin/dashboard';
-        // } else if ($user->hasRole('Accountant')) {
-        //     return '/admin/dashboard';
-        // } else if ($user->hasRole('Admin')) {
-        //     return '/admin/dashboard';
-        // }else {
-        //     return '/';
-        // }
     }
 }

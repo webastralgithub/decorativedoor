@@ -29,13 +29,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/admin', function () {
-    if (Auth::check()) {
-        return redirect()->route('home');
-    } else {
-        return view('auth.login');
-    }
-});
 
 Auth::routes();
 Route::middleware(['auth', 'isAdminWebAccess'])->group(function () {

@@ -35,11 +35,13 @@
         <div class="table-order">
             <table class="table table-striped table-bordered" id="order">
                 <thead>
-                    @can('make-payment','download-invoice')
+                    @if(auth()->user()->can('make-payment') || auth()->user()->can('download-invoice')|| auth()->user()->can('add-signature'))
                     <th>{{__('Action')}}</th>
-                    @endcan
+                    @endif
                     <th>{{__('Order ID')}}</th>
+                    @can('change-order-status')
                     <th>{{__('Status')}}</th>
+                    @endcan
                     <th>{{__('Order Coordinator')}}</th>
                     <th>{{__('Customer Name')}}</th>
                     <th>{{__('Sales Person')}}</th>
@@ -49,20 +51,20 @@
                     {{-- <th>{{__('Address')}}</th> --}}
                     <th>{{__('Delivery Date')}}</th>
                     <th>{{__('Ready Date')}}</th>
+                    @if(!auth()->user()->hasRole('Delivery User'))
                     <th>{{__('Quantity')}}</th>
+                    @endif
                     @can('order_price')
                     <th>{{__('Total')}}</th>
                     @endcan
                     @if(auth()->user()->hasRole('Accountant'))
                     <th>{{__('Approval')}}</th>
                     @endif
-                    @can('change-order-status')
-                    @endcan
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
                     <tr>
-                        @can('make-payment','download-invoice')
+                        @if(auth()->user()->can('make-payment') || auth()->user()->can('download-invoice')|| auth()->user()->can('add-signature'))
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,8 +75,9 @@
                                     <li><a class="dropdown-item" onclick="return makePayment('{{$order->id}}');">Make
                                             Payment</a></li>
                                     @endcan
+                                    @can('add-signature')
                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Add Signature</a></li>
-
+                                    @endcan
                                     @if(auth()->user()->hasRole('Accountant') || auth()->user()->hasRole('Super Admin'))
                                     <li><a class="dropdown-item" href="{{ route('order.confirm-order', $order->id) }}">Confirm Order</a></li> 
                                     @endif
@@ -84,7 +87,7 @@
                                 </ul>
                             </div>
                         </td>
-                        @endcan
+                        @endif
                         <td><a href="{{ route('orders.show', $order->order_id) }}" style="color: red;">#{{
                                 $order->order_id }}</a></td>
                         @can('change-order-status')
@@ -134,7 +137,9 @@
                         @endcan
                         <td>{{ $order->order_date->format('d-m-Y') }}</td>
                         <td>-</td>
+                        @if(!auth()->user()->hasRole('Delivery User'))
                         <td>{{ getTotalQuantity($order->id) }}</td>
+                        @endif
                         @can('order_price')
                         <td>${{ number_format(getOrderTotalprice($order->id), 2, '.', ',') }}</td>
                         @endcan

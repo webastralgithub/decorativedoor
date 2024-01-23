@@ -60,6 +60,9 @@ class OrderController extends Controller
         } else if (auth()->user()->hasRole('Accountant')) {
             $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::PENDING_ORDER_CONFIRMATION])->latest()->get();
             $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
+        }  else if (auth()->user()->hasRole('Order Coordinator')) {
+            $orders = Order::Where('coordinator_user_id', Auth::user()->id)->latest()->get();
+            $order_statuses = '';
         } else {
             $orders = Order::latest()->get();
             $order_statuses = OrderStatus::all();
@@ -157,7 +160,8 @@ class OrderController extends Controller
 
         if ($orderDetails->order->details->count() == 1) {
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
-            if($deliverQuan == 0){
+            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
+            if($deliverQuan == 0 || $request->order_quantity == $finalorderquan){
                $orderDetails->order->update(['order_status' => $request->new_status]);
                $orderDetails->update(['order_status' => $request->new_status]); 
             }
@@ -166,7 +170,8 @@ class OrderController extends Controller
             //return response()->json(['success' => 'Order status updated successfully']);
         } else {
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
-            if($deliverQuan == 0){
+            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
+            if($deliverQuan == 0 || $request->order_quantity == $finalorderquan){
                $orderDetails->update(['order_status' => $request->new_status]); 
             }
             DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
