@@ -28,6 +28,7 @@ class Order extends Model
         'sales_person',
         'pay',
         'due',
+        'order_confirm',
     ];
 
     protected $casts = [

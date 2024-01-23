@@ -96,9 +96,11 @@
                                                 @endcan
                                                 @if (auth()->user()->hasRole('Accountant') ||
                                                         auth()->user()->hasRole('Super Admin'))
-                                                    <li><a class="dropdown-item"
-                                                            href="{{ route('order.confirm-order', $order->id) }}">Confirm
-                                                            Order</a></li>
+                                                    @if($order->order_confirm != 1)
+                                                        <li><a class="dropdown-item"
+                                                                href="{{ route('order.confirm-order', $order->id) }}">Confirm
+                                                                Order</a></li>
+                                                    @endif
                                                 @endif
 
                                                 <!-- <li><a class="dropdown-item" href="{{ route('order.downloadInvoice', $order) }}">Print</a></li> -->

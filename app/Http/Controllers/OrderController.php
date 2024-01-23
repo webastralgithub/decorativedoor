@@ -445,7 +445,7 @@ class OrderController extends Controller
     public function confirmOrder(Request $request, $orderId = null) {
         $order = Order::where('id', $orderId)->get();
         if (isset($order) && !empty($order)) {
-            Order::where('id', $orderId)->update(['order_status' => 4]);
+            Order::where('id', $orderId)->update(['order_status' => 4, 'order_confirm' => 1]);
 
             $itemId = $orderId;
             $orderDetails = OrderDetails::where('order_id', $itemId)->get();
