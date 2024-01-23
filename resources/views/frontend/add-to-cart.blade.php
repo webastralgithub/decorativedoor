@@ -102,8 +102,8 @@
         }
 
         .cart-top-bar-added .cart-top-bar-added-right a:first-child{
-            background: #dcc49d;
-            color: #000;
+            background: #434e6e;
+            color: #fff;
         }
 
         .cart-top-bar-added .cart-top-bar-added-right a{
@@ -172,8 +172,8 @@
                             </div> 
 
                             <div class="col-lg-6 cart-top-bar-added-right">
-                                <a href="#">Cart</a>
-                                <a href="{{ route('cart') }}" class="btn btn-success">Proceed to checkout ({{ $cart['quantity'] }} Item)</a>
+                                <!-- <a href="{{ route('cart') }}">Cart ({{ $cart['quantity'] }} Item)</a> -->
+                                <a href="{{ route('cart') }}" class="btn btn-success cart-btn">Cart ({{ $cart['quantity'] }} Item)</a>
                             </div>
                            </div> 
                         </div>

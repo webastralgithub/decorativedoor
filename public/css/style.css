@@ -2458,6 +2458,7 @@ body {
 
 .product-variants .input-tags .tag-container .tag {
     background-color: #004787;
+    font-size: 10px;
 }
 
 .product-variants .input-tags .tag-container .tag .tag-text {
