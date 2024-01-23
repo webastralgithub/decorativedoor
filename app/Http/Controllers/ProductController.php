@@ -185,7 +185,7 @@ class ProductController extends Controller
         // Update variants
     
         $this->updateVariants($request, $product->id);
-        
+         
         
        // $product->update($request->all());
         return redirect()->back()
