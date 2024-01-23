@@ -3861,6 +3861,10 @@ div#loader-container .spinner-border{
     background: #fff;
 }
 
+section.customer.spad form .nice-select.form-control{
+	font-size: 1rem !important;
+}
+
 .customer-message p{
 	font-size: 20px;
     font-weight: 700;

@@ -55,7 +55,7 @@
                                         <h4 class="stock" style="color: {{ $inStock ? 'green' : 'red' }}">
                                             {{ $inStock ? 'In' : 'Out of' }} Stock
                                         </h4>                            
-                                        <h5>${{$product->selling_price}}</h5>
+                                        <h5>${{number_format($product->selling_price, 2, '.', ',')}}</h5>
                                     </div>
                                 </a>
                                 <a href="#" id="share-with-email" data-id ="{{$product->id}}" data-toggle="modal" data-target="#exampleModal" onclick="return share_product('{{$product->id}}');">Share <i class="fa fa-share"></i></a> 
