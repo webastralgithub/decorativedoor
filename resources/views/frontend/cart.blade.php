@@ -38,7 +38,7 @@
                         @endif
                     </div>
                     <div class="col-sm-9">
-                        <h4 class="nomargin">{{ $details['name'] }}</h4>
+                        <h4 class="nomargin"><a href="{{ route('product', $details['slug']) }}" style="color: #000;">{{ $details['name'] }}</a></h4>
                         <span class="cart-price-btm">
                             <b>Type:</b>
                             <span>{{ $subVariant['name'] != '' ? $subVariant['name'] : '' }}
@@ -68,7 +68,8 @@
                 <div class="row">
                     <div class="col-sm-3 hidden-xs"><img src="{{ asset('frontend/img/product/details/product-details-1.jpg') }}" width="100" height="100" class="img-responsive" /></div>
                     <div class="col-sm-9">
-                        <h4 class="nomargin">{{ $details['name'] }}</h4>
+                        <h4 class="nomargin"><a href="{{ route('product', $details['slug']) }}" style="color: #000;">{{ $details['name'] }}</a></h4>
+                       
                         @if (isset($details['variant_data']))
                         @foreach ($details['variant_data'] as $variant)
                         <span class="cart-price-btm">
@@ -106,7 +107,7 @@
                         <img src="{{ asset('frontend/img/product/details/product-details-1.jpg') }}" width="100" height="100" class="img-responsive" />
                     </div>
                     <div class="col-sm-9">
-                        <h4 class="nomargin">{{ $details['name'] }}</h4>
+                        <h4 class="nomargin"><a href="{{ route('product', $details['slug']) }}" style="color: #000;">{{ $details['name'] }}</a></h4>
                     </div>
                 </div>
             </td>

@@ -88,6 +88,7 @@ class ShopController extends Controller
                 if (!isset($cart[$productId]))
                     $cart[$productId] = [
                         "name" => $product->title,
+                        "slug" => $product->slug,
                         "product_id" => $product->id,
                         "quantity" => !empty($request->quantity) ? $request->quantity : 1,
                         "price" => $product->selling_price,
@@ -119,6 +120,7 @@ class ShopController extends Controller
             } else {
                 $cart[$productId] = [
                     "name" => $product->title,
+                    "slug" => $product->slug,
                     "product_id" => $product->id,
                     "quantity" => !empty($request->quantity) ? $request->quantity : 1,
                     "price" => $product->selling_price,
@@ -140,6 +142,7 @@ class ShopController extends Controller
                 if (!isset($succescart[$productId]))
                     $succescart[$productId] = [
                         "name" => $product->title,
+                        "slug" => $product->slug,
                         "product_id" => $product->id,
                         "quantity" => !empty($request->quantity) ? $request->quantity : 1,
                         "price" => $product->selling_price,
@@ -172,6 +175,7 @@ class ShopController extends Controller
             } else {
                 $succescart[$productId] = [
                     "name" => $product->title,
+                    "slug" => $product->slug,
                     "product_id" => $product->id,
                     "quantity" => !empty($request->quantity) ? $request->quantity : 1,
                     "price" => $product->selling_price,
