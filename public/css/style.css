@@ -2761,3 +2761,14 @@ div#exampleModal .modal-content .modal-header button.close span {
     padding: 20px 30px;
     border-radius: 5px;
 }
+
+.nav-item.dropdown.drpdwn .dropdown-menu{
+    background: #fff !important;
+    margin-top: 10px !important;
+    min-width: 8.4rem;
+    right: -4px;
+}
+
+.nav-item.dropdown.drpdwn .dropdown-menu a{
+    text-align: center;
+}

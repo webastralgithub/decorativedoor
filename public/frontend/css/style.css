@@ -4233,3 +4233,8 @@ div#assignuser .table td {
     padding: 20px 30px;
     border-radius: 5px;
 }
+
+.varient-block-cn .nice-select.variants  ul.list{
+    height: 200px;
+    overflow: auto;
+}
