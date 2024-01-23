@@ -40,6 +40,7 @@ class PermissionSeeder extends Seeder
             'change-order-status',
             'make-payment',
             'add-signature',
+            'show-quantity-listing'
         ];
 
         // Looping and Inserting Array's Permissions into Permission Table

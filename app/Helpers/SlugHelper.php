@@ -199,6 +199,21 @@ if (!function_exists('generateProductSlug')) {
         }
     }
 
+    if (!function_exists('getlatestDeliverdQuantity')) {
+        function getlatestDeliverdQuantity($orderId = null)
+        {
+            $order =  DeliverQuantity::where('order_id', $orderId)->latest()->first();
+             if(!empty($order)){
+                $FinalTotal = $order->deliver_quantity;
+             }else{
+                $FinalTotal = 0;
+             }
+            
+            
+            return $FinalTotal;
+        }
+    }
+
     if (!function_exists('getTotalQuantity')) {
         function getTotalQuantity($orderId = null)
         {
