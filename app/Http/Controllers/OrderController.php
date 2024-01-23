@@ -157,7 +157,8 @@ class OrderController extends Controller
 
         if ($orderDetails->order->details->count() == 1) {
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
-            if($deliverQuan == 0){
+            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
+            if($deliverQuan == 0 || $request->order_quantity == $finalorderquan){
                $orderDetails->order->update(['order_status' => $request->new_status]);
                $orderDetails->update(['order_status' => $request->new_status]); 
             }
@@ -166,7 +167,8 @@ class OrderController extends Controller
             //return response()->json(['success' => 'Order status updated successfully']);
         } else {
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
-            if($deliverQuan == 0){
+            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
+            if($deliverQuan == 0 || $request->order_quantity == $finalorderquan){
                $orderDetails->update(['order_status' => $request->new_status]); 
             }
             DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
