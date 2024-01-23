@@ -44,11 +44,11 @@
                         @can('change-order-status')
                             <th>{{ __('Status') }}</th>
                         @endcan
-                        <th>{{ __('Order Coordinator') }}</th>
                         <th>{{ __('Customer Name') }}</th>
+                        <th>{{ __('Order Coordinator') }}</th>
                         @can('show-quantity-listing')
                             <th>{{ __('Ordered Quantity') }}</th>
-                            <th>{{ __('Production Ready Qty') }}</th>
+                            <th>{{ __('Production Ready Qty') }}</th> 
                             <th>{{ __('Backorder Quantity') }}</th>
                             <th>{{ __('Delivered Quantity') }}</th>
                             <th>{{ __('Pending Quantity') }}</th>
@@ -123,38 +123,21 @@
                                         @endforeach
                                     </td>
                                 @endcan
-                                <td> <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer"
-                                        @can('change_order_coordinator') onclick="return assignUser(this,'{{ $order->id }}','{{ $coordinators }}','order coordinator','{{ $order->user_id }}');" @endcan>{{ $order->coordinator->name ?? '...' }}</span>
-                                </td>
-
                                 <td>
                                     <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer"
                                         @can('change_sales_person') onclick="return assignUser(this,'{{ $order->id }}','{{ $sales_users }}','sales person','{{ $order->user_id }}');" @endcan>{{ $order->user->name ?? '...' }}</span>
                                 </td>
+                                <td> <span class="@if (!$order->user_id) dots-assigned @endif cursor-pointer"
+                                        @can('change_order_coordinator') onclick="return assignUser(this,'{{ $order->id }}','{{ $coordinators }}','order coordinator','{{ $order->user_id }}');" @endcan>{{ $order->coordinator->name ?? '...' }}</span>
+                                </td>                               
 
                                 @can('show-quantity-listing')
-                                    @php
-                                        $orderQuantity = 0;
-                                        $deliver_quantity = 0;
-                                    @endphp
-                                    @foreach ($order->details as $key => $items)
-                                        @php
-                                            $orderQuantity += $items->quantity;
-                                        @endphp
-                                    @endforeach
-                                    @foreach ($order->deliverorder as $key => $items)
-                                        @php
-                                            $deliver_quantity += $items->deliver_quantity;
-                                        @endphp
-                                    @endforeach
-                                    @php
-                                    $backlogqty = $orderQuantity - $deliver_quantity;
-                                    @endphp
-                                    <td>{{ $orderQuantity }}</td>
-                                    <td>{{ $deliver_quantity }}</td>
-                                    <td style="color:red;"><b>{{ $backlogqty }}</b></td>
-                                    <td>{{ getlatestDeliverdQuantity($order->id) }}</td>
-                                    <td>{{ $backlogqty - getlatestDeliverdQuantity($order->id)}}</td>
+                                  @php  $Quantities =  getOrderDeliveryQuantity($order->id); @endphp
+                                    <td>{{ $Quantities['order_quantity'] }}</td>
+                                    <td>{{ $Quantities['delivery_order'] }}</td>
+                                    <td style="color:red;"><b>{{ $Quantities['missingqty'] }}</b></td>
+                                    <td>{{ $Quantities['delivery_quantity'] }}</td>
+                                    <td>{{ $Quantities['pendingQuantity']}}</td>
                                 @endcan
 
                                 

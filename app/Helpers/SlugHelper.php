@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\DeliverQuantity;
 use App\Models\OrderDetails;
+use App\Models\DeliveryuserQuantity;
 use App\Models\Note;
 use Illuminate\Support\Str;
 
@@ -245,6 +246,38 @@ if (!function_exists('generateProductSlug')) {
                 }
             $FinalTotal = abs($total - $discount);
             return $FinalTotal;
+        }
+    }
+
+    if (!function_exists('getOrderDeliveryQuantity')) {
+        function getOrderDeliveryQuantity($orderId = null)
+        {
+
+            $order =  DeliveryuserQuantity::where('order_id', $orderId)->get();
+
+            
+            $order_quantity = 0;
+            $delivery_order = 0;
+            $delivery_quantity = 0;
+            $missingqty = 0;
+            if (!empty($order))
+                foreach ($order as $deliver) {
+                    $order_quantity += $deliver->order_quantity;
+                    $delivery_order += $deliver->order_quantity;
+                    $delivery_quantity += $deliver->delivery_quantity;
+                    $missingqty += $deliver->missingqty;
+                   
+                }
+            $pendingQuantity = abs($delivery_order - $delivery_quantity + $missingqty);
+
+            $data = array(
+                'order_quantity' => $order_quantity,
+                'delivery_order' => $delivery_order,
+                'missingqty' => $missingqty,
+                'delivery_quantity' => $delivery_quantity,                
+                'pendingQuantity' => $pendingQuantity,
+            );
+            return $data;
         }
     }
 }

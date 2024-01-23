@@ -55,7 +55,7 @@
             </div>
             <div class="col-5"></div>
             <div class="col-3">
-                <label for="order_date" class="form-label required">
+                <label for="order_date" class="form-label required float-end">
                     <strong>{{ __('Order Date') }}:</strong> {{ $order->order_date->format('d-m-Y') }}
                 </label>
 
@@ -131,7 +131,7 @@
                             !auth()->user()->can(['order-status-complete','order-status-dispatch']))&&
                             in_array($item->order_status,[\App\Models\OrderStatus::COMPLETE,\App\Models\OrderStatus::READY_TO_DELIVER,\App\Models\OrderStatus::DISPATCHED]));
                             @endphp
-                            <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id)}}')" @disabled($disabled)>
+                            <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id)}}', '{{ ($item->quantity -getDeliverQuantity($item->order_id, $item->id))}}')" @disabled($disabled)>
                                 @foreach($order_statuses as $status)
                                 @if (\App\Models\OrderStatus::COMPLETE == $status->id )
                                 <option @disabled(!in_array($status->id,$access_status)) value="{{$status->id}}"
@@ -266,13 +266,86 @@
                 </div>
             </div>
 
+            <!------------deleivered user popup ------------------------>
+
+            <div class="modal fade" id="deliveredModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Add Delivery Product Quantity') }}
+                            </h5>
+                            <button type="button" class="close" aria-label="Close" onclick="deliveredcloseModal()">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- <form id="delivery_Quantity" action="{{ route('order.per.product.delivery') }}" method="Post"> -->
+                            <!-- @csrf -->
+                            <div class="mb-3 row delivery-products">
+                                <input type="hidden" name="item_id" id="d-item_id" value="">
+                                <input type="hidden" name="order_id" id="d-order_id" value="{{$order->id}}">
+                                <input type="hidden" name="new_status" id="d-new_status" value="">
+                                <input type="hidden" name="orders_quantity" id="d-orders_quantity" value="">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="note" class="col-md-12 col-form-label text-md-end text-start">
+                                            {{ __('Order Quantity :') }} <span id="d-order_quantity"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="note" class="col-md-12 col-form-label text-md-end text-start">
+                                            {{ __('Delivered Quantity :') }} <span id="d-delivery_order">0</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="note" class="col-md-12 col-form-label text-md-end text-start">
+                                            {{ __('Backorder Quantity :') }} <span id="d-missing_item">0</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="note" class="col-md-12 col-form-label text-md-end text-start">
+                                            {{ __('To be Delivered Quantity :') }}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-12" style="line-height: 35px;">
+                                            <input type="number" name="delivery_quantity" id="d-delivery_quantity" class="form-control example-date-input" value="{{ old('delivery_quantity') }}" required min="0">
+                                            @error('delivery_quantity')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- </form> -->
+                            <div class="row ">
+                                <div class="col-md-12 errors">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer delivery-products-footer">
+                            <div class="row">
+                                <div class="col-md-12 mt-6">
+                                    <input type="button" class="btn btn-primary btn-sm" onclick="return deleiveryupdateOrderItemQuantity();" name="submit" value="Submit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>
 @endsection
 @section('scripts')
 <script>
-    function updateSpecificProductrStatus(itemId, selectElement, order_quantity = '0', deliver_quantity = '0') {
+    function updateSpecificProductrStatus(itemId, selectElement, order_quantity = '0', deliver_quantity = '0', backorder_quantity = '0') {
         var newStatus = selectElement.value;
         if (newStatus == 5) {
             jQuery('#exampleModal').modal('show');
@@ -281,7 +354,15 @@
             jQuery('#item_id').val(itemId);
             jQuery('#orders_quantity').val(order_quantity);
             jQuery('#new_status').val(newStatus);
-        } else {
+        } else if (newStatus == 6) {
+            jQuery('#deliveredModal').modal('show');
+            jQuery('#d-order_quantity').text(order_quantity);
+            jQuery('#d-delivery_order').text(deliver_quantity);
+            jQuery('#d-missing_item').text(backorder_quantity);
+            jQuery('#d-item_id').val(itemId);
+            jQuery('#d-orders_quantity').val(order_quantity);
+            jQuery('#d-new_status').val(newStatus);
+        }else {
             updateOrderItemStatus(itemId, newStatus);
         }
 
@@ -394,6 +475,78 @@
 
     }
 
+    function deleiveryupdateOrderItemQuantity(){
+        jQuery('.errors').html('');
+        let order_quantity = jQuery('#d-order_quantity').text(); // Ordered Qty
+        let delivery_order = jQuery('#d-delivery_order').text(); // Delivered Qty
+        let delivery_quantity = jQuery('#d-delivery_quantity').val(); // Entered Qty
+        let orderId = jQuery('#d-order_id').val();
+        let itemId = jQuery('#d-item_id').val();
+        let newStatus = jQuery('#d-new_status').val();
+        let missingqty = jQuery('#d-missing_item').text();
+
+        if (delivery_quantity <= 0) {
+            jQuery('.errors').append(`<span class="text-danger ">Delivery quantity is required!</span>`);
+            hideErrors();
+            return false;
+        }
+        console.log("order_quantity", delivery_quantity, (order_quantity - delivery_order));
+        if (delivery_quantity > (delivery_order)) {
+            jQuery('.errors').append(`<span class="text-danger ">Delivery quantity must be less then Ordered quantity</span>`);
+            hideErrors();
+            return false;
+        }
+        jQuery.ajax({
+            url: "{{ route('order.per.product.delivery') }}", // Replace with your actual route
+            type: 'POST',
+            data: {
+                orderId: orderId,
+                item_id: itemId,
+                new_status: newStatus,
+                order_quantity: order_quantity,
+                delivery_quantity: delivery_quantity,
+                delivery_order: delivery_order,
+                missingqty:missingqty,
+               
+                _token: '{{ csrf_token() }}' // Add CSRF token if needed
+            },
+            success: function(response) {
+                console.log("response", response);
+                // Handle success, if needed
+                if (response.success) {
+                    jQuery('#delivery_order').text((delivery_order + delivery_quantity));
+                    jQuery('#exampleModal').modal('hide');
+                    jQuery('#success-message').text('Order Status and Quantity updated!').show();
+                    setTimeout(() => {
+                        jQuery('#success-message').hide();
+                    }, 2000);
+                    location.reload();
+                } else if (response.error) {
+                    jQuery('.errors').append(`<span class="text-danger ">${response.error}</span>`);
+                    hideErrors();
+                } else {
+                    errorCheck = true;
+                    // Iterate over the error messages
+                    for (const field in response.errors) {
+                        if (Object.hasOwnProperty.call(response.errors, field)) {
+                            const errorMessages = response.errors[field];
+                            // Print each error message
+                            errorMessages.forEach(errorMessage => {
+                                console.error(`${field}: ${errorMessage}`);
+                                jQuery('.errors').append(`<span class="text-danger ">${errorMessage}</span>`);
+                            });
+                        }
+                    }
+                    hideErrors();
+                }
+            },
+            error: function(error) {
+                // Handle error, if needed
+                console.error('Error updating order status', error);
+            }
+        });
+    }
+
     function hideErrors() {
         setTimeout(() => {
             jQuery('.errors span.text-danger').fadeOut('slow', function() {
@@ -402,23 +555,18 @@
         }, 5000);
     }
 
-    // function updateSpecificProductrStatus(itemId, selectElement, order_quantity = '0', deliver_quantity = '0') {
-    //     var newStatus = selectElement.value;
-    //     if (newStatus == 5) {
-    //         jQuery('#exampleModal').modal('show');
-    //         jQuery('#order_quantity').text(order_quantity);
-    //         jQuery('#delivery_order').text(deliver_quantity);
-    //         jQuery('#item_id').val(itemId);
-    //         jQuery('#orders_quantity').val(order_quantity);
-    //         jQuery('#new_status').val(newStatus);
-    //     }
-    // }
-
     function closeModal() {
         var modal = document.getElementById('exampleModal');
         if (modal) {
             $(modal).modal('hide');
         }
     }
+    function deliveredcloseModal() {
+        var modal = document.getElementById('deliveredModal');
+        if (modal) {
+            $(modal).modal('hide');
+        }
+    }
+    deliveredModal
 </script>
 @endsection
