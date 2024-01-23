@@ -47,7 +47,7 @@ class LoginController extends Controller
         $user = Auth::user();
         // Get the roles associated with the user
         $roles = $user->getRoleNames();
-         
+        
         if ($roles[0] == 'Super Admin') {
             $redirecturl = '/admin/dashboard';
         } else if ($roles[0] == 'Delivery User') {
@@ -61,7 +61,6 @@ class LoginController extends Controller
         }else {
             $redirecturl = '/';
         }
-
         return $redirecturl;
 
     }
