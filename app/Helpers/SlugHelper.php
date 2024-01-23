@@ -279,7 +279,7 @@ if (!function_exists('generateProductSlug')) {
                     $missingqty += $deliver->missingqty;
                    
                 }
-            $pendingQuantity = abs($delivery_quantity + $missing_quantiy);
+            $pendingQuantity = abs($deliver_quantity - $delivery_quantity);
 
             $data = array(
                 'order_quantity' => $orderQuantity,
