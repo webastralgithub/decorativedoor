@@ -53,11 +53,13 @@
                             <th>{{ __('Delivered Quantity') }}</th>
                             <th>{{ __('Pending Quantity') }}</th>
                         @endcan
+                        @if (!auth()->user()->hasRole('Delivery User'))
                         <th>{{ __('Sales Person') }}</th>
                         {{-- <th>{{__('Accountant')}}</th> --}}
                         <th>{{ __('Assembler') }}</th>
                         <th>{{ __('Delivery By') }}</th>
                         {{-- <th>{{__('Address')}}</th> --}}
+                        @endif
                         <th>{{ __('Delivery Date') }}</th>
                         <th>{{ __('Ready Date') }}</th>
                         @if (!auth()->user()->hasRole('Delivery User'))
@@ -156,18 +158,12 @@
                                     <td>{{ $Quantities['pendingQuantity'] }}</td>
                                 @endcan
 
-
+                                @if (!auth()->user()->hasRole('Delivery User'))
                                 <td>
                                     <span
                                         class="@if (!$order->sales_person) dots-assigned @endif cursor-pointer">{{ getUserInfo($order->sales_person)['name'] ?? '...' }}</span>
                                 </td>
-
-                                {{-- <td >
-                            <span class="@if (!$order->accountant) dots-assigned @endif cursor-pointer"
-                                @can('change_accountant_user')
-                                onclick="return assignUser(this, '{{$order->id}}','{{$accountant_users}}','accountant','{{$order->accountant_user_id}}');"
-                        @endcan>{{$order->accountant->name ?? "..."}}</span>
-                        </td> --}}
+                              
                                 <td>
                                     <span class="@if (!$order->assemble) dots-assigned @endif cursor-pointer"
                                         @can('change_assembler_user') onclick="return assignUser(this, '{{ $order->id }}','{{ $assembler_users }}','assembler','{{ $order->assembler_user_id }}');" @endcan>{{ $order->assemble->name ?? '...' }}</span>
@@ -176,18 +172,8 @@
                                     <span class="@if (!$order->delivery) dots-assigned @endif cursor-pointer"
                                         @can('change_delivery_user') onclick="return assignUser(this, '{{ $order->id }}','{{ $delivery_users }}','delivery','{{ $order->delivery_user_id }}');" @endcan>{{ $order->delivery->name ?? '...' }}</span>
                                 </td>
-                                @can('change-order-status')
-                                    @php
-                                        //$address = getUserAddress($order->user_id);
-                                    @endphp
-                                    {{-- <td class="@if ($address == '') center @endif">
-                            @if ($address != '')
-                            <span class="">{{$address}}</span>
-                        @else
-                        <span class="dots-assigned cursor-pointer" @can('change_user_address') onclick="return addUserAddress('{{$order->user_id}}');" @endcan>{{"..."}}</span>
-                        @endif
-                        </td> --}}
-                                @endcan
+                                @endif
+                               
                                 <td>{{ $order->order_date->format('d-m-Y') }}</td>
                                 <td>-</td>
                                 @if (!auth()->user()->hasRole('Delivery User'))
