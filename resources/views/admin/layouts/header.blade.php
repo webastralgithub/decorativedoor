@@ -31,7 +31,7 @@
 
         <div class="navbar-nav align-items-center ms-auto">
 
-            <div class="nav-item dropdown">
+            <div class="nav-item dropdown drpdwn">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                     <img class="rounded-circle me-lg-2" src="{{ asset('img/user.svg') }}" alt=""
                         style="width: 40px; height: 40px;">
