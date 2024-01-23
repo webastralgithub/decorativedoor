@@ -57,9 +57,10 @@
                         <th>{{ __('Sales Person') }}</th>
                         {{-- <th>{{__('Accountant')}}</th> --}}
                         <th>{{ __('Assembler') }}</th>
+                        @endif
                         <th>{{ __('Delivery By') }}</th>
                         {{-- <th>{{__('Address')}}</th> --}}
-                        @endif
+                        
                         <th>{{ __('Delivery Date') }}</th>
                         <th>{{ __('Ready Date') }}</th>
                         @if (!auth()->user()->hasRole('Delivery User'))
@@ -168,11 +169,12 @@
                                     <span class="@if (!$order->assemble) dots-assigned @endif cursor-pointer"
                                         @can('change_assembler_user') onclick="return assignUser(this, '{{ $order->id }}','{{ $assembler_users }}','assembler','{{ $order->assembler_user_id }}');" @endcan>{{ $order->assemble->name ?? '...' }}</span>
                                 </td>
+                                @endif
                                 <td>
                                     <span class="@if (!$order->delivery) dots-assigned @endif cursor-pointer"
                                         @can('change_delivery_user') onclick="return assignUser(this, '{{ $order->id }}','{{ $delivery_users }}','delivery','{{ $order->delivery_user_id }}');" @endcan>{{ $order->delivery->name ?? '...' }}</span>
                                 </td>
-                                @endif
+                               
                                
                                 <td>{{ $order->order_date->format('d-m-Y') }}</td>
                                 <td>-</td>
