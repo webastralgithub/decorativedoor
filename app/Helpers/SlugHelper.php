@@ -294,4 +294,21 @@ if (!function_exists('generateProductSlug')) {
             return $data;
         }
     }
+
+
+    if (!function_exists('getOrderDetailsPendingQuantity')) {
+        function getOrderDetailsPendingQuantity($orderId = null, $itemId = null)
+        {                     
+            $pendingqty =  DeliveryuserQuantity::where('order_id', $orderId)->where('item_id', $itemId)->latest()->first();
+           
+            $deliverdQuantity = $pendingqty->delivery_quantity;
+            $pendingQuantity = $pendingqty->missingqty;
+
+            $data = array(
+                'deliverdQuantity' => $deliverdQuantity,
+                'pendingQuantity' => $pendingQuantity
+            );
+            return $data;
+        }
+    }
 }

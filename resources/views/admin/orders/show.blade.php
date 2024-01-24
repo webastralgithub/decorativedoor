@@ -95,6 +95,10 @@
                             <th scope="col" class="align-middle text-center">Quantity</th>
                             <th scope="col" class="align-middle text-center">Production Ready Qty</th>
                             <th scope="col" class="align-middle text-center">Backorder Qty</th>
+                            @can('delivery-order-status')
+                            <th scope="col" class="align-middle text-center">Delivered Qty</th>
+                            <th scope="col" class="align-middle text-center">Pending Qty</th>
+                            @endcan
                             @can('change-order-status') 
                             <th scope="col" class="align-middle text-center">Order Status</th>
                             @endcan
@@ -146,6 +150,17 @@
                             <td class="align-middle ">
                                 {{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}
                             </td>
+                            @can('delivery-order-status')
+                            @php
+                            $deliverduserdata = getOrderDetailsPendingQuantity($item->order_id, $item->id);
+                            @endphp
+                            <td class="align-middle ">
+                                {{ $deliverduserdata['deliverdQuantity'] }}
+                            </td>
+                            <td class="align-middle ">
+                                {{ $deliverduserdata['pendingQuantity'] }}
+                            </td>
+                            @endcan
                             
                             @can('change-order-status')
                             <td class="align-middle ">
@@ -665,6 +680,7 @@
             var modal = document.getElementById('exampleModal');
             if (modal) {
                 $(modal).modal('hide');
+                
             }
         }
 
