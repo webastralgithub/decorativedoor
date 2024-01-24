@@ -99,7 +99,8 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
     Route::get('/assembler-order', [OrderController::class, 'assembler_order'])->name('order-assembler');
     Route::Post('/add-assembler-note', [OrderController::class, 'add_assembler_note'])->name('order.add_assembler_note');
     Route::Post('/get-existing-notes', [OrderController::class, 'get_existing_notes'])->name('order.get_existing_notes');
-
+    Route::get('/send-invoice/{id}', [OrderController::class, 'send_invoice'])->name('order.send_invoice');
+    
     Route::get('/deliverie', [DeliveriesController::class, 'index'])->name('deliveries');
     Route::get('/deliveries/track', [DeliveriesController::class, 'orderTrack'])->name('order.track');
     Route::post('deliveries/track/order', [DeliveriesController::class, 'deliveryTrackOrder'])->name('delivery.track.order');

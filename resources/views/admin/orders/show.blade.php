@@ -55,24 +55,27 @@
             </div>
         </div>
 
-        <div class="mt-2">
-            <div class="row row-cards mb-3 order-table-topb">
-                <div class="col-4">
-                    <label for="customer" class="form-label required">
-                        <strong>{{ __('Customer') }}:</strong> {{ @$order->user->name }}
-                    </label>
-                </div>
-                <div class="col-2"></div>
-                <div class="col-3">
-                    @can('add-signature')
-                        <a href="{{ route('orders.delivery_user', $order->id) }}" class="btn btn-primary float-end">Take
-                            Signature</a>
-                    @endcan
-                </div>
-                <div class="col-3">
-                    <label for="order_date" class="form-label required float-end">
-                        <strong>{{ __('Order Date') }}:</strong> {{ $order->order_date->format('d-m-Y') }}
-                    </label>
+    <div class="mt-2">
+        <div class="row row-cards mb-3 order-table-topb">
+            <div class="col-4">
+                <label for="customer" class="form-label required">
+                    <strong>{{ __('Customer') }}:</strong> {{ @$order->user->name }}
+                </label>
+            </div>
+            <div class="col-2">
+            <a class="btn btn-primary" href="{{ route('order.confirm-order', $order->id) }}">Confirm
+                Order</a>
+            </div>
+            <div class="col-3">
+                @can('add-signature')
+                <a href="{{ route('orders.delivery_user', $order->id) }}" class="btn btn-primary  float-end">Take
+                    Signature</a>
+                @endcan
+            </div>
+            <div class="col-3">
+                <label for="order_date" class="form-label required float-end">
+                    <strong>{{ __('Order Date') }}:</strong> {{ $order->order_date->format('d-m-Y') }}
+                </label>
 
                 </div>
 
