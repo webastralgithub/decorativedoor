@@ -50,12 +50,8 @@ class CheckoutController extends Controller
                 'sales_person' => (Auth::check()) ? Auth::user()->id : 0,
                 'pay' => 0,
                 'due' => 0,
-                "door_type" => $details['doortype'],
-                "door_jamb" => $details['doorjamb'],
-                "door_location" => $details['doorlocation'],
-                "door_left" => $details['doorleft'],
-                "door_right" => $details['doorright'],
-            ];
+                
+            ]; 
           
             
             $order = Order::create($productsArr);
@@ -78,6 +74,11 @@ class CheckoutController extends Controller
                                 'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['quantity'] * $selectedVariant['discount_price'] : 0,
                                 'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
                                 'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
+                                "door_type" => $product['doortype'],
+                                "door_jamb" => $product['doorjamb'],
+                                "door_location" => $product['doorlocation'],
+                                "door_left" => $product['doorleft'],
+                                "door_right" => $product['doorright'],
                             ]);
                         }
                         
@@ -92,6 +93,11 @@ class CheckoutController extends Controller
                             'discount' => (!empty($product['discount_price'])) ? $product['discount_price'] * $product['quantity'] : 0,
                             'total' => (!empty($selectedVariant)) ? ($selectedVariant['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
                             'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
+                            "door_type" => $product['doortype'],
+                                "door_jamb" => $product['doorjamb'],
+                                "door_location" => $product['doorlocation'],
+                                "door_left" => $product['doorleft'],
+                                "door_right" => $product['doorright'],
                         ]);
                     }
 

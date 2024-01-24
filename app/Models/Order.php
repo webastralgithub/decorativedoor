@@ -29,11 +29,7 @@ class Order extends Model
         'pay',
         'due',
         'order_confirm',
-        "door_type",
-                "door_jamb",
-                "door_location",
-                "door_left",
-                "door_right",
+        
     ];
 
     protected $casts = [
