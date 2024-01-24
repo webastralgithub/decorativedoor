@@ -96,9 +96,11 @@
                             @can('change-order-status')
                             <th scope="col" class="align-middle text-center">Order Status</th>
                             @endcan
+                            @if(!auth()->user()->hasRole('Super Admin'))
                             @can('delivery-order-status')
                             <th scope="col" class="align-middle text-center">Order Status</th>
                             @endcan
+                            @endif
                             @can('order_price')
                             <th scope="col" class="align-middle text-center">Price</th>
                             <th scope="col" class="align-middle text-center">Total</th>
