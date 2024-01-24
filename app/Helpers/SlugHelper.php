@@ -294,6 +294,60 @@ if (!function_exists('generateProductSlug')) {
             return $data;
         }
     }
+
+
+    if (!function_exists('getOrderDetailsPendingQuantity')) {
+        function getOrderDetailsPendingQuantity($orderId = null, $itemId = null)
+        {                     
+            $pendingqty =  DeliveryuserQuantity::where('order_id', $orderId)->where('item_id', $itemId)->latest()->first();
+           
+            if(!empty($pendingqty)){
+                $deliverdQuantity = ($pendingqty->delivery_quantity) ? $pendingqty->delivery_quantity : 0;
+                $pendingQuantity = ($pendingqty->missingqty) ? $pendingqty->missingqty : 0;
+    
+                $data = array(
+                    'deliverdQuantity' => $deliverdQuantity,
+                    'pendingQuantity' => $pendingQuantity
+                );
+            }else{
+                $data = array(
+                    'deliverdQuantity' => 0,
+                    'pendingQuantity' => 0
+                );
+            }
+            
+            return $data;
+        }
+    }
+
+    if (!function_exists('mangePendingQuantity')) {
+        function mangePendingQuantity($orderId = null, $itemId = null)
+        {                     
+            $pendingqty =  DeliveryuserQuantity::where('order_id', $orderId)->where('item_id', $itemId)->latest()->get();
+           
+            if(!empty($pendingqty)){
+                $deliverdQuantity = 0;
+                $pendingQuantity = 0;
+                foreach($pendingqty as $qty){
+                    $deliverdQuantity += ($qty->delivery_quantity) ? $qty->delivery_quantity : 0;
+                    $pendingQuantity = ($qty->missingqty) ? $qty->missingqty : 0;
+                }
+                
+    
+                $data = array(
+                    'deliverdQuantity' => $deliverdQuantity,
+                    'pendingQuantity' => $pendingQuantity
+                );
+            }else{
+                $data = array(
+                    'deliverdQuantity' => 0,
+                    'pendingQuantity' => 0
+                );
+            }
+            
+            return $data;
+        }
+    }
 }
 
 if (!function_exists('getInvoiceDeliveryQuantity')) {

@@ -43,5 +43,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserCompany::class);
     }
-    
+
+    public function isAdmin()
+    {
+        return $this->hasRole('Super Admin') || $this->hasRole('Admin') || $this->hasPermissionTo('admin-access');
+    }
 }

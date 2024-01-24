@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 Auth::routes();
-Route::middleware(['auth', 'isAdminWebAccess'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('/shop', [ShopController::class, 'index'])->name('shop');
@@ -61,7 +61,7 @@ Route::middleware(['auth', 'isAdminWebAccess'])->group(function () {
 
 Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function () {
     //dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resources([
