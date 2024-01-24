@@ -34,11 +34,16 @@ class ProductController extends Controller
      */
     public function index(Request $request): View
     {
-        $products = Product::when(isset($request->q), function ($query) use ($request) {
+        $products = Product::leftJoin('category_product', 'products.id', '=', 'category_product.product_id')
+        ->leftJoin('categories', 'category_product.category_id', '=', 'categories.id')
+        ->when(isset($request->q), function ($query) use ($request) {
+            $query->whereRaw("(products.title LIKE '%" . $request->q . "%')");
+        })
+        ->select('products.*', 'categories.name as category_name')
+        ->latest()
+        ->paginate(env('RECORD_PER_PAGE', 50));
 
-            $query->whereRaw("(title LIKE '%" . $request->q . "%')");
-        })->latest()->paginate(env('RECORD_PER_PAGE', 50));
-        return view('admin.products.index', compact('products'));
+    return view('admin.products.index', compact('products'));
 
     }
 
