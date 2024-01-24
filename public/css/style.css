@@ -2955,3 +2955,615 @@ body {
   .panel-title {
     color: inherit !important;
 }
+.modal.fade.show {
+    opacity: 1 !important;
+}
+
+.modal.fade.show .modal-dialog {
+    margin-top: 10% !important;
+}
+
+
+
+@media only screen and (max-width: 8000px) and (min-width: 6701px) {
+    body {
+        padding: 40px 170px;
+    }
+    .page-header-tp h3 {
+        font-size: 94px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .content-body table tr th {
+        font-size: 90px;
+        padding: 24px 40px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 94px;
+    }
+    .rounded-circle {
+        width: 170px !important;
+        height: 170px !important;
+    }
+    div#orderAssembler_length label {
+        font-size: 90px;
+    }
+    /* .content-body table tbody tr td {
+        
+    } */
+    table#orderAssembler tbody tr td {
+        padding: 30px 50px !important;
+        font-size: 90px;
+    }
+    div#orderAssembler_filter label {
+        font-size: 90px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_info {
+        font-size: 90px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 90px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 90px;
+    }
+    .content-body table {
+        border-radius: 40px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+} 
+
+@media only screen and (max-width: 6700px) and (min-width: 5901px) {
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 170px !important;
+        height: 170px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 94px;
+    }
+    .page-header-tp h3 {
+        font-size: 94px;
+    }
+    div#orderAssembler_length label {
+        font-size: 80px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_length label {
+        font-size: 80px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 80px;
+        padding: 24px 40px !important;
+    }
+    div#orderAssembler_filter label {
+        font-size: 80px;
+        margin-bottom: 30px;
+    }
+    table#orderAssembler tbody tr td {
+        font-size: 76px;
+        padding: 30px 50px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 76px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 76px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 76px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+    .content-body table {
+        border-radius: 40px;
+    }
+}
+
+@media only screen and (max-width: 5900px) and (min-width: 5001px) {
+    .content-body table {
+        border-radius: 40px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 170px !important;
+        height: 170px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 84px;
+    }
+    .page-header-tp h3 {
+        font-size: 84px;
+    }
+    div#orderAssembler_length label {
+        font-size: 80px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_length label {
+        font-size: 80px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 64px;
+        padding: 24px 40px !important;
+    }
+    div#orderAssembler_filter label {
+        font-size: 80px;
+        margin-bottom: 30px;
+    }
+    table#orderAssembler tbody tr td {
+        font-size: 72px;
+        padding: 25px 40px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 76px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 76px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 76px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-width: 5000px) and (min-width: 4501px) {
+    .content-body table {
+        border-radius: 40px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 170px !important;
+        height: 170px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 74px;
+    }
+    .page-header-tp h3 {
+        font-size: 74px;
+    }
+    div#orderAssembler_length label {
+        font-size: 80px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_length label {
+        font-size: 70px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 56px;
+        padding: 24px 40px !important;
+    }
+    div#orderAssembler_filter label {
+        font-size: 70px;
+        margin-bottom: 30px;
+    }
+    table#orderAssembler tbody tr td {
+        font-size: 64px;
+        padding: 25px 40px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 68px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 68px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 68px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+    
+}
+
+@media only screen and (max-width: 4500px) and (min-width: 4001px) {
+    .content-body table {
+        border-radius: 40px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 120px !important;
+        height: 120px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 64px;
+    }
+    .page-header-tp h3 {
+        font-size: 64px;
+    }
+    div#orderAssembler_length label {
+        font-size: 60px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_length label {
+        font-size: 70px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 50px;
+        padding: 24px 40px !important;
+    }
+    div#orderAssembler_filter label {
+        font-size: 70px;
+        margin-bottom: 30px;
+    }
+    table#orderAssembler tbody tr td {
+        font-size: 54px;
+        padding: 25px 40px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 58px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 58px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 58px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-width: 4000px) and (min-width: 3501px) {
+    .content-body table {
+        border-radius: 40px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 120px !important;
+        height: 120px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 60px;
+    }
+    .page-header-tp h3 {
+        font-size: 60px;
+    }
+    div#orderAssembler_length label {
+        font-size: 56px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_length label {
+        font-size: 56px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 42px;
+        padding: 24px 40px !important;
+    }
+    div#orderAssembler_filter label {
+        font-size: 60px;
+        margin-bottom: 30px;
+    }
+    table#orderAssembler tbody tr td {
+        font-size: 48px;
+        padding: 25px 40px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 56px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 56px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 56px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-width: 3500px) and (min-width: 3001px) {
+    .content-body table {
+        border-radius: 40px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 120px !important;
+        height: 120px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 56px;
+    }
+    .page-header-tp h3 {
+        font-size: 56px;
+    }
+    div#orderAssembler_length label {
+        font-size: 48px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_filter label {
+        font-size: 48px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 34px;
+        padding: 24px 40px !important;
+    }
+   
+    table#orderAssembler tbody tr td {
+        font-size: 40px;
+        padding: 18px 30px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 48px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 48px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 48px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-width: 3000px) and (min-width: 2501px) {
+    .content-body table {
+        border-radius: 30px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 90px !important;
+        height: 90px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 48px;
+    }
+    .page-header-tp h3 {
+        font-size: 48px;
+    }
+    div#orderAssembler_length label {
+        font-size: 40px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_filter label {
+        font-size: 40px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 27px;
+        padding: 24px 40px !important;
+    }
+   
+    table#orderAssembler tbody tr td {
+        font-size: 32px;
+        padding: 18px 30px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 40px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 40px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 40px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-width: 2500px) and (min-width: 2001px) {
+    .content-body table {
+        border-radius: 20px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 40px;
+    }
+    .page-header-tp h3 {
+        font-size: 40px;
+    }
+    div#orderAssembler_length label {
+        font-size: 34px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_filter label {
+        font-size: 34px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 22px;
+        padding: 14px 20px !important;
+    }
+   
+    table#orderAssembler tbody tr td {
+        font-size: 24px;
+        padding: 14px 20px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 28px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 28px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 28px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-width: 2000px) and (min-width: 1801px) {
+    .content-body table {
+        border-radius: 20px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 34px;
+    }
+    .page-header-tp h3 {
+        font-size: 34px;
+    }
+    div#orderAssembler_length label {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_filter label {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 20px;
+        padding: 14px 20px !important;
+    }
+   
+    table#orderAssembler tbody tr td {
+        font-size: 22px;
+        padding: 14px 20px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 28px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 28px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 28px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+}
+
+
+@media only screen and (max-width: 1800px) and (min-width: 1601px) {
+    .content-body table {
+        border-radius: 20px;
+    }
+    div.drpdwn a.dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rounded-circle {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    .nav-item.dropdown span {
+        font-size: 30px;
+    }
+    .page-header-tp h3 {
+        font-size: 30px;
+    }
+    div#orderAssembler_length label {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+    div#orderAssembler_filter label {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+    .content-body table tr th {
+        font-size: 18px;
+        padding: 14px 20px !important;
+    }
+   
+    table#orderAssembler tbody tr td {
+        font-size: 20px;
+        padding: 10px 20px !important;
+    }
+    div#orderAssembler_info {
+        font-size: 24px;
+    }
+    a#orderAssembler_previous, a#orderAssembler_next {
+        font-size: 24px;
+    }
+    div#orderAssembler_paginate span a.paginate_button.current {
+        font-size: 24px;
+    }
+    div#orderAssembler_paginate {
+        margin-top: 10px;
+    }
+}
+
+
+/* 
+@media only screen and (max-width: 2300px) and (min-width: 2001px) {
+    .rounded-circle {
+        width: 170px !important;
+        height: 170px !important;
+    }
+
+    .nav-item.dropdown span {
+        font-size: 94px;
+    }
+
+    body {
+        padding: 10px 30px;
+    }
+    .page-header-tp h3 {
+        font-size: 24px;
+    }
+    .content-body table tr th {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 2000px) and (min-width: 1701px) {
+    .page-header-tp h3 {
+        font-size: 20px;
+    }
+    .content-body table tr th {
+        font-size: 20px;
+    }
+} */
