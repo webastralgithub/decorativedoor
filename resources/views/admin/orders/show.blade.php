@@ -93,7 +93,9 @@
                             <th scope="col" class="align-middle text-center">Photo</th>
                             <th scope="col" class="align-middle text-center">Product Name</th>
                             <th scope="col" class="align-middle text-center">Quantity</th>
-                            @can('change-order-status')
+                            <th scope="col" class="align-middle text-center">Delivered Qty</th>
+                            <th scope="col" class="align-middle text-center">Backorder Qty</th>
+                            @can('change-order-status') 
                             <th scope="col" class="align-middle text-center">Order Status</th>
                             @endcan
                             @if(!auth()->user()->hasRole('Super Admin'))
@@ -137,6 +139,14 @@
                             <td class="align-middle ">
                                 {{ $item->quantity }}
                             </td>
+                            <td class="align-middle ">
+                                {{ getDeliverQuantity($item->order_id, $item->id) }}
+                            </td>
+
+                            <td class="align-middle ">
+                                {{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}
+                            </td>
+                            
                             @can('change-order-status')
                             <td class="align-middle ">
                                 @php
@@ -208,6 +218,7 @@
                                 </select>
                             </td>
                             @endcan
+                            @if(!auth()->user()->hasRole('Super Admin'))
                             @can('delivery-order-status')
                             <td>
                                 <button class="btn btn-primary btn-sm"
@@ -215,6 +226,7 @@
                                     to delivery</button>
                             </td>
                             @endcan
+                            @endif
                             @can('order_price')
                             <td class="align-middle ">
                                 ${{ number_format($item->unitcost, 2, '.', ',') }}
