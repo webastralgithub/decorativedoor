@@ -661,7 +661,7 @@
                                 }
                             }, 2000);
                         }
-                    },
+                    },  
                     error: function(error) {
                         // Handle error, if needed
                         console.error('Error updating order status', error);
