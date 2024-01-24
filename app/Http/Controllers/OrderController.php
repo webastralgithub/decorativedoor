@@ -46,25 +46,32 @@ class OrderController extends Controller
                     });
                 })
                  ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
+                 ->where('order_confirm', 1)
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
+
         } else if (auth()->user()->hasRole('Delivery User')) {
+
             $orders = Order::with(['deliverorder', 'deliveruserorder'])->whereHas('details', function ($query) {
                 $query->WhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION]);
-            })->whereHas('deliverorder', function ($query) {
-                $query->WhereIn('deliver_quantity', '>', 0);
+            })
+            ->whereHas('deliverorder', function ($query) {
+                $query->Where('deliver_quantity', '>', '0');
             })
                 ->where('delivery_user_id', Auth::user()->id)
                 ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION])
+                ->where('order_confirm', 1)
                 ->latest()
                 ->get();
+
+
             $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
         } else if (auth()->user()->hasRole('Accountant')) {
             $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::PENDING_ORDER_CONFIRMATION])->latest()->get();
             $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
         } else if (auth()->user()->hasRole('Order Coordinator')) {
-            $orders = Order::Where('coordinator_user_id', Auth::user()->id)->latest()->get();
+            $orders = Order::Where('coordinator_user_id', Auth::user()->id)->where('order_confirm', 1)->latest()->get();
             $order_statuses = '';
         } else {
             $orders = Order::latest()->get();
