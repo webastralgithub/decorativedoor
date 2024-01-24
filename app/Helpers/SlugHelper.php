@@ -264,6 +264,7 @@ if (!function_exists('generateProductSlug')) {
             foreach ($order->deliverorder as $key => $items){
                 $deliver_quantity += $items->deliver_quantity;
             }
+            
 
             $missing_quantiy = $orderQuantity - $deliver_quantity;
                                                
@@ -279,7 +280,9 @@ if (!function_exists('generateProductSlug')) {
                     $missingqty += $deliver->missingqty;
                    
                 }
-            $pendingQuantity = abs($deliver_quantity - $delivery_quantity);
+
+                //dd($deliver_quantity, $delivery_quantity);
+            $pendingQuantity = abs($deliver_quantity - $delivery_quantity + $missing_quantiy);
 
             $data = array(
                 'order_quantity' => $orderQuantity,

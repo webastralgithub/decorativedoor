@@ -51,7 +51,7 @@
             <td data-th="Quantity">
                 <input type="number" value="{{ (getProductAvailabityStock($details['product_id'] > $subVariant['quantity'])) ? getProductAvailabityStock($details['product_id']) : $subVariant['quantity'] }}" class="form-control quantity update-cart" />
             </td>
-            
+
             <td data-th="SubTotal">
                 ${{ number_format($subVariant['price'] * $subVariant['quantity'] - $subVariant['discount_price'] * $subVariant['quantity'], 2, '.', ',') }}
             </td>
@@ -69,7 +69,7 @@
                     <div class="col-sm-3 hidden-xs"><img src="{{ asset('frontend/img/product/details/product-details-1.jpg') }}" width="100" height="100" class="img-responsive" /></div>
                     <div class="col-sm-9">
                         <h4 class="nomargin"><a href="{{ route('product', $details['slug']) }}" style="color: #000;">{{ $details['name'] }}</a></h4>
-                       
+
                         @if (isset($details['variant_data']))
                         @foreach ($details['variant_data'] as $variant)
                         <span class="cart-price-btm">
@@ -115,7 +115,7 @@
             <td data-th="Quantity">
                 <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
             </td>
-            
+
             <td data-th="SubTotal">
                 ${{ number_format($details['price'] * $details['quantity'] - $details['discount_price'] * $details['quantity'], 2, '.', ',') }}
             </td>
@@ -128,6 +128,24 @@
         @endif
     </tbody>
     <tfoot>
+
+        @if(isset($_ENV['GST_HST_TAX']) || isset($_ENV['PST_RST_QST_TAX']))
+        <tr>
+            <td colspan="5" class="text-right">
+                <h5><strong>Total before Tax: ${{ number_format($total, 2, '.', ',') }}</strong></h5>
+
+                @php
+                $total = $total - env('GST_HST_TAX',11,94);
+                @endphp
+
+                <h5><strong>Estimated GST/HST: ${{ number_format(env('GST_HST_TAX'), 2, '.', ',') }}</strong></h5>
+                @php
+                $total = $total - env('PST_RST_QST_TAX',11,94);
+                @endphp
+                <h5><strong>Estimated PST/RST/QST: ${{ number_format(env('PST_RST_QST_TAX'), 2, '.', ',') }}</strong></h5>
+            </td>
+        </tr>
+        @endif
         <tr>
             <td colspan="5" class="text-right">
                 <h3><strong>Total ${{ number_format($total, 2, '.', ',') }}</strong></h3>
