@@ -200,7 +200,7 @@
                                 \App\Models\OrderStatus::READY_TO_DELIVER, \App\Models\OrderStatus::DISPATCHED]));
                                 @endphp
                                 <select class="form-select form-control-solid" id="order_status" name="order_status"
-                                    onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}')"
+                                    onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')"
                                     @disabled($disabled)>
                                     @foreach ($order_statuses as $status)
                                     @if (\App\Models\OrderStatus::COMPLETE == $status->id)
