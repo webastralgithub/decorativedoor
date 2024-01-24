@@ -2786,4 +2786,5 @@ div#exampleModal .modal-content .modal-header button.close span {
     width: 20% !important;
     margin: 0 0 0 20%;
     bottom: -36px;
+    z-index: 999;
 }
