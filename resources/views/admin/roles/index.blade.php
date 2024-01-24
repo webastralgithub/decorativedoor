@@ -3,7 +3,7 @@
 @section('content')
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
-        <h3>Manage Roles</h3>
+        <h3> Roles</h3>
         <div class="top-bntspg-hdr">
             @can('create-role')
             <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i>

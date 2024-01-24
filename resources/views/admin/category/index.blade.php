@@ -3,7 +3,7 @@
 @section('content')
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
-    <h3>Manage Categories</h3>
+    <h3>Categories</h3>
       <div class="top-bntspg-hdr">
         @can('create-category')
         <a href="{{ route('category.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New Category</a>

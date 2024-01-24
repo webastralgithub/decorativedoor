@@ -4,7 +4,7 @@
 
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
-        <h3>Manage Users</h3>
+        <h3> Users</h3>
         <div class="top-bntspg-hdr">
             @can('create-user')
             <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm my-2"><i class="bi bi-plus-circle"></i>
@@ -12,7 +12,7 @@
             @endcan
             @can('create-permission')
             <a href="{{ route('permissions.index') }}" class="btn btn-primary btn-sm my-2"><i
-                    class="bi bi-plus-circle"></i> Manage Permissions</a>
+                    class="bi bi-plus-circle"></i>  Permissions</a>
             @endcan
         </div>
     </div>

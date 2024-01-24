@@ -11,7 +11,7 @@
 
     <div class="mx-4 content-p-mobile">
         <div class="page-header-tp">
-            <h3>Manage Orders</h3>
+            <h3>Orders</h3>
 
             <div class="top-bntspg-hdr">
                 @can('create-order')

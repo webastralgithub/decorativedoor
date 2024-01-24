@@ -4,7 +4,7 @@
 
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
-        <h3>Manage Permissions</h3>
+        <h3>Permissions</h3>
 
         <div class="top-bntspg-hdr">
         @can('create-user')
