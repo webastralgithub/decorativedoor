@@ -20,7 +20,7 @@
     
 </style>
 
-<div class="mx-4 content-p-mobile">
+<div class="mx-4 content-p-mobile assembler-page">
     <div class="page-header-tp">
         <h3>Orders</h3>
 
