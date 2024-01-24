@@ -4,12 +4,13 @@
 
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
-        <h4>Add Signature</h4>
+        <h4>Take Signature</h4>
 
         <div class="top-bntspg-hdr">
             <a href="{{ route('orders.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
             <!-- <a href="javascript:window.print()" class="btn btn-primary text-capitalize border0" data-mdb-ripple-color="dark" onclick="hidePrintContent()"><i class="fas fa-print text-primary"></i> Download</a> -->
-            <a href="{{ route('order.downloadInvoice', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm"> Download</a>
+            <!-- <a href="{{ route('order.downloadInvoice', ['order_id' => $order->id]) }}" class="btn btn-primary btn-sm"> Download</a> -->
+            <a href="{{ route('order.send_invoice', ['id' => $order->id]) }}" class="btn btn-primary btn-sm">Send Invoice</a>
         </div>
     </div>
     @if(\Session::has('error'))
@@ -51,7 +52,7 @@
                 <div class="col-lg-12">
                     <div class="mt-4">
                         <div class="card-body delivery-user-imguploads">
-                            <input type="hidden" name="order_id" value="{{$order->id}}">
+                            <input type="hidden" name="order_id" value="{{$order->id}}">     
                             <label class="col-md-4 col-form-label text-md-end text-start">Images*</label>
                             <div class="mt-1 text-center">
                                 <div class="images-preview-div"> </div>

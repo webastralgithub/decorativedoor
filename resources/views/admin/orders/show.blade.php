@@ -62,10 +62,13 @@
                     <strong>{{ __('Customer') }}:</strong> {{ @$order->user->name }}
                 </label>
             </div>
-            <div class="col-2"></div>
+            <div class="col-2">
+            <a class="btn btn-primary" href="{{ route('order.confirm-order', $order->id) }}">Confirm
+                Order</a>
+            </div>
             <div class="col-3">
                 @can('add-signature')
-                <a href="{{ route('orders.delivery_user', $order->id) }}" class="btn btn-primary float-end">Take
+                <a href="{{ route('orders.delivery_user', $order->id) }}" class="btn btn-primary  float-end">Take
                     Signature</a>
                 @endcan
             </div>

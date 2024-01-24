@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Barryvdh\DomPDF\Facade\Pdf;
-
 class OrderController extends Controller
 {
 
@@ -507,5 +506,17 @@ class OrderController extends Controller
         } else {
             return back()->with(['success' => 'Order status has been not Confirmed!']);
         }
+    }
+    public function send_invoice($id)
+    {
+        $order = Order::leftJoin('user_addresses', 'orders.user_id', '=', 'user_addresses.user_id')
+        ->leftJoin('users', 'orders.user_id', '=', 'users.id') 
+        ->where('orders.id', $id)
+        ->select('orders.*', 'user_addresses.*', 'users.*')
+        ->first();
+        $signature = DeliveryUser::where('order_id', $id)->first();      
+
+        $orderDetails = Order::with('details')->find($id);
+        return view('admin.orders.send-invoice',compact('order','signature','orderDetails'));
     }
 }
