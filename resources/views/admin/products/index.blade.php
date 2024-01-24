@@ -24,12 +24,23 @@
     @endif
 
     <div class="content-body">
+        <div class="input-group category-product-filter">
+            <select class="form-select" id="categoryFilter">
+                <option value="" selected disabled>Select Category</option>
+                @foreach($categories as $category)
+                <option value="{{ $category->name }}" {{ request('category')==$category->name ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+                @endforeach
+            </select>
+        </div>
         <div class="table-order">
             <table class="table table-bordered table-striped" id="products">
                 <thead>
                     <tr>
                         <th scope="col">Action</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Category</th>
                         <th scope="col">On Hand Quantity</th>
                         <th scope="col">On Order Quantity</th>
                         <th scope="col">Available Quantity</th>
@@ -70,6 +81,7 @@
                         </td>
                         <td><a href="{{ route('products.edit', $product->id) }}">{{ $product->title }}</a>
                         </td>
+                        <th>{{ $product->category_name }}</th>
                         <th>{{ getProductOnhandAvailabityStock($product->id) }}</th>
                         <th>{{ getProductOnorderAvailabityStock($product->id) }}</th>
                         <th>{{ getProductAvailabityStock($product->id) }}</th>
@@ -92,9 +104,14 @@
 @endsection
 
 @section('scripts')
-<script>
-    new DataTable('#products', {
-        pageLength: 50
+<script>    document.addEventListener("DOMContentLoaded", function () {
+        var table = new DataTable('#products', {
+            pageLength: 50
+        });
+
+        $('#categoryFilter').on('change', function () {
+            table.search(this.value).draw();
+        });
     });
 </script>
 @endsection

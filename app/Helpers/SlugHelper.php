@@ -264,6 +264,7 @@ if (!function_exists('generateProductSlug')) {
             foreach ($order->deliverorder as $key => $items){
                 $deliver_quantity += $items->deliver_quantity;
             }
+            
 
             $missing_quantiy = $orderQuantity - $deliver_quantity;
                                                
@@ -279,7 +280,9 @@ if (!function_exists('generateProductSlug')) {
                     $missingqty += $deliver->missingqty;
                    
                 }
-            $pendingQuantity = abs($deliver_quantity - $delivery_quantity);
+
+                //dd($deliver_quantity, $delivery_quantity);
+            $pendingQuantity = abs($deliver_quantity - $delivery_quantity + $missing_quantiy);
 
             $data = array(
                 'order_quantity' => $orderQuantity,
@@ -287,6 +290,23 @@ if (!function_exists('generateProductSlug')) {
                 'missingqty' => $missingqty,
                 'delivery_quantity' => $delivery_quantity,                
                 'pendingQuantity' => $pendingQuantity,
+            );
+            return $data;
+        }
+    }
+
+
+    if (!function_exists('getOrderDetailsPendingQuantity')) {
+        function getOrderDetailsPendingQuantity($orderId = null, $itemId = null)
+        {                     
+            $pendingqty =  DeliveryuserQuantity::where('order_id', $orderId)->where('item_id', $itemId)->latest()->first();
+           
+            $deliverdQuantity = $pendingqty->delivery_quantity;
+            $pendingQuantity = $pendingqty->missingqty;
+
+            $data = array(
+                'deliverdQuantity' => $deliverdQuantity,
+                'pendingQuantity' => $pendingQuantity
             );
             return $data;
         }

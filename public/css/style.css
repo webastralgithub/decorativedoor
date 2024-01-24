@@ -2781,3 +2781,10 @@ div#exampleModal .modal-content .modal-header button.close span {
 .nav-item.dropdown.drpdwn .dropdown-menu a{
     text-align: center;
 }
+
+.category-product-filter{
+    width: 20% !important;
+    margin: 0 0 0 20%;
+    bottom: -36px;
+    z-index: 999;
+}
