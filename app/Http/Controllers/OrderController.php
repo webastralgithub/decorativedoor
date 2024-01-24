@@ -45,7 +45,7 @@ class OrderController extends Controller
                         $subQuery->where('order_status', OrderStatus::READY_TO_DELIVER);
                     });
                 })
-                // ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
+                 ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
@@ -158,6 +158,7 @@ class OrderController extends Controller
                 $orderDetails->order->update(['order_status' => $request->new_status]);
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
+
                 DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
             
             //return response()->json(['success' => 'Order status updated successfully']);
