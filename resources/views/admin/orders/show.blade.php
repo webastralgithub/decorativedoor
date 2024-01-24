@@ -93,7 +93,7 @@
                             <th scope="col" class="align-middle text-center">Photo</th>
                             <th scope="col" class="align-middle text-center">Product Name</th>
                             <th scope="col" class="align-middle text-center">Quantity</th>
-                            <th scope="col" class="align-middle text-center">Delivered Qty</th>
+                            <th scope="col" class="align-middle text-center">Production Ready Qty</th>
                             <th scope="col" class="align-middle text-center">Backorder Qty</th>
                             @can('change-order-status') 
                             <th scope="col" class="align-middle text-center">Order Status</th>
@@ -312,7 +312,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="note" class="col-md-12 col-form-label text-md-end text-start">
-                                                {{ __('Delivered Quantity :') }} <span id="delivery_order">0</span>
+                                                {{ __('Production Ready Quantity :') }} <span id="delivery_order">0</span>
                                             </label>
                                         </div>
                                     </div>
@@ -383,7 +383,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="note" class="col-md-12 col-form-label text-md-end text-start">
-                                                {{ __('Delivered Quantity :') }} <span id="d-delivery_order">0</span>
+                                                {{ __('Production Ready Quantity :') }} <span id="d-delivery_order">0</span>
                                             </label>
                                         </div>
 
