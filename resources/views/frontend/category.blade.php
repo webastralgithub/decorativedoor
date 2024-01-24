@@ -27,8 +27,7 @@
 <section class="product spad">
     <div class="container">
         <div class="row">
-            @include('frontend.layouts.include.sidebar')
-            <div class="col-lg-9 col-md-7">
+            <div class="col-lg-12 col-md-12">
                 <div class="filter__item">
                     <div class="row">
                       
@@ -40,7 +39,7 @@
                         $stockOnCart = getProductStockOnCart($product->id);
                         $inStock = $stockAvailability > 0 && $stockAvailability > $stockOnCart;
                         @endphp
-                        <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <a href="{{route('product',$product->slug)}}">
                                     <div class="featured__item__pic set-bg" data-setbg="{{asset((!empty($product->image) ? Storage::url('products/'.$product->image->path) : 'img/featured/feature-1.jpg'))}}">
