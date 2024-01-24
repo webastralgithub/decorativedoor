@@ -78,8 +78,10 @@
                 </label>
             </div>
             <div class="col-2">
+                @if(!$order->order_confirm)
                 <a class="btn btn-primary" href="{{ route('order.confirm-order', $order->id) }}">Confirm
                     Order</a>
+                @endif
             </div>
             <div class="col-3">
                 @can('add-signature')
@@ -167,9 +169,11 @@
                         <td class="align-middle ">
                             {{ getDeliverQuantity($item->order_id, $item->id) }}
                         </td>
-
+                        @php
+                        $backOrderQty = $item->quantity - getDeliverQuantity($item->order_id, $item->id);
+                        @endphp
                         <td class="align-middle ">
-                            {{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}
+                            {{ $backOrderQty }}
                         </td>
                         @can('delivery-order-status')
                         @php
