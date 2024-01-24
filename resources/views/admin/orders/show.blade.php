@@ -144,7 +144,7 @@
                                                         !auth()
                                                             ->user()
                                                             ->can(['order-status-pending-order-confirmation', 'order-status-complete', 'order-status-failed', 'order-status-ready-to-production']) &&
-                                                        in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION, \App\Models\OrderStatus::FAILED, \App\Models\OrderStatus::READY_TO_PRODUCTION])) ||
+                                                        in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION, \App\Models\OrderStatus::FAILED])) ||
                                                     (auth()
                                                         ->user()
                                                         ->hasRole('Accountant') &&
