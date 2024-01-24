@@ -505,6 +505,7 @@
                 return false;
             }
             console.log("order_quantity", delivery_quantity, (order_quantity - delivery_order));
+            console.log("order_quantity_new", delivery_quantity, order_quantity , delivery_order);
             if (delivery_quantity > (order_quantity - delivery_order) || ((delivery_order + delivery_quantity) >
                 order_quantity)) {
                 jQuery('.errors').append(
