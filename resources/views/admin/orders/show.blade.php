@@ -60,7 +60,7 @@
                 </label>
 
             </div>
-
+            
 
             {{-- <div class="col">
                 <label for="payment_type" class="form-label required">
@@ -172,7 +172,7 @@
                         <td class="align-middle ">
                             ${{ number_format($item->unitcost, 2, '.', ',') }}
                         </td>
-
+                        
                         <td class="align-middle ">
                             ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
                         </td>
@@ -183,41 +183,20 @@
                     $finaltotal = array_sum($finaltotal);
                     $discount = array_sum($discount);
                     $finaltotal = $finaltotal - $discount;
-                    $orderTotal = abs($order->due - $finaltotal);
                     @endphp
-
+                    
                     @can('order_price')
                     <tr>
-                        <td colspan="6" class="text-end">Shipping Charges:</td>
-                        <td style="border-bottom: 1px solid #000 !important;">
-                            ${{ number_format($order->due, 2, '.', ',') }}
-                        </td>
-                    </tr>
-                    @if(isset($_ENV['GST_HST_TAX']) || isset($_ENV['PST_RST_QST_TAX']))
-                    <tr>
-                        <td colspan="6" class="text-end">Total before Tax:</td>
-                        <td> ${{ number_format($orderTotal, 2, '.', ',') }}</td>
+                        <td colspan="6" class="text-end">Shipping Charges</td>
+                        <td class="">${{ number_format($order->due, 2, '.', ',') }}</td>
                     </tr>
                     <tr>
-                        @php
-                        $orderTotal = $orderTotal - env('GST_HST_TAX',11,94);
-                        @endphp
-                        <td colspan="6" class="text-end">Estimated GST/HST:</td>
-                        <td> ${{ number_format(env('GST_HST_TAX'), 2, '.', ',') }}</td>
+                        <td colspan="6" class="text-end">VAT</td>
+                        <td class="">${{ number_format($order->vat, 2, '.', ',') }}</td>
                     </tr>
                     <tr>
-                        @php
-                        $orderTotal = $orderTotal - env('PST_RST_QST_TAX',11,94);
-                        @endphp
-                        <td colspan="6" class="text-end">Estimated PST/RST/QST:</td>
-                        <td style="border-bottom: 1px solid #000 !important;">
-                            ${{ number_format(env('PST_RST_QST_TAX'), 2, '.', ',') }}
-                        </td>
-                    </tr>
-                    @endif
-                    <tr>
-                        <td colspan="6" class="text-end">Total:</td>
-                        <td class="">${{ number_format($orderTotal, 2, '.', ',') }}</td>
+                        <td colspan="6" class="text-end">Total</td>
+                        <td class="">${{ number_format(abs($order->due - ($finaltotal + $order->vat)), 2, '.', ',') }}</td>
                     </tr>
                     @endcan
                 </tbody>
@@ -383,7 +362,7 @@
             jQuery('#d-item_id').val(itemId);
             jQuery('#d-orders_quantity').val(order_quantity);
             jQuery('#d-new_status').val(newStatus);
-        } else {
+        }else {
             updateOrderItemStatus(itemId, newStatus);
         }
 
@@ -496,7 +475,7 @@
 
     }
 
-    function deleiveryupdateOrderItemQuantity() {
+    function deleiveryupdateOrderItemQuantity(){
         jQuery('.errors').html('');
         let order_quantity = jQuery('#d-order_quantity').text(); // Ordered Qty
         let delivery_order = jQuery('#d-delivery_order').text(); // Delivered Qty
@@ -527,8 +506,8 @@
                 order_quantity: order_quantity,
                 delivery_quantity: delivery_quantity,
                 delivery_order: delivery_order,
-                missingqty: missingqty,
-
+                missingqty:missingqty,
+               
                 _token: '{{ csrf_token() }}' // Add CSRF token if needed
             },
             success: function(response) {
@@ -582,7 +561,6 @@
             $(modal).modal('hide');
         }
     }
-
     function deliveredcloseModal() {
         var modal = document.getElementById('deliveredModal');
         if (modal) {

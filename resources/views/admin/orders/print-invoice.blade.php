@@ -115,7 +115,7 @@
                     <div class="col-md-12">
                         <div class="text-center print-admin-mn">
                             <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
-                            <p class="pt-0">Sunrise Door Admin</p>
+                            <p class="pt-0">Sunrise Doors Admin</p>
                         </div>
                     </div>
 

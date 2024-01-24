@@ -39,30 +39,39 @@ class OrderController extends Controller
             $orders = Order::with(['details', 'notes', 'deliverorder'])
                 ->where('assembler_user_id', Auth::user()->id)
                 ->where(function ($query) {
-                    $query->orWhereHas('details', function ($subQuery) {
+                    $query->WhereHas('details', function ($subQuery) {
                         $subQuery->where('order_status', OrderStatus::READY_TO_PRODUCTION);
-                    })->orWhereHas('details', function ($subQuery) {
+                    })->WhereHas('details', function ($subQuery) {
                         $subQuery->where('order_status', OrderStatus::READY_TO_DELIVER);
                     });
                 })
-                // ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
+                 ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
+                 ->where('order_confirm', 1)
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
+
         } else if (auth()->user()->hasRole('Delivery User')) {
+
             $orders = Order::with(['deliverorder', 'deliveruserorder'])->whereHas('details', function ($query) {
-                $query->orWhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED]);
+                $query->WhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION]);
+            })
+            ->whereHas('deliverorder', function ($query) {
+                $query->Where('deliver_quantity', '>', '0');
             })
                 ->where('delivery_user_id', Auth::user()->id)
-                // ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED])
+                ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION])
+                ->where('order_confirm', 1)
                 ->latest()
                 ->get();
+
+
             $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
         } else if (auth()->user()->hasRole('Accountant')) {
             $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::PENDING_ORDER_CONFIRMATION])->latest()->get();
             $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
         } else if (auth()->user()->hasRole('Order Coordinator')) {
-            $orders = Order::Where('coordinator_user_id', Auth::user()->id)->latest()->get();
+            $orders = Order::Where('coordinator_user_id', Auth::user()->id)->where('order_confirm', 1)->latest()->get();
             $order_statuses = '';
         } else {
             $orders = Order::latest()->get();
@@ -158,6 +167,7 @@ class OrderController extends Controller
                 $orderDetails->order->update(['order_status' => $request->new_status]);
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
+
                 DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
             
             //return response()->json(['success' => 'Order status updated successfully']);
@@ -220,7 +230,6 @@ class OrderController extends Controller
             }
                 DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
             
-            //return response()->json(['success' => 'Order status updated successfully']);
         }
         return response()->json(['success' => 'Quantity Added successfully!']);
     }
@@ -232,12 +241,6 @@ class OrderController extends Controller
         if (!isset($orderDetails) && empty($orderDetails)) {
             return response()->json(['error' => 'Order is not valid!']);
         }
-
-        // if ($orderDetails->order->order_status ==  OrderStatus::PENDING_ORDER_CONFIRMATION) {
-        //     Order::find($orderDetails->order->id)->update(['order_status' => OrderStatus::READY_TO_PRODUCTION]);
-        // }
-        // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);
-
         if ($orderDetails->order->details->count() == 1) {
             $orderDetails->order->update(['order_status' => $request->new_status]);
             $orderDetails->update(['order_status' => $request->new_status]);

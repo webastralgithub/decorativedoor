@@ -95,7 +95,7 @@
                                                 @endcan
                                                 @can('add-signature')
                                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}"
-                                                            class="dropdown-item">Add Signature</a></li>
+                                                            class="dropdown-item">Take Signature</a></li>
                                                 @endcan
                                                 @if (auth()->user()->hasRole('Accountant') ||
                                                         auth()->user()->hasRole('Super Admin'))
@@ -447,6 +447,7 @@
             order: [
                 [2, 'desc']
             ],
+            pageLength: 50
 
         });
 
