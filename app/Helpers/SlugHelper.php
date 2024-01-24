@@ -281,7 +281,7 @@ if (!function_exists('generateProductSlug')) {
                    
                 }
 
-                dd($deliver_quantity, $delivery_quantity);
+                //dd($deliver_quantity, $delivery_quantity);
             $pendingQuantity = abs($deliver_quantity - $delivery_quantity + $missing_quantiy);
 
             $data = array(
