@@ -1,7 +1,22 @@
 @extends('admin.layouts.app')
 
 @section('content')
+@if (auth()->user()->hasRole('Product Assembler') || auth()->user()->hasRole('Delivery User'))
+<style>
+    .sidebar.pe-4.pb-3 {
+        display: none;
+    }
 
+    .content.pb-4 {
+        margin: 0;
+        width: 100%;
+    }
+
+    a.sidebar-toggler.flex-shrink-0 {
+        display: none !important;
+    }
+</style>
+@endif
 <div class="mx-4 content-p-mobile">
     <div class="page-header-tp">
         <h3>{{ __('Order') }} #{{ $order->order_id }}</h3>
@@ -63,8 +78,10 @@
                 </label>
             </div>
             <div class="col-2">
+                @if(!$order->order_confirm)
                 <a class="btn btn-primary" href="{{ route('order.confirm-order', $order->id) }}">Confirm
                     Order</a>
+                @endif
             </div>
             <div class="col-3">
                 @can('add-signature')
@@ -152,9 +169,11 @@
                         <td class="align-middle ">
                             {{ getDeliverQuantity($item->order_id, $item->id) }}
                         </td>
-
+                        @php
+                        $backOrderQty = $item->quantity - getDeliverQuantity($item->order_id, $item->id);
+                        @endphp
                         <td class="align-middle ">
-                            {{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}
+                            {{ $backOrderQty }}
                         </td>
                         @can('delivery-order-status')
                         @php
@@ -411,14 +430,14 @@
                     </tr>
                     <tr>
                         @php
-                        $orderTotal = $orderTotal - env('GST_HST_TAX', 11, 94);
+                        $orderTotal = $orderTotal + env('GST_HST_TAX', 11, 94);
                         @endphp
                         <td colspan="10" class="text-end">Estimated GST/HST:</td>
                         <td> ${{ number_format(env('GST_HST_TAX'), 2, '.', ',') }}</td>
                     </tr>
                     <tr>
                         @php
-                        $orderTotal = $orderTotal - env('PST_RST_QST_TAX', 11, 94);
+                        $orderTotal = $orderTotal + env('PST_RST_QST_TAX', 11, 94);
                         @endphp
                         <td colspan="10" class="text-end">Estimated PST/RST/QST:</td>
                         <td style="border-bottom: 1px solid #000 !important;">
@@ -670,8 +689,9 @@
         }
         console.log("order_quantity", delivery_quantity, (order_quantity - delivery_order));
 
-        if (delivery_quantity > (order_quantity - delivery_order) || ((delivery_order + delivery_quantity) <
-                order_quantity)) {
+        // if (delivery_quantity > (order_quantity - delivery_order) || ((delivery_order + delivery_quantity) <
+        //         order_quantity)) {
+        if (delivery_quantity > (order_quantity - delivery_order) || ((order_quantity - delivery_order) == 0)) {
             jQuery('.errors').append(
                 `<span class="text-danger ">Delivery quantity must be less then Ordered quantity</span>`);
             hideErrors();

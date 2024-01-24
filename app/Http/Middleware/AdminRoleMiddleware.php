@@ -16,12 +16,7 @@ class AdminRoleMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        // if (auth()->check() && auth()->user()->hasRole('Super Admin')) {
-        //     return $next($request);
-        // }
         if (Auth::check()) {
-            // Check if the user has admin role or permission
             if (Auth::user()->isAdmin()) {
                 return $next($request);
             }

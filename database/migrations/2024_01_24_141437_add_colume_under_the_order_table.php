@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->intiger('order_confirm')->default(0);
+            $table->integer('order_confirm')->default(0);
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->intiger('order_confirm')->default(0);
+            $table->integer('order_confirm')->default(0);
         });
     }
 };
