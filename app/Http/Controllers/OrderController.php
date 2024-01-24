@@ -188,7 +188,7 @@ class OrderController extends Controller
 
     public function updateDeliveryQuantityStatus(Request $request)
     {
-      
+     
         $validator = validator($request->all(), [
             'delivery_quantity' => [
                 'required',
@@ -209,11 +209,11 @@ class OrderController extends Controller
             return response()->json(['error' => 'Order is not valid!']);
         }
 
-
+        
+       
         if ($orderDetails->order->details->count() == 1) {
-            $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
-            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
-            if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
+            $deliverQuan = ($request->delivery_order - $request->delivery_quantity);
+            if ($deliverQuan == 0) {
                 $orderDetails->order->update(['order_status' => $request->new_status]);
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
@@ -222,9 +222,9 @@ class OrderController extends Controller
         
             //return response()->json(['success' => 'Order status updated successfully']);
         } else {
-            $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
-            $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
-            if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
+            $deliverQuan = ($request->delivery_order - $request->delivery_quantity);
+            if ($deliverQuan == 0) {
+                $orderDetails->order->update(['order_status' => $request->new_status]);
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
                 DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
