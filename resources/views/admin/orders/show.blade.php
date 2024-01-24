@@ -670,8 +670,9 @@
         }
         console.log("order_quantity", delivery_quantity, (order_quantity - delivery_order));
 
-        if (delivery_quantity > (order_quantity - delivery_order) || ((delivery_order + delivery_quantity) <
-                order_quantity)) {
+        // if (delivery_quantity > (order_quantity - delivery_order) || ((delivery_order + delivery_quantity) <
+        //         order_quantity)) {
+        if (delivery_quantity > (order_quantity - delivery_order) || ((order_quantity - delivery_order) == 0)) {
             jQuery('.errors').append(
                 `<span class="text-danger ">Delivery quantity must be less then Ordered quantity</span>`);
             hideErrors();
