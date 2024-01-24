@@ -64,32 +64,32 @@ class CustomerController extends Controller
             $useraddress->address()->updateOrCreate(
                 ['user_id' => $user_id],
                 [
-                    'address_type' => $request->address_type,
-                    'street' => $request->street,
-                    'city' => $request->city,
-                    'state' => $request->state,
-                    'country' => $request->country,
-                    'zip_code' => $request->zipcode,
-                    'billing_address_type' => $request->billing_address_type,
-                    'billing_street' => $request->billing_street,
-                    'billing_city' => $request->billing_city,
-                    'billing_state' => $request->billing_state,
-                    'billing_country' => $request->billing_country,
-                    'billing_zipcode' => $request->billing_zipcode,
-                    'notes' => $request->notes,
+                    'address_type' => $request->address_type ?? '',
+                    'street' => $request->street ?? '',
+                    'city' => $request->city ?? '',
+                    'state' => $request->state ?? '',
+                    'country' => $request->country ?? '',
+                    'zip_code' => $request->zipcode ?? '',
+                    'billing_address_type' => $request->billing_address_type ?? '',
+                    'billing_street' => $request->billing_street ?? '',
+                    'billing_city' => $request->billing_city ?? '',
+                    'billing_state' => $request->billing_state ?? '',
+                    'billing_country' => $request->billing_country ?? '',
+                    'billing_zipcode' => $request->billing_zipcode ?? '',
+                    'notes' => $request->notes ?? '',
                 ]
             );
 
             $useraddress->usercompany()->updateOrCreate(
                 ['user_id' => $user_id],
                 [
-                    'company_name' => $request->company_name,
-                    'company_address' => $request->company_address,
-                    'company_phone' => $request->company_phone,
-                    'company_email' => $request->company_email,
-                    'industory_type' => $request->industory_type,
-                    'company_website' => $request->company_website,
-                    'registration_no' => $request->registration_no,
+                    'company_name' => $request->company_name ?? '',
+                    'company_address' => $request->company_address ?? '',
+                    'company_phone' => $request->company_phone ?? '',
+                    'company_email' => $request->company_email ?? '',
+                    'industory_type' => $request->industory_type ?? '',
+                    'company_website' => $request->company_website ?? '',
+                    'registration_no' => $request->registration_no ?? '',
                     'gst' => $request->gst,
                 ]
             );
@@ -111,33 +111,33 @@ class CustomerController extends Controller
             $user->address()->updateOrCreate(
                 ['user_id' => $lastinsertid],
                 [
-                    'address_type' => $request->address_type,
-                    'street' => $request->street,
-                    'city' => $request->city,
-                    'state' => $request->state,
-                    'country' => $request->country,
-                    'zip_code' => $request->zipcode,
-                    'billing_address_type' => $request->billing_address_type,
-                    'billing_street' => $request->billing_street,
-                    'billing_city' => $request->billing_city,
-                    'billing_state' => $request->billing_state,
-                    'billing_country' => $request->billing_country,
-                    'billing_zipcode' => $request->billing_zipcode,
-                    'notes' => $request->notes,
+                    'address_type' => $request->address_type ?? '',
+                    'street' => $request->street ?? '',
+                    'city' => $request->city ?? '',
+                    'state' => $request->state ?? '',
+                    'country' => $request->country ?? '',
+                    'zip_code' => $request->zipcode ?? '',
+                    'billing_address_type' => $request->billing_address_type ?? '',
+                    'billing_street' => $request->billing_street ?? '',
+                    'billing_city' => $request->billing_city ?? '',
+                    'billing_state' => $request->billing_state ?? '',
+                    'billing_country' => $request->billing_country ?? '',
+                    'billing_zipcode' => $request->billing_zipcode ?? '',
+                    'notes' => $request->notes ?? '',
                 ]
             );
 
             $user->usercompany()->updateOrCreate(
                 ['user_id' => $user_id],
                 [
-                    'company_name' => $request->company_name,
-                    'company_address' => $request->company_address,
-                    'company_phone' => $request->company_phone,
-                    'company_email' => $request->company_email,
-                    'industory_type' => $request->industory_type,
-                    'company_website' => $request->company_website,
-                    'registration_no' => $request->registration_no,
-                    'gst' => $request->gst,
+                    'company_name' => $request->company_name ?? '',
+                    'company_address' => $request->company_address ?? '',
+                    'company_phone' => $request->company_phone ?? '',
+                    'company_email' => $request->company_email ?? '',
+                    'industory_type' => $request->industory_type ?? '',
+                    'company_website' => $request->company_website ?? '',
+                    'registration_no' => $request->registration_no ?? '',
+                    'gst' => $request->gst ?? '',
                 ]
             );
             session()->put('assign_customer', $lastinsertid);

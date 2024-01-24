@@ -445,7 +445,7 @@
         })
         new DataTable('#order', {
             order: [
-                [2, 'desc']
+                [1, 'desc']
             ],
             pageLength: 50
 
