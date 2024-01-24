@@ -5,7 +5,9 @@
     <div class="mx-4 content-p-mobile">
         <div class="page-header-tp">
             <h3>{{ __('Order') }} #{{ $order->order_id }}</h3>
-
+            @can('add-signature')
+            <a href="{{ route('orders.delivery_user', $order->id) }}" class="btn btn-primary sign">Take Signature</a>
+            @endcan
             <div class="top-bntspg-hdr">
                 <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-sm">&larr; Back</a>
 
@@ -54,6 +56,7 @@
                 @endcan
 
             </div>
+            
         </div>
 
         <div class="mt-2">

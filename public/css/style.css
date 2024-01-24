@@ -2479,6 +2479,14 @@ body {
     .page-header-tp {
         flex-direction: column;
     }
+    .sign{
+    position: relative;
+    left: unset;
+    }
+}
+.sign{
+    position: relative;
+    left: 20rem;
 }
 
 button#remove-input-variant {
