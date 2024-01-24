@@ -10,46 +10,46 @@
 
                 @can('change-order-status')
                     <!-- <div class="col-md-6">
-                                                <label class="small mb-1" for="order_status">
-                                                    Order Status
-                                                    <span class="text-danger">*</span>
-                                                </label>
-                                                <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="updateOrderStatus()">
+                                                        <label class="small mb-1" for="order_status">
+                                                            Order Status
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="updateOrderStatus()">
 
-                                                    @foreach ($order_statuses as $status)
+                                                            @foreach ($order_statuses as $status)
         @if (
             \App\Models\OrderStatus::COMPLETE == $status->id &&
                 auth()->user()->can('order-status-complete'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                                                    @if (
-                                                        \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id &&
-                                                            auth()->user()->can('order-status-pending-order-confirmation'))
+                                                            @if (
+                                                                \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id &&
+                                                                    auth()->user()->can('order-status-pending-order-confirmation'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                                                    @if (
-                                                        \App\Models\OrderStatus::FAILED == $status->id &&
-                                                            auth()->user()->can('order-status-failed'))
+                                                            @if (
+                                                                \App\Models\OrderStatus::FAILED == $status->id &&
+                                                                    auth()->user()->can('order-status-failed'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                                                    @if (
-                                                        \App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id &&
-                                                            auth()->user()->can('order-status-ready-to-production'))
+                                                            @if (
+                                                                \App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id &&
+                                                                    auth()->user()->can('order-status-ready-to-production'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                                                    @if (
-                                                        \App\Models\OrderStatus::READY_TO_DELIVER == $status->id &&
-                                                            auth()->user()->can('order-status-deliver'))
+                                                            @if (
+                                                                \App\Models\OrderStatus::READY_TO_DELIVER == $status->id &&
+                                                                    auth()->user()->can('order-status-deliver'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                                                    @if (
-                                                        \App\Models\OrderStatus::DISPATCHED == $status->id &&
-                                                            auth()->user()->can('order-status-dispatch'))
+                                                            @if (
+                                                                \App\Models\OrderStatus::DISPATCHED == $status->id &&
+                                                                    auth()->user()->can('order-status-dispatch'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
         @endforeach
-                                                </select>
-                                            </div> -->
+                                                        </select>
+                                                    </div> -->
                 @endcan
 
             </div>
@@ -122,20 +122,147 @@
                                 @php
                                     $discount[] = $item->discount;
                                     $finaltotal[] = $item->total;
-                                    
+
                                 @endphp
 
 
-                                @if(auth()->user()->hasRole('Delivery User'))
-                                    @if(getDeliverQuantity($item->order_id, $item->id) != 0)
+                                @if (auth()->user()->hasRole('Delivery User'))
+                                    @if (getDeliverQuantity($item->order_id, $item->id) != 0)
+                                        <tr>
+                                            <td class="align-middle ">
+                                                {{ $loop->iteration }}
+                                            </td>
+                                            <td class="align-middle ">
+                                                <div style="max-height: 80px; max-width: 80px;">
 
+                                                    <img class="img-fluid"
+                                                        src="{{ asset(!empty(productsInfo($item->product->id)->image->path) ? Storage::url('products/' . productsInfo($item->product->id)->image->path) : 'img/featured/feature-1.jpg') }}">
+                                                </div>
+                                            </td>
+                                            <td class="align-middle ">
+                                                {{ $item->product->title }}
+                                                <div>CODE:<note>{{ $item->product->code }}</note>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle ">
+                                                {{ $item->quantity }}
+                                            </td>
+                                            <td class="align-middle ">
+                                                {{ getDeliverQuantity($item->order_id, $item->id) }}
+                                            </td>
+
+                                            <td class="align-middle ">
+                                                {{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}
+                                            </td>
+                                            @can('delivery-order-status')
+                                                @php
+                                                    $deliverduserdata = getOrderDetailsPendingQuantity($item->order_id, $item->id);
+                                                @endphp
+                                                <td class="align-middle ">
+                                                    {{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}
+                                                </td>
+                                                <td class="align-middle ">
+                                                    @php
+                                                        $backorder = $item->quantity - getDeliverQuantity($item->order_id, $item->id);
+                                                        $pending = getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'];
+                                                    @endphp
+                                                    {{ $backorder + $pending }}
+                                                </td>
+                                            @endcan
+
+                                            @can('change-order-status')
+                                                <td class="align-middle ">
+                                                    @php
+                                                        $disabled =
+                                                            (auth()
+                                                                ->user()
+                                                                ->hasRole('Product Assembler') &&
+                                                                !auth()
+                                                                    ->user()
+                                                                    ->can(['order-status-pending-order-confirmation', 'order-status-complete', 'order-status-failed', 'order-status-dispatch']) &&
+                                                                in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION, \App\Models\OrderStatus::FAILED, \App\Models\OrderStatus::DISPATCHED])) ||
+                                                            (auth()
+                                                                ->user()
+                                                                ->hasRole('Delivery User') &&
+                                                                !auth()
+                                                                    ->user()
+                                                                    ->can(['order-status-pending-order-confirmation', 'order-status-complete', 'order-status-failed', 'order-status-ready-to-production']) &&
+                                                                in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION, \App\Models\OrderStatus::FAILED, \App\Models\OrderStatus::READY_TO_PRODUCTION])) ||
+                                                            (auth()
+                                                                ->user()
+                                                                ->hasRole('Accountant') &&
+                                                                !auth()
+                                                                    ->user()
+                                                                    ->can(['order-status-complete', 'order-status-dispatch']) &&
+                                                                in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::READY_TO_DELIVER, \App\Models\OrderStatus::DISPATCHED]));
+                                                    @endphp
+                                                    <select class="form-select form-control-solid" id="order_status"
+                                                        name="order_status"
+                                                        onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')"
+                                                        @disabled($disabled)>
+                                                        @foreach ($order_statuses as $status)
+                                                            @if (\App\Models\OrderStatus::COMPLETE == $status->id)
+                                                                <option @disabled(!in_array($status->id, $access_status))
+                                                                    value="{{ $status->id }}" @selected($item->order_status == $status->id)>
+                                                                    {{ convertToReadableStatus($status->name) }}</option>
+                                                            @endif
+                                                            @if (\App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id)
+                                                                <option @disabled(!in_array($status->id, $access_status))
+                                                                    value="{{ $status->id }}" @selected($item->order_status == $status->id)>
+                                                                    {{ convertToReadableStatus($status->name) }}</option>
+                                                            @endif
+                                                            @if (\App\Models\OrderStatus::FAILED == $status->id)
+                                                                <option @disabled(!in_array($status->id, $access_status))
+                                                                    value="{{ $status->id }}" @selected($item->order_status == $status->id)>
+                                                                    {{ convertToReadableStatus($status->name) }}</option>
+                                                            @endif
+                                                            @if (\App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id)
+                                                                <option @disabled(!in_array($status->id, $access_status))
+                                                                    value="{{ $status->id }}" @selected($item->order_status == $status->id)>
+                                                                    {{ convertToReadableStatus($status->name) }}</option>
+                                                            @endif
+                                                            @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id)
+                                                                <option @disabled(!in_array($status->id, $access_status))
+                                                                    value="{{ $status->id }}" @selected($item->order_status == $status->id)>
+                                                                    {{ convertToReadableStatus($status->name) }}</option>
+                                                            @endif
+                                                            @if (\App\Models\OrderStatus::DISPATCHED == $status->id)
+                                                                <option @disabled(!in_array($status->id, $access_status))
+                                                                    value="{{ $status->id }}" @selected($item->order_status == $status->id)>
+                                                                    {{ convertToReadableStatus($status->name) }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                            @endcan
+                                            @if (!auth()->user()->hasRole('Super Admin'))
+                                                @can('delivery-order-status')
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm"
+                                                            onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}', '{{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')">Ready
+                                                            to delivery</button>
+                                                    </td>
+                                                @endcan
+                                            @endif
+                                            @can('order_price')
+                                                <td class="align-middle ">
+                                                    ${{ number_format($item->unitcost, 2, '.', ',') }}
+                                                </td>
+
+                                                <td class="align-middle ">
+                                                    ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
+                                                </td>
+                                            @endcan
+                                        </tr>
+                                    @endif
+                                @else
                                     <tr>
                                         <td class="align-middle ">
                                             {{ $loop->iteration }}
                                         </td>
                                         <td class="align-middle ">
                                             <div style="max-height: 80px; max-width: 80px;">
-    
+
                                                 <img class="img-fluid"
                                                     src="{{ asset(!empty(productsInfo($item->product->id)->image->path) ? Storage::url('products/' . productsInfo($item->product->id)->image->path) : 'img/featured/feature-1.jpg') }}">
                                             </div>
@@ -151,7 +278,7 @@
                                         <td class="align-middle ">
                                             {{ getDeliverQuantity($item->order_id, $item->id) }}
                                         </td>
-    
+
                                         <td class="align-middle ">
                                             {{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}
                                         </td>
@@ -170,7 +297,7 @@
                                                 {{ $backorder + $pending }}
                                             </td>
                                         @endcan
-    
+
                                         @can('change-order-status')
                                             <td class="align-middle ">
                                                 @php
@@ -197,7 +324,8 @@
                                                                 ->can(['order-status-complete', 'order-status-dispatch']) &&
                                                             in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::READY_TO_DELIVER, \App\Models\OrderStatus::DISPATCHED]));
                                                 @endphp
-                                                <select class="form-select form-control-solid" id="order_status" name="order_status"
+                                                <select class="form-select form-control-solid" id="order_status"
+                                                    name="order_status"
                                                     onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')"
                                                     @disabled($disabled)>
                                                     @foreach ($order_statuses as $status)
@@ -238,7 +366,7 @@
                                         @if (!auth()->user()->hasRole('Super Admin'))
                                             @can('delivery-order-status')
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm"
+                                                        <button class="btn btn-primary btn-sm"
                                                         onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}', '{{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')">Ready
                                                         to delivery</button>
                                                 </td>
@@ -248,145 +376,13 @@
                                             <td class="align-middle ">
                                                 ${{ number_format($item->unitcost, 2, '.', ',') }}
                                             </td>
-    
+
                                             <td class="align-middle ">
                                                 ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
                                             </td>
                                         @endcan
                                     </tr>
-
-                                    @endif
-                                @else
-
-                                <tr>
-                                    <td class="align-middle ">
-                                        {{ $loop->iteration }}
-                                    </td>
-                                    <td class="align-middle ">
-                                        <div style="max-height: 80px; max-width: 80px;">
-
-                                            <img class="img-fluid"
-                                                src="{{ asset(!empty(productsInfo($item->product->id)->image->path) ? Storage::url('products/' . productsInfo($item->product->id)->image->path) : 'img/featured/feature-1.jpg') }}">
-                                        </div>
-                                    </td>
-                                    <td class="align-middle ">
-                                        {{ $item->product->title }}
-                                        <div>CODE:<note>{{ $item->product->code }}</note>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle ">
-                                        {{ $item->quantity }}
-                                    </td>
-                                    <td class="align-middle ">
-                                        {{ getDeliverQuantity($item->order_id, $item->id) }}
-                                    </td>
-
-                                    <td class="align-middle ">
-                                        {{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}
-                                    </td>
-                                    @can('delivery-order-status')
-                                        @php
-                                            $deliverduserdata = getOrderDetailsPendingQuantity($item->order_id, $item->id);
-                                        @endphp
-                                        <td class="align-middle ">
-                                            {{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}
-                                        </td>
-                                        <td class="align-middle ">
-                                            @php
-                                                $backorder = $item->quantity - getDeliverQuantity($item->order_id, $item->id);
-                                                $pending = getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'];
-                                            @endphp
-                                            {{ $backorder + $pending }}
-                                        </td>
-                                    @endcan
-
-                                    @can('change-order-status')
-                                        <td class="align-middle ">
-                                            @php
-                                                $disabled =
-                                                    (auth()
-                                                        ->user()
-                                                        ->hasRole('Product Assembler') &&
-                                                        !auth()
-                                                            ->user()
-                                                            ->can(['order-status-pending-order-confirmation', 'order-status-complete', 'order-status-failed', 'order-status-dispatch']) &&
-                                                        in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION, \App\Models\OrderStatus::FAILED, \App\Models\OrderStatus::DISPATCHED])) ||
-                                                    (auth()
-                                                        ->user()
-                                                        ->hasRole('Delivery User') &&
-                                                        !auth()
-                                                            ->user()
-                                                            ->can(['order-status-pending-order-confirmation', 'order-status-complete', 'order-status-failed', 'order-status-ready-to-production']) &&
-                                                        in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION, \App\Models\OrderStatus::FAILED, \App\Models\OrderStatus::READY_TO_PRODUCTION])) ||
-                                                    (auth()
-                                                        ->user()
-                                                        ->hasRole('Accountant') &&
-                                                        !auth()
-                                                            ->user()
-                                                            ->can(['order-status-complete', 'order-status-dispatch']) &&
-                                                        in_array($item->order_status, [\App\Models\OrderStatus::COMPLETE, \App\Models\OrderStatus::READY_TO_DELIVER, \App\Models\OrderStatus::DISPATCHED]));
-                                            @endphp
-                                            <select class="form-select form-control-solid" id="order_status" name="order_status"
-                                                onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')"
-                                                @disabled($disabled)>
-                                                @foreach ($order_statuses as $status)
-                                                    @if (\App\Models\OrderStatus::COMPLETE == $status->id)
-                                                        <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                                            @selected($item->order_status == $status->id)>
-                                                            {{ convertToReadableStatus($status->name) }}</option>
-                                                    @endif
-                                                    @if (\App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id)
-                                                        <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                                            @selected($item->order_status == $status->id)>
-                                                            {{ convertToReadableStatus($status->name) }}</option>
-                                                    @endif
-                                                    @if (\App\Models\OrderStatus::FAILED == $status->id)
-                                                        <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                                            @selected($item->order_status == $status->id)>
-                                                            {{ convertToReadableStatus($status->name) }}</option>
-                                                    @endif
-                                                    @if (\App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id)
-                                                        <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                                            @selected($item->order_status == $status->id)>
-                                                            {{ convertToReadableStatus($status->name) }}</option>
-                                                    @endif
-                                                    @if (\App\Models\OrderStatus::READY_TO_DELIVER == $status->id)
-                                                        <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                                            @selected($item->order_status == $status->id)>
-                                                            {{ convertToReadableStatus($status->name) }}</option>
-                                                    @endif
-                                                    @if (\App\Models\OrderStatus::DISPATCHED == $status->id)
-                                                        <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
-                                                            @selected($item->order_status == $status->id)>
-                                                            {{ convertToReadableStatus($status->name) }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                    @endcan
-                                    @if (!auth()->user()->hasRole('Super Admin'))
-                                        @can('delivery-order-status')
-                                            <td>
-                                                <button class="btn btn-primary btn-sm"
-                                                    onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}', '{{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')">Ready
-                                                    to delivery</button>
-                                            </td>
-                                        @endcan
-                                    @endif
-                                    @can('order_price')
-                                        <td class="align-middle ">
-                                            ${{ number_format($item->unitcost, 2, '.', ',') }}
-                                        </td>
-
-                                        <td class="align-middle ">
-                                            ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
-                                        </td>
-                                    @endcan
-                                </tr>
                                 @endif
-                               
-                               
-                                
                             @endforeach
 
                             @php
@@ -748,7 +744,7 @@
             function deleiveryupdateOrderItemQuantity() {
                 jQuery('.errors').html('');
                 let order_quantity = jQuery('#d-order_quantity').text(); // Ordered Qty
-                let delivery_order = jQuery('#d-delivery_order').val(); // Delivered Qty
+                let delivery_order = jQuery('#d-delivery_order').val(); // pending Delivered Qty
                 let delivery_quantity = jQuery('#d-delivery_quantity').val(); // Entered Qty
                 let orderId = jQuery('#d-order_id').val();
                 let itemId = jQuery('#d-item_id').val();
@@ -760,10 +756,17 @@
                     hideErrors();
                     return false;
                 }
-                console.log("order_quantity", delivery_quantity, (order_quantity - delivery_order));
-                if (delivery_quantity > (delivery_order)) {
+                console.log("order_quantity", delivery_quantity, delivery_order);
+                if (delivery_quantity > delivery_order && delivery_order != 0 && delivery_order > 0) {
                     jQuery('.errors').append(
-                        `<span class="text-danger ">Delivery quantity must be less then Ordered quantity</span>`);
+                        `<span class="text-danger">You Have Delivered all Quantity which is Assign by Assembler</span>`
+                    );
+                    hideErrors();
+                    return false;
+                } else if (delivery_order <= 0) {
+                    jQuery('.errors').append(
+                        `<span class="text-danger">You Have Delivered all Quantity which is Assign by Assembler</span>`
+                    );
                     hideErrors();
                     return false;
                 }
