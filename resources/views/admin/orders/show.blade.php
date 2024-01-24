@@ -454,7 +454,7 @@
                 
 
             }
-
+    
             function updateOrderItemStatus(itemId, newStatus) {
                 jQuery.ajax({
                     url: '/admin/update-product-status', // Replace with your actual route
