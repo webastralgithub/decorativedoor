@@ -52,6 +52,8 @@ class OrderController extends Controller
         } else if (auth()->user()->hasRole('Delivery User')) {
             $orders = Order::with(['deliverorder', 'deliveruserorder'])->whereHas('details', function ($query) {
                 $query->WhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION]);
+            })->whereHas('deliverorder', function ($query) {
+                $query->WhereIn('deliver_quantity', '>', 0);
             })
                 ->where('delivery_user_id', Auth::user()->id)
                 ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION])
