@@ -50,7 +50,13 @@ class CheckoutController extends Controller
                 'sales_person' => (Auth::check()) ? Auth::user()->id : 0,
                 'pay' => 0,
                 'due' => 0,
+                "door_type" => $details['doortype'],
+                "door_jamb" => $details['doorjamb'],
+                "door_location" => $details['doorlocation'],
+                "door_left" => $details['doorleft'],
+                "door_right" => $details['doorright'],
             ];
+          
             
             $order = Order::create($productsArr);
             if ($order)
