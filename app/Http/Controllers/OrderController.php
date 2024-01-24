@@ -39,9 +39,9 @@ class OrderController extends Controller
             $orders = Order::with(['details', 'notes', 'deliverorder'])
                 ->where('assembler_user_id', Auth::user()->id)
                 ->where(function ($query) {
-                    $query->orWhereHas('details', function ($subQuery) {
+                    $query->WhereHas('details', function ($subQuery) {
                         $subQuery->where('order_status', OrderStatus::READY_TO_PRODUCTION);
-                    })->orWhereHas('details', function ($subQuery) {
+                    })->WhereHas('details', function ($subQuery) {
                         $subQuery->where('order_status', OrderStatus::READY_TO_DELIVER);
                     });
                 })
@@ -51,7 +51,7 @@ class OrderController extends Controller
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
         } else if (auth()->user()->hasRole('Delivery User')) {
             $orders = Order::with(['deliverorder', 'deliveruserorder'])->whereHas('details', function ($query) {
-                $query->orWhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED]);
+                $query->WhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED]);
             })
                 ->where('delivery_user_id', Auth::user()->id)
                 ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION])
