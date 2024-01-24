@@ -155,10 +155,14 @@
                             $deliverduserdata = getOrderDetailsPendingQuantity($item->order_id, $item->id);
                             @endphp
                             <td class="align-middle ">
-                                {{ $deliverduserdata['deliverdQuantity'] }}
+                                {{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity']  }}
                             </td>
                             <td class="align-middle ">
-                                {{ $deliverduserdata['pendingQuantity'] }}
+                                @php
+                                $backorder = $item->quantity - getDeliverQuantity($item->order_id, $item->id);
+                                $pending = getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'];
+                                @endphp
+                                {{ $backorder + $pending}}
                             </td>
                             @endcan
                             
@@ -237,7 +241,7 @@
                             @can('delivery-order-status')
                             <td>
                                 <button class="btn btn-primary btn-sm"
-                                    onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}')">Ready
+                                    onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}')">Ready
                                     to delivery</button>
                             </td>
                             @endcan

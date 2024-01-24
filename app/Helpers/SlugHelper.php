@@ -301,13 +301,50 @@ if (!function_exists('generateProductSlug')) {
         {                     
             $pendingqty =  DeliveryuserQuantity::where('order_id', $orderId)->where('item_id', $itemId)->latest()->first();
            
-            $deliverdQuantity = $pendingqty->delivery_quantity;
-            $pendingQuantity = $pendingqty->missingqty;
+            if(!empty($pendingqty)){
+                $deliverdQuantity = ($pendingqty->delivery_quantity) ? $pendingqty->delivery_quantity : 0;
+                $pendingQuantity = ($pendingqty->missingqty) ? $pendingqty->missingqty : 0;
+    
+                $data = array(
+                    'deliverdQuantity' => $deliverdQuantity,
+                    'pendingQuantity' => $pendingQuantity
+                );
+            }else{
+                $data = array(
+                    'deliverdQuantity' => 0,
+                    'pendingQuantity' => 0
+                );
+            }
+            
+            return $data;
+        }
+    }
 
-            $data = array(
-                'deliverdQuantity' => $deliverdQuantity,
-                'pendingQuantity' => $pendingQuantity
-            );
+    if (!function_exists('mangePendingQuantity')) {
+        function mangePendingQuantity($orderId = null, $itemId = null)
+        {                     
+            $pendingqty =  DeliveryuserQuantity::where('order_id', $orderId)->where('item_id', $itemId)->latest()->get();
+           
+            if(!empty($pendingqty)){
+                $deliverdQuantity = 0;
+                $pendingQuantity = 0;
+                foreach($pendingqty as $qty){
+                    $deliverdQuantity += ($qty->delivery_quantity) ? $qty->delivery_quantity : 0;
+                    $pendingQuantity = ($qty->missingqty) ? $qty->missingqty : 0;
+                }
+                
+    
+                $data = array(
+                    'deliverdQuantity' => $deliverdQuantity,
+                    'pendingQuantity' => $pendingQuantity
+                );
+            }else{
+                $data = array(
+                    'deliverdQuantity' => 0,
+                    'pendingQuantity' => 0
+                );
+            }
+            
             return $data;
         }
     }
