@@ -11,46 +11,46 @@
 
                 @can('change-order-status')
                     <!-- <div class="col-md-6">
-                        <label class="small mb-1" for="order_status">
-                            Order Status
-                            <span class="text-danger">*</span>
-                        </label>
-                        <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="updateOrderStatus()">
+                                        <label class="small mb-1" for="order_status">
+                                            Order Status
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="updateOrderStatus()">
 
-                            @foreach ($order_statuses as $status)
+                                            @foreach ($order_statuses as $status)
         @if (
             \App\Models\OrderStatus::COMPLETE == $status->id &&
                 auth()->user()->can('order-status-complete'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                            @if (
-                                \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id &&
-                                    auth()->user()->can('order-status-pending-order-confirmation'))
+                                            @if (
+                                                \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id &&
+                                                    auth()->user()->can('order-status-pending-order-confirmation'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                            @if (
-                                \App\Models\OrderStatus::FAILED == $status->id &&
-                                    auth()->user()->can('order-status-failed'))
+                                            @if (
+                                                \App\Models\OrderStatus::FAILED == $status->id &&
+                                                    auth()->user()->can('order-status-failed'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                            @if (
-                                \App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id &&
-                                    auth()->user()->can('order-status-ready-to-production'))
+                                            @if (
+                                                \App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id &&
+                                                    auth()->user()->can('order-status-ready-to-production'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                            @if (
-                                \App\Models\OrderStatus::READY_TO_DELIVER == $status->id &&
-                                    auth()->user()->can('order-status-deliver'))
+                                            @if (
+                                                \App\Models\OrderStatus::READY_TO_DELIVER == $status->id &&
+                                                    auth()->user()->can('order-status-deliver'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
-                            @if (
-                                \App\Models\OrderStatus::DISPATCHED == $status->id &&
-                                    auth()->user()->can('order-status-dispatch'))
+                                            @if (
+                                                \App\Models\OrderStatus::DISPATCHED == $status->id &&
+                                                    auth()->user()->can('order-status-dispatch'))
         <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
         @endif
         @endforeach
-                        </select>
-                    </div> -->
+                                        </select>
+                                    </div> -->
                 @endcan
 
             </div>
@@ -89,6 +89,9 @@
                                 <th scope="col" class="align-middle text-center">Product Name</th>
                                 <th scope="col" class="align-middle text-center">Quantity</th>
                                 @can('change-order-status')
+                                    <th scope="col" class="align-middle text-center">Order Status</th>
+                                @endcan
+                                @can('delivery-order-status')
                                     <th scope="col" class="align-middle text-center">Order Status</th>
                                 @endcan
                                 @can('order_price')
@@ -191,6 +194,13 @@
                                             </select>
                                         </td>
                                     @endcan
+                                    @can('delivery-order-status')
+                                        <td>
+                                            <button class="btn btn-primary btn-sm"
+                                                onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}')">Ready
+                                                to delivery</button>
+                                        </td>
+                                    @endcan
                                     @can('order_price')
                                         <td class="align-middle ">
                                             ${{ number_format($item->unitcost, 2, '.', ',') }}
@@ -202,27 +212,49 @@
                                     @endcan
                                 </tr>
                             @endforeach
+
                             @php
                                 $finaltotal = array_sum($finaltotal);
                                 $discount = array_sum($discount);
                                 $finaltotal = $finaltotal - $discount;
+                                $orderTotal = abs($order->due - $finaltotal);
                             @endphp
 
                             @can('order_price')
                                 <tr>
-                                    <td colspan="6" class="text-end">Shipping Charges</td>
-                                    <td class="">${{ number_format($order->due, 2, '.', ',') }}</td>
+                                    <td colspan="6" class="text-end">Shipping Charges:</td>
+                                    <td style="border-bottom: 1px solid #000 !important;">
+                                        ${{ number_format($order->due, 2, '.', ',') }}
+                                    </td>
                                 </tr>
+                                @if (isset($_ENV['GST_HST_TAX']) || isset($_ENV['PST_RST_QST_TAX']))
+                                    <tr>
+                                        <td colspan="6" class="text-end">Total before Tax:</td>
+                                        <td> ${{ number_format($orderTotal, 2, '.', ',') }}</td>
+                                    </tr>
+                                    <tr>
+                                        @php
+                                            $orderTotal = $orderTotal - env('GST_HST_TAX', 11, 94);
+                                        @endphp
+                                        <td colspan="6" class="text-end">Estimated GST/HST:</td>
+                                        <td> ${{ number_format(env('GST_HST_TAX'), 2, '.', ',') }}</td>
+                                    </tr>
+                                    <tr>
+                                        @php
+                                            $orderTotal = $orderTotal - env('PST_RST_QST_TAX', 11, 94);
+                                        @endphp
+                                        <td colspan="6" class="text-end">Estimated PST/RST/QST:</td>
+                                        <td style="border-bottom: 1px solid #000 !important;">
+                                            ${{ number_format(env('PST_RST_QST_TAX'), 2, '.', ',') }}
+                                        </td>
+                                    </tr>
+                                @endif
                                 <tr>
-                                    <td colspan="6" class="text-end">VAT</td>
-                                    <td class="">${{ number_format($order->vat, 2, '.', ',') }}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" class="text-end">Total</td>
-                                    <td class="">
-                                        ${{ number_format(abs($order->due - ($finaltotal + $order->vat)), 2, '.', ',') }}</td>
+                                    <td colspan="6" class="text-end">Total:</td>
+                                    <td class="">${{ number_format($orderTotal, 2, '.', ',') }}</td>
                                 </tr>
                             @endcan
+
                         </tbody>
                     </table>
 
@@ -403,17 +435,23 @@
                     jQuery('#item_id').val(itemId);
                     jQuery('#orders_quantity').val(order_quantity);
                     jQuery('#new_status').val(newStatus);
-                } else if (newStatus == 6) {
-                    jQuery('#deliveredModal').modal('show');
-                    jQuery('#d-order_quantity').text(order_quantity);
-                    jQuery('#d-delivery_order').text(deliver_quantity);
-                    jQuery('#d-missing_item').text(backorder_quantity);
-                    jQuery('#d-item_id').val(itemId);
-                    jQuery('#d-orders_quantity').val(order_quantity);
-                    jQuery('#d-new_status').val(newStatus);
-                } else {
+                }else {
                     updateOrderItemStatus(itemId, newStatus);
                 }
+
+            }
+
+            function DeleiveryupdateSpecificProductrStatus(itemId, selectElement, order_quantity = '0', deliver_quantity = '0',
+                backorder_quantity = '0') {
+                var newStatus = 6;                
+                jQuery('#deliveredModal').modal('show');
+                jQuery('#d-order_quantity').text(order_quantity);
+                jQuery('#d-delivery_order').text(deliver_quantity);
+                jQuery('#d-missing_item').text(backorder_quantity);
+                jQuery('#d-item_id').val(itemId);
+                jQuery('#d-orders_quantity').val(order_quantity);
+                jQuery('#d-new_status').val(newStatus);
+                
 
             }
 
