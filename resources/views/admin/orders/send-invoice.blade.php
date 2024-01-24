@@ -155,9 +155,9 @@
                         <tr>
                             <th class="text-center rowtotal mono">${{ number_format($subtotal, 2, '.', ',') }}</th>
                             <th class="text-center rowtotal mono">${{ number_format(env("GST_HST_TAX",
-                                0)+env("PST_RST_QST_TAX", 0), 2, '.', ',') }}</th>
-                            <th class="text-center rowtotal mono">${{ number_format($finalPrice -(env("GST_HST_TAX",
-                                0)+env("PST_RST_QST_TAX", 0)), 2, '.', ',') }}</th>
+                                0) + env("PST_RST_QST_TAX", 0), 2, '.', ',') }}</th>
+                            <th class="text-center rowtotal mono">${{ number_format($finalPrice + (env("GST_HST_TAX",
+                                0) + env("PST_RST_QST_TAX", 0)), 2, '.', ',') }}</th>
                         </tr>
                     </tbody>
                 </table>
@@ -186,8 +186,8 @@
                         <div class="panel-body">
                             <ul class="list-unstyled">
                                 <li>Recived Payment- <span class="mono">${{ number_format($finalPrice
-                                        -(env("GST_HST_TAX",
-                                        0)+env("PST_RST_QST_TAX", 0)), 2, '.', ',') }}</span></li>
+                                        + (env("GST_HST_TAX",
+                                        0) + env("PST_RST_QST_TAX", 0)), 2, '.', ',') }}</span></li>
                                 <li>Pending Payment - <span class="mono">In Progress</span></li>
 
                             </ul>

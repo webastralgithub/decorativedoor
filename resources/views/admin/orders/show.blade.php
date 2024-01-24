@@ -411,14 +411,14 @@
                     </tr>
                     <tr>
                         @php
-                        $orderTotal = $orderTotal - env('GST_HST_TAX', 11, 94);
+                        $orderTotal = $orderTotal + env('GST_HST_TAX', 11, 94);
                         @endphp
                         <td colspan="10" class="text-end">Estimated GST/HST:</td>
                         <td> ${{ number_format(env('GST_HST_TAX'), 2, '.', ',') }}</td>
                     </tr>
                     <tr>
                         @php
-                        $orderTotal = $orderTotal - env('PST_RST_QST_TAX', 11, 94);
+                        $orderTotal = $orderTotal + env('PST_RST_QST_TAX', 11, 94);
                         @endphp
                         <td colspan="10" class="text-end">Estimated PST/RST/QST:</td>
                         <td style="border-bottom: 1px solid #000 !important;">
