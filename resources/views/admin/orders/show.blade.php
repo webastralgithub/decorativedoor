@@ -162,6 +162,26 @@
                             {{ $item->product->title }}
                             <div>CODE:<note>{{ $item->product->code }}</note>
                             </div>
+                            @if(!empty($item->door_type))
+                            <div>Type:<note>{{ $item->door_type }}</note>
+                            </div>
+                            @endif
+                            @if(!empty($item->door_location))
+                            <div>Location:<note>{{ $item->door_location }}</note>
+                            </div>
+                            @endif
+                            @if(!empty($item->door_jamb))
+                            <div>Jamb:<note>{{ $item->door_jamb }}</note>
+                            </div>
+                            @endif
+                            @if(!empty($item->door_left))
+                            <div>Left:<note>{{ $item->door_left }}</note>
+                            </div>
+                            @endif
+                            @if(!empty($item->door_right))
+                            <div>Right:<note>{{ $item->door_right }}</note>
+                            </div>
+                            @endif
                         </td>
                         <td class="align-middle ">
                             {{ $item->quantity }}
@@ -293,6 +313,26 @@
                             {{ $item->product->title }}
                             <div>CODE:<note>{{ $item->product->code }}</note>
                             </div>
+                             @if(!empty($item->door_type))
+                            <div>Type:<note>{{ $item->door_type }}</note>
+                            </div>
+                            @endif
+                            @if(!empty($item->door_location))
+                            <div>Location:<note>{{ $item->door_location }}</note>
+                            </div>
+                            @endif
+                            @if(!empty($item->door_jamb))
+                            <div>Jamb:<note>{{ $item->door_jamb }}</note>
+                            </div>
+                            @endif
+                            @if(!empty($item->door_left))
+                            <div>Left:<note>{{ $item->door_left }}</note>
+                            </div>
+                            @endif
+                            @if(!empty($item->door_right))
+                            <div>Right:<note>{{ $item->door_right }}</note>
+                            </div>
+                            @endif
                         </td>
                         <td class="align-middle ">
                             {{ $item->quantity }}
