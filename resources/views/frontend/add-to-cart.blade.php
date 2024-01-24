@@ -209,7 +209,11 @@
 
                                                 <li><b>Quantity</b> <span>{{ $variation['quantity'] }}</span></li>
                                                 <li><b>Size</b> <span>{{ $variation['name'] }}</span></li>
-
+                                                <li><b>Type of Door</b> <span>{{ $cart['doortype'] }}</span></li>
+                                                <li><b>Type of Location</b> <span>{{ $cart['doorlocation'] }}</span></li>
+                                                <li><b>Jamb</b> <span>{{ $cart['doorjamb'] }}</span></li>
+                                                <li><b>Left</b> <span>{{ $cart['doorleft'] }}</span></li>
+                                                <li><b>Right</b> <span>{{ $cart['doorright'] }}</span></li>
                                             </ul>
                                         </div>
                                     </div>

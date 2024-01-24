@@ -83,7 +83,64 @@ json_decode($variantSingle->option_type, true) : null;
                     @endif
                     <div id="productDiscountMessage" class="product-discount-message" style="display:none;"></div>
                     <p>{!!$product->short_description!!}</p>
-
+                    <div class="col-8 varients-block-flex mb-3 p-0">
+                        <label>Type of Door</label>
+                    <select class="form-control" id="type-of-door"  onchange="return doortype('{{$product->id}}')">
+                        <option>Type of Door</option>
+                        <option value="Single Door (SGL)">Single Door (SGL)</option>
+                        <option value="Pair (PR)">Pair (PR)</option>
+                    </select>
+                </div>
+                <div class="col-8 varients-block-flex mb-3 p-0">
+                    <label>Loaction of Door</label>
+                    <select class="form-control" id="location-of-door" onchange="return doorlocation('{{$product->id}}')">
+                        <option>Location of Door</option>
+                        <option value="Bedroom">Bedroom</option>
+                        <option value="Washroom">Washroom</option>
+                        <option value="Closet">Closet</option>
+                        <option value="Entery Closet">Entery Closet</option>
+                        <option value="Pantry">Pantry </option>
+                        <option value="Spice Kitchen">Spice Kitchen </option>
+                        <option value="Powder Room">Powder Room</option>
+                        <option value="Under Stairs">Under Stairs</option>
+                        <option value="AC Room">AC Room</option>
+                        <option value="Mechanical Room">Mechanical Room </option>
+                        <option value="Boiler">Boiler</option>
+                        <option value="Laundary">Laundary</option>
+                        <option value="Den">Den</option>
+                        <option value="Office">Office</option>
+                    </select>
+                </div>
+                <div class="col-8 varients-block-flex mb-3 p-0">
+                    <label>Jamb</label>
+                    <select class="form-control" id="jamb"  onchange="return doorjamb('{{$product->id}}')">
+                        <option>JMB</option>
+                        <option value="4 1/2<">4 1/2</option>
+                        <option value="6 1/2">6 1/2</option>
+                        <option value="4 3/4">4 3/4</option>
+                        <option value="6 3/4">6 3/4</option>
+                        <option value="7 1/4">7 1/4</option>
+                        <option value="8 1/2">8 1/2</option>
+                        <option value="5 1/4">5 1/4</option>
+                        <option value="4 7/8">4 7/8</option>
+                    </select>
+                </div>
+                <div class="col-8 varients-block-flex mb-3 p-0">
+                    <label>Right</label>
+                    <select class="form-control" id="left" onchange="return doorleft('{{$product->id}}')">
+                        <option>Left</option>
+                        <option value="OPEN IN O/IN">OPEN IN O/IN</option>
+                        <option value="OPEN OUT O/OUT">OPEN OUT O/OUT</option>
+                    </select>
+                </div>
+                <div class="col-8 varients-block-flex mb-3 p-0">
+                    <label>Left</label>
+                    <select class="form-control" id="right" onchange="return doorright('{{$product->id}}')">
+                        <option>Right</option>
+                        <option value="OPEN IN O/IN">OPEN IN O/IN</option>
+                        <option value="OPEN OUT O/OUT">OPEN OUT O/OUT</option>
+                    </select>
+                </div>
                     @if(!empty($product->variants) && !empty($variantOptions))
                     <div class="varients-cart">
                         <h3>Variants</h3>
@@ -119,6 +176,11 @@ json_decode($variantSingle->option_type, true) : null;
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="type" id="door-type"  value="" />
+                        <input type="hidden" name="location" id="door-location" value="" />
+                        <input type="hidden" name="jamb" id="door-jamb" value="" />
+                        <input type="hidden" name="left" id="door-left" value="" />
+                        <input type="hidden" name="right" id="door-right" value="" />
 
                         <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
@@ -245,9 +307,44 @@ json_decode($variantSingle->option_type, true) : null;
 @section('scripts')
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+function doortype(event){
+    let selectedValue = document.getElementById("type-of-door").value;
+    document.getElementById('door-type').value = selectedValue
+
+}
+
+function doorlocation(event){
+    let selectedValue = document.getElementById("location-of-door").value;
+    document.getElementById('door-location').value = selectedValue
+
+}
+
+function doorjamb(event){
+    let selectedValue = document.getElementById("jamb").value;
+    document.getElementById('door-jamb').value = selectedValue
+
+}
+
+function doorleft(event){
+    let selectedValue = document.getElementById("left").value;
+    document.getElementById('door-left').value = selectedValue
+
+}
+
+function doorright(event){
+    let selectedValue = document.getElementById("right").value;
+    document.getElementById('door-right').value = selectedValue
+
+}
+
     function addToCart(event) {
         var quantity = document.querySelector('input[name="quantity"]').value;
         var allVariants = document.querySelectorAll('.variants');
+        var doortype = document.getElementById('door-type').value;
+        var doorlocation = document.getElementById('door-location').value;
+        var doorjamb = document.getElementById('door-jamb').value;
+        var doorleft = document.getElementById('door-left').value;
+        var doorright = document.getElementById('door-right').value;
         var selectedVariants = [];
         // Iterate through all variant dropdowns
         allVariants.forEach(function(variant) {
@@ -315,7 +412,12 @@ json_decode($variantSingle->option_type, true) : null;
 
                 var data = "product_id=" + product_id +
                     "&variant=" + variant +
-                    "&quantity=" + quantity;
+                    "&quantity=" + quantity +
+                    "&doortype=" + doortype +
+                    "&doorlocation=" + doorlocation +
+                    "&doorjamb=" + doorjamb +
+                    "&doorleft=" + doorleft +
+                    "&doorright=" + doorright;
 
                 xhr.send(data);
 

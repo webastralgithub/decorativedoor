@@ -94,6 +94,11 @@ class ShopController extends Controller
                         "price" => $product->selling_price,
                         "image" => $product->image,
                         "discount_price" => ($discount_ammount) ? $discount_ammount : 0,
+                        "doortype" => $request->doortype,
+                        "doorlocation" => $request->doorlocation,
+                        "doorjamb" => $request->doorjamb,
+                        "doorleft" => $request->doorleft,
+                        "doorright" => $request->doorright,
                         // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
                         // "variant_price" => 0
 
@@ -127,6 +132,11 @@ class ShopController extends Controller
                     "discount_price" => $discount_ammount,
                     "image" => $product->image,
                     "variant_data" => [],
+                    "doortype" => $request->doortype,
+                        "doorlocation" => $request->doorlocation,
+                        "doorjamb" => $request->doorjamb,
+                        "doorleft" => $request->doorleft,
+                        "doorright" => $request->doorright,
                     // "variant_price" => $product->selling_price
                 ];
             }
@@ -149,6 +159,11 @@ class ShopController extends Controller
                         "image" => $product->image,
                         "description" => $product->notes,
                         "discount_price" => ($discount_ammount) ? $discount_ammount : 0,
+                        "doortype" => $request->doortype,
+                        "doorlocation" => $request->doorlocation,
+                        "doorjamb" => $request->doorjamb,
+                        "doorleft" => $request->doorleft,
+                        "doorright" => $request->doorright,
                         // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
                         // "variant_price" => 0
 
@@ -183,6 +198,11 @@ class ShopController extends Controller
                     "description" => $product->notes,
                     "image" => $product->image,
                     "variant_data" => [],
+                    "doortype" => $request->doortype,
+                        "doorlocation" => $request->doorlocation,
+                        "doorjamb" => $request->doorjamb,
+                        "doorleft" => $request->doorleft,
+                        "doorright" => $request->doorright,
                     // "variant_price" => $product->selling_price
                 ];
             }
