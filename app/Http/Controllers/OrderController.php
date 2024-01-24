@@ -280,7 +280,9 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $order->loadMissing(['user', 'details'])->get();
+
+        
+        $order->loadMissing(['user', 'details'])->get(); 
         if (auth()->user()->hasRole('Product Assembler')) {
             $access_status = [4, 5];
         } else if (auth()->user()->hasRole('Delivery User')) {
