@@ -221,7 +221,6 @@ class OrderController extends Controller
             }
                 DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
             
-            //return response()->json(['success' => 'Order status updated successfully']);
         }
         return response()->json(['success' => 'Quantity Added successfully!']);
     }
@@ -233,12 +232,6 @@ class OrderController extends Controller
         if (!isset($orderDetails) && empty($orderDetails)) {
             return response()->json(['error' => 'Order is not valid!']);
         }
-
-        // if ($orderDetails->order->order_status ==  OrderStatus::PENDING_ORDER_CONFIRMATION) {
-        //     Order::find($orderDetails->order->id)->update(['order_status' => OrderStatus::READY_TO_PRODUCTION]);
-        // }
-        // OrderDetails::findOrFail($itemId)->update(['order_status' => $request->new_status]);
-
         if ($orderDetails->order->details->count() == 1) {
             $orderDetails->order->update(['order_status' => $request->new_status]);
             $orderDetails->update(['order_status' => $request->new_status]);
