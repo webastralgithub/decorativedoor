@@ -14,28 +14,67 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create(['name' => 'Super Admin']);
-        Role::create(['name' => 'Sales Person']);
-        Role::create(['name' => 'Accountant']);
-        Role::create(['name' => 'Product Assembler']);
-        Role::create(['name' => 'Order Coordinator']);
-        Role::create(['name' => 'Customer']);
+        $superAdmin = Role::create(['name' => 'Super Admin']);
         $admin = Role::create(['name' => 'Admin']);
-        $productManager = Role::create(['name' => 'Product Manager']);
+        $salePerson = Role::create(['name' => 'Sales Person']);
+        $accountant = Role::create(['name' => 'Accountant']);
+        $assembler = Role::create(['name' => 'Product Assembler']);
+        $orderCoordinator = Role::create(['name' => 'Order Coordinator']);
+        $deliveryUser = Role::create(['name' => 'Delivery User']);
+        Role::create(['name' => 'Customer']);
 
         $admin->givePermissionTo([
-            'create-user',
-            'edit-user',
-            'delete-user',
-            'create-product',
-            'edit-product',
-            'delete-product'
+            'All',
+        ]);
+        $superAdmin->givePermissionTo([
+            'All',
         ]);
 
-        $productManager->givePermissionTo([
-            'create-product',
-            'edit-product',
-            'delete-product'
+        $accountant->givePermissionTo([
+            'view-order',
+            'order-status-failed',
+            'order-status-ready-to-production',
+            'order-status-deliver',
+            'change-order-status',
+            'make-payment',
+            'change_sales_person',
+            'change_assembler_user',
+            'change_delivery_user',
+            'change_user_address',
+            'order_price',
+            'admin-access'
+        ]);
+
+        $orderCoordinator->givePermissionTo([
+            'create-order',
+            'edit-order',
+            'delete-order',
+            'view-order',
+            'order-status-complete',
+            'order-status-pending-order-confirmation',
+            'order-status-failed',
+            'order-status-ready-to-production',
+            'order-status-deliver',
+            'order-status-dispatch',
+            'change-order-status',
+            'order_price',
+            'admin-access'
+        ]);
+        $salePerson->givePermissionTo([
+            'view-order', 'order_price', 'admin-access'
+        ]);
+        $deliveryUser->givePermissionTo([
+            'edit-order',
+            'view-order',
+            'order-status-ready-to-production',
+            'order-status-deliver',
+            'change-order-status',
+            'add-signature',
+            'show-quantity-listing', 'admin-access'
+        ]);
+        $assembler->givePermissionTo([
+            'view-order', 'order-status-ready-to-production', 'order-status-deliver',
+            'change-order-status', 'admin-access'
         ]);
     }
 }

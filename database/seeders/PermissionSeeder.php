@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -40,7 +41,8 @@ class PermissionSeeder extends Seeder
             'change-order-status',
             'make-payment',
             'add-signature',
-            'show-quantity-listing'
+            'show-quantity-listing',
+            'admin-access'
         ];
 
         // Looping and Inserting Array's Permissions into Permission Table

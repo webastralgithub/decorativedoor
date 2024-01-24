@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminRoleMiddleware
@@ -15,9 +16,15 @@ class AdminRoleMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        
-        if (auth()->check() && (auth()->user()->hasRole('Super Admin') || auth()->user()->hasRole('Delivery User') || auth()->user()->hasRole('Product Assembler') || auth()->user()->hasRole('Accountant') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Sales Person') || auth()->user()->hasRole('Order Coordinator'))) {
-            return $next($request);
+
+        // if (auth()->check() && auth()->user()->hasRole('Super Admin')) {
+        //     return $next($request);
+        // }
+        if (Auth::check()) {
+            // Check if the user has admin role or permission
+            if (Auth::user()->isAdmin()) {
+                return $next($request);
+            }
         }
 
         return redirect('/');

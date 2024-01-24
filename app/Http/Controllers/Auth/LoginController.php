@@ -40,28 +40,23 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectTo()
+    protected function redirectTo()
     {
-
-        
         $user = Auth::user();
-        // Get the roles associated with the user
-        $roles = $user->getRoleNames();
-        
-        if ($roles[0] == 'Super Admin') {
+
+        if (($user->hasRole('Super Admin'))) {
             $redirecturl = '/admin/dashboard';
-        } else if ($roles[0] == 'Delivery User') {
+        } elseif ($user->hasRole('Accountant')) {
+            $redirecturl = '/admin/dashboard';
+        } elseif ($user->hasRole('Delivery User')) {
             $redirecturl = '/admin/orders';
-        } else if ($roles[0] == 'Product Assembler') {
+        } elseif ($user->hasRole('Product Assembler')) {
             $redirecturl = '/admin/assembler-order';
-        } else if ($roles[0] == 'Accountant') {
+        } elseif ($user->hasRole('Admin')) {
             $redirecturl = '/admin/dashboard';
-        } else if ($roles[0] == 'Admin') {
-            $redirecturl = '/admin/dashboard';
-        }else {
-            $redirecturl = '/';
+        } else {
+            $redirecturl = '/'; // Redirect other users to the default home page
         }
         return redirect($redirecturl);
-
     }
 }
