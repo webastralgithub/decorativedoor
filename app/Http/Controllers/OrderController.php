@@ -54,7 +54,7 @@ class OrderController extends Controller
                 $query->orWhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED]);
             })
                 ->where('delivery_user_id', Auth::user()->id)
-                ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED])
+                ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION])
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
