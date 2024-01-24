@@ -406,11 +406,11 @@
                                             </label>
                                         </div>
 
-                                        <div class="col-md-6 mb-3">
+                                        {{-- <div class="col-md-6 mb-3">
                                             <label for="note" class="col-md-12 col-form-label text-md-end text-start">
                                                 {{ __('Backorder Quantity :') }} <span id="d-missing_item">0</span>
                                             </label>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -479,7 +479,7 @@
             jQuery('#deliveredModal').modal('show');
             jQuery('#d-order_quantity').text(order_quantity);
             jQuery('#d-delivery_order').text(deliver_quantity);
-            jQuery('#d-missing_item').text(backorder_quantity);
+            //jQuery('#d-missing_item').text(backorder_quantity);
             jQuery('#d-item_id').val(itemId);
             jQuery('#d-orders_quantity').val(order_quantity);
             jQuery('#d-new_status').val(newStatus);
@@ -606,7 +606,7 @@
             let orderId = jQuery('#d-order_id').val();
             let itemId = jQuery('#d-item_id').val();
             let newStatus = jQuery('#d-new_status').val();
-            let missingqty = jQuery('#d-missing_item').text();
+            //let missingqty = jQuery('#d-missing_item').text();
 
             if (delivery_quantity <= 0) {
                 jQuery('.errors').append(`<span class="text-danger ">Delivery quantity is required!</span>`);
@@ -630,7 +630,7 @@
                     order_quantity: order_quantity,
                     delivery_quantity: delivery_quantity,
                     delivery_order: delivery_order,
-                    missingqty: missingqty,
+                    //missingqty: missingqty,
 
                     _token: '{{ csrf_token() }}' // Add CSRF token if needed
                 },
