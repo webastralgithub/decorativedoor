@@ -103,8 +103,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     @can('make-payment')
-                                    <li><a class="dropdown-item" onclick="return makePayment('{{ $order->id }}');">Make
-                                            Payment</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('make-payment',$order->id)}}" >Make Payment</a></li>
                                     @endcan
                                     @can('add-signature')
                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Take Signature</a></li>
