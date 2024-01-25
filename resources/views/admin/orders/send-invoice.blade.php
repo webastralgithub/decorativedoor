@@ -132,7 +132,7 @@
                                 $orderQuantity = 0;
                                 $deliver_quantity = 0;
 
-                                $subtotal += getOrderTotalprice($item->id);
+                                $subtotal += abs($item->discount - $item->total);
 
                                 $orderQuantity += $item->quantity;
                                 @endphp
