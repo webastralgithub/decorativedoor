@@ -189,7 +189,7 @@
                         <td>{{ getTotalQuantity($order->id) }}</td>
                         @endif
                         @can('order_price')
-                        <td>${{ number_format(getOrderTotalprice($order->id), 2, '.', ',') }}</td>
+                        <td>${{ number_format(getTotalPrice(getOrderTotalprice($order->id)), 2, '.', ',') }}</td>
                         @endcan
                         @if (auth()->user()->hasRole('Accountant'))
                         <td><button class="btn btn-primary btn-sm my-2" onclick="return updateProductStatus('{{ $order->id }}', 4)"> Okay to proceed
