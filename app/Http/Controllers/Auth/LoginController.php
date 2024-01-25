@@ -72,7 +72,7 @@ class LoginController extends Controller
         } else if ($role[0] == 'Admin') {
             $redirecturl = redirect()->route('dashboard');
         } else {
-            $redirecturl = '/'; // Redirect other users to the default home page
+            $redirecturl = redirect()->route('home');; // Redirect other users to the default home page
         }
         // Default redirect for other roles
         return redirect()->away($redirecturl->getTargetUrl());
