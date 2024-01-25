@@ -32,7 +32,7 @@
                 <div class="col-md-4">
                     <input type="text" class="form-control" id="name" name="recived_payment" value="" Placeholder="Pay Ammount">
                     @if ($errors->has('recived_payment'))
-                    <span class="text-error">{{ $errors->first('recived_payment') }}</span>
+                    <span class="text-danger">{{ $errors->first('recived_payment') }}</span>
                     @endif
                     
                 </div>

@@ -878,7 +878,8 @@ button:disabled {
 }
 
 .varients-cart {
-	margin: 30px 0;
+    margin: 30px 0;
+    width: 100%;
 }
 
 .related-product {
@@ -907,8 +908,25 @@ button:disabled {
     width: 50% !important;
 }
 
+.interior-panel-div-parent .interior-panel-div.interior-door-type {
+    width: 100% !important;
+    justify-content: space-between;
+}
+
+.interior-panel-div-parent .interior-panel-div .nice-select {
+    width: 150px;
+}
+
+.interior-panel-div-parent .interior-panel-div.interior-door-type .nice-select {
+    width: 77%;
+}
+
 .interior-panel-div-parent .interior-panel-div label {
     width: 40%;
+}
+
+.interior-panel-div-parent .interior-panel-div.interior-door-type label {
+    width: fit-content;
 }
 
 .interior-panel-div label {
@@ -4287,11 +4305,37 @@ div#assignuser .table td {
     padding-bottom: 30px;
 }
 
-/* .interior-panel-div-parent .interior-panel-div ul.list {
+.interior-panel-div-parent .interior-panel-div ul.list {
     height: 240px;
     overflow-y: scroll;
-} */
+}
 
 /* .varient-block-cn .nice-select.variants  ul.list {
     left: -150px;
 } */
+
+
+table#cart tbody tr td.actions {
+    display: flex;
+    justify-content: end;
+}
+table#cart tfoot .text-right-inner {
+    display: flex;
+    justify-content: end;
+    gap: 8px;
+    font-weight: 600;
+    align-items: center;
+}
+table#cart tfoot .text-right-inner h5 {
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-block;
+    text-align: start;
+    width: 170px;
+}
+table#cart tfoot .text-right-inner span {
+    font-size: 16px;
+    width: 70px;
+    text-align: end;
+    font-weight: 500;
+}
