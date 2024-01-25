@@ -48,13 +48,13 @@ class PaymentController extends Controller
         if($pending < $request->recived_payment){
             return redirect()
             ->back()
-            ->with('error', 'Add Amount Less-then Pending Ammount');
+            ->with('error', 'Added amount should be less-then pending amount.');
         }else{
             Payment::create(['order_id' => $request->order_id, 'customer_id' => $request->customer_id, 'recived_payment' => $request->recived_payment, 'payment_method' => $request->payment_method]);
 
             return redirect()
             ->back()
-            ->with('success', 'Payment added Successfully');
+            ->with('success', 'Payment added Successfully.');
         }
         
 
