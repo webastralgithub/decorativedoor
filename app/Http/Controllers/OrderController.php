@@ -68,13 +68,13 @@ class OrderController extends Controller
             $order_statuses = OrderStatus::whereIn('id', [5, 6])->get();
         } else if (auth()->user()->hasRole('Accountant')) {
             $orders = Order::whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::FAILED, OrderStatus::PENDING_ORDER_CONFIRMATION])->latest()->get();
-            $order_statuses = OrderStatus::whereIn('id', [1, 3, 4])->get();
+            $order_statuses = OrderStatus::whereIn('id', [1, 4])->get();
         } else if (auth()->user()->hasRole('Order Coordinator')) {
             $orders = Order::Where('coordinator_user_id', Auth::user()->id)->where('order_confirm', 1)->latest()->get();
             $order_statuses = '';
         } else {
             $orders = Order::latest()->get();
-            $order_statuses = OrderStatus::all();
+            $order_statuses = OrderStatus::whereIn('id', [1, 4, 5, 6])->get();
         }
         return view('admin.orders.index', [
             'orders' => $orders,
@@ -280,7 +280,7 @@ class OrderController extends Controller
         } else if (auth()->user()->hasRole('Accountant')) {
             $access_status = [1, 3, 4];
         } else {
-            $access_status = [1, 2, 3, 4, 5, 6];
+            $access_status = [1, 4, 5, 6];
         }
         $order_statuses = OrderStatus::all();
         return view('admin.orders.show', [
