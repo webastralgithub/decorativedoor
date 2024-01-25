@@ -34,7 +34,7 @@ class PaymentController extends Controller
 
         return redirect()
         ->back()
-        ->with('success', 'Order has been created!');
+        ->with('success', 'Payment added Successfully');
 
     }
 
