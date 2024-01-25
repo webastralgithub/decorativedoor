@@ -51,10 +51,10 @@ class OutsideDoorSeeder extends Seeder
             ['name' => 'OPEN OUT O/O', 'category_id' => 3],
         ];
 
-        DB::table('type_of_door')->insert($type_of_door);
-        DB::table('location_of_door')->insert($additional_locations);
-        DB::table('jamb')->insert($jamb);
-        DB::table('left')->insert($left);
-        DB::table('right')->insert($right);
+        DB::table('type_of_doors')->insert($type_of_door);
+        DB::table('location_of_doors')->insert($additional_locations);
+        DB::table('jambs')->insert($jamb);
+        DB::table('lefts')->insert($left);
+        DB::table('rights')->insert($right);
     }
 }

@@ -21,11 +21,11 @@ class OrderDetails extends Model
         'unitcost',
         'total',
         'discount',
-        "door_type",
-                "door_jamb",
-                "door_location",
-                "door_left",
-                "door_right",
+        "jamb_id",
+        "typeofdoor_id",
+        "locationofdoor_id",
+        "left_id",
+        "right_id",
     ];
 
     protected $casts = [

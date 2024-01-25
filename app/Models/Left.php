@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Left extends Model
 {
     use HasFactory;
-    protected $table  = "left";
+    protected $table  = "lefts";
 
     protected $guarded = [];
 
