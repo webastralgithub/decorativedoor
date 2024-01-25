@@ -184,7 +184,7 @@
                                 <li>Recived Payment- <span class="mono">${{ number_format($finalPrice
                                         + (env("GST_HST_TAX",
                                         0) + env("PST_RST_QST_TAX", 0)), 2, '.', ',') }}</span></li>
-                                <li>Pending Payment - <span class="mono">In Progress</span></li>
+                                <li>Pending Payment - <span class="mono"> ${{getTotalPendingPayment() }}</span></li>
 
                             </ul>
                         </div>

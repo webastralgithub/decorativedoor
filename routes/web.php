@@ -87,7 +87,7 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
     Route::post('/update-payment-method', [OrderController::class, 'updatePaymentMethod'])->name('orders.pay');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::put('/orders/update/{order}', [OrderController::class, 'update'])->name('orders.update');
-    Route::get('/orders/details/{order_id}/download', [OrderController::class, 'downloadInvoice'])->name('order.downloadInvoice');
+    Route::get('/orders/details/{id}/download', [OrderController::class, 'downloadInvoice'])->name('order.downloadInvoice');
     Route::post('/update-order-status', [OrderController::class, 'updateStatus']);
     Route::post('/update-order-quantity-status', [OrderController::class, 'updateQuantityStatus'])->name('order.per.product.delivery');
     Route::post('/update-order-delivery-quantity-status', [OrderController::class, 'updateDeliveryQuantityStatus'])->name('order.per.product.delivery-user');

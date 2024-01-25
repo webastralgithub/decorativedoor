@@ -7,6 +7,7 @@ use App\Models\DeliverQuantity;
 use App\Models\OrderDetails;
 use App\Models\DeliveryuserQuantity;
 use App\Models\Note;
+use App\Models\Payment;
 use Illuminate\Support\Str;
 
 if (!function_exists('generateProductSlug')) {
@@ -402,5 +403,21 @@ if (!function_exists('getTotalPrice')) {
         $total += env("PST_RST_QST_TAX", 0);
 
         return $total;
+    }
+}
+
+
+if (!function_exists('getTotalPendingPayment')) {
+    function getTotalPendingPayment()
+    {
+        $paymentList = Payment::all();
+        
+        $pendingammount = 0;
+        foreach($paymentList as $payment){
+            $pendingammount += $payment->recived_payment;
+        }
+
+
+        return $pendingammount;
     }
 }
