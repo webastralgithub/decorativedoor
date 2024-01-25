@@ -48,7 +48,7 @@ class PaymentController extends Controller
         if($pending < $request->recived_payment){
             return redirect()
             ->back()
-            ->with('error', 'Add amount lessthen Pending Ammount');
+            ->with('error', 'Add Amount Less-then Pending Ammount');
         }else{
             Payment::create(['order_id' => $request->order_id, 'customer_id' => $request->customer_id, 'recived_payment' => $request->recived_payment, 'payment_method' => $request->payment_method]);
 
