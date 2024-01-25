@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class OrderController extends Controller
 {
 
@@ -44,20 +45,19 @@ class OrderController extends Controller
                         $subQuery->where('order_status', OrderStatus::READY_TO_DELIVER);
                     });
                 })
-                 ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
-                 ->where('order_confirm', 1)
+                ->whereIn('order_status', [OrderStatus::READY_TO_PRODUCTION, OrderStatus::READY_TO_DELIVER])
+                ->where('order_confirm', 1)
                 ->latest()
                 ->get();
             $order_statuses = OrderStatus::whereIn('id', [4, 5])->get();
-
         } else if (auth()->user()->hasRole('Delivery User')) {
 
             $orders = Order::with(['deliverorder', 'deliveruserorder'])->whereHas('details', function ($query) {
                 $query->WhereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION]);
             })
-            ->whereHas('deliverorder', function ($query) {
-                $query->Where('deliver_quantity', '>', '0');
-            })
+                ->whereHas('deliverorder', function ($query) {
+                    $query->Where('deliver_quantity', '>', '0');
+                })
                 ->where('delivery_user_id', Auth::user()->id)
                 ->whereIn('order_status', [OrderStatus::READY_TO_DELIVER, OrderStatus::DISPATCHED, OrderStatus::READY_TO_PRODUCTION])
                 ->where('order_confirm', 1)
@@ -137,7 +137,7 @@ class OrderController extends Controller
 
     public function updateQuantityStatus(Request $request)
     {
-      
+
         $validator = validator($request->all(), [
             'delivery_quantity' => [
                 'required',
@@ -163,12 +163,12 @@ class OrderController extends Controller
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
             $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
             if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
-                $orderDetails->order->update(['order_status' => $request->new_status]);
+               // $orderDetails->order->update(['order_status' => $request->new_status]);
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
 
-                DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
-            
+            DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
+
             //return response()->json(['success' => 'Order status updated successfully']);
         } else {
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
@@ -177,9 +177,9 @@ class OrderController extends Controller
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
 
-            
-                DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
-            
+
+            DeliverQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'deliver_quantity' => $request->delivery_quantity]);
+
             //return response()->json(['success' => 'Order status updated successfully']);
         }
         return response()->json(['success' => 'Quantity Added successfully!']);
@@ -188,7 +188,7 @@ class OrderController extends Controller
 
     public function updateDeliveryQuantityStatus(Request $request)
     {
-     
+
         $validator = validator($request->all(), [
             'delivery_quantity' => [
                 'required',
@@ -209,27 +209,18 @@ class OrderController extends Controller
             return response()->json(['error' => 'Order is not valid!']);
         }
 
-        
-       
-        if ($orderDetails->order->details->count() == 1) {
-            $deliverQuan = ($request->delivery_order - $request->delivery_quantity);
-            if ($deliverQuan == 0) {
-                $orderDetails->order->update(['order_status' => $request->new_status]);
-                $orderDetails->update(['order_status' => $request->new_status]);
-            }
 
-                DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
-        
-            //return response()->json(['success' => 'Order status updated successfully']);
-        } else {
-            $deliverQuan = ($request->delivery_order - $request->delivery_quantity);
-            if ($deliverQuan == 0) {
-                $orderDetails->order->update(['order_status' => $request->new_status]);
-                $orderDetails->update(['order_status' => $request->new_status]);
-            }
-                DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
-            
+        $backorder = ($request->delivery_quantity + $request->deliverd_quantity);
+   
+        if ($backorder == $request->order_quantity) {
+            $orderDetails->update(['order_status' => $request->new_status]);
         }
+        if ($request->totalmainpending - $request->delivery_quantity == 0) {
+            $orderDetails->order->update(['order_status' => $request->new_status]);
+        }
+        DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);
+
+
         return response()->json(['success' => 'Quantity Added successfully!']);
     }
 
@@ -280,8 +271,8 @@ class OrderController extends Controller
     public function show(Order $order)
     {
 
-        
-        $order->loadMissing(['user', 'details'])->get(); 
+
+        $order->loadMissing(['user', 'details'])->get();
         if (auth()->user()->hasRole('Product Assembler')) {
             $access_status = [4, 5];
         } else if (auth()->user()->hasRole('Delivery User')) {
@@ -517,13 +508,13 @@ class OrderController extends Controller
     public function send_invoice($id)
     {
         $order = Order::leftJoin('user_addresses', 'orders.user_id', '=', 'user_addresses.user_id')
-        ->leftJoin('users', 'orders.user_id', '=', 'users.id') 
-        ->where('orders.id', $id)
-        ->select('orders.*', 'user_addresses.*', 'users.*')
-        ->first();
-        $signature = DeliveryUser::where('order_id', $id)->first();      
+            ->leftJoin('users', 'orders.user_id', '=', 'users.id')
+            ->where('orders.id', $id)
+            ->select('orders.*', 'user_addresses.*', 'users.*')
+            ->first();
+        $signature = DeliveryUser::where('order_id', $id)->first();
 
         $orderDetails = Order::with('details')->find($id);
-        return view('admin.orders.send-invoice',compact('order','signature','orderDetails'));
+        return view('admin.orders.send-invoice', compact('order', 'signature', 'orderDetails'));
     }
 }

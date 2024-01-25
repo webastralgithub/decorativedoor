@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -40,23 +41,43 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function redirectTo()
-    {
-        $user = Auth::user();
 
-        if (($user->hasRole('Super Admin'))) {
-            $redirecturl = '/admin/dashboard';
-        } elseif ($user->hasRole('Accountant')) {
-            $redirecturl = '/admin/dashboard';
-        } elseif ($user->hasRole('Delivery User')) {
-            $redirecturl = '/admin/orders';
-        } elseif ($user->hasRole('Product Assembler')) {
-            $redirecturl = '/admin/assembler-order';
-        } elseif ($user->hasRole('Admin')) {
-            $redirecturl = '/admin/dashboard';
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        // Attempt to log the user in
+        if ($this->attemptLogin($request)) {
+            // Check user's role and redirect accordingly
+            return $this->authenticated($request, Auth::user())
+                ?: redirect()->intended($this->redirectPath());
+        }
+
+        // If the login attempt was unsuccessful
+        return $this->sendFailedLoginResponse($request);
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $role = $user->getRoleNames();
+        
+        if (($role[0] == 'Super Admin')) {
+            $redirecturl = redirect()->route('dashboard');
+        } else if ($role[0] == 'Accountant') {
+            $redirecturl = redirect()->route('dashboard');
+        } else if ($role[0] == 'Delivery User') {
+            $redirecturl = redirect()->route('orders.index');
+        } else if ($role[0] == 'Product Assembler') {
+            $redirecturl = redirect()->route('order-assembler');
+        } else if ($role[0] == 'Admin') {
+            $redirecturl = redirect()->route('dashboard');
         } else {
             $redirecturl = '/'; // Redirect other users to the default home page
         }
-        return redirect($redirecturl);
+        // Default redirect for other roles
+        return redirect()->away($redirecturl->getTargetUrl());
     }
+
+
+
 }

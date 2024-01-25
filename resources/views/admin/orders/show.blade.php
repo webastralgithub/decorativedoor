@@ -17,7 +17,7 @@
     }
 </style>
 @endif
-<div class="mx-4 content-p-mobile">
+<div class="mx-4 content-p-mobile" id="order-listing-assembler">
     <div class="page-header-tp">
         <h3>{{ __('Order') }} #{{ $order->order_id }}</h3>
         <div class="top-bntspg-hdr">
@@ -115,18 +115,18 @@
                         <th scope="col" class="align-middle text-center">Photo</th>
                         <th scope="col" class="align-middle text-center">Product Name</th>
                         <th scope="col" class="align-middle text-center">Quantity</th>
-                        <th scope="col" class="align-middle text-center">Production Ready Qty</th>
-                        <th scope="col" class="align-middle text-center">Backorder Qty</th>
+                        <th scope="col" class="align-middle text-center order-listing-production-qty">Production Ready Qty</th>
+                        <th scope="col" class="align-middle text-center order-listing-backorder-qty">Backorder Qty</th>
                         @can('delivery-order-status')
                         <th scope="col" class="align-middle text-center">Delivered Qty</th>
                         <th scope="col" class="align-middle text-center">Pending Qty</th>
                         @endcan
                         @can('change-order-status')
-                        <th scope="col" class="align-middle text-center">Order Status</th>
+                        <th scope="col" class="align-middle text-center order-listing-order-status">Order Status</th>
                         @endcan
                         @if (!auth()->user()->hasRole('Super Admin'))
                         @can('delivery-order-status')
-                        <th scope="col" class="align-middle text-center">Order Status</th>
+                        <th scope="col" class="align-middle text-center order-listing-order-status">Order Status</th>
                         @endcan
                         @endif
                         @can('order_price')
@@ -145,6 +145,9 @@
                     $discount[] = $item->discount;
                     $finaltotal[] = $item->total;
 
+
+                    $pendingingtotal = getOrderDeliveryQuantity($order->id)['pendingQuantity']; 
+                    //dd($pendingingtotal);
                     @endphp
 
 
@@ -284,7 +287,7 @@
                         @if (!auth()->user()->hasRole('Super Admin'))
                         @can('delivery-order-status')
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}', '{{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')">Ready
+                            <button class="btn btn-primary btn-sm" onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}', '{{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{$backorder + $pending}}','{{$pendingingtotal}}')">Ready
                                 to delivery</button>
                         </td>
                         @endcan
@@ -433,7 +436,7 @@
                         @if (!auth()->user()->hasRole('Super Admin'))
                         @can('delivery-order-status')
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}', '{{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}')">Ready
+                            <button class="btn btn-primary btn-sm" onclick="return DeleiveryupdateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{ $item->quantity - getDeliverQuantity($item->order_id, $item->id) }}', '{{ mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}', '{{$backorder + $pending}}', '{{$pendingingtotal}}')">Ready
                                 to delivery</button>
                         </td>
                         @endcan
@@ -581,6 +584,8 @@
                                 <input type="hidden" name="item_id" id="d-item_id" value="">
                                 <input type="hidden" name="order_id" id="d-order_id" value="{{ $order->id }}">
                                 <input type="hidden" name="new_status" id="d-new_status" value="">
+                                <input type="hidden" name="backorder" id="d-bacorder" value="">
+                                <input type="hidden" name="totalmainpending" id="d-totalmainpending" value="">
                                 <input type="hidden" name="orders_quantity" id="d-orders_quantity" value="">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -664,8 +669,7 @@
         });
     }
 
-    function DeleiveryupdateSpecificProductrStatus(itemId, selectElement, order_quantity = '0', deliver_quantity = '0',
-        backorder_quantity = '0', deliverdqty = 0) {
+    function DeleiveryupdateSpecificProductrStatus(itemId, selectElement, order_quantity = '0', deliver_quantity = '0', backorder_quantity = '0', deliverdqty = '0',  backorder = '0', totalmainpending = '0') {
         var newStatus = 6;
         jQuery('#deliveredModal').modal('show');
         jQuery('#d-delivery_quantity').val('');
@@ -675,6 +679,9 @@
         jQuery('#d-item_id').val(itemId);
         jQuery('#d-orders_quantity').val(order_quantity);
         jQuery('#d-new_status').val(newStatus);
+        jQuery('#d-bacorder').val(backorder);
+        jQuery('#d-totalmainpending').val(totalmainpending);
+
 
 
     }
@@ -733,7 +740,7 @@
 
         // if (delivery_quantity > (order_quantity - delivery_order) || ((delivery_order + delivery_quantity) <
         //         order_quantity)) {
-        if (delivery_quantity > (order_quantity - delivery_order) || ((order_quantity - delivery_order) == 0)) {
+        if (parseInt(delivery_quantity) > (parseInt(order_quantity) - parseInt(delivery_order)) || ((parseInt(order_quantity) - parseInt(delivery_order)) == 0)) {
             jQuery('.errors').append(
                 `<span class="text-danger ">Delivery quantity must be less then Ordered quantity</span>`);
             hideErrors();
@@ -799,6 +806,13 @@
         let orderId = jQuery('#d-order_id').val();
         let itemId = jQuery('#d-item_id').val();
         let newStatus = jQuery('#d-new_status').val();
+        let backorder = jQuery('#d-bacorder').val();
+        let totalmainpending = jQuery('#d-totalmainpending').val();
+        let deliverd_quantity = jQuery('#d-deliverd_quantity').text();
+        
+        //alert(delivery_order);
+        //return false;
+        
         //let missingqty = jQuery('#d-missing_item').text();
 
         if (delivery_quantity <= 0) {
@@ -807,13 +821,19 @@
             return false;
         }
         console.log("order_quantity", delivery_quantity, delivery_order);
-        if (delivery_quantity > delivery_order && delivery_order != 0 && delivery_order > 0) {
+        if (parseInt(delivery_order) < parseInt(delivery_quantity)) {
             jQuery('.errors').append(
                 `<span class="text-danger">You have delivered all the quantity that was assigned by the assembler.</span>`
             );
             hideErrors();
             return false;
-        } else if (delivery_order <= 0) {
+        }else if(delivery_order < 0){
+            jQuery('.errors').append(
+                `<span class="text-danger">You have delivered all the quantity that was assigned by the assembler >0.</span>`
+            );
+            hideErrors();
+            return false;
+        }else if (delivery_order <= 0) {
             jQuery('.errors').append(
                 `<span class="text-danger">You have delivered all the quantity that was assigned by the assembler.</span>`
             );
@@ -830,7 +850,9 @@
                 order_quantity: order_quantity,
                 delivery_quantity: delivery_quantity,
                 delivery_order: delivery_order,
-                //missingqty: missingqty,
+                backorder: backorder,
+                totalmainpending:totalmainpending,
+                deliverd_quantity:deliverd_quantity,
 
                 _token: '{{ csrf_token() }}' // Add CSRF token if needed
             },
@@ -838,8 +860,10 @@
                 console.log("response", response);
                 // Handle success, if needed
                 if (response.success) {
+                    jQuery('#d-orders_quantity').val((delivery_order - delivery_quantity));
                     jQuery('#delivery_order').text((delivery_order + delivery_quantity));
                     jQuery('#exampleModal').modal('hide');
+
                     jQuery('#success-message').text('Order Status and Quantity updated!').show();
                     setTimeout(() => {
                         jQuery('#success-message').hide();
@@ -894,6 +918,6 @@
             $(modal).modal('hide');
         }
     }
-    deliveredModal
+    
 </script>
 @endsection

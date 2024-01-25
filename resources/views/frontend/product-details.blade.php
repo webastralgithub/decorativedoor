@@ -87,135 +87,143 @@ json_decode($variantSingle->option_type, true) : null;
                     @endif
                     <div id="productDiscountMessage" class="product-discount-message" style="display:none;"></div>
                     <p>{!!$product->short_description!!}</p>
-                    <div class="col-8 varients-block-flex mb-3 p-0">
-                        <label>Type of Door</label>
-                        <select class="form-control" id="type-of-door" onchange="return doortype('{{$product->id}}')">
-                            <option value="">Type of Door</option>
-                            @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
-                            @foreach ($product->categories[0]->type_of_doors as $typeOfDoor)
-                            <option value="{{ $typeOfDoor->name }}" {{ $product->type_of_door === $typeOfDoor->name ?
-                                'selected' : '' }}>
-                                {{ $typeOfDoor->name }}
-                            </option>
-                            @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div class="col-8 varients-block-flex mb-3 p-0">
-                        <label>Loaction of Door</label>
-                        <select class="form-control" id="location-of-door"
-                            onchange="return doorlocation('{{$product->id}}')">
-                            @if ( isset($product->categories[0]) && $product->categories[0]->location_of_doors)
-                            @foreach ($product->categories[0]->location_of_doors as $location_of_doors)
-                            <option value="{{ $location_of_doors->name }}" {{ $product->location_of_doors ===
-                                $location_of_doors->name ? 'selected' : '' }}>
-                                {{ $location_of_doors->name }}
-                            </option>
-                            @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div class="col-8 varients-block-flex mb-3 p-0">
-                        <label>Jamb</label>
-                        <select class="form-control" id="jamb" onchange="return doorjamb('{{$product->id}}')">
-                            <option>JMB</option>
-                            @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
-                            @foreach ($product->categories[0]->jambs as $jambs)
-                            <option value="{{ $jambs->name }}" {{ $product->jambs === $jambs->name ? 'selected' : '' }}>
-                                {{ $jambs->name }}
-                            </option>
-                            @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div class="col-8 varients-block-flex mb-3 p-0">
-                        <label>Right</label>
-                        <select class="form-control" id="left" onchange="return doorleft('{{$product->id}}')">
-                            <option>Left</option>
-                            @if ( isset($product->categories[0]) && $product->categories[0]->lefts)
-                            @foreach ($product->categories[0]->lefts as $lefts)
-                            <option value="{{ $jambs->name }}" {{ $product->lefts === $lefts->name ? 'selected' : '' }}>
-                                {{ $lefts->name }}
-                            </option>
-                            @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div class="col-8 varients-block-flex mb-3 p-0">
-                        <label>Left</label>
-                        <select class="form-control" id="right" onchange="return doorright('{{$product->id}}')">
-                            <option>Right</option>
-                            @if (isset($product->categories[0]) && $product->categories[0]->rights)
-                            @foreach ($product->categories[0]->rights as $rights)
-                            <option value="{{ $jambs->name }}" {{ $product->rights === $rights->name ? 'selected' : ''
-                                }}>
-                                {{ $rights->name }}
-                            </option>
-                            @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    @if(!empty($product->variants) && !empty($variantOptions))
-                    <div class="varients-cart">
-                        <h3>Variants</h3>
-                        <div class="varients-block-flex">
-                            @foreach($variantOptions as $variantCombination)
-                            <div class="varient-block-cn">
-                                <label>{{ucwords($variantCombination['variantType'])}}</label>
+                    <div class="interior-panel-div-parent">
+                        <div class="varients-block-flex mb-3 p-0 interior-panel-div">
+                            <label>Type of Door</label>
+                            <select class="form-control" id="type-of-door"
+                                onchange="return doortype('{{$product->id}}')">
+                                <option value="">Type of Door</option>
+                                @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
+                                @foreach ($product->categories[0]->type_of_doors as $typeOfDoor)
+                                <option value="{{ $typeOfDoor->name }}" {{ $product->type_of_door === $typeOfDoor->name
+                                    ?
+                                    'selected' : '' }}>
+                                    {{ $typeOfDoor->name }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="varients-block-flex mb-3 p-0 interior-panel-div">
+                            <label>Loaction of Door</label>
+                            <select class="form-control" id="location-of-door"
+                                onchange="return doorlocation('{{$product->id}}')">
+                                @if ( isset($product->categories[0]) && $product->categories[0]->location_of_doors)
+                                @foreach ($product->categories[0]->location_of_doors as $location_of_doors)
+                                <option value="{{ $location_of_doors->name }}" {{ $product->location_of_doors ===
+                                    $location_of_doors->name ? 'selected' : '' }}>
+                                    {{ $location_of_doors->name }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="varients-block-flex mb-3 p-0 interior-panel-div">
+                            <label>Jamb</label>
+                            <select class="form-control" id="jamb" onchange="return doorjamb('{{$product->id}}')">
+                                <option>JMB</option>
+                                @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
+                                @foreach ($product->categories[0]->jambs as $jambs)
+                                <option value="{{ $jambs->name }}" {{ $product->jambs === $jambs->name ? 'selected' : ''
+                                    }}>
+                                    {{ $jambs->name }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="varients-block-flex mb-3 p-0 interior-panel-div">
+                            <label>Right</label>
+                            <select class="form-control" id="left" onchange="return doorleft('{{$product->id}}')">
+                                <option>Left</option>
+                                @if ( isset($product->categories[0]) && $product->categories[0]->lefts)
+                                @foreach ($product->categories[0]->lefts as $lefts)
+                                <option value="{{ $jambs->name }}" {{ $product->lefts === $lefts->name ? 'selected' : ''
+                                    }}>
+                                    {{ $lefts->name }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="varients-block-flex mb-3 p-0 interior-panel-div">
+                            <label>Left</label>
+                            <select class="form-control" id="right" onchange="return doorright('{{$product->id}}')">
+                                <option>Right</option>
+                                @if (isset($product->categories[0]) && $product->categories[0]->rights)
+                                @foreach ($product->categories[0]->rights as $rights)
+                                <option value="{{ $jambs->name }}" {{ $product->rights === $rights->name ? 'selected' :
+                                    ''
+                                    }}>
+                                    {{ $rights->name }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        @if(!empty($product->variants) && !empty($variantOptions))
+                        <div class="varients-cart">
+                            <h3>Variants</h3>
+                            <div class="varients-block-flex">
+                                @foreach($variantOptions as $variantCombination)
+                                <div class="varient-block-cn">
+                                    <label>{{ucwords($variantCombination['variantType'])}}</label>
 
-                                <select class="variants">
-                                    <option disabled selected value="0">Select
-                                        {{ucwords($variantCombination['variantType'])}}
-                                    </option>
-                                    @foreach($variantCombination['tagNames'] as $key => $tags)
-                                    <option value="{{$tags}}">{{ucwords($tags)}}</option>
-                                    @endforeach
-                                </select>
+                                    <select class="variants">
+                                        <option disabled selected value="0">Select
+                                            {{ucwords($variantCombination['variantType'])}}
+                                        </option>
+                                        @foreach($variantCombination['tagNames'] as $key => $tags)
+                                        <option value="{{$tags}}">{{ucwords($tags)}}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                @endforeach
 
                             </div>
-                            @endforeach
-
                         </div>
-                    </div>
-                    @endif
-                    <form id="addToCartForm" class="form-cart-btn">
-                        @csrf
-                        @method('POST')
-                        <div class="product__details__quantity">
-                            <div class="quantity">
-                                <div class="pro-qty">
-                                    <tr data-id="{{$product->id}}">
-                                    </tr>
-                                    <input type="number" min="0" value="1" class="quantity " name="quantity">
+                        @endif
+                        <form id="addToCartForm" class="form-cart-btn">
+                            @csrf
+                            @method('POST')
+                            <div class="product__details__quantity">
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <tr data-id="{{$product->id}}">
+                                        </tr>
+                                        <input type="number" min="0" value="1" class="quantity " name="quantity">
+                                    </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="type" id="door-type" value="" />
+                            <input type="hidden" name="location" id="door-location" value="" />
+                            <input type="hidden" name="jamb" id="door-jamb" value="" />
+                            <input type="hidden" name="left" id="door-left" value="" />
+                            <input type="hidden" name="right" id="door-right" value="" />
+
+                            <input type="hidden" name="variant" class="product-variant-data"
+                                value="{{json_encode($variantSingle)}}" />
+                            <input type="hidden" name="product_id" value="{{$product->id}}" />
+                            <button type="button" class="primary-btn add-to-cart " onclick="return addToCart(event)"
+                                @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
+                            <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal"
+                                data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
+                        </form>
+                        @if(session('success'))
+                        <div id="productDiscountMessage" class="product-discount-message">
+                            {{ session('success') }}
                         </div>
-                        <input type="hidden" name="type" id="door-type" value="" />
-                        <input type="hidden" name="location" id="door-location" value="" />
-                        <input type="hidden" name="jamb" id="door-jamb" value="" />
-                        <input type="hidden" name="left" id="door-left" value="" />
-                        <input type="hidden" name="right" id="door-right" value="" />
+                        @endif
+                        <div id="addtocartMessage"></div>
 
-                        <input type="hidden" name="variant" class="product-variant-data"
-                            value="{{json_encode($variantSingle)}}" />
-                        <input type="hidden" name="product_id" value="{{$product->id}}" />
-                        <button type="button" class="primary-btn add-to-cart " onclick="return addToCart(event)"
-                            @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
-                        <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal"
-                            data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
-                    </form>
-                    @if(session('success'))
-                    <div id="productDiscountMessage" class="product-discount-message">
-                        {{ session('success') }}
+
+                        <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
+                                getProductAvailabityStock($product->id) > 0 && (getProductAvailabityStock($product->id)
+                                >
+                                getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
+                        </ul>
                     </div>
-                    @endif
-                    <div id="addtocartMessage"></div>
-
-
-                    <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
-                            getProductAvailabityStock($product->id) > 0 && (getProductAvailabityStock($product->id) >
-                            getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
-                    </ul>
                 </div>
             </div>
 
