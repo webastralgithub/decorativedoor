@@ -176,76 +176,6 @@
                                 <a href="{{ route('cart') }}" class="btn btn-success cart-btn">Cart ({{ $cart['quantity'] }} Item)</a>
                             </div>
                         </div>
-
-                        <div class="col-lg-12">
-                            <div class="row cart-sucess-pg-btm-summary">
-                                <div class="col-lg-2 col-md-6">
-                                    <div class="product__details__pic">
-                                        <div class="product__details__pic__item">
-                                            @if($cart['image']['path'])
-                                            <img class="product__details__pic__item--large" src="{{ asset('storage/products/' .$cart['image']['path'])}}" width="100" height="100" class="img-responsive" />
-                                            @else
-                                            <img class="product__details__pic__item--large" src="{{ asset('frontend/img/product/details/product-details-1.jpg') }}" width="100" height="100" class="img-responsive" />
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-
-                                @if (!empty($cart['variant_data']))
-                                @foreach ($cart['variant_data'] as $variation)
-                                <div class="col-lg-10 col-md-6">
-                                    <div class="product__details__text product__details__text-summary">
-                                        <h3>{{ $cart['name'] }}</h3>
-                                        <div class="product__details__price">
-                                            <span><b>Cart subtotal</b> ({{ $variation['quantity'] }} item)</span>
-                                            ${{ $variation['price'] * $variation['quantity']}}
-                                        </div>
-
-                                        <ul class="variants-ul" style="margin-top: 0;padding-top: 0;border: none;">
-                                            <li class="Variantsl-li">
-                                                <b>Variants</b>
-                                            </li>
-
-                                            <li><b>Quantity</b> <span>{{ $variation['quantity'] }}</span></li>
-                                            <li><b>Size</b> <span>{{ $variation['name'] }}</span></li>
-                                            @if(!empty($cart['doortype']))
-                                            <li><b>Type of Door</b> <span>{{ \App\Models\TypeOfDoor::find($cart['doortype'])->name }}</span></li>
-                                            @endif
-                                            @if(!empty($cart['doorlocation']))
-                                            <li><b>Type of Location</b> <span>{{ \App\Models\LocationOfDoor::find($cart['doorlocation'])->name }}</span></li>
-                                            @endif
-                                            @if(!empty($cart['doorjamb']))
-                                            <li><b>Jamb</b> <span>{{ \App\Models\Jamb::find($cart['doorjamb'])->name }}</span></li>
-                                            @endif
-                                            @if(!empty($cart['doorleft']))
-                                            <li><b>Left</b> <span>{{ \App\Models\Left::find($cart['doorleft'])->name }}</span></li>
-                                            @endif
-                                            @if(!empty($cart['doorright']))
-                                            <li><b>Right</b> <span>{{ \App\Models\Right::find($cart['doorright'])->name }}</span></li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </div>
-                                @endforeach
-                                @else
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-lg-10 col-md-6">
-                            <div class="product__details__text product__details__text-summary">
-                                <h3>{{ $cart['name'] }}</h3>
-                                <div class="product__details__price">${{ $cart['price'] * $cart['quantity'] }}</div>
-                                <p>{!! $cart['description'] !!}</p>
-
-                                <ul class="variants-ul" style="margin-top: 0;padding-top: 0;border: none;">
-                                    <li><b>Quantity</b> <span>{{ $cart['quantity'] }}</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        @endif
-                        @endforeach
                     </div>
 
                     <div class="col-lg-12">
@@ -292,6 +222,8 @@
                             @else
                         </div>
                     </div>
+
+
 
                     <div class="col-lg-10 col-md-6">
                         <div class="product__details__text product__details__text-summary">
