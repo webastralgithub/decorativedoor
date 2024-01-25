@@ -394,24 +394,24 @@
                             @endphp
                             <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="return updateSpecificProductrStatus('{{ $item->id }}',this, '{{ $item->quantity }}', '{{ getDeliverQuantity($item->order_id, $item->id) }}', '{{ getDeliverQuantity($item->order_id, $item->id) - mangePendingQuantity($item->order_id, $item->id)['deliverdQuantity'] }}','{{$item->order_status}}')" @disabled($disabled)>
                                 @foreach ($order_statuses as $status)
-                                @if (\App\Models\OrderStatus::COMPLETE == $status->id)
+                                {{-- @if (\App\Models\OrderStatus::COMPLETE == $status->id)
                                 <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
                                     @selected($item->order_status == $status->id)>
                                     {{ convertToReadableStatus($status->name) }}
                                 </option>
-                                @endif
+                                @endif --}}
                                 @if (\App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id)
                                 <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
                                     @selected($item->order_status == $status->id)>
                                     {{ convertToReadableStatus($status->name) }}
                                 </option>
                                 @endif
-                                @if (\App\Models\OrderStatus::FAILED == $status->id)
+                                {{-- @if (\App\Models\OrderStatus::FAILED == $status->id)
                                 <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
                                     @selected($item->order_status == $status->id)>
                                     {{ convertToReadableStatus($status->name) }}
                                 </option>
-                                @endif
+                                @endif --}}
                                 @if (\App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id)
                                 <option @disabled(!in_array($status->id, $access_status)) value="{{ $status->id }}"
                                     @selected($item->order_status == $status->id)>
