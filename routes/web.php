@@ -16,6 +16,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -72,7 +73,7 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
         'category' =>  CategoryController::class,
         'permissions' =>  PermissionController::class,
         'deliveries' =>  DeliveriesController::class,
-        // 'orders' =>  \App\Http\Controllers\OrderController::class
+        'payment' =>  PaymentController::class
     ]);
 
     Route::post('/product-image-delete', [ProductController::class, 'ProductImageDelete'])->name('product.imges.delete');
@@ -104,5 +105,8 @@ Route::middleware(['auth', 'isAdminAccess'])->prefix('admin')->group(function ()
     Route::get('/deliverie', [DeliveriesController::class, 'index'])->name('deliveries');
     Route::get('/deliveries/track', [DeliveriesController::class, 'orderTrack'])->name('order.track');
     Route::post('deliveries/track/order', [DeliveriesController::class, 'deliveryTrackOrder'])->name('delivery.track.order');
+
+    Route::get('make-payment/{id}', [PaymentController::class, 'show'])->name('make-payment');
+
 });
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.order');

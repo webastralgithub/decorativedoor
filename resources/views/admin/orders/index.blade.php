@@ -103,8 +103,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     @can('make-payment')
-                                    <li><a class="dropdown-item" onclick="return makePayment('{{ $order->id }}');">Make
-                                            Payment</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('make-payment',$order->id)}}" >Make Payment</a></li>
                                     @endcan
                                     @can('add-signature')
                                     <li><a href="{{ route('orders.delivery_user', $order->id) }}" class="dropdown-item">Take Signature</a></li>
@@ -189,7 +188,7 @@
                         <td>{{ getTotalQuantity($order->id) }}</td>
                         @endif
                         @can('order_price')
-                        <td>${{ number_format(getOrderTotalprice($order->id), 2, '.', ',') }}</td>
+                        <td>${{ number_format(getTotalPrice(getOrderTotalprice($order->id)), 2, '.', ',') }}</td>
                         @endcan
                         @if (auth()->user()->hasRole('Accountant'))
                         <td><button class="btn btn-primary btn-sm my-2" onclick="return updateProductStatus('{{ $order->id }}', 4)"> Okay to proceed
