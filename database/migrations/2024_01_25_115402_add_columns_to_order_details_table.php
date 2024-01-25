@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('order_details', function (Blueprint $table) {
-         $table->unsignedBigInteger('jamb_id')->nullable();
-         $table->unsignedBigInteger('typeofdoor_id')->nullable();
-         $table->unsignedBigInteger('locationofdoor_id')->nullable();
-         $table->unsignedBigInteger('left_id')->nullable();
-         $table->unsignedBigInteger('right_id')->nullable();
-
+            $table->unsignedBigInteger('jamb_id')->nullable();
+            $table->unsignedBigInteger('typeofdoor_id')->nullable();
+            $table->unsignedBigInteger('locationofdoor_id')->nullable();
+            $table->unsignedBigInteger('variant_category_id')->nullable();
+            $table->unsignedBigInteger('left_id')->nullable();
+            $table->unsignedBigInteger('right_id')->nullable();
         });
     }
 
@@ -27,12 +27,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('order_details', function (Blueprint $table) {
-        $table->dropColumn('jamb_id');
-        $table->dropColumn('typeofdoor_id');
-        $table->dropColumn('locationofdoor_id');
-        $table->dropColumn('left_id');
-        $table->dropColumn('right_id');
-
+            $table->dropColumn('jamb_id');
+            $table->dropColumn('typeofdoor_id');
+            $table->dropColumn('locationofdoor_id');
+            $table->dropColumn('left_id');
+            $table->dropColumn('right_id');
+            $table->dropColumn('variant_category_id');
         });
     }
 };

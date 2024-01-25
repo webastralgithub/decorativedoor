@@ -51,4 +51,8 @@ class Category extends Model
         return $this->hasMany(LocationOfDoor::class);
     }
 
+    public function variant_categories()
+    {
+        return $this->hasMany(VariantCategory::class);
+    }
 }

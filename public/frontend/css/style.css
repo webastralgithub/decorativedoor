@@ -921,9 +921,9 @@ button:disabled {
     width: 77%;
 }
 
-.interior-panel-div-parent .interior-panel-div label {
+/* .interior-panel-div-parent .interior-panel-div label {
     width: 40%;
-}
+} */
 
 .interior-panel-div-parent .interior-panel-div.interior-door-type label {
     width: fit-content;

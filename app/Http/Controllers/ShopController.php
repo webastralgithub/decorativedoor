@@ -48,7 +48,15 @@ class ShopController extends Controller
 
     public function product_details($slug)
     {
-        $product = Product::with(['image', 'categories.jambs', 'categories.lefts', 'categories.rights', 'categories.type_of_doors', 'categories.location_of_doors'])->where('slug', $slug)->first();
+        $product = Product::with([
+            'image', 'categories.jambs', 'categories.lefts',
+            'categories.rights', 'categories.type_of_doors',
+            'categories.location_of_doors',
+            'categories.variant_categories'
+        ])->where('slug', $slug)->first();
+        // echo '<pre>';
+        // print_r($product->categories[1]);
+        // die;
         if (empty($product)) {
             return abort(404);
         }
@@ -61,7 +69,6 @@ class ShopController extends Controller
     public function addToCart(Request $request)
     {
         session()->forget('succescart');
-
         $cart = (!session()->has('cart')) ? session()->get('cart', []) : session()->get('cart');
         $succescart = (!session()->has('succescart')) ? session()->get('succescart', []) : session()->get('succescart');
         $discount = session()->get('discount');
@@ -99,6 +106,7 @@ class ShopController extends Controller
                         "doorjamb" => $request->doorjamb,
                         "doorleft" => $request->doorleft,
                         "doorright" => $request->doorright,
+                        "variant_category_id" => $request->variant_category_id,
                         // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
                         // "variant_price" => 0
 
@@ -137,6 +145,7 @@ class ShopController extends Controller
                     "doorjamb" => $request->doorjamb,
                     "doorleft" => $request->doorleft,
                     "doorright" => $request->doorright,
+                    "variant_category_id" => $request->variant_category_id,
                     // "variant_price" => $product->selling_price
                 ];
             }
@@ -164,6 +173,7 @@ class ShopController extends Controller
                         "doorjamb" => $request->doorjamb,
                         "doorleft" => $request->doorleft,
                         "doorright" => $request->doorright,
+                        "variant_category_id" => $request->variant_category_id,
                         // "variant_id" => (!empty($selectedVariant['id'])) ? $selectedVariant['id'] : 0,
                         // "variant_price" => 0
 
@@ -203,6 +213,7 @@ class ShopController extends Controller
                     "doorjamb" => $request->doorjamb,
                     "doorleft" => $request->doorleft,
                     "doorright" => $request->doorright,
+                    "variant_category_id" => $request->variant_category_id,
                     // "variant_price" => $product->selling_price
                 ];
             }
@@ -437,7 +448,6 @@ class ShopController extends Controller
 
     public function AddtoCartSubmit()
     {
-
         $succescart = (!session()->has('succescart')) ? session()->get('succescart', []) : session()->get('succescart');
         return view('frontend.add-to-cart', compact('succescart'));
     }
