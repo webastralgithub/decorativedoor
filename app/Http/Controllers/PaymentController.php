@@ -47,7 +47,7 @@ class PaymentController extends Controller
 
         $order =  Order::with(['customer'])->where('id', $id)->first();
         
-        dd($order);
+        //dd($order);
         return view('admin.payment.index', [
             'order_id' => $id, 
             'payments' => $paymentList,  
