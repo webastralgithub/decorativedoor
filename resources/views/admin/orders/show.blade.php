@@ -448,7 +448,7 @@
                         </td>
 
                         <td class="align-middle ">
-                            ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
+                            ${{ number_format(abs($item->quantity * $item->unitcost), 2, '.', ',') }}
                         </td>
                         @endcan
                     </tr>

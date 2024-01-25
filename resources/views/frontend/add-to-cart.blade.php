@@ -209,11 +209,21 @@
 
                                                 <li><b>Quantity</b> <span>{{ $variation['quantity'] }}</span></li>
                                                 <li><b>Size</b> <span>{{ $variation['name'] }}</span></li>
+                                                @if(!empty($cart['doortype'])->name)
                                                 <li><b>Type of Door</b> <span>{{ \App\Models\TypeOfDoor::find($cart['doortype'])->name }}</span></li>
+                                                @endif
+                                                @if(!empty($cart['doorlocation'])->name)
                                                 <li><b>Type of Location</b> <span>{{ \App\Models\LocationOfDoor::find($cart['doorlocation'])->name }}</span></li>
+                                                @endif
+                                                @if(!empty($cart['doorjamb'])->name)
                                                 <li><b>Jamb</b> <span>{{  \App\Models\Jamb::find($cart['doorjamb'])->name }}</span></li>
+                                                @endif
+                                                @if(!empty($cart['doorleft'])->name)
                                                 <li><b>Left</b> <span>{{  \App\Models\Left::find($cart['doorleft'])->name }}</span></li>
+                                                @endif
+                                                @if(!empty($cart['doorright'])->name)
                                                 <li><b>Right</b> <span>{{  \App\Models\Right::find($cart['doorright'])->name }}</span></li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </div>
