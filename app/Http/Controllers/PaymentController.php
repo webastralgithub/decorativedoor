@@ -35,7 +35,7 @@ class PaymentController extends Controller
             'payment_method' => 'required',
         ]);
 
-        $paymentList = Payment::all();
+        $paymentList = Payment::where('order_id', $request->order_id)->get();
         
         $pendingammount = 0;
         foreach($paymentList as $payment){
@@ -65,7 +65,7 @@ class PaymentController extends Controller
      */
     public function show(string $id)
     {
-        $paymentList = Payment::all();
+        $paymentList = Payment::where('order_id', $id)->get();
 
         $order =  Order::with(['customer'])->where('id', $id)->first();
         
