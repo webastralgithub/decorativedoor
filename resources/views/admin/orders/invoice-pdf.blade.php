@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="width:60s%" class="col-xs-7 invoice-body-col-xs-7 invoice-body-custom-inner-col-7">
+                <div style="width:60%" class="col-xs-7 invoice-body-col-xs-7 invoice-body-custom-inner-col-7">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">User Details</h3>
