@@ -47,11 +47,16 @@ class PaymentController extends Controller
 
         $order =  Order::with(['customer'])->where('id', $id)->first();
         
+        $pendingammount = 0;
+        foreach($paymentList as $payment){
+            $pendingammount += $payment->recived_payment;
+        }
         //dd($order);
         return view('admin.payment.index', [
             'order_id' => $id, 
             'payments' => $paymentList,  
-            'order' => $order,          
+            'order' => $order,  
+            'totalpending' => $pendingammount,        
         ]);
     }
 

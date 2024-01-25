@@ -10,9 +10,9 @@
     <div class="content-body">
 
         <div class="mb-3 row">
-            <div class="col-md-4"><strong> Total Amount : 2000 </strong></div>
-            <div class="col-md-4"><strong> Recived Amount : 1000 </strong></div>
-            <div class="col-md-4"><strong> Pending Amount : 1000 </strong></div>
+            <div class="col-md-4"><strong> Total Amount : ${{ number_format(getTotalPrice(getOrderTotalprice($order->id)), 2, '.', ',') }} </strong></div>
+            <div class="col-md-4"><strong> Recived Amount : ${{ $totalpending }} </strong></div>
+            <div class="col-md-4"><strong> Pending Amount : ${{ number_format(getTotalPrice(getOrderTotalprice($order->id) - $totalpending), 2, '.', ',')}} </strong></div>
         </div>
         <form action="{{ route('payment.store')}}" method="Post">
             @csrf
