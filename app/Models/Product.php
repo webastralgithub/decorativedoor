@@ -34,7 +34,12 @@ class Product extends Model
         return $this->hasMany(Inventory::class);
     }
 
-    public function orderdetails(){
+    public function orderdetails()
+    {
         return $this->hasMany(OrderDetails::class);
+    }
+    public function variant_categories()
+    {
+        return $this->hasMany(VariantCategory::class);
     }
 }

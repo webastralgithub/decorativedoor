@@ -50,11 +50,21 @@ class OutsideDoorSeeder extends Seeder
             ['name' => 'OPEN IN O/IN', 'category_id' => 3],
             ['name' => 'OPEN OUT O/O', 'category_id' => 3],
         ];
+        $category = [
+            ['name' => 'WEATHER STRIP (WS)', 'category_id' => 3],
+            ['name' => 'DOUBLE DRILL ', 'category_id' => 3],
+            ['name' => 'METAL SILL (MS) ', 'category_id' => 3],
+            ['name' => 'SINGLE DRILL ', 'category_id' => 3],
+            ['name' => 'BRICK MOULDINGS (BM)', 'category_id' => 3],
+            ['name' => 'ROLLERS', 'category_id' => 3],
+            ['name' => 'PEEP LENS ', 'category_id' => 3],
+        ];
 
         DB::table('type_of_doors')->insert($type_of_door);
         DB::table('location_of_doors')->insert($additional_locations);
         DB::table('jambs')->insert($jamb);
         DB::table('lefts')->insert($left);
         DB::table('rights')->insert($right);
+        DB::table('variant_categories')->insert($category);
     }
 }

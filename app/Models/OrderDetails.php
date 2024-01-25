@@ -24,6 +24,7 @@ class OrderDetails extends Model
         "jamb_id",
         "typeofdoor_id",
         "locationofdoor_id",
+        "variant_category_id",
         "left_id",
         "right_id",
     ];

@@ -46,6 +46,10 @@ class InsideDoorSeeder extends Seeder
             ['name' => '4 7/8', 'category_id' => 8],
         ];
         
+        $category = [
+            ['name' => 'ROLLERS', 'category_id' => 8],
+        ];
+
         $left = [
             ['name' => 'OPEN IN O/IN', 'category_id' => 8],
             ['name' => 'OPEN OUT O/O', 'category_id' => 8],
@@ -59,5 +63,6 @@ class InsideDoorSeeder extends Seeder
         DB::table('jambs')->insert($jamb);
         DB::table('lefts')->insert($left);
         DB::table('rights')->insert($right);
+        DB::table('variant_categories')->insert($category);
     }
 }
