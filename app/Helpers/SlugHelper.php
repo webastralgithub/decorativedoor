@@ -394,3 +394,13 @@ if (!function_exists('getInvoiceDeliveryQuantity')) {
         return $data;
     }
 }
+
+if (!function_exists('getTotalPrice')) {
+    function getTotalPrice($total = 0)
+    {
+        $total += env("GST_HST_TAX", 0);
+        $total += env("PST_RST_QST_TAX", 0);
+
+        return $total;
+    }
+}

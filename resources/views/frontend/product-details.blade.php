@@ -108,6 +108,7 @@ json_decode($variantSingle->option_type, true) : null;
                             <label>Loaction of Door</label>
                             <select class="form-control" id="location-of-door"
                                 onchange="return doorlocation('{{$product->id}}')">
+                                <option value="">Loaction of Door</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->location_of_doors)
                                 @foreach ($product->categories[0]->location_of_doors as $location_of_doors)
                                 <option value="{{ $location_of_doors->name }}" {{ $product->location_of_doors ===

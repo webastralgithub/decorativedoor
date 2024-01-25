@@ -1,19 +1,21 @@
-<div class="container invoice">
-        <div class="invoice-header">
-            <div class="row">
-                <div class="col-xs-8">
-                    <h1>Invoice</h1>
-                    <h4 class="text-muted">NO: <strong>{{$order->invoice_no}} </strong>| Date: <strong>{{
+
+
+<div style="padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; max-width:1140px;  background: #fff; width: 970px !important; margin: 50px auto; border: 1px solid #00000061; background-color: #eef1f4;" class="container invoice">
+        <div style=" padding: 25px 25px 15px;" class="invoice-header">
+            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; " class="row invoice-header-row">
+                <div style="width:50%"  class="col-xs-8 invoice-header-col-xs-8">
+                    <h1 style="  margin: 0; color: #2b4551; font-size: 36px; font-weight: 500;">Invoice</h1>
+                    <h4 style="color:#6c757d !important; margin-top:10px; margin-bottom:10px; font-weight:500; font-size:18px;" class="text-muted">NO: <strong style="color:rgba(0, 0, 0, 0.75); ">{{$order->invoice_no}} </strong>| Date: <strong>{{
                             \Carbon\Carbon::parse($order->created_at)->format('d-m-Y') }}</strong></h4>
                 </div>
-                <div class="col-xs-4">
-                    <div class="media">
-                        <div class="media-left">
-                            <img class="media-object logo"
+                <div style="width:33%" class="col-xs-4 invoice-header-col-xs-4">
+                    <div style="margin-top:0; display:flex; overflow:hidden;" class="media">
+                        <div style="padding-right:10px;" class="media-left invoice-header-media-left">
+                            <img style="width:100%" class="media-object logo media-left-img"
                                 src="https://sunrisedoor.nvinfobase.com/frontend/img/logo.png" />
                         </div>
-                        <ul class="media-body list-unstyled">
-                            <li><strong>Sunrise Doors</strong></li>
+                        <ul style="font-size:0.9em; margin:0;" class="media-body list-unstyled invoice-header-media-body">
+                            <li><strong style="font-weight:700;">Sunrise Doors</strong></li>
                             <li>00-00 Road 00000</li>
                             <li>info@sunrisedoor.com</li>
                         </ul>
@@ -21,15 +23,15 @@
                 </div>
             </div>
         </div>
-        <div class="invoice-body">
-            <div class="row">
-                <div class="col-xs-5">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
+        <div style=" padding: 25px 25px 15px;" class="invoice-body invoice-body-custom">
+            <div style="display:flex; justy-content:space-between; " class="row invoice-body-row">
+                <div style="width:40%; " class="col-xs-5 invoice-body-col-xs-5 invoice-body-custom-inner-col-5">
+                    <div class="panel panel-default invoice-body-panel">
+                        <div class="panel-heading invoice-body-panel-heading">
                             <h3 class="panel-title">Company Details</h3>
                         </div>
                         <div class="panel-body">
-                            <dl class="dl-horizontal">
+                            <dl class="dl-horizontal invoice-body-dl">
                                 <dt>Name</dt>
                                 <dd><strong>Sunrise Doors</strong></dd>
                                 <dt>Address</dt>
@@ -41,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-7">
+                <div style="width:60s%" class="col-xs-7 invoice-body-col-xs-7 invoice-body-custom-inner-col-7">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">User Details</h3>
@@ -68,11 +70,11 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default panel-default-custom">
                 <div class="panel-heading">
                     <h3 class="panel-title">Order #{{$order->order_id}}</h3>
                 </div>
-                <table class="table table-bordered table-condensed">
+                <table class="table table-bordered table-condensed panel-default-custom-table">
                     <thead>
                         <tr>
                             <th>Item / Details</th>
@@ -136,7 +138,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="panel panel-default">
+            <div class="panel panel-default panel-default-for total ">
                 <table class="table table-bordered table-condensed">
                     <thead>
                         <tr>
@@ -156,8 +158,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="row">
-                <div class="col-xs-7">
+            <div class="row signature-row">
+                <div class="col-xs-7 signature-row-col-7">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <i>Signature</i>
@@ -172,7 +174,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-5">
+                <div class="col-xs-5 signature-row-col-5">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Payment Status</h3>
@@ -191,7 +193,7 @@
             </div>
 
         </div>
-        <div class="invoice-footer">
+        <div style=" padding: 25px 25px 15px;" class="invoice-footer">
             Thank you for choosing our services.
             <br /> We hope to see you again soon
             <br />

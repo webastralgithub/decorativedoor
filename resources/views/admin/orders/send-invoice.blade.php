@@ -1,6 +1,22 @@
 @extends('admin.layouts.app')
 
 @section('content')
+@if (auth()->user()->hasRole('Product Assembler') || auth()->user()->hasRole('Delivery User'))
+<style>
+    .sidebar.pe-4.pb-3 {
+        display: none;
+    }
+
+    .content.pb-4 {
+        margin: 0;
+        width: 100%;
+    }
+
+    a.sidebar-toggler.flex-shrink-0 {
+        display: none !important;
+    }
+</style>
+@endif
 <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
 
 <div class="mx-4 content-p-mobile">
