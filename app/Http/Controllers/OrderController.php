@@ -325,30 +325,35 @@ class OrderController extends Controller
     {
         $order->delete();
     }
-
-    // public function downloadInvoice($order)
+    // public function downloadInvoice($order_id)
     // {
     //     $order = Order::with(['customer', 'details'])
-    //         ->where('id', $order)
+    //         ->where('id', $order_id)
     //         ->first();
 
     //     $recentSignature = DeliveryUser::where('order_id', $order->id)->first();
-    //     return view('admin.orders.print-invoice', [
-    //         'order' => $order,
-    //         'recentSignature' => $recentSignature,
-    //     ]);
+
+    //     $pdf = PDF::loadView('admin.orders.print-invoice', compact("order", "recentSignature"));
+    //     return $pdf->download('invoice.pdf');
     // }
 
-    public function downloadInvoice($order_id)
+    public function downloadInvoice($id)
     {
-        $order = Order::with(['customer', 'details'])
-            ->where('id', $order_id)
+        $order = Order::leftJoin('user_addresses', 'orders.user_id', '=', 'user_addresses.user_id')
+            ->leftJoin('users', 'orders.user_id', '=', 'users.id')
+            ->where('orders.id', $id)
+            ->select('orders.*', 'user_addresses.*', 'users.*')
             ->first();
+            
+        $signature = DeliveryUser::where('order_id', $id)->first();
+        $orderDetails = Order::with('details')->find($id);
 
-        $recentSignature = DeliveryUser::where('order_id', $order->id)->first();
+        $pdf = PDF::loadView('admin.orders.invoice-pdf', compact('order', 'signature', 'orderDetails'));
 
-        $pdf = PDF::loadView('admin.orders.print-invoice', compact("order", "recentSignature"));
-        return $pdf->download('invoice.pdf');
+        $pdfPath = storage_path('app/public/invoices/invoice_' . $order->invoice_no . '.pdf');
+        $pdf->save($pdfPath);
+
+        return response()->download($pdfPath, 'invoice.pdf')->deleteFileAfterSend(true);
     }
 
     public function assign_user(Request $request)
