@@ -1,20 +1,4 @@
-@extends('admin.layouts.app')
-
-@section('content')
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
-
-<div class="mx-4 content-p-mobile">
-    <div class="page-header-tp">
-        <h4></h4>
-        <input type="hidden" name="id" value="{{$order->id}}">
-        <div class="top-bntspg-hdr">
-            <a href="{{ route('orders.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
-            <a href="{{ route('order.downloadInvoice',['id' => $orderDetails->id]) }}" class="btn btn-primary btn-sm">Download</a>
-        </div>
-    </div>
-<main class="cd__main">
-    <!-- Start DEMO HTML (Use the following code into your project)-->
-    <div class="container invoice">
+<div class="container invoice">
         <div class="invoice-header">
             <div class="row">
                 <div class="col-xs-8">
@@ -213,8 +197,3 @@
             <br />
         </div>
     </div>
-    <!-- END EDMO HTML (Happy Coding!)-->
-</main>
-
-
-@endsection

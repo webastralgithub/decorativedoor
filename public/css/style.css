@@ -1993,6 +1993,9 @@ button.from-row-block-btn img {
     .message {
         max-width: 90%;
     }
+    .order-table-topb.order-listing {
+        flex-direction: column !important;
+    }
 }
 
 
@@ -2274,6 +2277,7 @@ body {
     .add-client-bnt {
         margin-left: 0px;
     }
+
 }
 
 
@@ -2306,6 +2310,11 @@ body {
         width: 40%;
         margin: 0 auto;
     }
+    .content-body .category-product-filter {
+        width: 170px !important;
+        margin: 0 0 0 28%;
+        bottom: -36px;
+    }
 }
 
 
@@ -2317,6 +2326,12 @@ body {
     .table-top-bar form {
         width: 100%;
         display: block !important;
+    }
+    .content-body .category-product-filter {
+        width: 160px !important;
+        margin: auto;
+        bottom: 0px;
+        margin-bottom: 10px;
     }
 
 }
@@ -2743,6 +2758,13 @@ div#exampleModal .modal-content .modal-header button.close span {
     .delevery-user-pg .signature-sec-btm .signature-tp-bar{
         flex-direction: column;
     }
+    .order-table-topb.order-listing {
+        align-items: center;
+    }
+    .order-table-topb.order-listing .order-listing-inner {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .alert-success, .success-message {
@@ -2787,6 +2809,13 @@ div#exampleModal .modal-content .modal-header button.close span {
     margin: 0 0 0 20%;
     bottom: -36px;
     z-index: 999;
+}
+
+select#categoryFilter {
+    background-color: #eef1f4;
+    border: 1px solid #b0a8a8;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 /* invoice */
@@ -2866,7 +2895,12 @@ body {
     background: #fff;
     width: 970px !important;
     margin: 50px auto;
-    border: 1px solid #00000061;
+    border: 1px solid #00000061;.category-product-filter {
+        width: 170px !important;
+        margin: 0 0 0 28%;
+        bottom: -36px;
+        z-index: 999;
+    }
     background-color: #eef1f4;
   }
   .invoice .invoice-header {
@@ -2952,6 +2986,8 @@ body {
     object-fit: cover;
   }
 
+  /* invoice css end */
+
   .panel-title {
     color: inherit !important;
 }
@@ -2961,7 +2997,7 @@ body {
 
 .modal.fade.show .modal-dialog {
     margin-top: 10% !important;
-}
+} 
 
 
 
@@ -3537,33 +3573,33 @@ body {
 }
 
 
-/* 
-@media only screen and (max-width: 2300px) and (min-width: 2001px) {
-    .rounded-circle {
-        width: 170px !important;
-        height: 170px !important;
-    }
+/* ====== assembler-order-listing css end  ====== */
 
-    .nav-item.dropdown span {
-        font-size: 94px;
-    }
 
-    body {
-        padding: 10px 30px;
-    }
-    .page-header-tp h3 {
-        font-size: 24px;
-    }
-    .content-body table tr th {
-        font-size: 24px;
-    }
+.order-table-topb.order-listing {
+    flex-wrap: unset;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-@media only screen and (max-width: 2000px) and (min-width: 1701px) {
-    .page-header-tp h3 {
-        font-size: 20px;
-    }
-    .content-body table tr th {
-        font-size: 20px;
-    }
-} */
+.order-table-topb.order-listing .order-listing-inner {
+    display: flex;
+    gap: 10px;
+    width: fit-content;
+}
+
+.order-listing .order-listing-customer {
+    width: fit-content;
+}
+
+.order-listing-inner .order-listing-confirm a, .order-listing-inner .order-listing-signature a {
+    background-color: #02315c !important;
+    font-size: 15px !important;
+    border-color: #02315c;
+}
+
+.order-table-topb.order-listing .order-listing-date {
+    width: fit-content;
+}
+
+
