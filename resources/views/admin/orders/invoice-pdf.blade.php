@@ -2,7 +2,7 @@
 
 <div style="padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; max-width:1140px;  background: #fff; width: 970px !important; margin: 50px auto; border: 1px solid #00000061; background-color: #eef1f4;" class="container invoice">
         <div style=" padding: 25px 25px 15px;" class="invoice-header">
-            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; " class="row invoice-header-row">
+            <div style="display:flex; justify-content:space-between; width:100%; " class="row invoice-header-row">
                 <div style="width:50%"  class="col-xs-8 invoice-header-col-xs-8">
                     <h1 style="  margin: 0; color: #2b4551; font-size: 36px; font-weight: 500;">Invoice</h1>
                     <h4 style="color:#6c757d !important; margin-top:10px; margin-bottom:10px; font-weight:500; font-size:18px;" class="text-muted">NO: <strong style="color:rgba(0, 0, 0, 0.75); ">{{$order->invoice_no}} </strong>| Date: <strong>{{
@@ -23,56 +23,134 @@
                 </div>
             </div>
         </div>
-        <div style=" padding: 25px 25px 15px;" class="invoice-body invoice-body-custom">
+        <div style=" padding: 25px 25px; border-radius: 10px; background: #eef1f4;" class="invoice-body invoice-body-custom">
             <div style="display:flex; justy-content:space-between; " class="row invoice-body-row">
-                <div style="width:40%; " class="col-xs-5 invoice-body-col-xs-5 invoice-body-custom-inner-col-5">
-                    <div class="panel panel-default invoice-body-panel">
-                        <div class="panel-heading invoice-body-panel-heading">
-                            <h3 class="panel-title">Company Details</h3>
+                <div style="width:45%; " class="col-xs-5 invoice-body-col-xs-5 invoice-body-custom-inner-col-5">
+                    <div style="border: 1px solid #ddd; margin-bottom:20px; background-color: #fff; box-shadow: 0 1px 1px rgba(0,0,0,.05);" class="panel panel-default invoice-body-panel">
+                        <div style=" background-color: #004686; color: #fff !important; padding: 10px 15px; border-bottom: 1px solid #ddd !important; border: 1px solid #ddd; border-top-left-radius: 3px; border-top-right-radius: 3px;" class="panel-heading invoice-body-panel-heading">
+                            <h3 style="color:#fff; font-weight:600;" class="panel-title">Company Details</h3>
                         </div>
-                        <div class="panel-body">
-                            <dl class="dl-horizontal invoice-body-dl">
-                                <dt>Name</dt>
-                                <dd><strong>Sunrise Doors</strong></dd>
-                                <dt>Address</dt>
-                                <dd>00-00 Road 00000</dd>
-                                <dt>Phone</dt>
-                                <dd>+1 (604) 446-5841</dd>
-                                <dt>Email</dt>
-                                <dd>hello@dummy.com</dd>
+                        <div style=" padding: 15px;" class="panel-body">
+                            <dl style="margin:0;" class="dl-horizontal invoice-body-dl">
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Name</dt>
+                                <dd style="margin-left: 180px;"><strong style="font-weight:700;">Sunrise Doors</strong></dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Address</dt>
+                                <dd style="margin-left: 180px;">00-00 Road 00000</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Phone</dt>
+                                <dd style="margin-left: 180px;">+1 (604) 446-5841</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Email</dt>
+                                <dd style="margin-left: 180px;">hello@dummy.com</dd>
                         </div>
                     </div>
                 </div>
-                <div style="width:60%" class="col-xs-7 invoice-body-col-xs-7 invoice-body-custom-inner-col-7">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">User Details</h3>
+                <div style="width:45%" class="col-xs-7 invoice-body-col-xs-7 invoice-body-custom-inner-col-7">
+                    <div style="border: 1px solid #ddd; margin-bottom:20px; background-color: #fff; box-shadow: 0 1px 1px rgba(0,0,0,.05);" class="panel panel-default">
+                        <div style=" background-color: #004686; color: #fff !important; padding: 10px 15px; border-bottom: 1px solid #ddd !important; border: 1px solid #ddd; border-top-left-radius: 3px; border-top-right-radius: 3px;" class="panel-heading">
+                            <h3 style="color:#fff; font-weight:600;" class="panel-title">User Details</h3>
                         </div>
-                        <div class="panel-body">
-                            <dl class="dl-horizontal">
-                                <dt>Name</dt>
-                                <dd>{{$order->name}}</dd>
-                                <dt>Email</dt>
-                                <dd>{{$order->email}}</dd>
-                                <dt>Phone</dt>
-                                <dd>{{$order->phone}}</dd>
-                                <dt>Street</dt>
-                                <dd>{{$order->street}}</dd>
-                                <dt>City</dt>
-                                <dd>{{$order->city}}</dd>
-                                <dt>State</dt>
-                                <dd>{{$order->state}}</dd>
-                                <dt>Country</dt>
-                                <dd class="mono">{{$order->country}}</dd>
-                                <dt>Zip Code</dt>
-                                <dd>{{$order->zip_code}}</dd>
+                        <div style=" padding: 15px;" class="panel-body">
+                            <dl style="margin:0;" class="dl-horizontal">
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Name</dt>
+                                <dd style="margin-left: 180px;">{{$order->name}}</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Email</dt>
+                                <dd style="margin-left: 180px;">{{$order->email}}</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Phone</dt>
+                                <dd style="margin-left: 180px;">{{$order->phone}}</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Street</dt>
+                                <dd style="margin-left: 180px;">{{$order->street}}</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">City</dt>
+                                <dd style="margin-left: 180px;">{{$order->city}}</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">State</dt>
+                                <dd style="margin-left: 180px;">{{$order->state}}</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Country</dt>
+                                <dd style="margin-left: 180px;" class="mono">{{$order->country}}</dd>
+                                <dt style="float: left;
+                                            width: 160px;
+                                            overflow: hidden;
+                                            clear: left;
+                                            text-align: right;
+                                            text-overflow: ellipsis;
+                                            white-space: nowrap;">Zip Code</dt>
+                                <dd style="margin-left: 180px;">{{$order->zip_code}}</dd>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default panel-default-custom">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Order #{{$order->order_id}}</h3>
+            <div style="border: 1px solid #ddd; margin-bottom: 20px; background-color: #fff; border-radius: 4px; box-shadow: 0 1px 1px rgba(0,0,0,.05);" class="panel panel-default panel-default-custom">
+                <div style="   
+                            background-color: #004686;
+                            color: #fff !important; border: 1px solid #ddd;
+                            padding: 10px 15px;
+                            border-bottom: 1px solid transparent;
+                            border-top-left-radius: 3px;
+                            border-top-right-radius: 3px;" class="panel-heading">
+                    <h3 style="font-weight: 600; color:#fff;" class="panel-title">Order #{{$order->order_id}}</h3>
                 </div>
                 <table class="table table-bordered table-condensed panel-default-custom-table">
                     <thead>

@@ -32,6 +32,12 @@
         return false;
     });
 
+    setTimeout(() => {
+        $('.alert-success').fadeOut('slow');
+        $('.alert-error').fadeOut('slow');
+        $('.text-danger').fadeOut('slow');
+    }, 2000);
+
 
     // Progress Bar
     // $('.pg-bar').waypoint(function () {
