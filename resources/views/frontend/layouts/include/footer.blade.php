@@ -209,7 +209,7 @@
                 pid: "{{$product->id ?? 0 }}"
             },
             success: function(response) {
-                console.log("productAvailabityStock:", response.productAvailabityStock);
+                console.log("productAvailabityStock:", response);
                 let price = 0;
                 if (response.selling_price) {
                     price = response.selling_price
@@ -224,6 +224,17 @@
                     $('.product__details__price').html('$' + (price - discount_price));
                 }
 
+                var quantity = parseInt($('input[name="quantity"]').val());
+
+                // Check if the quantity is greater than or equal to 2
+                if (quantity >= response.productAvailabityStock) {
+                    // Disable the "ADD TO CART" button
+                    $('.add-to-cart').prop('disabled', true);
+                } else {
+                    // Enable the "ADD TO CART" button
+                    $('.add-to-cart').prop('disabled', false);
+                }
+               // updateAddToCartButton(response.productAvailabityStock);
                 // if (response.productAvailabityStock <= 0)
                 //     $('#availability').text('Out of Stock');
                 // $('.add-to-cart').attr('disabled', (response.productAvailabityStock > 0) ? false : true);
@@ -231,6 +242,9 @@
             }
         });
     })
+
+    // Add an event listener to the quantity input for both keyup and change events
+
 
     function share_product(productid) {
         jQuery('form#shareForm #footer_product_id').val(productid);

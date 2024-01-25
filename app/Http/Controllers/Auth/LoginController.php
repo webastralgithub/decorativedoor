@@ -59,22 +59,23 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if (($user->hasRole('Super Admin'))) {
-            $redirecturl = '/admin/dashboard';
-        } elseif ($user->hasRole('Accountant')) {
-            $redirecturl = '/admin/dashboard';
-        } elseif ($user->hasRole('Delivery User')) {
-            $redirecturl = '/admin/orders';
-        } elseif ($user->hasRole('Product Assembler')) {
-            $redirecturl = '/admin/assembler-order';
-        } elseif ($user->hasRole('Admin')) {
-            $redirecturl = '/admin/dashboard';
+        $role = $user->getRoleNames();
+        
+        if (($role[0] == 'Super Admin')) {
+            $redirecturl = redirect()->route('dashboard');
+        } else if ($role[0] == 'Accountant') {
+            $redirecturl = redirect()->route('dashboard');
+        } else if ($role[0] == 'Delivery User') {
+            $redirecturl = redirect()->route('orders.index');
+        } else if ($role[0] == 'Product Assembler') {
+            $redirecturl = redirect()->route('order-assembler');
+        } else if ($role[0] == 'Admin') {
+            $redirecturl = redirect()->route('dashboard');
         } else {
-            $redirecturl = '/'; // Redirect other users to the default home page
+            $redirecturl = redirect()->route('home');; // Redirect other users to the default home page
         }
-
         // Default redirect for other roles
-        return redirect()->intended($redirecturl);
+        return redirect()->away($redirecturl->getTargetUrl());
     }
 
 

@@ -30,4 +30,25 @@ class Category extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+    public function jambs()
+    {
+        return $this->hasMany(Jamb::class);
+    }
+    public function lefts()
+    {
+        return $this->hasMany(Left::class);
+    }
+    public function rights()
+    {
+        return $this->hasMany(Right::class);
+    }
+    public function type_of_doors()
+    {
+        return $this->hasMany(TypeOfDoor::class);
+    }
+    public function location_of_doors()
+    {
+        return $this->hasMany(LocationOfDoor::class);
+    }
+
 }

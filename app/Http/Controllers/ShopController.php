@@ -47,8 +47,8 @@ class ShopController extends Controller
     }
 
     public function product_details($slug)
-    {
-        $product = Product::with(['image'])->where('slug', $slug)->first();
+    { 
+        $product = Product::with(['image','categories.jambs','categories.lefts','categories.rights','categories.type_of_doors','categories.location_of_doors'])->where('slug', $slug)->first();
         if (empty($product)) {
             return abort(404);
         }
