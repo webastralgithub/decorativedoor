@@ -132,17 +132,25 @@
         @if(isset($_ENV['GST_HST_TAX']) || isset($_ENV['PST_RST_QST_TAX']))
         <tr>
             <td colspan="5" class="text-right">
-                <h5>Total before Tax: ${{ number_format($total, 2, '.', ',') }}</h5>
+                <div class="text-right-inner">
+                    <h5>Total before Tax </h5>:
+                    <span>${{ number_format($total, 2, '.', ',') }}</span>
+                </div>
 
                 @php
                 $total = $total + env('GST_HST_TAX',11,94);
                 @endphp
-
-                <h5>Estimated GST/HST: ${{ number_format(env('GST_HST_TAX'), 2, '.', ',') }}</h5>
+                <div class="text-right-inner">
+                    <h5>Estimated GST/HST </h5>:
+                    <span>${{ number_format(env('GST_HST_TAX'), 2, '.', ',') }}</span>
+                </div>
                 @php
                 $total = $total + env('PST_RST_QST_TAX',11,94);
                 @endphp
-                <h5>Estimated PST/RST/QST: ${{ number_format(env('PST_RST_QST_TAX'), 2, '.', ',') }}</h5>
+                <div class="text-right-inner">
+                    <h5>Estimated PST/RST/QST </h5>:
+                    <span>${{ number_format(env('PST_RST_QST_TAX'), 2, '.', ',') }}</span>
+                </div>
             </td>
         </tr>
         @endif

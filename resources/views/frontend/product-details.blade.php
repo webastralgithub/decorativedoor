@@ -88,7 +88,7 @@ json_decode($variantSingle->option_type, true) : null;
                     <div id="productDiscountMessage" class="product-discount-message" style="display:none;"></div>
                     <p>{!!$product->short_description!!}</p>
                     <div class="interior-panel-div-parent">
-                        <div class="varients-block-flex mb-3 p-0 interior-panel-div">
+                        <div class="varients-block-flex mb-3 p-0 interior-panel-div interior-door-type">
                             <label>Type of Door</label>
                             <select class="form-control" id="type-of-door"
                                 onchange="return doortype('{{$product->id}}')">
@@ -162,7 +162,20 @@ json_decode($variantSingle->option_type, true) : null;
                                 @endif
                             </select>
                         </div>
-                        @if(!empty($product->variants) && !empty($variantOptions))
+                        
+                        
+                        @if(session('success'))
+                        <div id="productDiscountMessage" class="product-discount-message">
+                            {{ session('success') }}
+                        </div>
+                        @endif
+                        <div id="addtocartMessage"></div>
+
+
+                        
+                        </ul>
+                    </div>
+                    @if(!empty($product->variants) && !empty($variantOptions))
                         <div class="varients-cart">
                             <h3>Variants</h3>
                             <div class="varients-block-flex">
@@ -185,6 +198,7 @@ json_decode($variantSingle->option_type, true) : null;
                             </div>
                         </div>
                         @endif
+
                         <form id="addToCartForm" class="form-cart-btn">
                             @csrf
                             @method('POST')
@@ -211,20 +225,10 @@ json_decode($variantSingle->option_type, true) : null;
                             <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal"
                                 data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
                         </form>
-                        @if(session('success'))
-                        <div id="productDiscountMessage" class="product-discount-message">
-                            {{ session('success') }}
-                        </div>
-                        @endif
-                        <div id="addtocartMessage"></div>
-
-
                         <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
                                 getProductAvailabityStock($product->id) > 0 && (getProductAvailabityStock($product->id)
                                 >
                                 getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
 

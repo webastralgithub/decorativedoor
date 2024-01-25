@@ -72,31 +72,32 @@
 
     <div class="mt-2">
         <div class="row row-cards mb-3 order-table-topb order-listing">
-            <div class="order-listing-inner">
-                <div class="order-listing-customer">
+            <div class="order-listing-customer">
                     <label for="customer" class="form-label required">
                         <strong>{{ __('Customer') }}:</strong> {{ @$order->user->name }}
                     </label>
-                </div>
-                <div class="order-listing-confirm">
-                    @if(!$order->order_confirm)
-                    <a class="btn btn-primary" href="{{ route('order.confirm-order', $order->id) }}">Confirm
-                        Order</a>
-                    @endif
-                </div>
-                <div class="order-listing-signature">
-                    @can('add-signature')
-                    <a href="{{ route('orders.delivery_user', $order->id) }}" class="btn btn-primary  ">Take
-                        Signature</a>
-                    @endcan
-                </div>
             </div>
-            <div class="order-listing-date">
+            <div class="order-listing-inner">                
+                    <div class="order-listing-confirm">
+                        @if(!$order->order_confirm)
+                        <a class="btn btn-primary" href="{{ route('order.confirm-order', $order->id) }}">Confirm
+                            Order</a>
+                        @endif
+                    </div>
+                    <div class="order-listing-signature">
+                        @can('add-signature')
+                        <a href="{{ route('orders.delivery_user', $order->id) }}" class="btn btn-primary  ">Take
+                            Signature</a>
+                        @endcan
+                    </div>
+                    <div class="order-listing-date">
                 <label for="order_date" class="form-label required ">
                     <strong>{{ __('Order Date') }}:</strong> {{ $order->order_date->format('d-m-Y') }}
                 </label>
 
             </div>
+            </div>
+            
 
 
             {{-- <div class="col">
@@ -460,7 +461,8 @@
                     $finaltotal = $finaltotal - $discount;
                     $orderTotal = abs($order->due - $finaltotal);
                     @endphp
-
+                    
+                    @if(count($order->details) > 0)
                     @can('order_price')
                     <tr>
                         <td colspan="10" class="text-end">Shipping Charges:</td>
@@ -468,6 +470,7 @@
                             ${{ number_format($order->due, 2, '.', ',') }}
                         </td>
                     </tr>
+                   
                     @if (isset($_ENV['GST_HST_TAX']) || isset($_ENV['PST_RST_QST_TAX']))
                     <tr>
                         <td colspan="10" class="text-end">Total before Tax:</td>
@@ -495,6 +498,7 @@
                         <td class="">${{ number_format($orderTotal, 2, '.', ',') }}</td>
                     </tr>
                     @endcan
+                    @endif
 
                 </tbody>
             </table>

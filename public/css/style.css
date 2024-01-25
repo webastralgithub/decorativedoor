@@ -3579,10 +3579,11 @@ body {
     width: fit-content;
 }
 
-.order-listing-inner .order-listing-confirm a, .order-listing-inner .order-listing-signature a {
+.order-listing-inner .order-listing-confirm a, .order-listing-inner .order-listing-signature a, .order-listing-inner .order-listing-date label, .order-listing-inner .order-listing-date label strong {
     background-color: #02315c !important;
-    font-size: 15px !important;
+    font-size: 13px !important;
     border-color: #02315c;
+    font-weight: 400;
 }
 
 .order-table-topb.order-listing .order-listing-date {
@@ -3830,3 +3831,14 @@ body {
 
 
 /* ====== pdf css end ====== */
+
+.dataTables_paginate.paging_simple_numbers span a.paginate_button.current {
+    padding: 4px 12px !important;
+    border-radius: 4px !important;
+    background-color: #004686 !important;
+    color: #fff !important;
+}
+
+.dataTables_paginate.paging_simple_numbers span a.paginate_button.current:hover{
+    color: #fff !important;
+}
