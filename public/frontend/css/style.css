@@ -890,6 +890,29 @@ button:disabled {
 	display: flex;
 	gap: 20px;
 	flex-wrap: wrap;
+	align-items: center;
+}
+
+.interior-panel-div .form-control span {
+    line-height: 30px !important;
+    display: block;
+}
+
+.interior-panel-div-parent {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.interior-panel-div-parent .interior-panel-div {
+    width: 50% !important;
+}
+
+.interior-panel-div-parent .interior-panel-div label {
+    width: 40%;
+}
+
+.interior-panel-div label {
+    margin: 0;
 }
 
 .varients-block-flex .varient-block-cn {
@@ -3106,6 +3129,17 @@ font-size: 30px;
 	}
 }
 
+@media only screen and (max-width: 1024px) {
+	.interior-panel-div-parent .interior-panel-div {
+		width: 80% !important;
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	.interior-panel-div-parent .interior-panel-div {
+		width: 100% !important;
+	}
+}
 /* Medium Device = 1200px */
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
