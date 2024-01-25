@@ -9,7 +9,7 @@ class Right extends Model
 {
     use HasFactory;
 
-    protected $table  = "right";
+    protected $table  = "rights";
 
     protected $guarded = [];
 
