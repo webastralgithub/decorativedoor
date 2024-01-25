@@ -39,15 +39,18 @@ json_decode($variantSingle->option_type, true) : null;
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
                         @if(isset($productimages) && !empty($productimages[0]))
-                        <img class="product__details__pic__item--large" src="{{ asset('storage/products/' . $productimages[0]['path'])}}" alt="">
+                        <img class="product__details__pic__item--large"
+                            src="{{ asset('storage/products/' . $productimages[0]['path'])}}" alt="">
                         @else
-                        <img class="product__details__pic__item--large" src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
+                        <img class="product__details__pic__item--large"
+                            src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
                         @endif
                     </div>
                     @if(isset($productimages) && !empty($productimages))
                     <div class="product__details__pic__slider owl-carousel">
                         @foreach($productimages as $images)
-                        <img data-imgbigurl="{{ asset('storage/products/' . $images->path)}}" src="{{ asset('storage/products/' . $images->path)}}" alt="">
+                        <img data-imgbigurl="{{ asset('storage/products/' . $images->path)}}"
+                            src="{{ asset('storage/products/' . $images->path)}}" alt="">
                         @endforeach
                     </div>
                     @endif
@@ -66,7 +69,7 @@ json_decode($variantSingle->option_type, true) : null;
                         <i class="fa fa-star-half-o"></i>
                         <span>(18 reviews)</span>
                     </div>
-                    
+
                     <div class="product__details__price" id="main-price">
                         @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
                         <del style="color: #625c5c;font-size: 18px;">${{number_format($product->selling_price, 2, '.',
@@ -77,7 +80,8 @@ json_decode($variantSingle->option_type, true) : null;
                         @endif
                     </div>
                     @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
-                    <input type="hidden" id="discount_price" value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
+                    <input type="hidden" id="discount_price"
+                        value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
                     @else
                     <input type="hidden" id="discount_price" value="">
                     @endif
@@ -85,62 +89,72 @@ json_decode($variantSingle->option_type, true) : null;
                     <p>{!!$product->short_description!!}</p>
                     <div class="col-8 varients-block-flex mb-3 p-0">
                         <label>Type of Door</label>
-                    <select class="form-control" id="type-of-door"  onchange="return doortype('{{$product->id}}')">
-                        <option>Type of Door</option>
-                        <option value="Single Door (SGL)">Single Door (SGL)</option>
-                        <option value="Pair (PR)">Pair (PR)</option>
-                    </select>
-                </div>
-                <div class="col-8 varients-block-flex mb-3 p-0">
-                    <label>Loaction of Door</label>
-                    <select class="form-control" id="location-of-door" onchange="return doorlocation('{{$product->id}}')">
-                        <option>Location of Door</option>
-                        <option value="Bedroom">Bedroom</option>
-                        <option value="Washroom">Washroom</option>
-                        <option value="Closet">Closet</option>
-                        <option value="Entery Closet">Entery Closet</option>
-                        <option value="Pantry">Pantry </option>
-                        <option value="Spice Kitchen">Spice Kitchen </option>
-                        <option value="Powder Room">Powder Room</option>
-                        <option value="Under Stairs">Under Stairs</option>
-                        <option value="AC Room">AC Room</option>
-                        <option value="Mechanical Room">Mechanical Room </option>
-                        <option value="Boiler">Boiler</option>
-                        <option value="Laundary">Laundary</option>
-                        <option value="Den">Den</option>
-                        <option value="Office">Office</option>
-                    </select>
-                </div>
-                <div class="col-8 varients-block-flex mb-3 p-0">
-                    <label>Jamb</label>
-                    <select class="form-control" id="jamb"  onchange="return doorjamb('{{$product->id}}')">
-                        <option>JMB</option>
-                        <option value="4 1/2<">4 1/2</option>
-                        <option value="6 1/2">6 1/2</option>
-                        <option value="4 3/4">4 3/4</option>
-                        <option value="6 3/4">6 3/4</option>
-                        <option value="7 1/4">7 1/4</option>
-                        <option value="8 1/2">8 1/2</option>
-                        <option value="5 1/4">5 1/4</option>
-                        <option value="4 7/8">4 7/8</option>
-                    </select>
-                </div>
-                <div class="col-8 varients-block-flex mb-3 p-0">
-                    <label>Right</label>
-                    <select class="form-control" id="left" onchange="return doorleft('{{$product->id}}')">
-                        <option>Left</option>
-                        <option value="OPEN IN O/IN">OPEN IN O/IN</option>
-                        <option value="OPEN OUT O/OUT">OPEN OUT O/OUT</option>
-                    </select>
-                </div>
-                <div class="col-8 varients-block-flex mb-3 p-0">
-                    <label>Left</label>
-                    <select class="form-control" id="right" onchange="return doorright('{{$product->id}}')">
-                        <option>Right</option>
-                        <option value="OPEN IN O/IN">OPEN IN O/IN</option>
-                        <option value="OPEN OUT O/OUT">OPEN OUT O/OUT</option>
-                    </select>
-                </div>
+                        <select class="form-control" id="type-of-door" onchange="return doortype('{{$product->id}}')">
+                            <option value="">Type of Door</option>
+                            @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
+                            @foreach ($product->categories[0]->type_of_doors as $typeOfDoor)
+                            <option value="{{ $typeOfDoor->name }}" {{ $product->type_of_door === $typeOfDoor->name ?
+                                'selected' : '' }}>
+                                {{ $typeOfDoor->name }}
+                            </option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-8 varients-block-flex mb-3 p-0">
+                        <label>Loaction of Door</label>
+                        <select class="form-control" id="location-of-door"
+                            onchange="return doorlocation('{{$product->id}}')">
+                            @if ( isset($product->categories[0]) && $product->categories[0]->location_of_doors)
+                            @foreach ($product->categories[0]->location_of_doors as $location_of_doors)
+                            <option value="{{ $location_of_doors->name }}" {{ $product->location_of_doors ===
+                                $location_of_doors->name ? 'selected' : '' }}>
+                                {{ $location_of_doors->name }}
+                            </option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-8 varients-block-flex mb-3 p-0">
+                        <label>Jamb</label>
+                        <select class="form-control" id="jamb" onchange="return doorjamb('{{$product->id}}')">
+                            <option>JMB</option>
+                            @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
+                            @foreach ($product->categories[0]->jambs as $jambs)
+                            <option value="{{ $jambs->name }}" {{ $product->jambs === $jambs->name ? 'selected' : '' }}>
+                                {{ $jambs->name }}
+                            </option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-8 varients-block-flex mb-3 p-0">
+                        <label>Right</label>
+                        <select class="form-control" id="left" onchange="return doorleft('{{$product->id}}')">
+                            <option>Left</option>
+                            @if ( isset($product->categories[0]) && $product->categories[0]->lefts)
+                            @foreach ($product->categories[0]->lefts as $lefts)
+                            <option value="{{ $jambs->name }}" {{ $product->lefts === $lefts->name ? 'selected' : '' }}>
+                                {{ $lefts->name }}
+                            </option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-8 varients-block-flex mb-3 p-0">
+                        <label>Left</label>
+                        <select class="form-control" id="right" onchange="return doorright('{{$product->id}}')">
+                            <option>Right</option>
+                            @if (isset($product->categories[0]) && $product->categories[0]->rights)
+                            @foreach ($product->categories[0]->rights as $rights)
+                            <option value="{{ $jambs->name }}" {{ $product->rights === $rights->name ? 'selected' : ''
+                                }}>
+                                {{ $rights->name }}
+                            </option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
                     @if(!empty($product->variants) && !empty($variantOptions))
                     <div class="varients-cart">
                         <h3>Variants</h3>
@@ -176,16 +190,19 @@ json_decode($variantSingle->option_type, true) : null;
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="type" id="door-type"  value="" />
+                        <input type="hidden" name="type" id="door-type" value="" />
                         <input type="hidden" name="location" id="door-location" value="" />
                         <input type="hidden" name="jamb" id="door-jamb" value="" />
                         <input type="hidden" name="left" id="door-left" value="" />
                         <input type="hidden" name="right" id="door-right" value="" />
 
-                        <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
+                        <input type="hidden" name="variant" class="product-variant-data"
+                            value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
-                        <button type="button" class="primary-btn add-to-cart " onclick="return addToCart(event)" @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
-                        <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal" data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
+                        <button type="button" class="primary-btn add-to-cart " onclick="return addToCart(event)"
+                            @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
+                        <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal"
+                            data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
                     </form>
                     @if(session('success'))
                     <div id="productDiscountMessage" class="product-discount-message">
@@ -194,24 +211,28 @@ json_decode($variantSingle->option_type, true) : null;
                     @endif
                     <div id="addtocartMessage"></div>
 
-                    
+
                     <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
-                            getProductAvailabityStock($product->id) > 0  && (getProductAvailabityStock($product->id) > getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
+                            getProductAvailabityStock($product->id) > 0 && (getProductAvailabityStock($product->id) >
+                            getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
                     </ul>
                 </div>
             </div>
-          
+
             <div class="col-lg-12">
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Description</a>
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                aria-selected="true">Description</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">Information</a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                                aria-selected="false">Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab" aria-selected="false">Reviews <span>(1)</span></a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                aria-selected="false">Reviews <span>(1)</span></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -266,7 +287,8 @@ json_decode($variantSingle->option_type, true) : null;
 </section>
 
 <!-- Modal share with email -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -287,10 +309,12 @@ json_decode($variantSingle->option_type, true) : null;
                             </label>
                             <input type="hidden" id="product_id" name="product_id" value=" {{ $product->id }}">
                             <div class="col-md-12">
-                                <input name="email" id="email" type="email" class="form-control example-date-input" value="{{ old('email') }}" required>
+                                <input name="email" id="email" type="email" class="form-control example-date-input"
+                                    value="{{ old('email') }}" required>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn" value="{{ _('Share') }}">
+                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn"
+                                    value="{{ _('Share') }}">
                             </div>
                             <span id="message">
                         </div>
@@ -307,35 +331,35 @@ json_decode($variantSingle->option_type, true) : null;
 @section('scripts')
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-function doortype(event){
-    let selectedValue = document.getElementById("type-of-door").value;
-    document.getElementById('door-type').value = selectedValue
+    function doortype(event) {
+        let selectedValue = document.getElementById("type-of-door").value;
+        document.getElementById('door-type').value = selectedValue
 
-}
+    }
 
-function doorlocation(event){
-    let selectedValue = document.getElementById("location-of-door").value;
-    document.getElementById('door-location').value = selectedValue
+    function doorlocation(event) {
+        let selectedValue = document.getElementById("location-of-door").value;
+        document.getElementById('door-location').value = selectedValue
 
-}
+    }
 
-function doorjamb(event){
-    let selectedValue = document.getElementById("jamb").value;
-    document.getElementById('door-jamb').value = selectedValue
+    function doorjamb(event) {
+        let selectedValue = document.getElementById("jamb").value;
+        document.getElementById('door-jamb').value = selectedValue
 
-}
+    }
 
-function doorleft(event){
-    let selectedValue = document.getElementById("left").value;
-    document.getElementById('door-left').value = selectedValue
+    function doorleft(event) {
+        let selectedValue = document.getElementById("left").value;
+        document.getElementById('door-left').value = selectedValue
 
-}
+    }
 
-function doorright(event){
-    let selectedValue = document.getElementById("right").value;
-    document.getElementById('door-right').value = selectedValue
+    function doorright(event) {
+        let selectedValue = document.getElementById("right").value;
+        document.getElementById('door-right').value = selectedValue
 
-}
+    }
 
     function addToCart(event) {
         var quantity = document.querySelector('input[name="quantity"]').value;
@@ -347,7 +371,7 @@ function doorright(event){
         var doorright = document.getElementById('door-right').value;
         var selectedVariants = [];
         // Iterate through all variant dropdowns
-        allVariants.forEach(function(variant) {
+        allVariants.forEach(function (variant) {
             var selectedValue = variant.value;
             console.log("selectedValue", selectedValue);
             // Check if the variant is selected
@@ -362,7 +386,7 @@ function doorright(event){
         if (checkStockAvailability < getProductStockOnCart || (quantity > checkStockAvailability)) {
             addtocartMessage.innerHTML = '<div class="product-discount-message-error">Product is out of Stock</div>';
             addtocartMessage.style.display = 'block';
-            setTimeout(function() {
+            setTimeout(function () {
                 addtocartMessage.style.display = 'none';
             }, 5000);
             return false;
@@ -381,7 +405,7 @@ function doorright(event){
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 
-                xhr.onreadystatechange = function() {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
                             var responseData = JSON.parse(xhr.responseText);
@@ -425,14 +449,14 @@ function doorright(event){
                 event.preventDefault(event);
                 document.getElementById('addToCartForm').disabled = true;
 
-                allVariants.forEach(function(variant) {
+                allVariants.forEach(function (variant) {
                     variant.style.border = '2px solid red';
                 });
                 // alert('Please select all variants before adding to the cart.');
                 return false;
             }
         }
-        setTimeout(function() {
+        setTimeout(function () {
             addtocartMessage.style.display = 'none';
         }, 5000);
         return false;
@@ -440,8 +464,8 @@ function doorright(event){
 
     }
 
-    jQuery(document).ready(function() {
-        jQuery('#shareForm').submit(function(e) {
+    jQuery(document).ready(function () {
+        jQuery('#shareForm').submit(function (e) {
             e.preventDefault();
             jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
@@ -461,7 +485,7 @@ function doorright(event){
                     selectvarient: selectvarient,
                     _token: csrfToken,
                 },
-                success: function(response) {
+                success: function (response) {
                     // Handle the success response here
                     console.log(response);
                     jQuery('div#loader-container').hide();
@@ -473,7 +497,7 @@ function doorright(event){
                     }, 2000);
                     jQuery('#email').val('');
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     // Handle the error response here
                     console.error(xhr.responseText);
                 }
@@ -481,9 +505,9 @@ function doorright(event){
         });
     });
 
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         jQuery('#productDiscountMessage').hide();
-        jQuery('#discountForm').submit(function(e) {
+        jQuery('#discountForm').submit(function (e) {
             e.preventDefault();
             jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
@@ -498,7 +522,7 @@ function doorright(event){
                     apply_code: discount_value,
                     _token: csrfToken,
                 },
-                success: function(response) {
+                success: function (response) {
                     var selling_price = "{{$product->selling_price}}";
                     var discount_ammount = selling_price - response.discount;
                     // Handle the success response here
@@ -514,13 +538,13 @@ function doorright(event){
                     jQuery('#discount_btn').prop('disabled', true);
 
                     jQuery('#productDiscountMessage').text(response.success);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         jQuery('#productDiscountMessage').hide();
                     }, 2000);
 
 
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     // Handle the error response here
                     console.error(xhr.responseText);
                 }
