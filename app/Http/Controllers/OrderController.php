@@ -210,12 +210,12 @@ class OrderController extends Controller
         }
 
 
-        $backorder = ($request->backorder + $request->delivery_quantity + $request->delivery_order);
+        $backorder = ($request->delivery_quantity + $request->deliverd_quantity);
+   
         if ($backorder == $request->order_quantity) {
-
             $orderDetails->update(['order_status' => $request->new_status]);
         }
-        if ($request->totalmainpending - $request->delivery_quantity == 0 || $request->totalmainpending == 0) {
+        if ($request->totalmainpending - $request->delivery_quantity == 0) {
             $orderDetails->order->update(['order_status' => $request->new_status]);
         }
         DeliveryuserQuantity::create(['order_id' => $request->orderId, 'item_id' => $itemId, 'order_quantity' => $request->order_quantity, 'delivery_quantity' => $request->delivery_quantity, 'delivery_order' => $request->delivery_order, 'missingqty' => $request->missingqty]);

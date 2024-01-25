@@ -808,6 +808,8 @@
         let newStatus = jQuery('#d-new_status').val();
         let backorder = jQuery('#d-bacorder').val();
         let totalmainpending = jQuery('#d-totalmainpending').val();
+        let deliverd_quantity = jQuery('#d-deliverd_quantity').text();
+        
         //alert(delivery_order);
         //return false;
         
@@ -850,6 +852,7 @@
                 delivery_order: delivery_order,
                 backorder: backorder,
                 totalmainpending:totalmainpending,
+                deliverd_quantity:deliverd_quantity,
 
                 _token: '{{ csrf_token() }}' // Add CSRF token if needed
             },
