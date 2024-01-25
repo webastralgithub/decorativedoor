@@ -83,7 +83,8 @@ json_decode($variantSingle->option_type, true) : null;
                     @endif
                     <div id="productDiscountMessage" class="product-discount-message" style="display:none;"></div>
                     <p>{!!$product->short_description!!}</p>
-                    <div class="col-8 varients-block-flex mb-3 p-0">
+                    <div class="interior-panel-div-parent">
+                    <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                         <label>Type of Door</label>
                     <select class="form-control" id="type-of-door"  onchange="return doortype('{{$product->id}}')">
                         <option>Type of Door</option>
@@ -91,7 +92,7 @@ json_decode($variantSingle->option_type, true) : null;
                         <option value="Pair (PR)">Pair (PR)</option>
                     </select>
                 </div>
-                <div class="col-8 varients-block-flex mb-3 p-0">
+                <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                     <label>Loaction of Door</label>
                     <select class="form-control" id="location-of-door" onchange="return doorlocation('{{$product->id}}')">
                         <option>Location of Door</option>
@@ -111,7 +112,7 @@ json_decode($variantSingle->option_type, true) : null;
                         <option value="Office">Office</option>
                     </select>
                 </div>
-                <div class="col-8 varients-block-flex mb-3 p-0">
+                <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                     <label>Jamb</label>
                     <select class="form-control" id="jamb"  onchange="return doorjamb('{{$product->id}}')">
                         <option>JMB</option>
@@ -125,7 +126,7 @@ json_decode($variantSingle->option_type, true) : null;
                         <option value="4 7/8">4 7/8</option>
                     </select>
                 </div>
-                <div class="col-8 varients-block-flex mb-3 p-0">
+                <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                     <label>Right</label>
                     <select class="form-control" id="left" onchange="return doorleft('{{$product->id}}')">
                         <option>Left</option>
@@ -133,13 +134,14 @@ json_decode($variantSingle->option_type, true) : null;
                         <option value="OPEN OUT O/OUT">OPEN OUT O/OUT</option>
                     </select>
                 </div>
-                <div class="col-8 varients-block-flex mb-3 p-0">
+                <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                     <label>Left</label>
                     <select class="form-control" id="right" onchange="return doorright('{{$product->id}}')">
                         <option>Right</option>
                         <option value="OPEN IN O/IN">OPEN IN O/IN</option>
                         <option value="OPEN OUT O/OUT">OPEN OUT O/OUT</option>
                     </select>
+                </div>
                 </div>
                     @if(!empty($product->variants) && !empty($variantOptions))
                     <div class="varients-cart">

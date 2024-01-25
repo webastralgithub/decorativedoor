@@ -17,7 +17,7 @@
     }
 </style>
 @endif
-<div class="mx-4 content-p-mobile">
+<div class="mx-4 content-p-mobile" id="order-listing-assembler">
     <div class="page-header-tp">
         <h3>{{ __('Order') }} #{{ $order->order_id }}</h3>
         <div class="top-bntspg-hdr">
@@ -115,18 +115,18 @@
                         <th scope="col" class="align-middle text-center">Photo</th>
                         <th scope="col" class="align-middle text-center">Product Name</th>
                         <th scope="col" class="align-middle text-center">Quantity</th>
-                        <th scope="col" class="align-middle text-center">Production Ready Qty</th>
-                        <th scope="col" class="align-middle text-center">Backorder Qty</th>
+                        <th scope="col" class="align-middle text-center order-listing-production-qty">Production Ready Qty</th>
+                        <th scope="col" class="align-middle text-center order-listing-backorder-qty">Backorder Qty</th>
                         @can('delivery-order-status')
                         <th scope="col" class="align-middle text-center">Delivered Qty</th>
                         <th scope="col" class="align-middle text-center">Pending Qty</th>
                         @endcan
                         @can('change-order-status')
-                        <th scope="col" class="align-middle text-center">Order Status</th>
+                        <th scope="col" class="align-middle text-center order-listing-order-status">Order Status</th>
                         @endcan
                         @if (!auth()->user()->hasRole('Super Admin'))
                         @can('delivery-order-status')
-                        <th scope="col" class="align-middle text-center">Order Status</th>
+                        <th scope="col" class="align-middle text-center order-listing-order-status">Order Status</th>
                         @endcan
                         @endif
                         @can('order_price')
