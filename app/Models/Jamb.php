@@ -9,8 +9,7 @@ class Jamb extends Model
 {
     use HasFactory;
 
-    protected $table  = "jamb";
-
+    protected $table  = "jambs";
     protected $guarded = [];
     
     public function category()

@@ -22,7 +22,6 @@ class CheckoutController extends Controller
     {
         $cart = session()->get('cart');
         // dd($cart);
-        // print_r($cart);
         $orderId = '';
         if (!empty($cart)) {
             $totalProducts = 0;
@@ -74,11 +73,11 @@ class CheckoutController extends Controller
                                 'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['quantity'] * $selectedVariant['discount_price'] : 0,
                                 'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
                                 'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
-                                "door_type" =>  (!empty($product['doortype'])) ? $product['doortype'] : '',
-                                "door_jamb" => (!empty($product['doorjamb'])) ? $product['doorjamb'] : '',
-                                "door_location" => (!empty($product['doorlocation'])) ? $product['doorlocation'] : '',
-                                "door_left" => (!empty($product['doorleft'])) ? $product['doorleft'] : '',
-                                "door_right" => (!empty($product['doorright'])) ? $product['doorright'] : '',
+                                "typeofdoor_id" =>  (!empty($product['doortype'])) ? $product['doortype'] : '',
+                                "jamb_id" => (!empty($product['doorjamb'])) ? $product['doorjamb'] : '',
+                                "locationofdoor_id" => (!empty($product['doorlocation'])) ? $product['doorlocation'] : '',
+                                "left_id" => (!empty($product['doorleft'])) ? $product['doorleft'] : '',
+                                "right_id" => (!empty($product['doorright'])) ? $product['doorright'] : '',
                             ]);
                         }
                         
@@ -93,11 +92,11 @@ class CheckoutController extends Controller
                             'discount' => (!empty($product['discount_price'])) ? $product['discount_price'] * $product['quantity'] : 0,
                             'total' => (!empty($selectedVariant)) ? ($selectedVariant['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
                             'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
-                            "door_type" =>  (!empty($product['doortype'])) ? $product['doortype'] : '',
-                                "door_jamb" => (!empty($product['doorjamb'])) ? $product['doorjamb'] : '',
-                                "door_location" => (!empty($product['doorlocation'])) ? $product['doorlocation'] : '',
-                                "door_left" => (!empty($product['doorleft'])) ? $product['doorleft'] : '',
-                                "door_right" => (!empty($product['doorright'])) ? $product['doorright'] : '',
+                            "typeofdoor_id" =>  (!empty($product['doortype'])) ? $product['doortype'] : '',
+                                "jamb_id" => (!empty($product['doorjamb'])) ? $product['doorjamb'] : '',
+                                "locationofdoor_id" => (!empty($product['doorlocation'])) ? $product['doorlocation'] : '',
+                                "left_id" => (!empty($product['doorleft'])) ? $product['doorleft'] : '',
+                                "right_id" => (!empty($product['doorright'])) ? $product['doorright'] : '',
                         ]);
                     }
 

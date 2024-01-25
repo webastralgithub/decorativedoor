@@ -47,8 +47,8 @@ class ShopController extends Controller
     }
 
     public function product_details($slug)
-    { 
-        $product = Product::with(['image','categories.jambs','categories.lefts','categories.rights','categories.type_of_doors','categories.location_of_doors'])->where('slug', $slug)->first();
+    {
+        $product = Product::with(['image', 'categories.jambs', 'categories.lefts', 'categories.rights', 'categories.type_of_doors', 'categories.location_of_doors'])->where('slug', $slug)->first();
         if (empty($product)) {
             return abort(404);
         }
@@ -133,10 +133,10 @@ class ShopController extends Controller
                     "image" => $product->image,
                     "variant_data" => [],
                     "doortype" => $request->doortype,
-                        "doorlocation" => $request->doorlocation,
-                        "doorjamb" => $request->doorjamb,
-                        "doorleft" => $request->doorleft,
-                        "doorright" => $request->doorright,
+                    "doorlocation" => $request->doorlocation,
+                    "doorjamb" => $request->doorjamb,
+                    "doorleft" => $request->doorleft,
+                    "doorright" => $request->doorright,
                     // "variant_price" => $product->selling_price
                 ];
             }
@@ -199,10 +199,10 @@ class ShopController extends Controller
                     "image" => $product->image,
                     "variant_data" => [],
                     "doortype" => $request->doortype,
-                        "doorlocation" => $request->doorlocation,
-                        "doorjamb" => $request->doorjamb,
-                        "doorleft" => $request->doorleft,
-                        "doorright" => $request->doorright,
+                    "doorlocation" => $request->doorlocation,
+                    "doorjamb" => $request->doorjamb,
+                    "doorleft" => $request->doorleft,
+                    "doorright" => $request->doorright,
                     // "variant_price" => $product->selling_price
                 ];
             }
@@ -435,8 +435,9 @@ class ShopController extends Controller
         return response()->json($data);
     }
 
-    public function AddtoCartSubmit(){
-       
+    public function AddtoCartSubmit()
+    {
+
         $succescart = (!session()->has('succescart')) ? session()->get('succescart', []) : session()->get('succescart');
         return view('frontend.add-to-cart', compact('succescart'));
     }

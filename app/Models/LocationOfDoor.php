@@ -9,7 +9,7 @@ class LocationOfDoor extends Model
 {
     use HasFactory;
 
-    protected $table  = "location_of_door";
+    protected $table  = "location_of_doors";
 
     protected $guarded = [];
 

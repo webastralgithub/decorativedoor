@@ -9,7 +9,7 @@ class TypeOfDoor extends Model
 {
     use HasFactory;
 
-    protected $table  = "type_of_door";
+    protected $table  = "type_of_doors";
 
     protected $guarded = [];
 

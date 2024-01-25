@@ -95,7 +95,7 @@ json_decode($variantSingle->option_type, true) : null;
                                 <option value="">Type of Door</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
                                 @foreach ($product->categories[0]->type_of_doors as $typeOfDoor)
-                                <option value="{{ $typeOfDoor->name }}" {{ $product->type_of_door === $typeOfDoor->name
+                                <option value="{{ $typeOfDoor->id }}" {{ $product->type_of_door === $typeOfDoor->name
                                     ?
                                     'selected' : '' }}>
                                     {{ $typeOfDoor->name }}
@@ -111,7 +111,7 @@ json_decode($variantSingle->option_type, true) : null;
                                 <option value="">Loaction of Door</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->location_of_doors)
                                 @foreach ($product->categories[0]->location_of_doors as $location_of_doors)
-                                <option value="{{ $location_of_doors->name }}" {{ $product->location_of_doors ===
+                                <option value="{{ $location_of_doors->id }}" {{ $product->location_of_doors ===
                                     $location_of_doors->name ? 'selected' : '' }}>
                                     {{ $location_of_doors->name }}
                                 </option>
@@ -125,7 +125,7 @@ json_decode($variantSingle->option_type, true) : null;
                                 <option>JMB</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
                                 @foreach ($product->categories[0]->jambs as $jambs)
-                                <option value="{{ $jambs->name }}" {{ $product->jambs === $jambs->name ? 'selected' : ''
+                                <option value="{{ $jambs->id }}" {{ $product->jambs === $jambs->name ? 'selected' : ''
                                     }}>
                                     {{ $jambs->name }}
                                 </option>
@@ -139,7 +139,7 @@ json_decode($variantSingle->option_type, true) : null;
                                 <option>Left</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->lefts)
                                 @foreach ($product->categories[0]->lefts as $lefts)
-                                <option value="{{ $jambs->name }}" {{ $product->lefts === $lefts->name ? 'selected' : ''
+                                <option value="{{ $lefts->id }}" {{ $product->lefts === $lefts->name ? 'selected' : ''
                                     }}>
                                     {{ $lefts->name }}
                                 </option>
@@ -153,7 +153,7 @@ json_decode($variantSingle->option_type, true) : null;
                                 <option>Right</option>
                                 @if (isset($product->categories[0]) && $product->categories[0]->rights)
                                 @foreach ($product->categories[0]->rights as $rights)
-                                <option value="{{ $jambs->name }}" {{ $product->rights === $rights->name ? 'selected' :
+                                <option value="{{ $rights->id }}" {{ $product->rights === $rights->name ? 'selected' :
                                     ''
                                     }}>
                                     {{ $rights->name }}
