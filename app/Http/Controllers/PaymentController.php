@@ -30,11 +30,33 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
-        Payment::create(['order_id' => $request->order_id, 'customer_id' => $request->customer_id, 'recived_payment' => $request->recived_payment, 'payment_method' => $request->payment_method]);
+        $request->validate([
+            'recived_payment' => 'required',
+            'payment_method' => 'required',
+        ]);
 
-        return redirect()
-        ->back()
-        ->with('success', 'Payment added Successfully');
+        $paymentList = Payment::all();
+        
+        $pendingammount = 0;
+        foreach($paymentList as $payment){
+            $pendingammount += $payment->recived_payment;
+        }
+       
+        $paymenttotal =  getOrderTotalprice($request->order_id);
+        $pending =  $paymenttotal- $pendingammount;
+      
+        if($pending < $request->recived_payment){
+            return redirect()
+            ->back()
+            ->with('error', 'Add amount lessthen Pending Ammount');
+        }else{
+            Payment::create(['order_id' => $request->order_id, 'customer_id' => $request->customer_id, 'recived_payment' => $request->recived_payment, 'payment_method' => $request->payment_method]);
+
+            return redirect()
+            ->back()
+            ->with('success', 'Payment added Successfully');
+        }
+        
 
     }
 
