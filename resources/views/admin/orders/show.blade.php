@@ -22,51 +22,6 @@
         <h3>{{ __('Order') }} #{{ $order->order_id }}</h3>
         <div class="top-bntspg-hdr">
             <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-sm">&larr; Back</a>
-
-            @can('change-order-status')
-            <!-- <div class="col-md-6">
-                                                        <label class="small mb-1" for="order_status">
-                                                            Order Status
-                                                            <span class="text-danger">*</span>
-                                                        </label>
-                                                        <select class="form-select form-control-solid" id="order_status" name="order_status" onchange="updateOrderStatus()">
-
-                                                            @foreach ($order_statuses as $status)
-        @if (
-            \App\Models\OrderStatus::COMPLETE == $status->id &&
-                auth()->user()->can('order-status-complete'))
-        <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
-        @endif
-                                                            @if (
-                                                                \App\Models\OrderStatus::PENDING_ORDER_CONFIRMATION == $status->id &&
-                                                                    auth()->user()->can('order-status-pending-order-confirmation'))
-        <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
-        @endif
-                                                            @if (
-                                                                \App\Models\OrderStatus::FAILED == $status->id &&
-                                                                    auth()->user()->can('order-status-failed'))
-        <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
-        @endif
-                                                            @if (
-                                                                \App\Models\OrderStatus::READY_TO_PRODUCTION == $status->id &&
-                                                                    auth()->user()->can('order-status-ready-to-production'))
-        <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
-        @endif
-                                                            @if (
-                                                                \App\Models\OrderStatus::READY_TO_DELIVER == $status->id &&
-                                                                    auth()->user()->can('order-status-deliver'))
-        <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
-        @endif
-                                                            @if (
-                                                                \App\Models\OrderStatus::DISPATCHED == $status->id &&
-                                                                    auth()->user()->can('order-status-dispatch'))
-        <option value="{{ $status->id }}" @selected($order->order_status == $status->id)>{{ $status->name }}</option>
-        @endif
-        @endforeach
-                                                        </select>
-                                                    </div> -->
-            @endcan
-
         </div>
     </div>
 
@@ -144,7 +99,7 @@
                     @foreach ($order->details as $item)
                     @php
                     $discount[] = $item->discount;
-                    $finaltotal[] = $item->total;
+                    $finaltotal[] = abs($item->quantity * $item->unitcost);
 
 
                     $pendingingtotal = getOrderDeliveryQuantity($order->id)['pendingQuantity']; 

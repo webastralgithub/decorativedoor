@@ -163,7 +163,7 @@ class OrderController extends Controller
             $deliverQuan = ($request->order_quantity - $request->delivery_quantity);
             $finalorderquan = ($request->delivery_quantity + $request->delivery_order);
             if ($deliverQuan == 0 || $request->order_quantity == $finalorderquan) {
-               // $orderDetails->order->update(['order_status' => $request->new_status]);
+                // $orderDetails->order->update(['order_status' => $request->new_status]);
                 $orderDetails->update(['order_status' => $request->new_status]);
             }
 
@@ -211,7 +211,7 @@ class OrderController extends Controller
 
 
         $backorder = ($request->delivery_quantity + $request->deliverd_quantity);
-   
+
         if ($backorder == $request->order_quantity) {
             $orderDetails->update(['order_status' => $request->new_status]);
         }
@@ -335,7 +335,7 @@ class OrderController extends Controller
             ->where('orders.id', $id)
             ->select('orders.*', 'user_addresses.*', 'users.*')
             ->first();
-            
+
         $signature = DeliveryUser::where('order_id', $id)->first();
         $orderDetails = Order::with('details')->find($id);
 
@@ -426,7 +426,7 @@ class OrderController extends Controller
 
     public function delivery_user($id)
     {
-        $recentSignature = DeliveryUser::latest()->first();
+        $recentSignature = DeliveryUser::where('order_id', $id)->latest()->first();
         $images = DeliveryUser::where('order_id', $id)->get();
         $order = Order::find($id);
         return view('admin.orders.delivery-user', compact('order', 'recentSignature', 'images'));
@@ -463,7 +463,7 @@ class OrderController extends Controller
         $deliveryUser->images = json_encode($imagePaths);
         $deliveryUser->save();
 
-        $recentSignature = DeliveryUser::latest()->first();
+        $recentSignature = DeliveryUser::where('order_id', $request->order_id)->latest()->first();
         $order = Order::find($request->order_id);
         View::share(['recentSignature' => $recentSignature, 'order' => $order]);
 

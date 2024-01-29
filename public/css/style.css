@@ -573,6 +573,7 @@ option:disabled {
 .top-bntspg-hdr {
     display: flex;
     gap: 10px;
+    margin-top: -48px;
 }
 
 .content-body {

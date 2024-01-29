@@ -132,7 +132,7 @@
                                 $orderQuantity = 0;
                                 $deliver_quantity = 0;
 
-                                $subtotal += abs($item->discount - $item->total);
+                                $subtotal += abs($item->quantity * $item->unitcost);
 
                                 $orderQuantity += $item->quantity;
                                 @endphp
@@ -174,7 +174,7 @@
                                 </td>
 
                                 <td class="text-right">
-                                    ${{ number_format(abs($item->discount - $item->total), 2, '.', ',') }}
+                                    ${{ number_format(abs($item->quantity * $item->unitcost), 2, '.', ',') }}
                                 </td>
                             </tr>
                             @endforeach
@@ -231,7 +231,7 @@
                                             + (env("GST_HST_TAX",
                                             0) + env("PST_RST_QST_TAX", 0)), 2, '.', ',') }}</span></li>
                                     <li>Pending Payment - <span class="mono">
-                                            ${{getTotalPendingPayment() }}</span></li>
+                                            ${{getTotalPendingPayment($order->order_id) }}</span></li>
 
                                 </ul>
                             </div>

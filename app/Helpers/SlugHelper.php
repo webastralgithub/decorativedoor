@@ -249,6 +249,20 @@ if (!function_exists('generateProductSlug')) {
             return $FinalTotal;
         }
     }
+    if (!function_exists('getPaymentTotalPrice')) {
+        function getPaymentTotalPrice($orderId = null)
+        {
+
+            $order = OrderDetails::where('order_id', $orderId)->get();
+
+            $FinalTotal = 0;
+            if (!empty($order))
+                foreach ($order as $item) {
+                    $FinalTotal += abs($item->quantity * $item->unitcost);
+                }
+            return $FinalTotal;
+        }
+    }
 
     if (!function_exists('getOrderDeliveryQuantity')) {
         function getOrderDeliveryQuantity($orderId = null)
@@ -279,7 +293,6 @@ if (!function_exists('generateProductSlug')) {
 
                     $delivery_quantity += $deliver->delivery_quantity;
                     $missingqty += $deliver->missingqty;
-
                 }
 
             //dd($deliver_quantity, $delivery_quantity);
@@ -299,53 +312,53 @@ if (!function_exists('generateProductSlug')) {
 
     if (!function_exists('getOrderDetailsPendingQuantity')) {
         function getOrderDetailsPendingQuantity($orderId = null, $itemId = null)
-        {                     
+        {
             $pendingqty =  DeliveryuserQuantity::where('order_id', $orderId)->where('item_id', $itemId)->latest()->first();
-           
-            if(!empty($pendingqty)){
+
+            if (!empty($pendingqty)) {
                 $deliverdQuantity = ($pendingqty->delivery_quantity) ? $pendingqty->delivery_quantity : 0;
                 $pendingQuantity = ($pendingqty->missingqty) ? $pendingqty->missingqty : 0;
-    
+
                 $data = array(
                     'deliverdQuantity' => $deliverdQuantity,
                     'pendingQuantity' => $pendingQuantity
                 );
-            }else{
+            } else {
                 $data = array(
                     'deliverdQuantity' => 0,
                     'pendingQuantity' => 0
                 );
             }
-            
+
             return $data;
         }
     }
 
     if (!function_exists('mangePendingQuantity')) {
         function mangePendingQuantity($orderId = null, $itemId = null)
-        {                     
+        {
             $pendingqty =  DeliveryuserQuantity::where('order_id', $orderId)->where('item_id', $itemId)->latest()->get();
-           
-            if(!empty($pendingqty)){
+
+            if (!empty($pendingqty)) {
                 $deliverdQuantity = 0;
                 $pendingQuantity = 0;
-                foreach($pendingqty as $qty){
+                foreach ($pendingqty as $qty) {
                     $deliverdQuantity += ($qty->delivery_quantity) ? $qty->delivery_quantity : 0;
                     $pendingQuantity = ($qty->missingqty) ? $qty->missingqty : 0;
                 }
-                
-    
+
+
                 $data = array(
                     'deliverdQuantity' => $deliverdQuantity,
                     'pendingQuantity' => $pendingQuantity
                 );
-            }else{
+            } else {
                 $data = array(
                     'deliverdQuantity' => 0,
                     'pendingQuantity' => 0
                 );
             }
-            
+
             return $data;
         }
     }
@@ -408,16 +421,14 @@ if (!function_exists('getTotalPrice')) {
 
 
 if (!function_exists('getTotalPendingPayment')) {
-    function getTotalPendingPayment()
+    function getTotalPendingPayment($orderId)
     {
-        $paymentList = Payment::all();
-        
+        $paymentList = Payment::where('order_id', $orderId)->get();
+
         $pendingammount = 0;
-        foreach($paymentList as $payment){
+        foreach ($paymentList as $payment) {
             $pendingammount += $payment->recived_payment;
         }
-
-
         return $pendingammount;
     }
 }

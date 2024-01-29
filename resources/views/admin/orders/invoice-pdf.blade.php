@@ -178,7 +178,7 @@
                             $orderQuantity = 0;
                             $deliver_quantity = 0;
 
-                            $subtotal += getOrderTotalprice($item->id);
+                            $subtotal += abs($item->quantity * $item->unitcost);
 
                             $orderQuantity += $item->quantity;
                             @endphp
@@ -208,7 +208,7 @@
                                 <strong class="mono">{{ $quantities['pending_quantity'] }}</strong>
                             </td>
                             <td class="text-right">
-                                <strong class="mono">${{ number_format(getOrderTotalprice($item->id), 2, '.', ',')
+                                <strong class="mono">${{ number_format(abs($item->quantity * $item->unitcost), 2, '.', ',')
                                     }}</strong>
                             </td>
                         </tr>
@@ -262,7 +262,7 @@
                                 <li>Recived Payment- <span class="mono">${{ number_format($finalPrice
                                         + (env("GST_HST_TAX",
                                         0) + env("PST_RST_QST_TAX", 0)), 2, '.', ',') }}</span></li>
-                                <li>Pending Payment - <span class="mono"> ${{getTotalPendingPayment() }}</span></li>
+                                <li>Pending Payment - <span class="mono"> ${{getTotalPendingPayment($order->order_id) }}</span></li>
 
                             </ul>
                         </div>
