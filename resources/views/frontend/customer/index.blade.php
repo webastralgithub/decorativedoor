@@ -29,7 +29,7 @@
         @endif --}}
         <div class="row customer-form-responsive">
             <div class="col-lg-12 customer-page-cm-one">
-                <form id="customer-assign" action="{{ route('store-customer') }}" method="POST">
+                <form id="customer-assign" action="{{ route('store-customer') }}" method="POST" novalidate>
                     @csrf
                     <input type="hidden" class="form-control" id="customer-id" name="user_id" value="">
 
@@ -95,16 +95,14 @@
 
                                 <div class="row mt-4">
                                     <div class="col-md-12">
-                                        <select class="form-control" id="customer-billing-state" placeholder="Billing State" name="billing_state" value="{{ old('billing_state') }}" required>
-                                            @foreach($canadaStates as $state)
+                                        <select class="form-control select2" id="customer-billing-state" placeholder="Billing State" name="billing_state" required>
                                             <option value="">Select State</option>
-                                            <option value="{{$state}}">{{$state}}</option>
+                                            @foreach($canadaStates as $state)
+                                                <option value="{{ $state }}" {{ old('billing_state') == $state ? 'selected' : '' }}>{{ $state }}</option>
                                             @endforeach
                                         </select>
-                                        <!-- <input type="text" class="form-control" id="customer-billing-state" placeholder="Billing State" name="billing_state" value=""> -->
                                     </div>
                                 </div>
-
 
                                 <div class="row mt-4">
                                     <div class="col-md-12 same-address-block">
@@ -136,13 +134,12 @@
 
                                 <div class="row mt-4">
                                     <div class="col-md-12">
-                                        <select class="form-control" id="shipping-customer-state" placeholder="Shipping  State" name="state" value="{{ old('state') }}" required>
-                                            @foreach($canadaStates as $state)
+                                        <select class="form-control select2" id="shipping-customer-state" placeholder="Shipping State" name="state" required>
                                             <option value="">Select State</option>
-                                            <option value="{{$state}}">{{$state}}</option>
+                                            @foreach($canadaStates as $state)
+                                                <option value="{{ $state }}" {{ old('state') == $state ? 'selected' : '' }}>{{ $state }}</option>
                                             @endforeach
                                         </select>
-                                        <!-- <input type="text" class="form-control" id="shipping-customer-state" placeholder="Shipping  State" name="state" value=""> -->
                                     </div>
                                 </div>
                             </div>
@@ -209,4 +206,11 @@
         </div>
     </div>
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script>
+    $('.select2').select2();
+</script>
 @endsection

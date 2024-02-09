@@ -161,7 +161,7 @@
         </tr>
         <tr>
             <td colspan="5" class="text-right cart-page-btm-btns">
-                <a href="{{ url()->previous() }}" class="btn btn-warning" style="background: #93681a; color: #fff; border-color: #93681a;"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+                <a href="{{route('shop')}}" class="btn btn-warning" style="background: #93681a; color: #fff; border-color: #93681a;"><i class="fa fa-angle-left"></i> Continue Shopping</a>
                 <div id="place-order-btn">
                     <a href="{{ route('checkout.order') }}" class="btn btn-success">Proceed Order</a>
                 </div>

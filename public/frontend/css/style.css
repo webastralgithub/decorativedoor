@@ -1877,13 +1877,13 @@ section.related-product .product__item__text h6 {
 -----------------------*/
 
 .product-details {
-	padding-top: 80px;
+	padding-top: 40px;
 }
 
 .product__details__pic__item {
 	margin-bottom: 20px;
 	width: 100%;
-	height: 500px;
+	height: 310px;
 }
 
 .product__details__pic__item .product__details__pic__item--large {
@@ -1913,9 +1913,10 @@ table#cart div#place-order-btn {
 }
 
 .product__details__text h3 {
-	color: #252525;
-	font-weight: 700;
-	margin-bottom: 16px;
+    color: #252525;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 25px;
 }
 
 .product__details__text .product__details__rating {
@@ -3933,8 +3934,55 @@ div#loader-container .spinner-border {
 	background: #fff;
 }
 
-section.customer.spad form .nice-select.form-control {
+section.customer.spad form .nice-select.form-control,
+section.customer.spad form .select2 {
 	font-size: 1rem !important;
+}
+
+section.customer.spad form .select2 .select2-selection,
+.product-details .select2 .select2-selection{
+    font-size: 1rem !important;
+    background: #fff;
+    border: solid 1px #e8e8e8;
+    border-radius: 0.25rem;
+    padding: 0 0px;
+    height: 42px;
+}
+
+.product-pg-top-bread-crum{
+	background: #ebebeb;
+    padding: 4px;
+    border-bottom: 1px solid #00000014;
+}
+
+.product-pg-top-bread-crum .breadcrumb__option{
+	text-align: left;
+}
+
+.product-pg-top-bread-crum .breadcrumb__option span,
+.product-pg-top-bread-crum .breadcrumb__option a{
+	color: #000000;
+}
+
+.product-pg-top-bread-crum  .breadcrumb__option a:after{
+    background: #000000;
+}
+
+section.customer.spad form .select2 {
+	width: 100% !important;
+}
+section.customer.spad form .select2 .select2-selection .select2-selection__rendered,
+.product-details .select2 .select2-selection .select2-selection__rendered{
+    height: 42px;
+    padding: 6px 13px;
+	font-size: 1rem !important;
+	color: #6c757d !important;
+}
+
+section.customer.spad form .select2 .select2-selection .select2-selection__arrow,
+.product-details .select2 .select2-selection  .select2-selection__arrow{
+	height: 41px;
+    right: 5px;
 }
 
 .customer-message p {

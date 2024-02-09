@@ -7,15 +7,14 @@
 <!-- Hero Section End -->
 
 <!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg" data-setbg="{{asset('frontend/img/breadcrumb.jpg')}}">
+<section class="breadcrumb-section set-bg product-pg-top-bread-crum" data-setbg="">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>{{$product->title}}</h2>
                     <div class="breadcrumb__option">
                         <a href="./index.html">Home</a>
-                        <span>Product-detail</span>
+                        <span>Product-detail</span> /  <span>{{$product->title}}</span>
                     </div>
                 </div>
             </div>
@@ -35,26 +34,29 @@ json_decode($variantSingle->option_type, true) : null;
 <section class="product-details spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-4 col-md-4">
                 <div class="product__details__pic">
                     <div class="product__details__pic__item">
                         @if(isset($productimages) && !empty($productimages[0]))
-                        <img class="product__details__pic__item--large" src="{{ asset('storage/products/' . $productimages[0]['path'])}}" alt="">
+                        <img class="product__details__pic__item--large"
+                            src="{{ asset('storage/products/' . $productimages[0]['path'])}}" alt="">
                         @else
-                        <img class="product__details__pic__item--large" src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
+                        <img class="product__details__pic__item--large"
+                            src="{{asset('frontend/img/product/details/product-details-1.jpg')}}" alt="">
                         @endif
                     </div>
                     @if(isset($productimages) && !empty($productimages))
                     <div class="product__details__pic__slider owl-carousel">
                         @foreach($productimages as $images)
-                        <img data-imgbigurl="{{ asset('storage/products/' . $images->path)}}" src="{{ asset('storage/products/' . $images->path)}}" alt="">
+                        <img data-imgbigurl="{{ asset('storage/products/' . $images->path)}}"
+                            src="{{ asset('storage/products/' . $images->path)}}" alt="">
                         @endforeach
                     </div>
                     @endif
                 </div>
             </div>
 
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-8 col-md-8">
                 <input type="hidden" name="slug" value="{{$product->slug}}">
                 <div class="product__details__text">
                     <h3>{{$product->title}}</h3>
@@ -77,7 +79,8 @@ json_decode($variantSingle->option_type, true) : null;
                         @endif
                     </div>
                     @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
-                    <input type="hidden" id="discount_price" value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
+                    <input type="hidden" id="discount_price"
+                        value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
                     @else
                     <input type="hidden" id="discount_price" value="">
                     @endif
@@ -85,13 +88,13 @@ json_decode($variantSingle->option_type, true) : null;
                     <p>{!!$product->short_description!!}</p>
                     <div class="interior-panel-div-parent">
                         <div class="varients-block-flex mb-3 p-0 interior-panel-div interior-door-type">
-                            <label>Type of Door</label>
-                            <select class="form-control" id="type-of-door" onchange="return doortype('{{$product->id}}')">
+                            <label for="type-of-door">Type of Door</label>
+                            <select class="form-control select2" id="type-of-door"
+                                onchange="return doortype('{{$product->id}}')">
                                 <option value="">Type of Door</option>
-                                @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
+                                @if (isset($product->categories[0]) && $product->categories[0]->jambs)
                                 @foreach ($product->categories[0]->type_of_doors as $typeOfDoor)
-                                <option value="{{ $typeOfDoor->id }}" {{ $product->type_of_door === $typeOfDoor->name
-                                    ?
+                                <option value="{{ $typeOfDoor->id }}" {{ $product->type_of_door === $typeOfDoor->name ?
                                     'selected' : '' }}>
                                     {{ $typeOfDoor->name }}
                                 </option>
@@ -101,11 +104,13 @@ json_decode($variantSingle->option_type, true) : null;
                         </div>
                         <div class="varients-block-flex mb-3 p-0 interior-panel-div interior-door-type">
                             <label>Doors Category</label>
-                            <select class="form-control" id="variant-category" onchange="return doorcategory('{{$product->id}}')">
+                            <select class="form-control select2" id="variant-category"
+                                onchange="return doorcategory('{{$product->id}}')">
                                 <option value="">Select Category</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->variant_categories)
                                 @foreach ($product->categories[0]->variant_categories as $categorySingle)
-                                <option value="{{ $categorySingle->id }}" {{ $product->variant_category_id === $categorySingle->name
+                                <option value="{{ $categorySingle->id }}" {{ $product->variant_category_id ===
+                                    $categorySingle->name
                                     ?
                                     'selected' : '' }}>
                                     {{ $categorySingle->name }}
@@ -116,7 +121,8 @@ json_decode($variantSingle->option_type, true) : null;
                         </div>
                         <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                             <label>Loaction of Door</label>
-                            <select class="form-control" id="location-of-door" onchange="return doorlocation('{{$product->id}}')">
+                            <select class="form-control select2" id="location-of-door"
+                                onchange="return doorlocation('{{$product->id}}')">
                                 <option value="">Loaction of Door</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->location_of_doors)
                                 @foreach ($product->categories[0]->location_of_doors as $location_of_doors)
@@ -130,7 +136,8 @@ json_decode($variantSingle->option_type, true) : null;
                         </div>
                         <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                             <label>Jamb</label>
-                            <select class="form-control" id="jamb" onchange="return doorjamb('{{$product->id}}')">
+                            <select class="form-control select2" id="jamb"
+                                onchange="return doorjamb('{{$product->id}}')">
                                 <option>JMB</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
                                 @foreach ($product->categories[0]->jambs as $jambs)
@@ -144,7 +151,8 @@ json_decode($variantSingle->option_type, true) : null;
                         </div>
                         <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                             <label>Right</label>
-                            <select class="form-control" id="left" onchange="return doorleft('{{$product->id}}')">
+                            <select class="form-control select2" id="left"
+                                onchange="return doorleft('{{$product->id}}')">
                                 <option>Left</option>
                                 @if ( isset($product->categories[0]) && $product->categories[0]->lefts)
                                 @foreach ($product->categories[0]->lefts as $lefts)
@@ -158,7 +166,8 @@ json_decode($variantSingle->option_type, true) : null;
                         </div>
                         <div class="varients-block-flex mb-3 p-0 interior-panel-div">
                             <label>Left</label>
-                            <select class="form-control" id="right" onchange="return doorright('{{$product->id}}')">
+                            <select class="form-control select2" id="right"
+                                onchange="return doorright('{{$product->id}}')">
                                 <option>Right</option>
                                 @if (isset($product->categories[0]) && $product->categories[0]->rights)
                                 @foreach ($product->categories[0]->rights as $rights)
@@ -192,7 +201,7 @@ json_decode($variantSingle->option_type, true) : null;
                             <div class="varient-block-cn">
                                 <label>{{ucwords($variantCombination['variantType'])}}</label>
 
-                                <select class="variants">
+                                <select class="variants select2">
                                     <option disabled selected value="0">Select
                                         {{ucwords($variantCombination['variantType'])}}
                                     </option>
@@ -227,15 +236,18 @@ json_decode($variantSingle->option_type, true) : null;
                         <input type="hidden" name="right" id="door-right" value="" />
                         <input type="hidden" name="variant_category_id" id="variant_category_id" value="" />
 
-                        <input type="hidden" name="variant" class="product-variant-data" value="{{json_encode($variantSingle)}}" />
+                        <input type="hidden" name="variant" class="product-variant-data"
+                            value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
-                        <button type="button" class="primary-btn add-to-cart " onclick="return addToCart(event)" @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
-                        <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal" data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
+                        <button type="button" class="primary-btn add-to-cart " onclick="return addToCart(event)"
+                            @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
+                        <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal"
+                            data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
                     </form>
                     <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
-                                getProductAvailabityStock($product->id) > 0 && (getProductAvailabityStock($product->id)
-                                >
-                                getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
+                            getProductAvailabityStock($product->id) > 0 && (getProductAvailabityStock($product->id)
+                            >
+                            getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
                 </div>
             </div>
 
@@ -243,13 +255,16 @@ json_decode($variantSingle->option_type, true) : null;
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Description</a>
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                aria-selected="true">Description</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">Information</a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                                aria-selected="false">Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab" aria-selected="false">Reviews <span>(1)</span></a>
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                aria-selected="false">Reviews <span>(1)</span></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -304,7 +319,8 @@ json_decode($variantSingle->option_type, true) : null;
 </section>
 
 <!-- Modal share with email -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -325,10 +341,12 @@ json_decode($variantSingle->option_type, true) : null;
                             </label>
                             <input type="hidden" id="product_id" name="product_id" value=" {{ $product->id }}">
                             <div class="col-md-12">
-                                <input name="email" id="email" type="email" class="form-control example-date-input" value="{{ old('email') }}" required>
+                                <input name="email" id="email" type="email" class="form-control example-date-input"
+                                    value="{{ old('email') }}" required>
                             </div>
                             <div class="col-md-12 mt-3">
-                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn" value="{{ _('Share') }}">
+                                <input name="submit" id="share" type="submit" class="form-control btn primary-btn"
+                                    value="{{ _('Share') }}">
                             </div>
                             <span id="message">
                         </div>
@@ -392,7 +410,7 @@ json_decode($variantSingle->option_type, true) : null;
         var variant_category_id = document.getElementById('variant_category_id').value;
         var selectedVariants = [];
         // Iterate through all variant dropdowns
-        allVariants.forEach(function(variant) {
+        allVariants.forEach(function (variant) {
             var selectedValue = variant.value;
             console.log("selectedValue", selectedValue);
             // Check if the variant is selected
@@ -407,7 +425,7 @@ json_decode($variantSingle->option_type, true) : null;
         if (checkStockAvailability < getProductStockOnCart || (quantity > checkStockAvailability)) {
             addtocartMessage.innerHTML = '<div class="product-discount-message-error">Product is out of Stock</div>';
             addtocartMessage.style.display = 'block';
-            setTimeout(function() {
+            setTimeout(function () {
                 addtocartMessage.style.display = 'none';
             }, 5000);
             return false;
@@ -426,10 +444,11 @@ json_decode($variantSingle->option_type, true) : null;
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 
-                xhr.onreadystatechange = function() {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
                             var responseData = JSON.parse(xhr.responseText);
+                            console.log(responseData, 'hiii');
                             // Check if the response contains a 'success' property
                             if (responseData.success) {
                                 // Display the success message
@@ -469,17 +488,27 @@ json_decode($variantSingle->option_type, true) : null;
                 xhr.send(data);
 
             } else {
-                event.preventDefault(event);
+                event.preventDefault();
+
                 document.getElementById('addToCartForm').disabled = true;
 
-                allVariants.forEach(function(variant) {
+                allVariants.forEach(function (variant) {
                     variant.style.border = '2px solid red';
                 });
-                // alert('Please select all variants before adding to the cart.');
+
+                document.getElementById('error-message').style.display = 'none';
+
+                document.getElementById('error-message').innerHTML = 'Please select all variants before adding to the cart.';
+                document.getElementById('error-message').style.display = 'block';
+
+                setTimeout(function () {
+                    document.getElementById('error-message').style.display = 'none';
+                }, 3000);
+
                 return false;
             }
         }
-        setTimeout(function() {
+        setTimeout(function () {
             addtocartMessage.style.display = 'none';
         }, 5000);
         return false;
@@ -487,8 +516,8 @@ json_decode($variantSingle->option_type, true) : null;
 
     }
 
-    jQuery(document).ready(function() {
-        jQuery('#shareForm').submit(function(e) {
+    jQuery(document).ready(function () {
+        jQuery('#shareForm').submit(function (e) {
             e.preventDefault();
             jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
@@ -508,7 +537,7 @@ json_decode($variantSingle->option_type, true) : null;
                     selectvarient: selectvarient,
                     _token: csrfToken,
                 },
-                success: function(response) {
+                success: function (response) {
                     // Handle the success response here
                     console.log(response);
                     jQuery('div#loader-container').hide();
@@ -520,7 +549,7 @@ json_decode($variantSingle->option_type, true) : null;
                     }, 2000);
                     jQuery('#email').val('');
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     // Handle the error response here
                     console.error(xhr.responseText);
                 }
@@ -528,9 +557,9 @@ json_decode($variantSingle->option_type, true) : null;
         });
     });
 
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         jQuery('#productDiscountMessage').hide();
-        jQuery('#discountForm').submit(function(e) {
+        jQuery('#discountForm').submit(function (e) {
             e.preventDefault();
             jQuery('div#loader-container').show();
             var csrfToken = $('input[name="_token"]').val();
@@ -545,7 +574,7 @@ json_decode($variantSingle->option_type, true) : null;
                     apply_code: discount_value,
                     _token: csrfToken,
                 },
-                success: function(response) {
+                success: function (response) {
                     var selling_price = "{{$product->selling_price}}";
                     var discount_ammount = selling_price - response.discount;
                     // Handle the success response here
@@ -561,18 +590,24 @@ json_decode($variantSingle->option_type, true) : null;
                     jQuery('#discount_btn').prop('disabled', true);
 
                     jQuery('#productDiscountMessage').text(response.success);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         jQuery('#productDiscountMessage').hide();
                     }, 2000);
 
 
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     // Handle the error response here
                     console.error(xhr.responseText);
                 }
             });
         });
     });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script>
+    $('.select2').select2();
 </script>
 @endsection
