@@ -79,12 +79,12 @@ class ShopController extends Controller
             $discount_ammount = 0;
         }
         $product = Product::findOrFail($productId);
-        if (getProductAvailabityStock($product->id) <= 0) {
-            $data = array(
-                'error' => 'Product is out of stock!',
-            );
-            return response()->json($data, 403);
-        }
+        // if (getProductAvailabityStock($product->id) <= 0) {
+        //     $data = array(
+        //         'error' => 'Product is out of stock!',
+        //     );
+        //     return response()->json($data, 403);
+        // }
 
         if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
             // $selectedVariant = json_decode($request->variant, true);
