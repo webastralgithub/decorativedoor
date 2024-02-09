@@ -29,7 +29,7 @@
         <tr data-id="{{ $id }}" data-variant="{{ $variantId }}">
             <td data-th="Product">
                 <div class="row">
-                    <div class="col-sm-3 hidden-xs">
+                    <div class="col-sm-2 hidden-xs">
 
                         @if($details['image']['path'])
                         <img src="{{ asset('storage/products/' .$details['image']['path'])}}" width="100" height="100" class="img-responsive" />
@@ -37,13 +37,15 @@
                         <img src="{{ asset('frontend/img/product/details/product-details-1.jpg') }}" width="100" height="100" class="img-responsive" />
                         @endif
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-10">
+                        <div class="cart-pg-product-pg">
                         <h4 class="nomargin"><a href="{{ route('product', $details['slug']) }}" style="color: #000;">{{ $details['name'] }}</a></h4>
                         <span class="cart-price-btm">
                             <b>Type:</b>
                             <span>{{ $subVariant['name'] != '' ? $subVariant['name'] : '' }}
                             </span>
                         </span>
+                        </div>
                     </div>
                 </div>
             </td>
