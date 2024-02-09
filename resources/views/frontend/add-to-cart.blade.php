@@ -217,12 +217,24 @@
 
                                         <li><b>Quantity</b> <span>{{ $variation['quantity'] }}</span></li>
                                         <li><b>Size</b> <span>{{ $variation['name'] }}</span></li>
+                                        @if(!empty($doorCategory))
                                         <li><b>Doors Category</b> <span>{{ (!empty($doorCategory) ? $doorCategory->name : " ") }}</span></li>
+                                        @endif
+                                        @if(!empty($typeOfDoor))
                                         <li><b>Type of Door</b> <span>{{ (!empty($typeOfDoor) ? $typeOfDoor->name : " ") }}</span></li>
+                                        @endif
+                                        @if(!empty($typeOfLocation))
                                         <li><b>Type of Location</b> <span>{{ (!empty($typeOfLocation) ? $typeOfLocation->name : " ")}}</span></li>
+                                        @endif
+                                        @if(!empty($jump))
                                         <li><b>Jamb</b> <span>{{ (!empty($jump) ? $jump->name : " ") }}</span></li>
+                                        @endif
+                                        @if(!empty($left))
                                         <li><b>Left</b> <span>{{ (!empty($left) ? $left->name : " ") }}</span></li>
+                                        @endif
+                                        @if(!empty($right))
                                         <li><b>Right</b> <span>{{ (!empty($right) ? $right->name : " ") }}</span></li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
