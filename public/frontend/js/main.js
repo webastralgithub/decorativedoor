@@ -255,6 +255,7 @@
                             <button id="customerassign" data-id="${jsonData.id}" class="primary-btn">
                             Use This Customer </button>`);
                     $('#customer-id').val(jsonData.id);
+                    $('#customer-password').hide();
 
                     /**********Personal information ***********/
 
@@ -367,7 +368,7 @@
                 var zipcode = $('#customer-billing-zipcode').val();
 
                 // $('#customer-shipping-address_type').val(address_type);
-                // $('#shipping-customer-state').val(state);
+                $('#shipping-customer-state').val(state);
                 // $('#shipping-customer-city').val(city);
                 // $('#shipping-customer-street').val(street);
                 // $('#shipping-customer-zipcode').val(zipcode);

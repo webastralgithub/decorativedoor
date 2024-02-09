@@ -13,7 +13,7 @@
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
                     <div class="breadcrumb__option">
-                        <a href="./index.html">Home</a>
+                        <a href="{{route('home')}}">Home</a>
                         <span>Product-detail</span> /  <span>{{$product->title}}</span>
                     </div>
 
@@ -435,17 +435,17 @@ json_decode($variantSingle->option_type, true) : null;
         var getProductStockOnCart = parseInt("{{ getProductStockOnCart($product->id) }}");
 
         console.log("checkStockAvailability::", checkStockAvailability, "getProductStockOnCart", getProductStockOnCart, "selectedVariants", selectedVariants.length);
-        var addtocartMessage = document.getElementById('addtocartMessage');
-        if (quantity + getProductStockOnCart > checkStockAvailability) {
-        // Quantity exceeds available stock, show error message
-        var addtocartMessage = document.getElementById('addtocartMessage');
-        addtocartMessage.innerHTML = '<div class="product-discount-message-error">Quantity exceeds available stock</div>';
-        addtocartMessage.style.display = 'block';
-        setTimeout(function () {
-            addtocartMessage.style.display = 'none';
-        }, 5000);
-        return false;
-    }
+    //     var addtocartMessage = document.getElementById('addtocartMessage');
+    //     if (quantity + getProductStockOnCart > checkStockAvailability) {
+    //     // Quantity exceeds available stock, show error message
+    //     var addtocartMessage = document.getElementById('addtocartMessage');
+    //     addtocartMessage.innerHTML = '<div class="product-discount-message-error">Quantity exceeds available stock</div>';
+    //     addtocartMessage.style.display = 'block';
+    //     setTimeout(function () {
+    //         addtocartMessage.style.display = 'none';
+    //     }, 5000);
+    //     return false;
+    // }
         if (checkStockAvailability != 0) {
             // Check if all variants are selected
             if (selectedVariants.length >= 0 && selectedVariants.length === (allVariants.length / 2)) {
@@ -483,10 +483,11 @@ json_decode($variantSingle->option_type, true) : null;
                                 console.error('Error or unexpected response:', responseData);
                             }
                             console.log(responseData);
-                        } else {
-                            addtocartMessage.innerHTML = '<div class="product-discount-message-error">Product is out of Stock</div>';
-                            addtocartMessage.style.display = 'block';
-                        }
+                        } 
+                        // else {
+                        //     addtocartMessage.innerHTML = '<div class="product-discount-message-error">Product is out of Stock</div>';
+                        //     addtocartMessage.style.display = 'block';
+                        // }
                     }
                 };
 
