@@ -281,7 +281,10 @@
         </div>
         @if(session()->has('assign_customer'))
         <div class="customer-message">
-            <p>Current Order for this Customer: {{getUserInfo(session()->get('assign_customer'))->name}}</p>
+            @php 
+            $customerDeatils =getUserInfo(session()->get('assign_customer'));
+            @endphp
+            <p>Current Order for this Customer: {{!empty($customerDeatils) ? $customerDeatils->name : ''}}</p>
         </div>
         @endif
 

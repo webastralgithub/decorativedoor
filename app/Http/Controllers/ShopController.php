@@ -87,7 +87,9 @@ class ShopController extends Controller
         }
 
         if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
-            $selectedVariant = json_decode($request->variant, true);
+            // $selectedVariant = json_decode($request->variant, true);
+            $productVariant = ProductVariant::where('name', $request->selectedVariants)->first();
+            $selectedVariant = json_decode($productVariant, true);
             if (isset($cart[$productId]) && isset($cart[$productId]['variant_data'][$selectedVariant['id']])) {
                 $cart[$productId]['quantity'] += $request->quantity;
                 $cart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] += $request->quantity;
@@ -153,7 +155,8 @@ class ShopController extends Controller
 
 
         if (count($product->variants) > 0 && !empty($product->variants) && !empty($request->variant)) {
-            $selectedVariant = json_decode($request->variant, true);
+            $productVariant = ProductVariant::where('name', $request->selectedVariants)->first();
+            $selectedVariant = json_decode($productVariant, true);
             if (isset($succescart[$productId]) && isset($succescart[$productId]['variant_data'][$selectedVariant['id']])) {
                 $succescart[$productId]['quantity'] += $request->quantity;
                 $succescart[$productId]['variant_data'][$selectedVariant['id']]["quantity"] += $request->quantity;

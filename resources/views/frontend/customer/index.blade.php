@@ -68,25 +68,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
-                                <div class="row mt-4">
-                                    <div class="col-md-12">
-                                        <input type="date" class="form-control @error('dob') is-invalid @enderror" id="customer-dob" placeholder="Date Of Birth" name="dob" value="">
-                                        @error('dob')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-12">
-                                        <select name="gender" id="customer-gender" class="form-control @error('gender') is-invalid @enderror">
-                                            <option value=""> Select Gender </option>
-                                            <option value="male"> Male </option>
-                                            <option value="female"> Female </option>
-                                        </select>
-                                        @error('gender')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -108,16 +89,19 @@
                                         <input type="text" class="form-control" id="customer-billing-city" placeholder="Billing City" name="billing_city" value="">
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" id="customer-billing-state" placeholder="Billing State" name="billing_state" value="">
+                                        <input type="text" class="form-control" id="customer-billing-zipcode" placeholder="Billing Postal Code" name="billing_zipcode" value="">
                                     </div>
                                 </div>
 
                                 <div class="row mt-4">
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" id="customer-billing-country" placeholder="Billing Country" name="billing_country" value="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control" id="customer-billing-zipcode" placeholder="Billing Postal Code" name="billing_zipcode" value="">
+                                        <select class="form-control" id="customer-billing-state" placeholder="Billing State" name="billing_state" value="{{ old('billing_state') }}" required>
+                                            @foreach($canadaStates as $state)
+                                            <option value="">Select State</option>
+                                            <option value="{{$state}}">{{$state}}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- <input type="text" class="form-control" id="customer-billing-state" placeholder="Billing State" name="billing_state" value=""> -->
                                     </div>
                                 </div>
 
@@ -146,16 +130,19 @@
                                         <input type="text" class="form-control" id="shipping-customer-city" placeholder="Shipping  City" name="city" value="">
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" id="shipping-customer-state" placeholder="Shipping  State" name="state" value="">
+                                        <input type="text" class="form-control" id="shipping-customer-zipcode" placeholder="Shipping Postal Code" name="zipcode" value="">
                                     </div>
                                 </div>
 
                                 <div class="row mt-4">
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" id="shipping-customer-country" placeholder="Shipping  Country" name="country" value="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control" id="shipping-customer-zipcode" placeholder="Shipping Postal Code" name="zipcode" value="">
+                                        <select class="form-control" id="shipping-customer-state" placeholder="Shipping  State" name="state" value="{{ old('state') }}" required>
+                                            @foreach($canadaStates as $state)
+                                            <option value="">Select State</option>
+                                            <option value="{{$state}}">{{$state}}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- <input type="text" class="form-control" id="shipping-customer-state" placeholder="Shipping  State" name="state" value=""> -->
                                     </div>
                                 </div>
                             </div>

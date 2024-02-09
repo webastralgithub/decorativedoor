@@ -234,17 +234,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <div class="col-md-12 flex">
-                        <label for="country" class="col-md-3 col-form-label text-md-end text-start">
-                            {{ __('Country') }}
-                            <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-md-9" style="line-height: 35px;">
-                            <input name="country" id="country" type="text" class="form-control example-date-input @error('country') is-invalid @enderror" value="{{ old('country') }}" required>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="mb-3 row">
                     <div class="col-md-12 flex">
                         <label for="state" class="col-md-3 col-form-label text-md-end text-start">
@@ -526,10 +516,9 @@
                 const street = Swal.getPopup().querySelector('#street').value;
                 const city = Swal.getPopup().querySelector('#city').value;
                 const state = Swal.getPopup().querySelector('#state').value;
-                const country = Swal.getPopup().querySelector('#country').value;
                 const zipCode = Swal.getPopup().querySelector('#zip_code').value;
 
-                if (country.trim() === '' || street.trim() === '' || city.trim() === '' || state
+                if (street.trim() === '' || city.trim() === '' || state
                     .trim() === '' || zipCode.trim() === '') {
                     Swal.showValidationMessage('All fields are required');
                 } else {
@@ -541,7 +530,6 @@
                             street: street,
                             city: city,
                             state: state,
-                            country: country,
                             zipCode: zipCode,
                             _token: '{{ csrf_token() }}' // Add CSRF token if needed
                         },

@@ -72,12 +72,12 @@ class CheckoutController extends Controller
                                 'discount' => (!empty($selectedVariant['discount_price'])) ? $selectedVariant['quantity'] * $selectedVariant['discount_price'] : 0,
                                 'total' => (!empty($selectedVariant)) ? ($product['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
                                 'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
-                                "typeofdoor_id" => (!empty($product['doortype'])) ? $product['doortype'] : '',
-                                "jamb_id" => (!empty($product['doorjamb'])) ? $product['doorjamb'] : '',
-                                "locationofdoor_id" => (!empty($product['doorlocation'])) ? $product['doorlocation'] : '',
-                                "variant_category_id" => (!empty($product['variant_category_id'])) ? $product['variant_category_id'] : '',
-                                "left_id" => (!empty($product['doorleft'])) ? $product['doorleft'] : '',
-                                "right_id" => (!empty($product['doorright'])) ? $product['doorright'] : '',
+                                "typeofdoor_id" => (!empty($product['doortype'])) ? $product['doortype'] : 0,
+                                "jamb_id" => (!empty($product['doorjamb'])) ? $product['doorjamb'] : 0,
+                                "locationofdoor_id" => (!empty($product['doorlocation'])) ? $product['doorlocation'] : 0,
+                                "variant_category_id" => (!empty($product['variant_category_id'])) ? $product['variant_category_id'] : 0,
+                                "left_id" => (!empty($product['doorleft'])) ? $product['doorleft'] : 0,
+                                "right_id" => (!empty($product['doorright'])) ? $product['doorright'] : 0,
                             ]);
                         }
                     } else {
@@ -91,12 +91,12 @@ class CheckoutController extends Controller
                             'discount' => (!empty($product['discount_price'])) ? $product['discount_price'] * $product['quantity'] : 0,
                             'total' => (!empty($selectedVariant)) ? ($selectedVariant['quantity'] * $selectedVariant['price']) : ($product['quantity'] * $productData->selling_price),
                             'unitcost' => (!empty($selectedVariant)) ? $selectedVariant['price'] : $productData->selling_price,
-                            "typeofdoor_id" => (!empty($product['doortype'])) ? $product['doortype'] : '',
-                            "jamb_id" => (!empty($product['doorjamb'])) ? $product['doorjamb'] : '',
-                            "locationofdoor_id" => (!empty($product['doorlocation'])) ? $product['doorlocation'] : '',
-                            "variant_category_id" => (!empty($product['variant_category_id'])) ? $product['variant_category_id'] : '',
-                            "left_id" => (!empty($product['doorleft'])) ? $product['doorleft'] : '',
-                            "right_id" => (!empty($product['doorright'])) ? $product['doorright'] : '',
+                            "typeofdoor_id" => (!empty($product['doortype'])) ? $product['doortype'] : 0,
+                            "jamb_id" => (!empty($product['doorjamb'])) ? $product['doorjamb'] : 0,
+                            "locationofdoor_id" => (!empty($product['doorlocation'])) ? $product['doorlocation'] : 0,
+                            "variant_category_id" => (!empty($product['variant_category_id'])) ? $product['variant_category_id'] : 0,
+                            "left_id" => (!empty($product['doorleft'])) ? $product['doorleft'] : 0,
+                            "right_id" => (!empty($product['doorright'])) ? $product['doorright'] : 0,
                         ]);
                     }
 

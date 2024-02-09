@@ -18,14 +18,14 @@ return new class extends Migration
             $table->string('street')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->string('country')->nullable();
+            $table->string('country')->default('Canada');
             $table->string('zipcode')->nullable();
           
             $table->enum('billing_address_type', ['billing'])->default('billing');
             $table->string('billing_street')->nullable();
             $table->string('billing_city')->nullable();
             $table->string('billing_state')->nullable();
-            $table->string('billing_country')->nullable();
+            $table->string('billing_country')->default('Canada');
             $table->string('billing_zipcode')->nullable();
 
             $table->text('notes');

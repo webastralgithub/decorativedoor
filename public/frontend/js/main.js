@@ -250,28 +250,27 @@
                     console.log(jsonData);
                     $('#user-alreday-exist').show();
                     $('#final_submit').hide();
-                    $('#user-alreday-exist').html('<span id="user-alreday-exist" style="color: green;"><i class="fa fa-check"></i>User Already Exist</span><br><input type="checkbox" id="customerassign" data-id="' + jsonData.id + '"><label class="form-check-label" style="padding-left: 10px;"> Use This Customer </label>');
+                    $('#user-alreday-exist').html(`<span id="user-alreday-exist" style="color: green;">
+                            <i class="fa fa-check"></i>User Already Exist</span>
+                            <button id="customerassign" data-id="${jsonData.id}" class="primary-btn">
+                            Use This Customer </button>`);
                     $('#customer-id').val(jsonData.id);
 
                     /**********Personal information ***********/
 
                     $('#customer-name').val(jsonData.name);
                     $('#customer-phone').val(jsonData.phone);
-                    $('#customer-dob').val(jsonData.dob);
-                    $('#customer-gender').val(jsonData.gender);
 
                     $('#customer-shipping-address_type').val(jsonData.address_type);
                     $('#customer-shipping-state').val(jsonData.state);
                     $('#customer-shipping-city').val(jsonData.city);
                     $('#customer-shipping-street').val(jsonData.street);
-                    $('#customer-shipping-country').val(jsonData.country);
                     $('#customer-shipping-zipcode').val(jsonData.zipcode);
 
                     $('#customer-billing-address_type').val(jsonData.billing_address_type);
                     $('#customer-billing-state').val(jsonData.billing_state);
                     $('#customer-billing-city').val(jsonData.billing_city);
                     $('#customer-billing-street').val(jsonData.billing_street);
-                    $('#customer-billing-country').val(jsonData.billing_country);
                     $('#customer-billing-zipcode').val(jsonData.billing_zipcode);
 
                     /**********company information ***********/
@@ -327,21 +326,17 @@
         /**********Personal information ***********/
         $('#customer-name').val('');
         $('#customer-phone').val('');
-        $('#customer-dob').val('');
-        $('#customer-gender').val('');
 
         $('#customer-shipping-address_type').val('');
         $('#customer-shipping-state').val('');
         $('#customer-shipping-city').val('');
         $('#customer-shipping-street').val('');
-        $('#customer-shipping-country').val('');
         $('#customer-shipping-zipcode').val('');
 
         $('#customer-billing-address_type').val('');
         $('#customer-billing-state').val('');
         $('#customer-billing-city').val('');
         $('#customer-billing-street').val('');
-        $('#customer-billing-country').val('');
         $('#customer-billing-zipcode').val('');
 
         /**********company information ***********/
@@ -369,14 +364,12 @@
                 var state = $('#customer-billing-state').val();
                 var city = $('#customer-billing-city').val();
                 var street = $('#customer-billing-street').val();
-                var country = $('#customer-billing-country').val();
                 var zipcode = $('#customer-billing-zipcode').val();
 
                 // $('#customer-shipping-address_type').val(address_type);
                 // $('#shipping-customer-state').val(state);
                 // $('#shipping-customer-city').val(city);
                 // $('#shipping-customer-street').val(street);
-                // $('#shipping-customer-country').val(country);
                 // $('#shipping-customer-zipcode').val(zipcode);
             } else {
                 $('.shipping_address').hide();
@@ -384,7 +377,6 @@
                 $('#shipping-customer-street').val('');
                 $('#shipping-customer-city').val('');
                 $('#shipping-customer-street').val('');
-                $('#shipping-customer-country').val('');
                 $('#shipping-customer-zipcode').val('');
 
             }

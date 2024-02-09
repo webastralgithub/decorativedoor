@@ -206,15 +206,23 @@
                                         <li class="Variantsl-li">
                                             <b>Variants</b>
                                         </li>
+                                        @php
+                                        $doorCategory = \App\Models\VariantCategory::find($cart['variant_category_id']);
+                                        $typeOfDoor = \App\Models\TypeOfDoor::find($cart['doortype']);
+                                        $typeOfLocation = \App\Models\LocationOfDoor::find($cart['doorlocation']);
+                                        $jump = \App\Models\Jamb::find($cart['doorjamb']);
+                                        $left = \App\Models\Left::find($cart['doorleft']);
+                                        $right = \App\Models\Right::find($cart['doorright']);
+                                        @endphp
 
                                         <li><b>Quantity</b> <span>{{ $variation['quantity'] }}</span></li>
                                         <li><b>Size</b> <span>{{ $variation['name'] }}</span></li>
-                                        <li><b>Doors Category</b> <span>{{ \App\Models\VariantCategory::find($cart['variant_category_id'])->name }}</span></li>
-                                        <li><b>Type of Door</b> <span>{{ \App\Models\TypeOfDoor::find($cart['doortype'])->name }}</span></li>
-                                        <li><b>Type of Location</b> <span>{{ \App\Models\LocationOfDoor::find($cart['doorlocation'])->name }}</span></li>
-                                        <li><b>Jamb</b> <span>{{ \App\Models\Jamb::find($cart['doorjamb'])->name }}</span></li>
-                                        <li><b>Left</b> <span>{{ \App\Models\Left::find($cart['doorleft'])->name }}</span></li>
-                                        <li><b>Right</b> <span>{{ \App\Models\Right::find($cart['doorright'])->name }}</span></li>
+                                        <li><b>Doors Category</b> <span>{{ (!empty($doorCategory) ? $doorCategory->name : " ") }}</span></li>
+                                        <li><b>Type of Door</b> <span>{{ (!empty($typeOfDoor) ? $typeOfDoor->name : " ") }}</span></li>
+                                        <li><b>Type of Location</b> <span>{{ (!empty($typeOfLocation) ? $typeOfLocation->name : " ")}}</span></li>
+                                        <li><b>Jamb</b> <span>{{ (!empty($jump) ? $jump->name : " ") }}</span></li>
+                                        <li><b>Left</b> <span>{{ (!empty($left) ? $left->name : " ") }}</span></li>
+                                        <li><b>Right</b> <span>{{ (!empty($right) ? $right->name : " ") }}</span></li>
                                     </ul>
                                 </div>
                             </div>

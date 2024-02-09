@@ -88,8 +88,8 @@ json_decode($variantSingle->option_type, true) : null;
                             <label>Type of Door</label>
                             <select class="form-control" id="type-of-door" onchange="return doortype('{{$product->id}}')">
                                 <option value="">Type of Door</option>
-                                @if ( isset($product->categories[1]) && $product->categories[1]->jambs)
-                                @foreach ($product->categories[1]->type_of_doors as $typeOfDoor)
+                                @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
+                                @foreach ($product->categories[0]->type_of_doors as $typeOfDoor)
                                 <option value="{{ $typeOfDoor->id }}" {{ $product->type_of_door === $typeOfDoor->name
                                     ?
                                     'selected' : '' }}>
@@ -103,8 +103,8 @@ json_decode($variantSingle->option_type, true) : null;
                             <label>Doors Category</label>
                             <select class="form-control" id="variant-category" onchange="return doorcategory('{{$product->id}}')">
                                 <option value="">Select Category</option>
-                                @if ( isset($product->categories[1]) && $product->categories[1]->variant_categories)
-                                @foreach ($product->categories[1]->variant_categories as $categorySingle)
+                                @if ( isset($product->categories[0]) && $product->categories[0]->variant_categories)
+                                @foreach ($product->categories[0]->variant_categories as $categorySingle)
                                 <option value="{{ $categorySingle->id }}" {{ $product->variant_category_id === $categorySingle->name
                                     ?
                                     'selected' : '' }}>
@@ -118,8 +118,8 @@ json_decode($variantSingle->option_type, true) : null;
                             <label>Loaction of Door</label>
                             <select class="form-control" id="location-of-door" onchange="return doorlocation('{{$product->id}}')">
                                 <option value="">Loaction of Door</option>
-                                @if ( isset($product->categories[1]) && $product->categories[1]->location_of_doors)
-                                @foreach ($product->categories[1]->location_of_doors as $location_of_doors)
+                                @if ( isset($product->categories[0]) && $product->categories[0]->location_of_doors)
+                                @foreach ($product->categories[0]->location_of_doors as $location_of_doors)
                                 <option value="{{ $location_of_doors->id }}" {{ $product->location_of_doors ===
                                     $location_of_doors->name ? 'selected' : '' }}>
                                     {{ $location_of_doors->name }}
@@ -132,8 +132,8 @@ json_decode($variantSingle->option_type, true) : null;
                             <label>Jamb</label>
                             <select class="form-control" id="jamb" onchange="return doorjamb('{{$product->id}}')">
                                 <option>JMB</option>
-                                @if ( isset($product->categories[1]) && $product->categories[1]->jambs)
-                                @foreach ($product->categories[1]->jambs as $jambs)
+                                @if ( isset($product->categories[0]) && $product->categories[0]->jambs)
+                                @foreach ($product->categories[0]->jambs as $jambs)
                                 <option value="{{ $jambs->id }}" {{ $product->jambs === $jambs->name ? 'selected' : ''
                                     }}>
                                     {{ $jambs->name }}
@@ -146,8 +146,8 @@ json_decode($variantSingle->option_type, true) : null;
                             <label>Right</label>
                             <select class="form-control" id="left" onchange="return doorleft('{{$product->id}}')">
                                 <option>Left</option>
-                                @if ( isset($product->categories[1]) && $product->categories[1]->lefts)
-                                @foreach ($product->categories[1]->lefts as $lefts)
+                                @if ( isset($product->categories[0]) && $product->categories[0]->lefts)
+                                @foreach ($product->categories[0]->lefts as $lefts)
                                 <option value="{{ $lefts->id }}" {{ $product->lefts === $lefts->name ? 'selected' : ''
                                     }}>
                                     {{ $lefts->name }}
@@ -160,8 +160,8 @@ json_decode($variantSingle->option_type, true) : null;
                             <label>Left</label>
                             <select class="form-control" id="right" onchange="return doorright('{{$product->id}}')">
                                 <option>Right</option>
-                                @if (isset($product->categories[1]) && $product->categories[1]->rights)
-                                @foreach ($product->categories[1]->rights as $rights)
+                                @if (isset($product->categories[0]) && $product->categories[0]->rights)
+                                @foreach ($product->categories[0]->rights as $rights)
                                 <option value="{{ $rights->id }}" {{ $product->rights === $rights->name ? 'selected' :
                                     ''
                                     }}>
@@ -463,7 +463,8 @@ json_decode($variantSingle->option_type, true) : null;
                     "&doorjamb=" + doorjamb +
                     "&doorleft=" + doorleft +
                     "&variant_category_id=" + variant_category_id +
-                    "&doorright=" + doorright;
+                    "&doorright=" + doorright +
+                    "&selectedVariants=" + selectedVariants;
 
                 xhr.send(data);
 

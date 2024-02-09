@@ -140,7 +140,6 @@ class UserController extends Controller
                 'street' => $request->street,
                 'city' => $request->city,
                 'state' => $request->state,
-                'country' => $request->country,
                 'zip_code' => $request->zipCode,
             ]
         );

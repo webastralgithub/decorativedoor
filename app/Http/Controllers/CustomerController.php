@@ -16,8 +16,25 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        $canadaStates = [
+            "Alberta",
+            "British Columbia",
+            "Manitoba",
+            "New Brunswick",
+            "Newfoundland and Labrador",
+            "Northwest Territories",
+            "Nova Scotia",
+            "Nunavut",
+            "Ontario",
+            "Prince Edward Island",
+            "Quebec",
+            "Saskatchewan",
+            "Yukon"
+        ];
+
         return view('frontend.customer.index', [
-            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 50))
+            'products' => Product::latest()->paginate(env('RECORD_PER_PAGE', 50)),
+            'canadaStates' => $canadaStates
         ]);
     }
 
@@ -39,9 +56,6 @@ class CustomerController extends Controller
             'name' => 'required',
             'password' => 'required',
             'phone' => 'required',
-            'dob' => 'required',
-            'gender' => 'required',
-
         ]);
 
         // dd($request->all());
@@ -54,9 +68,7 @@ class CustomerController extends Controller
                 'email' => $request->email,
                 'name' => $request->name,
                 'password' => Hash::make($request->password),
-                'phone' => $request->phone,
-                'dob' => $request->dob,
-                'gender' => $request->gender,
+                'phone' => $request->phone
             ]);
 
             $useraddress = User::find($user_id);
@@ -68,13 +80,11 @@ class CustomerController extends Controller
                     'street' => $request->street ?? '',
                     'city' => $request->city ?? '',
                     'state' => $request->state ?? '',
-                    'country' => $request->country ?? '',
                     'zip_code' => $request->zipcode ?? '',
                     'billing_address_type' => $request->billing_address_type ?? '',
                     'billing_street' => $request->billing_street ?? '',
                     'billing_city' => $request->billing_city ?? '',
                     'billing_state' => $request->billing_state ?? '',
-                    'billing_country' => $request->billing_country ?? '',
                     'billing_zipcode' => $request->billing_zipcode ?? '',
                     'notes' => $request->notes ?? '',
                 ]
@@ -99,9 +109,7 @@ class CustomerController extends Controller
                 'email' => $request->email,
                 'name' => $request->name,
                 'password' => Hash::make($request->password),
-                'phone' => $request->phone,
-                'dob' => $request->dob,
-                'gender' => $request->gender,
+                'phone' => $request->phone
             ];
             $user = User::create($input);
 
@@ -115,13 +123,11 @@ class CustomerController extends Controller
                     'street' => $request->street ?? '',
                     'city' => $request->city ?? '',
                     'state' => $request->state ?? '',
-                    'country' => $request->country ?? '',
                     'zip_code' => $request->zipcode ?? '',
                     'billing_address_type' => $request->billing_address_type ?? '',
                     'billing_street' => $request->billing_street ?? '',
                     'billing_city' => $request->billing_city ?? '',
                     'billing_state' => $request->billing_state ?? '',
-                    'billing_country' => $request->billing_country ?? '',
                     'billing_zipcode' => $request->billing_zipcode ?? '',
                     'notes' => $request->notes ?? '',
                 ]
@@ -194,20 +200,15 @@ class CustomerController extends Controller
                 'name' => $checkuser->name ?? '',
                 'password' => $checkuser->password ?? '',
                 'phone' => $checkuser->phone ?? '',
-                'dob' => $checkuser->dob ?? '',
-                'gender' => $checkuser->gender ?? '',
-
                 'address_type' => $checkuser->address->address_type ?? '',
                 'street' => $checkuser->address->street ?? '',
                 'city' => $checkuser->address->city ?? '',
                 'state' => $checkuser->address->state ?? '',
-                'country' => $checkuser->address->country ?? '',
                 'zip_code' => $checkuser->address->zipcode ?? '',
                 'billing_address_type' => $checkuser->address->billing_address_type ?? '',
                 'billing_street' => $checkuser->address->billing_street ?? '',
                 'billing_city' => $checkuser->address->billing_city ?? '',
                 'billing_state' => $checkuser->address->billing_state ?? '',
-                'billing_country' => $checkuser->address->billing_country ?? '',
                 'billing_zipcode' => $checkuser->address->billing_zipcode ?? '',
                 'notes' => $checkuser->address->notes ?? '',
 
