@@ -16,6 +16,11 @@
                         <a href="./index.html">Home</a>
                         <span>Product-detail</span> /  <span>{{$product->title}}</span>
                     </div>
+
+                    <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
+                            getProductAvailabityStock($product->id) > 0 && (getProductAvailabityStock($product->id)
+                            >
+                            getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
                 </div>
             </div>
         </div>
@@ -59,16 +64,8 @@ json_decode($variantSingle->option_type, true) : null;
             <div class="col-lg-8 col-md-8">
                 <input type="hidden" name="slug" value="{{$product->slug}}">
                 <div class="product__details__text">
+                    <div class="hd-price-dv">
                     <h3>{{$product->title}}</h3>
-                    <div class="product__details__rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <span>(18 reviews)</span>
-                    </div>
-
                     <div class="product__details__price" id="main-price">
                         @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
                         <del style="color: #625c5c;font-size: 18px;">${{number_format($product->selling_price, 2, '.',
@@ -78,6 +75,18 @@ json_decode($variantSingle->option_type, true) : null;
                         ${{number_format($product->selling_price, 2, '.', ',')}}
                         @endif
                     </div>
+                    </div>
+
+                    <div class="product__details__rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <span>(18 reviews)</span>
+                    </div>
+
+                    
                     @if(isset(session()->get('discount')[$product->id]['discount_ammount']))
                     <input type="hidden" id="discount_price"
                         value="{{session()->get('discount')[$product->id]['discount_ammount']}}">
@@ -193,6 +202,8 @@ json_decode($variantSingle->option_type, true) : null;
 
                         </ul>
                     </div>
+
+                    <div class="product-page-btm-part">
                     @if(!empty($product->variants) && !empty($variantOptions))
                     <div class="varients-cart">
                         <h3>Variants</h3>
@@ -239,15 +250,15 @@ json_decode($variantSingle->option_type, true) : null;
                         <input type="hidden" name="variant" class="product-variant-data"
                             value="{{json_encode($variantSingle)}}" />
                         <input type="hidden" name="product_id" value="{{$product->id}}" />
+
+                        <div class="cart-sharebtn-btm">
                         <button type="button" class="primary-btn add-to-cart " onclick="return addToCart(event)"
                             @disabled(getProductAvailabityStock($product->id) <= 0)>ADD TO CART</button>
                         <a href="#" id="share-with-email" class="btn primary-btn" data-toggle="modal"
                             data-target="#exampleModal">Share <i class="fa fa-share"></i></a>
+                        </div>    
                     </form>
-                    <li class="availibility-div-mn"><b>Availability</b> <span id="availability">{{(
-                            getProductAvailabityStock($product->id) > 0 && (getProductAvailabityStock($product->id)
-                            >
-                            getProductStockOnCart($product->id))) ? 'In' : 'Out of'}} Stock</span></li>
+                    </div>
                 </div>
             </div>
 
