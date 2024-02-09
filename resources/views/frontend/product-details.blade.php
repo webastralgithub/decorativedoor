@@ -232,6 +232,7 @@ json_decode($variantSingle->option_type, true) : null;
                         @csrf
                         @method('POST')
                         <div class="product__details__quantity">
+                        <h5>Quantity</h5>
                             <div class="quantity">
                                 <div class="pro-qty">
                                     <tr data-id="{{$product->id}}">
@@ -411,7 +412,7 @@ json_decode($variantSingle->option_type, true) : null;
     }
 
     function addToCart(event) {
-        var quantity = document.querySelector('input[name="quantity"]').value;
+        // var quantity = document.querySelector('input[name="quantity"]').value;
         var allVariants = document.querySelectorAll('.variants');
         var doortype = document.getElementById('door-type').value;
         var doorlocation = document.getElementById('door-location').value;
@@ -429,18 +430,22 @@ json_decode($variantSingle->option_type, true) : null;
                 selectedVariants.push(selectedValue);
             }
         });
-        let checkStockAvailability = "{{ getProductAvailabityStock($product->id) }}";
-        let getProductStockOnCart = "{{ getProductStockOnCart($product->id) }}";
+        var quantity = parseInt(document.querySelector('input[name="quantity"]').value);
+        var checkStockAvailability = parseInt("{{ getProductAvailabityStock($product->id) }}");
+        var getProductStockOnCart = parseInt("{{ getProductStockOnCart($product->id) }}");
+
         console.log("checkStockAvailability::", checkStockAvailability, "getProductStockOnCart", getProductStockOnCart, "selectedVariants", selectedVariants.length);
         var addtocartMessage = document.getElementById('addtocartMessage');
-        if (checkStockAvailability < getProductStockOnCart || (quantity > checkStockAvailability)) {
-            addtocartMessage.innerHTML = '<div class="product-discount-message-error">Product is out of Stock</div>';
-            addtocartMessage.style.display = 'block';
-            setTimeout(function () {
-                addtocartMessage.style.display = 'none';
-            }, 5000);
-            return false;
-        }
+        if (quantity + getProductStockOnCart > checkStockAvailability) {
+        // Quantity exceeds available stock, show error message
+        var addtocartMessage = document.getElementById('addtocartMessage');
+        addtocartMessage.innerHTML = '<div class="product-discount-message-error">Quantity exceeds available stock</div>';
+        addtocartMessage.style.display = 'block';
+        setTimeout(function () {
+            addtocartMessage.style.display = 'none';
+        }, 5000);
+        return false;
+    }
         if (checkStockAvailability != 0) {
             // Check if all variants are selected
             if (selectedVariants.length >= 0 && selectedVariants.length === (allVariants.length / 2)) {
